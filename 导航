@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pizza</title>
+    <style type="text/css">
+      #content {
+            border: solid #FFFFFF;  /*设置入口边框内样式跟颜色*/
+            margin:100px auto;  /*设置外框居中*/
+            width: 62px;  /*设置外框宽度*/
+            height: 23px; /*设置外框高度*/
+            border-width: 2px; /*设置边框宽度*/
+            background: #aedbde;  /*设置背容景色*/
+            text-indent:5px;  /*设置框内字符缩进*/
+    </style>
+</head>
+<body>
+<body style="background-color:#aedbde;">
+ <h1 style="text-align:center;">
+    <br />
+    <br />
+    <br />
+    <br />
+</span>
+</h1>
+    <span style="font-family:&quot"><p style="color:#FFFFFF;text-align:center;"><font size=100><strong>Hello World!</strong></font></p></span>
+    <div id="content"><a href="www.Evan.link" style="color:#FFFFFF; text-decoration:none">ENTER</a></div>
+</body>
+</html>
