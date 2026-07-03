@@ -1,29 +1,74 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>世界和平！</title>
-    <link rel="shortcut icon" href="favicon.ico" />
-    <style type="text/css">
-      #content {
-            border: solid #FFFFFF;  /*设置入口边框内样式跟颜色*/
-            margin:100px auto;  /*设置外框居中*/
-            width: 62px;  /*设置外框宽度*/
-            height: 23px; /*设置外框高度*/
-            border-width: 2px; /*设置边框宽度*/
-            background: #aedbde;  /*设置背容景色*/
-            text-indent:5px;  /*设置框内字符缩进*/
+    <link rel="shortcut icon" href="favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #ffffff;
+            /* ========== 这里是添加背景图的位置 ========== */
+            /* background-image: url("你的图片地址"); */
+            background-image: url("bg.jpg"); /* 把引号内替换成你的背景图片路径 */
+            background-size: cover;    /* 图片铺满整个页面，不变形留白 */
+            background-position: center; /* 图片居中显示 */
+            background-repeat: no-repeat; /* 禁止图片重复平铺 */
+            background-attachment: fixed; /* 固定背景，滚动页面不移动图片 */
+            /* ========================================== */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            gap: 16px;
+        }
+        .title-wrap {
+            opacity: 0;
+            transform: scale(0.8);
+            animation: textShow 2s ease-out forwards;
+        }
+        .title-text {
+            color: #000000;
+            font-weight: bold;
+            font-size: clamp(3rem, 10vw, 6rem);
+            line-height: 1.4;
+            text-align: center;
+            letter-spacing: 4px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+        .peace-text {
+            animation-delay: 0.6s;
+        }
+        @keyframes textShow {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes float {
+            from {
+                transform: translateY(-6px);
+            }
+            to {
+                transform: translateY(6px);
+            }
+        }
     </style>
 </head>
 <body>
-<body style="background-color:#FFF;">
- <h1 style="text-align:center;">
-    <br />
-    <br />
-    <br />
-    <br />
-</span>
-</h1>
-     <span style="font-family:&quot"><p style="color:#000000;text-align:center;"><font size=100><strong>我们的愿望是~</strong></font></p></span>
-    <span style="font-family:&quot"><p style="color:#000000;text-align:center;"><font size=100><strong>世界和平！</strong></font></p></span>
+    <div class="title-wrap">
+        <p class="title-text">我们的愿望是~</p>
+    </div>
+    <div class="title-wrap peace-wrap">
+        <p class="title-text peace-text">世界和平！</p>
+    </div>
 </body>
 </html>
