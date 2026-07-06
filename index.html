@@ -993,7 +993,7 @@
     </style>
 </head>
 <body>
-    <!-- 天气组件 -->
+     <!-- 天气组件 -->
     <div class="weather-widget" id="weatherWidget">
         <span class="weather-icon" id="weatherIcon">🌤️</span>
         <div class="weather-info">
@@ -1002,6 +1002,142 @@
             <span class="weather-location" id="weatherLocation">定位中</span>
         </div>
     </div>
+
+    <!-- 其余HTML结构不变... -->
+    
+    <script>
+        (function() {
+            // ... 其他变量和函数保持不变 ...
+
+            // ============ 天气功能（修复版） ============
+            const weatherCodeMap = {
+                0: { icon: "☀️", desc: "晴天" },
+                1: { icon: "🌤️", desc: "少云" },
+                2: { icon: "⛅", desc: "多云" },
+                3: { icon: "☁️", desc: "阴天" },
+                45: { icon: "🌫️", desc: "雾" },
+                48: { icon: "🌫️", desc: "雾凇" },
+                51: { icon: "🌦️", desc: "小毛毛雨" },
+                53: { icon: "🌦️", desc: "毛毛雨" },
+                55: { icon: "🌧️", desc: "大毛毛雨" },
+                61: { icon: "🌧️", desc: "小雨" },
+                63: { icon: "🌧️", desc: "中雨" },
+                65: { icon: "🌧️", desc: "大雨" },
+                71: { icon: "❄️", desc: "小雪" },
+                73: { icon: "❄️", desc: "中雪" },
+                75: { icon: "❄️", desc: "大雪" },
+                80: { icon: "🌦️", desc: "阵雨" },
+                81: { icon: "🌧️", desc: "中阵雨" },
+                82: { icon: "🌧️", desc: "大阵雨" },
+                95: { icon: "⛈️", desc: "雷暴" },
+                96: { icon: "⛈️", desc: "雷暴伴冰雹" },
+                99: { icon: "⛈️", desc: "强雷暴伴冰雹" }
+            };
+
+            function updateWeatherDisplay(temp, code, city) {
+                const weather = weatherCodeMap[code] || { icon: "🌡️", desc: "未知" };
+                weatherIcon.textContent = weather.icon;
+                weatherTemp.textContent = `${Math.round(temp)}°C`;
+                weatherDesc.textContent = weather.desc;
+                weatherLocation.textContent = city || "未知地点";
+                weatherWidget.classList.remove("weather-loading");
+            }
+
+            function fetchWeatherByCoords(lat, lon, cityName) {
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.current_weather) {
+                            const temp = data.current_weather.temperature;
+                            const code = data.current_weather.weathercode;
+                            if (cityName) {
+                                updateWeatherDisplay(temp, code, cityName);
+                            } else {
+                                // 如果没有传入城市名，尝试逆地理编码
+                                getCityNameFromCoords(lat, lon).then(city => {
+                                    updateWeatherDisplay(temp, code, city);
+                                }).catch(() => {
+                                    updateWeatherDisplay(temp, code, "未知地点");
+                                });
+                            }
+                        } else {
+                            throw new Error("无效天气数据");
+                        }
+                    })
+                    .catch(err => {
+                        console.warn("天气API请求失败:", err);
+                        weatherIcon.textContent = "🌡️";
+                        weatherTemp.textContent = "--°C";
+                        weatherDesc.textContent = "暂不可用";
+                        weatherLocation.textContent = cityName || "获取失败";
+                        weatherWidget.classList.add("weather-loading");
+                    });
+            }
+
+            function getCityNameFromCoords(lat, lon) {
+                const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&accept-language=zh`;
+                return fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.address) {
+                            const addr = data.address;
+                            return addr.city || addr.town || addr.county || addr.state || addr.country || "未知地点";
+                        }
+                        return "未知地点";
+                    })
+                    .catch(() => "未知地点");
+            }
+
+            // IP定位回退
+            function fetchWeatherByIP() {
+                weatherLocation.textContent = "IP定位中...";
+                fetch("https://ipapi.co/json/")
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.latitude && data.longitude) {
+                            const city = data.city || data.region || data.country_name || "未知地点";
+                            fetchWeatherByCoords(data.latitude, data.longitude, city);
+                        } else {
+                            throw new Error("IP定位数据无效");
+                        }
+                    })
+                    .catch(err => {
+                        console.warn("IP定位失败:", err);
+                        // 最终回退到默认城市（北京）
+                        weatherLocation.textContent = "默认位置";
+                        fetchWeatherByCoords(39.9042, 116.4074, "北京");
+                    });
+            }
+
+            function initWeather() {
+                // 先尝试浏览器GPS定位
+                if (!navigator.geolocation) {
+                    fetchWeatherByIP();
+                    return;
+                }
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        fetchWeatherByCoords(lat, lon, ""); // 城市名稍后通过逆地理获取
+                    },
+                    (error) => {
+                        console.warn("GPS定位失败，尝试IP定位:", error.message);
+                        fetchWeatherByIP();
+                    },
+                    {
+                        enableHighAccuracy: false,
+                        timeout: 5000,
+                        maximumAge: 600000
+                    }
+                );
+            }
+
+            // 启动天气
+            initWeather();
+
 
     <div class="title-wrap">
         <p class="title-text">我们的愿望是~</p>
