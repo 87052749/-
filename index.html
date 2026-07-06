@@ -448,7 +448,7 @@
             }
 
             function fetchWeatherByCoords(lat, lon, cityName) {
-                fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+                fetch(`https://api.seniverse.com/v3/weather/daily.json?key=PP5i5qKl-pSNGb4wd&location=beijing&language=zh-Hans&unit=c&start=-1&days=5`)
                     .then(r => r.json()).then(data => {
                         if (data?.current_weather) {
                             const temp = data.current_weather.temperature, code = data.current_weather.weathercode;
