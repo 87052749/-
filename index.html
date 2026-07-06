@@ -12,7 +12,7 @@
             --primary-bg: #eef6ff;
             --holiday-red: #d82020;
             --festival-orange: #e66000;
-            --card-bg: rgba(255, 255, 255, 0.96);
+            --card-bg: rgba(255, 255, 255, 0.92);
             --shadow-sm: 0 2px 12px rgba(36, 120, 224, 0.08);
             --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.12);
             --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.18);
@@ -48,11 +48,12 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
         }
 
+        /* 全局背景蒙版：降低透明度，解决整体泛白问题 */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.38);
             z-index: -1;
             pointer-events: none;
         }
@@ -70,7 +71,8 @@
             line-height: 1.4;
             text-align: center;
             letter-spacing: 4px;
-            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9);
+            /* 弱化白色文字阴影，避免泛白发灰 */
+            text-shadow: 0 1px 6px rgba(255, 255, 255, 0.65);
             animation: float 4s ease-in-out infinite alternate;
         }
         .peace-text {
@@ -96,7 +98,7 @@
             font-size: clamp(1rem, 3vw, 1.4rem);
             color: #000;
             letter-spacing: 2px;
-            text-shadow: 0 1px 6px rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 4px rgba(255, 255, 255, 0.6);
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -111,8 +113,9 @@
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            /* 轻微降低模糊强度，保留背景可见度 */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
         .calendar-box:hover {
             transform: translateY(-6px);
@@ -195,9 +198,10 @@
         .year-click,
         .month-click {
             color: #2478e0;
-            text-decoration: underline dotted 2px #74b3ff;
-            padding: 2px 5px;
-            transition: color 0.2s;
+            /* 替换点状下划线，消除像素毛刺小点 */
+            border-bottom: 2px dotted #74b3ff;
+            padding: 2px 5px 0;
+            transition: color 0.2s, border-color 0.2s;
             cursor: pointer;
             border-radius: 4px;
             -webkit-tap-highlight-color: transparent;
@@ -206,6 +210,7 @@
         .month-click:hover {
             color: #0f5fc4;
             background: rgba(36, 120, 224, 0.06);
+            border-color: #2478e0;
         }
         .year-click:active,
         .month-click:active {
@@ -744,7 +749,7 @@
                 if (y === 2026 && lunar2026[m] && lunar2026[m][d]) {
                     return lunar2026[m][d];
                 }
-                // 非2026年：不显示农历（避免不准确的数据误导用户）
+                // 非2026年：不显示农历（避免不准确的数据）
                 return "";
             }
 
@@ -753,13 +758,12 @@
                 if (!lunarTxt || !holidayName) return false;
                 if (lunarTxt === holidayName) return true;
                 if (lunarTxt.includes(holidayName) || holidayName.includes(lunarTxt)) return true;
-                // 特殊映射："国庆节" vs "国庆"
                 if (lunarTxt === "国庆节" && holidayName === "国庆") return true;
                 if (lunarTxt === "元旦" && holidayName === "元旦") return true;
                 return false;
             }
 
-            // ============ 创建日期单元格 ============
+            // ============ 创建日期单元格（已去除灰色占位小点） ============
             function createDayCell(num, holidayName, lunarTxt, isOtherMonth, isTodayFlag, isHoliday, isFestival,
                 isPeaceDay) {
                 const div = document.createElement("div");
@@ -783,12 +787,12 @@
                 }
                 if (displayLunar) {
                     innerHtml += `<span class="lunar">${displayLunar}</span>`;
-                } else if (!isHoliday && !isOtherMonth && !lunarTxt && currentShowYear !== 2026) {
-                    // 非2026年显示小点占位
-                    innerHtml += `<span class="lunar" style="color:#ccc;">·</span>`;
+                } else if (!isOtherMonth && !displayLunar && !isHoliday && lunarTxt === "" && currentShowYear !== 2026) {
+                    // 非2026年无农历数据时，添加不可见占位保持高度一致（无可见小点）
+                    innerHtml += '<span class="lunar" style="visibility:hidden;">·</span>';
                 } else if (!displayLunar && !isHoliday && !isOtherMonth && lunarTxt === "") {
-                    // 占位保持高度一致
-                    innerHtml += `<span class="lunar" style="visibility:hidden;">·</span>`;
+                    // 其他无农历情况（例如2026年某天无数据）也使用不可见占位
+                    innerHtml += '<span class="lunar" style="visibility:hidden;">·</span>';
                 }
 
                 div.innerHTML = innerHtml;
@@ -898,7 +902,6 @@
             // ============ 回到今天 ============
             function goToToday() {
                 if (currentShowYear === todayYear && currentShowMonth === todayMonth) {
-                    // 如果已经在今天，做一个微妙的"脉冲"提示
                     renderCalendar(currentShowYear, currentShowMonth);
                     return;
                 }
@@ -909,7 +912,6 @@
             }
 
             // ============ 事件绑定 ============
-            // 上一个月
             document.getElementById("prevMonth").addEventListener("click", () => {
                 currentShowMonth--;
                 if (currentShowMonth < 1) {
@@ -920,7 +922,6 @@
                 closeAllPanel();
             });
 
-            // 下一个月
             document.getElementById("nextMonth").addEventListener("click", () => {
                 currentShowMonth++;
                 if (currentShowMonth > 12) {
@@ -931,25 +932,21 @@
                 closeAllPanel();
             });
 
-            // 回到今天按钮
             btnToday.addEventListener("click", (e) => {
                 e.stopPropagation();
                 goToToday();
             });
 
-            // 年份文字点击
             yearText.addEventListener("click", (e) => {
                 e.stopPropagation();
                 togglePanel(yearPanel, monthPanel, renderYearPanel);
             });
 
-            // 月份文字点击
             monthText.addEventListener("click", (e) => {
                 e.stopPropagation();
                 togglePanel(monthPanel, yearPanel, renderMonthPanel);
             });
 
-            // 面板容器阻止冒泡（防止点击面板空白处关闭）
             yearPanel.addEventListener("click", (e) => {
                 e.stopPropagation();
             });
@@ -957,31 +954,22 @@
                 e.stopPropagation();
             });
 
-            // 点击页面空白关闭面板
-            document.body.addEventListener("click", (e) => {
-                // 如果点击的是日历盒子外部，也关闭面板
+            document.body.addEventListener("click", () => {
                 closeAllPanel();
             });
 
-            // 日历盒子点击时阻止冒泡（保持面板打开如果点击在盒子内非面板区域）
             calendarBox.addEventListener("click", (e) => {
-                // 如果面板已打开且点击在面板外（但在日历盒子内），关闭面板
                 if (yearPanel.classList.contains("show") || monthPanel.classList.contains("show")) {
-                    // 检查点击是否在面板内（面板内有自己的stopPropagation）
-                    // 这里到达说明点击在日历盒子内但不在面板内
                     closeAllPanel();
                 }
                 e.stopPropagation();
             });
 
-            // 键盘导航
             document.addEventListener("keydown", (e) => {
-                // ESC关闭面板
                 if (e.key === "Escape") {
                     closeAllPanel();
                     return;
                 }
-                // 左右箭头切换月份
                 if (e.key === "ArrowLeft" && !e.target.closest("input, textarea, select")) {
                     e.preventDefault();
                     currentShowMonth--;
@@ -1002,14 +990,12 @@
                     renderCalendar(currentShowYear, currentShowMonth);
                     closeAllPanel();
                 }
-                // T键回到今天
                 if (e.key === "t" && !e.target.closest("input, textarea, select") && !e.ctrlKey && !e.metaKey) {
                     e.preventDefault();
                     goToToday();
                 }
             });
 
-            // ============ 窗口尺寸变化时关闭面板 ============
             window.addEventListener("resize", () => {
                 closeAllPanel();
             });
