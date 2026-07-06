@@ -64,6 +64,100 @@
             pointer-events: none;
         }
 
+        /* ========== 天气组件 ========== */
+        .weather-widget {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            z-index: 9998;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+            font-size: 14px;
+            color: #333;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            cursor: default;
+            user-select: none;
+            animation: weatherFadeIn 0.8s ease;
+        }
+        @keyframes weatherFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .weather-widget:hover {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+            transform: translateY(-2px);
+        }
+        .weather-icon {
+            font-size: 28px;
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        .weather-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .weather-temp {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+        .weather-desc {
+            font-size: 11px;
+            color: #666;
+            white-space: nowrap;
+        }
+        .weather-location {
+            font-size: 10px;
+            color: #999;
+            white-space: nowrap;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .weather-loading {
+            opacity: 0.7;
+        }
+        @media (max-width: 480px) {
+            .weather-widget {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                gap: 6px;
+                border-radius: 14px;
+                font-size: 12px;
+            }
+            .weather-icon {
+                font-size: 22px;
+            }
+            .weather-temp {
+                font-size: 15px;
+            }
+            .weather-desc {
+                font-size: 10px;
+            }
+            .weather-location {
+                font-size: 9px;
+                max-width: 60px;
+            }
+        }
+
         /* ========== 标题区域 ========== */
         .title-wrap {
             opacity: 0;
@@ -899,6 +993,16 @@
     </style>
 </head>
 <body>
+    <!-- 天气组件 -->
+    <div class="weather-widget" id="weatherWidget">
+        <span class="weather-icon" id="weatherIcon">🌤️</span>
+        <div class="weather-info">
+            <span class="weather-temp" id="weatherTemp">--°C</span>
+            <span class="weather-desc" id="weatherDesc">加载中</span>
+            <span class="weather-location" id="weatherLocation">定位中</span>
+        </div>
+    </div>
+
     <div class="title-wrap">
         <p class="title-text">我们的愿望是~</p>
     </div>
@@ -966,6 +1070,120 @@
             const modalNoteInput = document.getElementById("modalNoteInput");
             const btnAddNote = document.getElementById("btnAddNote");
             const btnCloseModal = document.getElementById("btnCloseModal");
+            const weatherIcon = document.getElementById("weatherIcon");
+            const weatherTemp = document.getElementById("weatherTemp");
+            const weatherDesc = document.getElementById("weatherDesc");
+            const weatherLocation = document.getElementById("weatherLocation");
+            const weatherWidget = document.getElementById("weatherWidget");
+
+            // ============ 天气功能 ============
+            const weatherCodeMap = {
+                0: { icon: "☀️", desc: "晴天" },
+                1: { icon: "🌤️", desc: "少云" },
+                2: { icon: "⛅", desc: "多云" },
+                3: { icon: "☁️", desc: "阴天" },
+                45: { icon: "🌫️", desc: "雾" },
+                48: { icon: "🌫️", desc: "雾凇" },
+                51: { icon: "🌦️", desc: "小毛毛雨" },
+                53: { icon: "🌦️", desc: "毛毛雨" },
+                55: { icon: "🌧️", desc: "大毛毛雨" },
+                61: { icon: "🌧️", desc: "小雨" },
+                63: { icon: "🌧️", desc: "中雨" },
+                65: { icon: "🌧️", desc: "大雨" },
+                71: { icon: "❄️", desc: "小雪" },
+                73: { icon: "❄️", desc: "中雪" },
+                75: { icon: "❄️", desc: "大雪" },
+                80: { icon: "🌦️", desc: "阵雨" },
+                81: { icon: "🌧️", desc: "中阵雨" },
+                82: { icon: "🌧️", desc: "大阵雨" },
+                95: { icon: "⛈️", desc: "雷暴" },
+                96: { icon: "⛈️", desc: "雷暴伴冰雹" },
+                99: { icon: "⛈️", desc: "强雷暴伴冰雹" }
+            };
+
+            function updateWeatherDisplay(temp, code, city) {
+                const weather = weatherCodeMap[code] || { icon: "🌡️", desc: "未知" };
+                weatherIcon.textContent = weather.icon;
+                weatherTemp.textContent = `${Math.round(temp)}°C`;
+                weatherDesc.textContent = weather.desc;
+                weatherLocation.textContent = city || "当前位置";
+                weatherWidget.classList.remove("weather-loading");
+            }
+
+            function fetchWeather(lat, lon) {
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.current_weather) {
+                            const temp = data.current_weather.temperature;
+                            const code = data.current_weather.weathercode;
+                            // 获取城市名
+                            getCityName(lat, lon).then(city => {
+                                updateWeatherDisplay(temp, code, city);
+                            }).catch(() => {
+                                updateWeatherDisplay(temp, code, "当前位置");
+                            });
+                        } else {
+                            throw new Error("天气数据无效");
+                        }
+                    })
+                    .catch(err => {
+                        console.warn("天气获取失败:", err);
+                        weatherIcon.textContent = "🌡️";
+                        weatherTemp.textContent = "--°C";
+                        weatherDesc.textContent = "天气不可用";
+                        weatherLocation.textContent = "获取失败";
+                        weatherWidget.classList.add("weather-loading");
+                    });
+            }
+
+            function getCityName(lat, lon) {
+                const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&accept-language=zh`;
+                return fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.address) {
+                            const addr = data.address;
+                            return addr.city || addr.town || addr.county || addr.state || addr.country ||
+                                "未知地点";
+                        }
+                        return "未知地点";
+                    })
+                    .catch(() => "未知地点");
+            }
+
+            function initWeather() {
+                if (!navigator.geolocation) {
+                    weatherIcon.textContent = "📍";
+                    weatherTemp.textContent = "--°C";
+                    weatherDesc.textContent = "无定位权限";
+                    weatherLocation.textContent = "无法获取";
+                    return;
+                }
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        fetchWeather(lat, lon);
+                    },
+                    (error) => {
+                        console.warn("定位失败:", error);
+                        weatherIcon.textContent = "📍";
+                        weatherTemp.textContent = "--°C";
+                        weatherDesc.textContent = "定位失败";
+                        weatherLocation.textContent = "请授权位置";
+                        weatherWidget.classList.add("weather-loading");
+                    }, {
+                        enableHighAccuracy: false,
+                        timeout: 8000,
+                        maximumAge: 300000
+                    }
+                );
+            }
+
+            // 页面加载后初始化天气
+            initWeather();
 
             // ============ 实时时钟 ============
             function updateTime() {
@@ -1005,7 +1223,7 @@
                     "10-9": "补班" },
             };
 
-            // ============ 二十四节气数据（精确到2026-2027年） ============
+            // ============ 二十四节气数据 ============
             const solarTermsData = {
                 2026: { "1-5": "小寒", "1-20": "大寒", "2-4": "立春", "2-18": "雨水", "3-5": "惊蛰", "3-20": "春分", "4-5": "清明", "4-20": "谷雨",
                     "5-5": "立夏", "5-21": "小满", "6-5": "芒种", "6-21": "夏至", "7-7": "小暑", "7-22": "大暑", "8-7": "立秋", "8-23": "处暑",
@@ -1426,7 +1644,6 @@
                 const todayKey = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
                 const allHolidayDates = [];
 
-                // 收集所有节日日期
                 for (const [yearStr, holidays] of Object.entries(allYearHolidays)) {
                     const year = parseInt(yearStr);
                     const seen = new Set();
@@ -1440,10 +1657,8 @@
                     }
                 }
 
-                // 排序
                 allHolidayDates.sort((a, b) => a.dateObj - b.dateObj);
 
-                // 找下一个节日
                 const nowTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
                 let nextHoliday = null;
                 for (const h of allHolidayDates) {
@@ -1590,7 +1805,6 @@
             // ============ 初始化 ============
             renderCalendar(currentShowYear, currentShowMonth);
             updateCountdown();
-            // 每分钟更新倒计时
             setInterval(updateCountdown, 60000);
 
             console.log("🕊 世界和平！日历已就绪");
