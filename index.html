@@ -64,7 +64,7 @@
             pointer-events: none;
         }
 
-        /* ========== 天气组件 ========== */
+        /* 天气组件 */
         .weather-widget {
             position: fixed;
             top: 18px;
@@ -88,14 +88,8 @@
             animation: weatherFadeIn 0.8s ease;
         }
         @keyframes weatherFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .weather-widget:hover {
             background: rgba(255, 255, 255, 0.95);
@@ -131,869 +125,253 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .weather-loading {
-            opacity: 0.7;
-        }
+        .weather-loading { opacity: 0.7; }
         @media (max-width: 480px) {
             .weather-widget {
-                top: 10px;
-                right: 10px;
-                padding: 8px 12px;
-                gap: 6px;
-                border-radius: 14px;
-                font-size: 12px;
+                top: 10px; right: 10px; padding: 8px 12px; gap: 6px; border-radius: 14px; font-size: 12px;
             }
-            .weather-icon {
-                font-size: 22px;
-            }
-            .weather-temp {
-                font-size: 15px;
-            }
-            .weather-desc {
-                font-size: 10px;
-            }
-            .weather-location {
-                font-size: 9px;
-                max-width: 60px;
-            }
+            .weather-icon { font-size: 22px; }
+            .weather-temp { font-size: 15px; }
+            .weather-desc { font-size: 10px; }
+            .weather-location { font-size: 9px; max-width: 60px; }
         }
 
-        /* ========== 标题区域 ========== */
+        /* 标题 */
         .title-wrap {
-            opacity: 0;
-            transform: scale(0.8);
-            animation: textShow 2s ease-out forwards;
+            opacity: 0; transform: scale(0.8); animation: textShow 2s ease-out forwards;
         }
         .title-text {
-            color: #1a1a1a;
-            font-weight: bold;
-            font-size: clamp(2.6rem, 9vw, 5.5rem);
-            line-height: 1.35;
-            text-align: center;
-            letter-spacing: 3px;
+            color: #1a1a1a; font-weight: bold; font-size: clamp(2.6rem, 9vw, 5.5rem);
+            line-height: 1.35; text-align: center; letter-spacing: 3px;
             text-shadow: 0 2px 12px rgba(255, 255, 255, 0.85);
             animation: float 4s ease-in-out infinite alternate;
         }
-        .peace-text {
-            animation-delay: 0.6s;
-        }
-        @keyframes textShow {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        @keyframes float {
-            from {
-                transform: translateY(-5px);
-            }
-            to {
-                transform: translateY(5px);
-            }
-        }
+        .peace-text { animation-delay: 0.6s; }
+        @keyframes textShow { to { opacity: 1; transform: scale(1); } }
+        @keyframes float { from { transform: translateY(-5px); } to { transform: translateY(5px); } }
 
-        /* ========== 倒计时提示栏 ========== */
+        /* 倒计时栏 */
         .countdown-bar {
             background: linear-gradient(135deg, #fff8e8, #fff3d6);
-            border: 1.5px solid #f0c060;
-            border-radius: 20px;
-            padding: 8px 20px;
-            font-size: clamp(0.85rem, 2.2vw, 1rem);
-            color: #8b5e14;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-align: center;
+            border: 1.5px solid #f0c060; border-radius: 20px; padding: 8px 20px;
+            font-size: clamp(0.85rem, 2.2vw, 1rem); color: #8b5e14; font-weight: 600;
+            letter-spacing: 1px; text-align: center;
             box-shadow: 0 2px 10px rgba(180, 130, 40, 0.10);
             animation: countdownPulse 3s ease-in-out infinite;
-            cursor: default;
-            user-select: none;
-            max-width: 90vw;
-            transition: all 0.3s ease;
+            cursor: default; user-select: none; max-width: 90vw; transition: all 0.3s ease;
         }
         .countdown-bar:hover {
             background: linear-gradient(135deg, #fff5d8, #ffedc4);
-            box-shadow: 0 4px 16px rgba(180, 130, 40, 0.16);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(180, 130, 40, 0.16); transform: translateY(-2px);
         }
         @keyframes countdownPulse {
-            0%,
-            100% {
-                box-shadow: 0 2px 10px rgba(180, 130, 40, 0.10);
-            }
-            50% {
-                box-shadow: 0 2px 18px rgba(180, 130, 40, 0.22);
-            }
+            0%,100%{ box-shadow: 0 2px 10px rgba(180, 130, 40, 0.10); }
+            50%{ box-shadow: 0 2px 18px rgba(180, 130, 40, 0.22); }
         }
-        .countdown-icon {
-            display: inline-block;
-            animation: bounceIcon 0.6s ease-in-out infinite alternate;
-        }
-        @keyframes bounceIcon {
-            from {
-                transform: translateY(0);
-            }
-            to {
-                transform: translateY(-4px);
-            }
-        }
+        .countdown-icon { display: inline-block; animation: bounceIcon 0.6s ease-in-out infinite alternate; }
+        @keyframes bounceIcon { from { transform: translateY(0); } to { transform: translateY(-4px); } }
 
-        /* ========== 时钟 ========== */
+        /* 时钟 */
         .time-box {
-            font-size: clamp(0.9rem, 2.5vw, 1.25rem);
-            color: #1a1a1a;
-            letter-spacing: 2px;
-            text-shadow: 0 1px 6px rgba(255, 255, 255, 0.85);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: default;
+            font-size: clamp(0.9rem, 2.5vw, 1.25rem); color: #1a1a1a; letter-spacing: 2px;
+            text-shadow: 0 1px 6px rgba(255, 255, 255, 0.85); font-weight: 500; transition: all 0.3s ease; cursor: default;
         }
 
-        /* ========== 日历卡片 ========== */
+        /* 日历卡片 */
         .calendar-box {
-            width: min(78vw, 450px);
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 18px 16px 16px;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            width: min(78vw, 450px); background: var(--card-bg); border-radius: var(--radius);
+            padding: 18px 16px 16px; box-shadow: var(--shadow-md); transition: all 0.3s ease;
+            position: relative; z-index: 1; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
         }
-        .calendar-box:hover {
-            box-shadow: var(--shadow-lg);
-        }
-        @media (max-width: 420px) {
-            .calendar-box {
-                width: 95vw;
-                padding: 14px 10px 12px;
-                border-radius: 12px;
-            }
-        }
+        .calendar-box:hover { box-shadow: var(--shadow-lg); }
+        @media (max-width: 420px) { .calendar-box { width: 95vw; padding: 14px 10px 12px; border-radius: 12px; } }
 
-        /* ========== 日历头部 ========== */
-        .calendar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            gap: 5px;
-            flex-wrap: nowrap;
-        }
+        /* 日历头部 */
+        .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 5px; flex-wrap: nowrap; }
         .calendar-header button {
-            border: 1px solid #ddd;
-            background: #fff;
-            padding: 5px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all var(--transition-fast);
-            white-space: nowrap;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            flex-shrink: 0;
-            cursor: pointer;
+            border: 1px solid #ddd; background: #fff; padding: 5px 12px; border-radius: 6px;
+            cursor: pointer; font-size: 14px; transition: all var(--transition-fast); white-space: nowrap;
+            user-select: none; -webkit-tap-highlight-color: transparent; flex-shrink: 0;
         }
-        .calendar-header button:hover {
-            background-color: #f0f6ff;
-            border-color: #94bfff;
-        }
-        .calendar-header button:active {
-            transform: scale(0.92);
-        }
+        .calendar-header button:hover { background-color: #f0f6ff; border-color: #94bfff; }
+        .calendar-header button:active { transform: scale(0.92); }
         .btn-today {
-            font-weight: 500;
-            color: var(--primary);
-            border-color: #c8ddfb !important;
-            background: #fafcff !important;
-            letter-spacing: 1px;
-            font-size: 13px !important;
-            padding: 5px 10px !important;
-            cursor: pointer;
+            font-weight: 500; color: var(--primary); border-color: #c8ddfb !important; background: #fafcff !important;
+            letter-spacing: 1px; font-size: 13px !important; padding: 5px 10px !important; cursor: pointer;
         }
-        .btn-today:hover {
-            background: #e8f0ff !important;
-            border-color: var(--primary-light) !important;
-            color: #1860c7 !important;
-        }
+        .btn-today:hover { background: #e8f0ff !important; border-color: var(--primary-light) !important; color: #1860c7 !important; }
         @media (max-width: 380px) {
-            .btn-today {
-                font-size: 11px !important;
-                padding: 4px 7px !important;
-            }
-            .calendar-header button {
-                padding: 4px 8px;
-                font-size: 12px;
-            }
+            .btn-today { font-size: 11px !important; padding: 4px 7px !important; }
+            .calendar-header button { padding: 4px 8px; font-size: 12px; }
         }
 
-        /* ========== 年月标题 ========== */
-        .ym-text {
-            font-size: 18px;
-            font-weight: bold;
-            position: relative;
-            cursor: default;
-            user-select: none;
-            text-align: center;
-            flex-shrink: 0;
-            padding: 4px 2px;
+        /* 年月标题 */
+        .ym-text { font-size: 18px; font-weight: bold; position: relative; cursor: default; user-select: none; text-align: center; flex-shrink: 0; padding: 4px 2px; }
+        .year-click, .month-click {
+            color: #2478e0; text-decoration: underline dotted 2px #74b3ff; padding: 2px 5px; transition: color 0.2s;
+            cursor: pointer; border-radius: 4px; -webkit-tap-highlight-color: transparent;
         }
-        .year-click,
-        .month-click {
-            color: #2478e0;
-            text-decoration: underline dotted 2px #74b3ff;
-            padding: 2px 5px;
-            transition: color 0.2s;
-            cursor: pointer;
-            border-radius: 4px;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .year-click:hover,
-        .month-click:hover {
-            color: #0f5fc4;
-            background: rgba(36, 120, 224, 0.06);
-        }
-        .year-click:active,
-        .month-click:active {
-            background: rgba(36, 120, 224, 0.14);
-        }
+        .year-click:hover, .month-click:hover { color: #0f5fc4; background: rgba(36, 120, 224, 0.06); }
+        .year-click:active, .month-click:active { background: rgba(36, 120, 224, 0.14); }
 
-        /* ========== 下拉选择面板 ========== */
+        /* 下拉面板 */
         .select-panel {
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%) scale(0.92);
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm), var(--shadow-glow);
-            padding: 10px;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all var(--transition-smooth);
-            border: none;
-            pointer-events: none;
-            max-height: 260px;
-            overflow-y: auto;
-            overscroll-behavior: contain;
+            position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) scale(0.92);
+            background: #ffffff; border-radius: 12px; box-shadow: var(--shadow-sm), var(--shadow-glow);
+            padding: 10px; z-index: 9999; opacity: 0; visibility: hidden; transition: all var(--transition-smooth);
+            border: none; pointer-events: none; max-height: 260px; overflow-y: auto; overscroll-behavior: contain;
         }
-        .select-panel::-webkit-scrollbar {
-            width: 5px;
-        }
-        .select-panel::-webkit-scrollbar-track {
-            background: transparent;
-            border-radius: 10px;
-        }
-        .select-panel::-webkit-scrollbar-thumb {
-            background: #d0d8e8;
-            border-radius: 10px;
-            transition: background 0.2s;
-        }
-        .select-panel::-webkit-scrollbar-thumb:hover {
-            background: #b0bcd0;
-        }
+        .select-panel::-webkit-scrollbar { width: 5px; }
+        .select-panel::-webkit-scrollbar-track { background: transparent; border-radius: 10px; }
+        .select-panel::-webkit-scrollbar-thumb { background: #d0d8e8; border-radius: 10px; transition: background 0.2s; }
+        .select-panel::-webkit-scrollbar-thumb:hover { background: #b0bcd0; }
         .select-panel::before {
-            content: "";
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 8px solid #fff;
-            filter: drop-shadow(0 -2px 2px rgba(0, 0, 0, 0.04));
+            content: ""; position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;
+            border-bottom: 8px solid #fff; filter: drop-shadow(0 -2px 2px rgba(0,0,0,0.04));
         }
-        .select-panel.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) scale(1);
-            pointer-events: auto;
-        }
-        .year-panel {
-            width: 170px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
-        }
-        .month-panel {
-            width: 210px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
-        }
-        @media (max-width: 420px) {
-            .year-panel {
-                width: 148px;
-                gap: 4px;
-            }
-            .month-panel {
-                width: 180px;
-                gap: 4px;
-            }
-            .select-panel {
-                padding: 8px;
-                border-radius: 10px;
-            }
-        }
+        .select-panel.show { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); pointer-events: auto; }
+        .year-panel { width: 170px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+        .month-panel { width: 210px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+        @media (max-width: 420px) { .year-panel { width: 148px; gap: 4px; } .month-panel { width: 180px; gap: 4px; } .select-panel { padding: 8px; border-radius: 10px; } }
         .panel-item {
-            padding: 7px 0;
-            text-align: center;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 14px;
-            transition: all var(--transition-fast);
-            background: #f8fbff;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            white-space: nowrap;
+            padding: 7px 0; text-align: center; border-radius: var(--radius-sm); cursor: pointer; font-size: 14px;
+            transition: all var(--transition-fast); background: #f8fbff; user-select: none; -webkit-tap-highlight-color: transparent; white-space: nowrap;
         }
-        .panel-item:hover {
-            background: linear-gradient(135deg, #e0edff, #d0e4ff);
-            color: #1860c7;
-            transform: translateY(-1px);
-        }
-        .panel-item:active {
-            transform: scale(0.94);
-        }
+        .panel-item:hover { background: linear-gradient(135deg, #e0edff, #d0e4ff); color: #1860c7; transform: translateY(-1px); }
+        .panel-item:active { transform: scale(0.94); }
         .panel-item.active {
-            background: linear-gradient(135deg, #2478e0, #368cf0);
-            color: #ffffff;
-            box-shadow: 0 2px 6px rgba(36, 120, 224, 0.3);
-            font-weight: 600;
+            background: linear-gradient(135deg, #2478e0, #368cf0); color: #ffffff; box-shadow: 0 2px 6px rgba(36, 120, 224, 0.3); font-weight: 600;
         }
-        @media (max-width: 420px) {
-            .panel-item {
-                font-size: 12px;
-                padding: 5px 0;
-                border-radius: 6px;
-            }
-        }
+        @media (max-width: 420px) { .panel-item { font-size: 12px; padding: 5px 0; border-radius: 6px; } }
 
-        /* ========== 星期行 ========== */
-        .week-row {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            margin-bottom: 5px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 4px;
-        }
-        .week-item {
-            text-align: center;
-            font-size: 13px;
-            padding: 4px 0;
-            font-weight: 600;
-            color: #444;
-            letter-spacing: 0.5px;
-            cursor: default;
-        }
-        .week-item:nth-child(6) {
-            color: #2979c1;
-        }
-        .week-item:nth-child(7) {
-            color: #c62828;
-        }
-        @media (max-width: 380px) {
-            .week-item {
-                font-size: 11px;
-                padding: 3px 0;
-            }
-        }
+        /* 星期行 */
+        .week-row { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+        .week-item { text-align: center; font-size: 13px; padding: 4px 0; font-weight: 600; color: #444; letter-spacing: 0.5px; cursor: default; }
+        .week-item:nth-child(6) { color: #2979c1; } .week-item:nth-child(7) { color: #c62828; }
+        @media (max-width: 380px) { .week-item { font-size: 11px; padding: 3px 0; } }
 
-        /* ========== 日期网格 ========== */
-        .day-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0.3;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        /* 日期网格 */
+        .day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0.3; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .day-cell {
-            aspect-ratio: 1 / 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-sm);
-            padding: 1px;
-            transition: background 0.18s ease, transform 0.18s ease;
-            cursor: pointer;
-            position: relative;
-            min-width: 0;
-            -webkit-tap-highlight-color: transparent;
+            aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: var(--radius-sm); padding: 1px; transition: background 0.18s ease, transform 0.18s ease;
+            cursor: pointer; position: relative; min-width: 0; -webkit-tap-highlight-color: transparent;
         }
-        .day-cell.other-month {
-            color: #c5c5c5;
-            pointer-events: none;
-            cursor: default;
-        }
-        .day-cell.other-month .lunar {
-            color: #d5d5d5;
-        }
-        .day-cell:not(.other-month):hover {
-            background-color: #eef6ff;
-            transform: scale(1.07);
-            z-index: 3;
-        }
-        .day-cell:not(.other-month):active {
-            transform: scale(0.94);
-            background-color: #dceaff;
-        }
-
-        /* 周六日颜色 */
-        .day-cell.weekday-sat:not(.other-month) .num {
-            color: #2979c1;
-            font-weight: 600;
-        }
-        .day-cell.weekday-sun:not(.other-month) .num {
-            color: #c62828;
-            font-weight: 600;
-        }
-
-        /* 今天标记 */
+        .day-cell.other-month { color: #c5c5c5; pointer-events: none; cursor: default; }
+        .day-cell.other-month .lunar { color: #d5d5d5; }
+        .day-cell:not(.other-month):hover { background-color: #eef6ff; transform: scale(1.07); z-index: 3; }
+        .day-cell:not(.other-month):active { transform: scale(0.94); background-color: #dceaff; }
+        .day-cell.weekday-sat:not(.other-month) .num { color: #2979c1; font-weight: 600; }
+        .day-cell.weekday-sun:not(.other-month) .num { color: #c62828; font-weight: 600; }
         .day-cell.today {
-            border: 2.5px solid #2478e0;
-            animation: breath 2.8s ease-in-out infinite alternate;
-            background: rgba(36, 120, 224, 0.05);
-            z-index: 2;
+            border: 2.5px solid #2478e0; animation: breath 2.8s ease-in-out infinite alternate;
+            background: rgba(36, 120, 224, 0.05); z-index: 2;
         }
-        @keyframes breath {
-            from {
-                box-shadow: 0 0 4px #74b3ff, inset 0 0 4px rgba(36, 120, 224, 0.04);
-            }
-            to {
-                box-shadow: 0 0 16px #4096ff, inset 0 0 10px rgba(36, 120, 224, 0.10);
-            }
-        }
-        .day-cell.today .num {
-            font-weight: 800;
-            color: #1860c7;
-        }
+        @keyframes breath { from { box-shadow: 0 0 4px #74b3ff, inset 0 0 4px rgba(36,120,224,0.04); } to { box-shadow: 0 0 16px #4096ff, inset 0 0 10px rgba(36,120,224,0.10); } }
+        .day-cell.today .num { font-weight: 800; color: #1860c7; }
+        .day-cell.holiday { background-color: #fff4f4; }
+        .day-cell.holiday .num { color: #d82020; font-weight: bold; }
+        .day-cell.holiday:hover { background-color: #ffe8e8 !important; }
+        .day-cell.workday-makeup { background-color: #f5f5f5; }
+        .day-cell.workday-makeup .num { color: #8c8c8c; font-weight: 600; }
+        .day-cell.workday-makeup:hover { background-color: #eaeaea !important; }
+        .workday-tag { font-size: 8px; color: #8c8c8c; font-weight: bold; line-height: 1; white-space: nowrap; }
+        .day-cell.festival .num { color: #e66000; font-weight: 500; }
+        .day-cell.festival { background-color: #fffaf5; }
+        .day-cell.festival:hover { background-color: #fff2e0 !important; }
+        .day-cell.solar-term { background-color: #eafaf1; }
+        .day-cell.solar-term .num { color: #3a8c5c; font-weight: 600; }
+        .day-cell.solar-term:hover { background-color: #d8f4e2 !important; }
+        .solar-term-name { font-size: 8px; color: #3a8c5c; font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .day-cell.peace-day { background-color: #f0f7ff; position: relative; }
+        .day-cell.peace-day::after { content: "🕊"; position: absolute; top: 1px; right: 2px; font-size: 7px; line-height: 1; opacity: 0.7; pointer-events: none; }
+        @media (max-width: 380px) { .day-cell.peace-day::after { font-size: 5px; top: 0; right: 1px; } }
+        .holiday-name { font-size: 8px; color: #c41818; font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .day-cell .num { font-size: clamp(12px, 1.8vw, 16px); line-height: 1.1; font-weight: 500; }
+        .day-cell .lunar { font-size: 8px; margin-top: 0px; color: #555; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .day-cell.other-month .lunar { color: #d5d5d5; }
+        .note-dot { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: #e04040; box-shadow: 0 0 3px rgba(224,64,64,0.5); pointer-events: none; z-index: 1; }
+        @media (max-width: 380px) { .note-dot { width: 4px; height: 4px; bottom: 2px; } }
 
-        /* 法定节假日 */
-        .day-cell.holiday {
-            background-color: #fff4f4;
-        }
-        .day-cell.holiday .num {
-            color: #d82020;
-            font-weight: bold;
-        }
-        .day-cell.holiday:hover {
-            background-color: #ffe8e8 !important;
-        }
-
-        /* 调休补班 */
-        .day-cell.workday-makeup {
-            background-color: #f5f5f5;
-        }
-        .day-cell.workday-makeup .num {
-            color: #8c8c8c;
-            font-weight: 600;
-        }
-        .day-cell.workday-makeup:hover {
-            background-color: #eaeaea !important;
-        }
-        .workday-tag {
-            font-size: 8px;
-            color: #8c8c8c;
-            font-weight: bold;
-            line-height: 1;
-            white-space: nowrap;
-        }
-
-        /* 纪念日/节气 */
-        .day-cell.festival .num {
-            color: #e66000;
-            font-weight: 500;
-        }
-        .day-cell.festival {
-            background-color: #fffaf5;
-        }
-        .day-cell.festival:hover {
-            background-color: #fff2e0 !important;
-        }
-
-        /* 二十四节气 - 淡绿色 */
-        .day-cell.solar-term {
-            background-color: #eafaf1;
-        }
-        .day-cell.solar-term .num {
-            color: #3a8c5c;
-            font-weight: 600;
-        }
-        .day-cell.solar-term:hover {
-            background-color: #d8f4e2 !important;
-        }
-        .solar-term-name {
-            font-size: 8px;
-            color: #3a8c5c;
-            font-weight: bold;
-            line-height: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-
-        /* 和平主题特殊标记 */
-        .day-cell.peace-day {
-            background-color: #f0f7ff;
-            position: relative;
-        }
-        .day-cell.peace-day::after {
-            content: "🕊";
-            position: absolute;
-            top: 1px;
-            right: 2px;
-            font-size: 7px;
-            line-height: 1;
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        @media (max-width: 380px) {
-            .day-cell.peace-day::after {
-                font-size: 5px;
-                top: 0;
-                right: 1px;
-            }
-        }
-
-        .holiday-name {
-            font-size: 8px;
-            color: #c41818;
-            font-weight: bold;
-            line-height: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-        .day-cell .num {
-            font-size: clamp(12px, 1.8vw, 16px);
-            line-height: 1.1;
-            font-weight: 500;
-        }
-        .day-cell .lunar {
-            font-size: 8px;
-            margin-top: 0px;
-            color: #555;
-            line-height: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-        .day-cell.other-month .lunar {
-            color: #d5d5d5;
-        }
-
-        /* 记事红点 */
-        .note-dot {
-            position: absolute;
-            bottom: 3px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #e04040;
-            box-shadow: 0 0 3px rgba(224, 64, 64, 0.5);
-            pointer-events: none;
-            z-index: 1;
-        }
-        @media (max-width: 380px) {
-            .note-dot {
-                width: 4px;
-                height: 4px;
-                bottom: 2px;
-            }
-        }
-
-        /* ========== 记事悬浮预览 ========== */
+        /* 悬浮提示 */
         .note-tooltip {
-            position: fixed;
-            z-index: 10000;
-            background: #fffef8;
-            border: 1px solid #e0d8c0;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 12px;
-            color: #444;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
-            pointer-events: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.15s ease;
-            max-width: 200px;
-            word-break: break-word;
-            line-height: 1.4;
+            position: fixed; z-index: 10000; background: #fffef8; border: 1px solid #e0d8c0; border-radius: 8px;
+            padding: 8px 12px; font-size: 12px; color: #444; box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+            pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.15s ease;
+            max-width: 200px; word-break: break-word; line-height: 1.4;
         }
-        .note-tooltip.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .note-tooltip .tooltip-date {
-            font-weight: 700;
-            color: #2478e0;
-            margin-bottom: 3px;
-            font-size: 11px;
-        }
-        .note-tooltip .tooltip-item {
-            padding: 1px 0;
-            border-bottom: 1px dotted #eee;
-            font-size: 11px;
-        }
-        .note-tooltip .tooltip-item:last-child {
-            border-bottom: none;
-        }
+        .note-tooltip.show { opacity: 1; visibility: visible; }
+        .note-tooltip .tooltip-date { font-weight: 700; color: #2478e0; margin-bottom: 3px; font-size: 11px; }
+        .note-tooltip .tooltip-item { padding: 1px 0; border-bottom: 1px dotted #eee; font-size: 11px; }
+        .note-tooltip .tooltip-item:last-child { border-bottom: none; }
 
-        /* ========== 记事编辑弹窗 ========== */
+        /* 弹窗 */
         .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.45);
-            z-index: 10001;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            cursor: pointer;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 10001; display: flex;
+            align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s ease; cursor: pointer;
         }
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
         .modal-dialog {
-            background: #fff;
-            border-radius: 14px;
-            padding: 20px 18px;
-            width: min(88vw, 380px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.20);
-            cursor: default;
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            animation: modalIn 0.25s ease;
+            background: #fff; border-radius: 14px; padding: 20px 18px; width: min(88vw, 380px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.20); cursor: default; max-height: 80vh;
+            display: flex; flex-direction: column; gap: 10px; animation: modalIn 0.25s ease;
         }
-        @keyframes modalIn {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        .modal-dialog h3 {
-            font-size: 16px;
-            color: #2478e0;
-            text-align: center;
-            margin: 0;
-            letter-spacing: 1px;
-        }
-        .modal-date-label {
-            text-align: center;
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 2px;
-        }
-        .modal-notes-list {
-            max-height: 180px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding-right: 4px;
-        }
-        .modal-notes-list::-webkit-scrollbar {
-            width: 4px;
-        }
-        .modal-notes-list::-webkit-scrollbar-track {
-            background: transparent;
-            border-radius: 8px;
-        }
-        .modal-notes-list::-webkit-scrollbar-thumb {
-            background: #d0d8e8;
-            border-radius: 8px;
-        }
+        @keyframes modalIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-dialog h3 { font-size: 16px; color: #2478e0; text-align: center; margin: 0; letter-spacing: 1px; }
+        .modal-date-label { text-align: center; font-size: 13px; color: #666; margin-bottom: 2px; }
+        .modal-notes-list { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }
+        .modal-notes-list::-webkit-scrollbar { width: 4px; }
+        .modal-notes-list::-webkit-scrollbar-track { background: transparent; border-radius: 8px; }
+        .modal-notes-list::-webkit-scrollbar-thumb { background: #d0d8e8; border-radius: 8px; }
         .modal-note-item {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            background: #fafaf7;
-            border-radius: 8px;
-            padding: 8px 10px;
-            gap: 8px;
-            font-size: 13px;
-            border: 1px solid #eee;
-            transition: all 0.15s ease;
+            display: flex; align-items: flex-start; justify-content: space-between; background: #fafaf7;
+            border-radius: 8px; padding: 8px 10px; gap: 8px; font-size: 13px; border: 1px solid #eee; transition: all 0.15s ease;
         }
-        .modal-note-item:hover {
-            background: #fff8f0;
-            border-color: #e8d8c0;
-        }
-        .modal-note-item .note-text {
-            flex: 1;
-            word-break: break-word;
-            line-height: 1.4;
-        }
-        .modal-note-item .note-time {
-            font-size: 10px;
-            color: #aaa;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
+        .modal-note-item:hover { background: #fff8f0; border-color: #e8d8c0; }
+        .modal-note-item .note-text { flex: 1; word-break: break-word; line-height: 1.4; }
+        .modal-note-item .note-time { font-size: 10px; color: #aaa; white-space: nowrap; flex-shrink: 0; }
         .modal-note-item .btn-del-note {
-            background: none;
-            border: none;
-            color: #d88;
-            cursor: pointer;
-            font-size: 14px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            transition: all 0.15s ease;
-            flex-shrink: 0;
-            line-height: 1;
+            background: none; border: none; color: #d88; cursor: pointer; font-size: 14px;
+            padding: 2px 6px; border-radius: 4px; transition: all 0.15s ease; flex-shrink: 0; line-height: 1;
         }
-        .modal-note-item .btn-del-note:hover {
-            background: #fff0f0;
-            color: #c0392b;
-        }
-        .modal-input-row {
-            display: flex;
-            gap: 8px;
-        }
+        .modal-note-item .btn-del-note:hover { background: #fff0f0; color: #c0392b; }
+        .modal-input-row { display: flex; gap: 8px; }
         .modal-input-row input {
-            flex: 1;
-            padding: 9px 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: border 0.2s;
-            font-family: inherit;
+            flex: 1; padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;
+            outline: none; transition: border 0.2s; font-family: inherit;
         }
-        .modal-input-row input:focus {
-            border-color: #74b3ff;
-            box-shadow: 0 0 0 3px rgba(36, 120, 224, 0.08);
-        }
+        .modal-input-row input:focus { border-color: #74b3ff; box-shadow: 0 0 0 3px rgba(36,120,224,0.08); }
         .btn-add-note {
-            background: #2478e0;
-            color: #fff;
-            border: none;
-            padding: 9px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-            white-space: nowrap;
+            background: #2478e0; color: #fff; border: none; padding: 9px 14px; border-radius: 8px;
+            cursor: pointer; font-size: 13px; font-weight: 600; letter-spacing: 1px; transition: all 0.2s; white-space: nowrap;
         }
-        .btn-add-note:hover {
-            background: #1a60c0;
-        }
-        .btn-add-note:active {
-            transform: scale(0.94);
-        }
-        .btn-close-modal {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s;
-            text-align: center;
-            letter-spacing: 1px;
-        }
-        .btn-close-modal:hover {
-            background: #eaeaea;
-        }
-        .modal-empty {
-            text-align: center;
-            color: #bbb;
-            font-size: 13px;
-            padding: 12px 0;
-        }
+        .btn-add-note:hover { background: #1a60c0; }
+        .btn-add-note:active { transform: scale(0.94); }
+        .btn-close-modal { background: #f5f5f5; border: 1px solid #ddd; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.2s; text-align: center; letter-spacing: 1px; }
+        .btn-close-modal:hover { background: #eaeaea; }
+        .modal-empty { text-align: center; color: #bbb; font-size: 13px; padding: 12px 0; }
 
-        /* ========== 响应式 ========== */
         @media (max-width: 380px) {
-            .day-cell .num {
-                font-size: 11px;
-            }
-            .day-cell .lunar {
-                font-size: 7px;
-            }
-            .holiday-name,
-            .solar-term-name,
-            .workday-tag {
-                font-size: 6px;
-            }
-            .note-dot {
-                width: 3px;
-                height: 3px;
-                bottom: 1px;
-            }
+            .day-cell .num { font-size: 11px; } .day-cell .lunar { font-size: 7px; }
+            .holiday-name,.solar-term-name,.workday-tag { font-size: 6px; }
+            .note-dot { width: 3px; height: 3px; bottom: 1px; }
         }
         @media (max-width: 360px) {
-            .calendar-box {
-                padding: 10px 5px 10px;
-                border-radius: 10px;
-            }
-            .calendar-header {
-                margin-bottom: 8px;
-                gap: 2px;
-            }
-            .ym-text {
-                font-size: 15px;
-            }
-            .day-grid {
-                gap: 1px;
-            }
-            .day-cell {
-                border-radius: 5px;
-                padding: 0;
-            }
-            .day-cell .num {
-                font-size: 10px;
-            }
-            .day-cell .lunar {
-                font-size: 6px;
-            }
-            .holiday-name,
-            .solar-term-name,
-            .workday-tag {
-                font-size: 5px;
-            }
-            .week-item {
-                font-size: 10px;
-            }
-            .modal-dialog {
-                padding: 14px 10px;
-                border-radius: 10px;
-            }
+            .calendar-box { padding: 10px 5px 10px; border-radius: 10px; }
+            .calendar-header { margin-bottom: 8px; gap: 2px; }
+            .ym-text { font-size: 15px; }
+            .day-grid { gap: 1px; }
+            .day-cell { border-radius: 5px; padding: 0; }
+            .day-cell .num { font-size: 10px; } .day-cell .lunar { font-size: 6px; }
+            .holiday-name,.solar-term-name,.workday-tag { font-size: 5px; }
+            .week-item { font-size: 10px; }
+            .modal-dialog { padding: 14px 10px; border-radius: 10px; }
         }
     </style>
 </head>
 <body>
-     <!-- 天气组件 -->
     <div class="weather-widget" id="weatherWidget">
         <span class="weather-icon" id="weatherIcon">🌤️</span>
         <div class="weather-info">
@@ -1003,26 +381,21 @@
         </div>
     </div>
 
-    <div class="title-wrap">
-        <p class="title-text">我们的愿望是~</p>
-    </div>
-    <div class="title-wrap peace-wrap">
-        <p class="title-text peace-text">世界和平！</p>
-    </div>
-    <div class="countdown-bar" id="countdownBar">
-        <span class="countdown-icon">📅</span> <span id="countdownText">加载中...</span>
-    </div>
+    <div class="title-wrap"><p class="title-text">我们的愿望是~</p></div>
+    <div class="title-wrap peace-wrap"><p class="title-text peace-text">世界和平！</p></div>
+    <div class="countdown-bar"><span class="countdown-icon">📅</span> <span id="countdownText">加载中...</span></div>
     <div class="time-box" id="timeText"></div>
+
     <div class="calendar-box" id="calendarBox">
         <div class="calendar-header">
-            <button class="btn-today" id="btnToday" title="回到今天">🕊 今天</button>
-            <button id="prevMonth" title="上个月">◀</button>
-            <div class="ym-text" id="ymTitle">
+            <button class="btn-today" id="btnToday">🕊 今天</button>
+            <button id="prevMonth">◀</button>
+            <div class="ym-text">
                 <span class="year-click" id="yearText">2026</span>年<span class="month-click" id="monthText">7</span>月
                 <div class="select-panel year-panel" id="yearPanel"></div>
                 <div class="select-panel month-panel" id="monthPanel"></div>
             </div>
-            <button id="nextMonth" title="下个月">▶</button>
+            <button id="nextMonth">▶</button>
         </div>
         <div class="week-row">
             <div class="week-item">一</div><div class="week-item">二</div><div class="week-item">三</div>
@@ -1031,19 +404,14 @@
         <div class="day-grid" id="dayGrid"></div>
     </div>
 
-    <!-- 记事悬浮预览 -->
     <div class="note-tooltip" id="noteTooltip"></div>
-
-    <!-- 记事编辑弹窗 -->
     <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-dialog" id="modalDialog">
+        <div class="modal-dialog">
             <h3>📝 记事本</h3>
             <div class="modal-date-label" id="modalDateLabel"></div>
-            <div class="modal-notes-list" id="modalNotesList">
-                <div class="modal-empty">暂无记事，快来添加吧~</div>
-            </div>
+            <div class="modal-notes-list" id="modalNotesList"></div>
             <div class="modal-input-row">
-                <input type="text" id="modalNoteInput" placeholder="输入记事内容..." maxlength="200">
+                <input type="text" id="modalNoteInput" placeholder="输入记事..." maxlength="200">
                 <button class="btn-add-note" id="btnAddNote">添加</button>
             </div>
             <button class="btn-close-modal" id="btnCloseModal">关闭</button>
@@ -1052,329 +420,137 @@
 
     <script>
         (function() {
-            // ============ DOM引用 ============
-            const timeText = document.getElementById("timeText");
-            const dayGrid = document.getElementById("dayGrid");
-            const yearText = document.getElementById("yearText");
-            const monthText = document.getElementById("monthText");
-            const yearPanel = document.getElementById("yearPanel");
-            const monthPanel = document.getElementById("monthPanel");
-            const btnToday = document.getElementById("btnToday");
-            const calendarBox = document.getElementById("calendarBox");
-            const countdownText = document.getElementById("countdownText");
-            const noteTooltip = document.getElementById("noteTooltip");
-            const modalOverlay = document.getElementById("modalOverlay");
-            const modalDialog = document.getElementById("modalDialog");
-            const modalDateLabel = document.getElementById("modalDateLabel");
-            const modalNotesList = document.getElementById("modalNotesList");
-            const modalNoteInput = document.getElementById("modalNoteInput");
-            const btnAddNote = document.getElementById("btnAddNote");
-            const btnCloseModal = document.getElementById("btnCloseModal");
-            const weatherIcon = document.getElementById("weatherIcon");
-            const weatherTemp = document.getElementById("weatherTemp");
-            const weatherDesc = document.getElementById("weatherDesc");
-            const weatherLocation = document.getElementById("weatherLocation");
-            const weatherWidget = document.getElementById("weatherWidget");
+            // DOM 元素
+            const $ = (id) => document.getElementById(id);
+            const timeText = $("timeText"), dayGrid = $("dayGrid"), yearText = $("yearText"), monthText = $("monthText");
+            const yearPanel = $("yearPanel"), monthPanel = $("monthPanel"), btnToday = $("btnToday"), calendarBox = $("calendarBox");
+            const countdownText = $("countdownText"), noteTooltip = $("noteTooltip");
+            const modalOverlay = $("modalOverlay"), modalDateLabel = $("modalDateLabel");
+            const modalNotesList = $("modalNotesList"), modalNoteInput = $("modalNoteInput");
+            const btnAddNote = $("btnAddNote"), btnCloseModal = $("btnCloseModal");
+            const weatherIcon = $("weatherIcon"), weatherTemp = $("weatherTemp"), weatherDesc = $("weatherDesc"), weatherLocation = $("weatherLocation"), weatherWidget = $("weatherWidget");
 
-              // ============ 天气功能（修复版） ============
-            const weatherCodeMap = {
-                0: { icon: "☀️", desc: "晴天" },
-                1: { icon: "🌤️", desc: "少云" },
-                2: { icon: "⛅", desc: "多云" },
-                3: { icon: "☁️", desc: "阴天" },
-                45: { icon: "🌫️", desc: "雾" },
-                48: { icon: "🌫️", desc: "雾凇" },
-                51: { icon: "🌦️", desc: "小毛毛雨" },
-                53: { icon: "🌦️", desc: "毛毛雨" },
-                55: { icon: "🌧️", desc: "大毛毛雨" },
-                61: { icon: "🌧️", desc: "小雨" },
-                63: { icon: "🌧️", desc: "中雨" },
-                65: { icon: "🌧️", desc: "大雨" },
-                71: { icon: "❄️", desc: "小雪" },
-                73: { icon: "❄️", desc: "中雪" },
-                75: { icon: "❄️", desc: "大雪" },
-                80: { icon: "🌦️", desc: "阵雨" },
-                81: { icon: "🌧️", desc: "中阵雨" },
-                82: { icon: "🌧️", desc: "大阵雨" },
-                95: { icon: "⛈️", desc: "雷暴" },
-                96: { icon: "⛈️", desc: "雷暴伴冰雹" },
-                99: { icon: "⛈️", desc: "强雷暴伴冰雹" }
-            };
+            // 天气映射
+            const weatherCodeMap = { 0:{icon:"☀️",desc:"晴天"},1:{icon:"🌤️",desc:"少云"},2:{icon:"⛅",desc:"多云"},3:{icon:"☁️",desc:"阴天"},45:{icon:"🌫️",desc:"雾"},48:{icon:"🌫️",desc:"雾凇"},51:{icon:"🌦️",desc:"小毛毛雨"},53:{icon:"🌦️",desc:"毛毛雨"},55:{icon:"🌧️",desc:"大毛毛雨"},61:{icon:"🌧️",desc:"小雨"},63:{icon:"🌧️",desc:"中雨"},65:{icon:"🌧️",desc:"大雨"},71:{icon:"❄️",desc:"小雪"},73:{icon:"❄️",desc:"中雪"},75:{icon:"❄️",desc:"大雪"},80:{icon:"🌦️",desc:"阵雨"},81:{icon:"🌧️",desc:"中阵雨"},82:{icon:"🌧️",desc:"大阵雨"},95:{icon:"⛈️",desc:"雷暴"},96:{icon:"⛈️",desc:"雷暴伴冰雹"},99:{icon:"⛈️",desc:"强雷暴伴冰雹"} };
 
             function updateWeatherDisplay(temp, code, city) {
-                const weather = weatherCodeMap[code] || { icon: "🌡️", desc: "未知" };
-                weatherIcon.textContent = weather.icon;
+                const w = weatherCodeMap[code] || { icon: "🌡️", desc: "未知" };
+                weatherIcon.textContent = w.icon;
                 weatherTemp.textContent = `${Math.round(temp)}°C`;
-                weatherDesc.textContent = weather.desc;
+                weatherDesc.textContent = w.desc;
                 weatherLocation.textContent = city || "未知地点";
                 weatherWidget.classList.remove("weather-loading");
             }
 
+            function getCityName(lat, lon) {
+                return fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&accept-language=zh`)
+                    .then(r => r.json()).then(d => d?.address ? (d.address.city || d.address.town || d.address.county || d.address.state || d.address.country || "未知地点") : "未知地点").catch(() => "未知地点");
+            }
+
             function fetchWeatherByCoords(lat, lon, cityName) {
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data && data.current_weather) {
-                            const temp = data.current_weather.temperature;
-                            const code = data.current_weather.weathercode;
-                            if (cityName) {
-                                updateWeatherDisplay(temp, code, cityName);
-                            } else {
-                                // 如果没有传入城市名，尝试逆地理编码
-                                getCityNameFromCoords(lat, lon).then(city => {
-                                    updateWeatherDisplay(temp, code, city);
-                                }).catch(() => {
-                                    updateWeatherDisplay(temp, code, "未知地点");
-                                });
-                            }
-                        } else {
-                            throw new Error("无效天气数据");
-                        }
-                    })
-                    .catch(err => {
-                        console.warn("天气API请求失败:", err);
-                        weatherIcon.textContent = "🌡️";
-                        weatherTemp.textContent = "--°C";
-                        weatherDesc.textContent = "暂不可用";
-                        weatherLocation.textContent = cityName || "获取失败";
+                fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+                    .then(r => r.json()).then(data => {
+                        if (data?.current_weather) {
+                            const temp = data.current_weather.temperature, code = data.current_weather.weathercode;
+                            if (cityName) updateWeatherDisplay(temp, code, cityName);
+                            else getCityName(lat, lon).then(c => updateWeatherDisplay(temp, code, c)).catch(() => updateWeatherDisplay(temp, code, "未知地点"));
+                        } else throw new Error("无效数据");
+                    }).catch(() => {
+                        weatherIcon.textContent = "🌡️"; weatherTemp.textContent = "--°C";
+                        weatherDesc.textContent = "暂不可用"; weatherLocation.textContent = cityName || "获取失败";
                         weatherWidget.classList.add("weather-loading");
                     });
             }
 
-            function getCityNameFromCoords(lat, lon) {
-                const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&accept-language=zh`;
-                return fetch(url)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data && data.address) {
-                            const addr = data.address;
-                            return addr.city || addr.town || addr.county || addr.state || addr.country || "未知地点";
-                        }
-                        return "未知地点";
-                    })
-                    .catch(() => "未知地点");
-            }
-
-            // IP定位回退
             function fetchWeatherByIP() {
                 weatherLocation.textContent = "IP定位中...";
-                fetch("https://ipapi.co/json/")
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data && data.latitude && data.longitude) {
-                            const city = data.city || data.region || data.country_name || "未知地点";
-                            fetchWeatherByCoords(data.latitude, data.longitude, city);
-                        } else {
-                            throw new Error("IP定位数据无效");
-                        }
-                    })
-                    .catch(err => {
-                        console.warn("IP定位失败:", err);
-                        // 最终回退到默认城市（北京）
-                        weatherLocation.textContent = "默认位置";
-                        fetchWeatherByCoords(39.9042, 116.4074, "北京");
-                    });
+                fetch("https://ipapi.co/json/").then(r => r.json()).then(data => {
+                    if (data?.latitude && data?.longitude) {
+                        fetchWeatherByCoords(data.latitude, data.longitude, data.city || data.region || data.country_name || "未知地点");
+                    } else throw new Error("IP定位失败");
+                }).catch(() => {
+                    weatherLocation.textContent = "默认位置";
+                    fetchWeatherByCoords(39.9042, 116.4074, "北京");
+                });
             }
 
             function initWeather() {
-                // 先尝试浏览器GPS定位
-                if (!navigator.geolocation) {
-                    fetchWeatherByIP();
-                    return;
-                }
-                
+                if (!navigator.geolocation) return fetchWeatherByIP();
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        fetchWeatherByCoords(lat, lon, ""); // 城市名稍后通过逆地理获取
-                    },
-                    (error) => {
-                        console.warn("GPS定位失败，尝试IP定位:", error.message);
-                        fetchWeatherByIP();
-                    },
-                    {
-                        enableHighAccuracy: false,
-                        timeout: 5000,
-                        maximumAge: 600000
-                    }
+                    pos => fetchWeatherByCoords(pos.coords.latitude, pos.coords.longitude, ""),
+                    err => { console.warn("GPS定位失败:", err.message); fetchWeatherByIP(); },
+                    { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
                 );
             }
-
-            // 启动天气
             initWeather();
 
-            // ============ 实时时钟 ============
+            // 时钟
             function updateTime() {
                 const now = new Date();
-                const y = now.getFullYear();
-                const mo = now.getMonth() + 1;
-                const d = now.getDate();
-                const weekArr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-                const week = weekArr[now.getDay()];
-                const h = String(now.getHours()).padStart(2, '0');
-                const mi = String(now.getMinutes()).padStart(2, '0');
-                const s = String(now.getSeconds()).padStart(2, '0');
-                timeText.textContent = `${y}年${mo}月${d}日 ${week} ${h}:${mi}:${s}`;
+                const weekArr = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+                timeText.textContent = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${weekArr[now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
             }
-            updateTime();
-            setInterval(updateTime, 1000);
+            updateTime(); setInterval(updateTime, 1000);
 
-            // ============ 法定节假日数据 ============
+            // 节假日/补班/节气数据
             const allYearHolidays = {
-                2026: { "1-1": "元旦", "1-2": "元旦", "1-3": "元旦", "2-15": "春节", "2-16": "春节", "2-17": "春节",
-                    "2-18": "春节", "2-19": "春节", "2-20": "春节", "2-21": "春节", "2-22": "春节", "2-23": "春节", "4-4": "清明",
-                    "4-5": "清明", "4-6": "清明", "5-1": "劳动节", "5-2": "劳动节", "5-3": "劳动节", "5-4": "劳动节", "5-5": "劳动节",
-                    "6-19": "端午", "6-20": "端午", "6-21": "端午", "9-25": "中秋", "9-26": "中秋", "9-27": "中秋", "10-1": "国庆",
-                    "10-2": "国庆", "10-3": "国庆", "10-4": "国庆", "10-5": "国庆", "10-6": "国庆", "10-7": "国庆" },
-                2027: { "1-1": "元旦", "1-2": "元旦", "1-3": "元旦", "2-5": "春节", "2-6": "春节", "2-7": "春节", "2-8": "春节",
-                    "2-9": "春节", "2-10": "春节", "2-11": "春节", "4-5": "清明", "4-6": "清明", "4-7": "清明", "5-1": "劳动节",
-                    "5-2": "劳动节", "5-3": "劳动节", "5-4": "劳动节", "5-5": "劳动节", "6-7": "端午", "6-8": "端午", "6-9": "端午",
-                    "9-15": "中秋", "9-16": "中秋", "9-17": "中秋", "10-1": "国庆", "10-2": "国庆", "10-3": "国庆", "10-4": "国庆",
-                    "10-5": "国庆", "10-6": "国庆", "10-7": "国庆" },
+                2026: {"1-1":"元旦","1-2":"元旦","1-3":"元旦","2-15":"春节","2-16":"春节","2-17":"春节","2-18":"春节","2-19":"春节","2-20":"春节","2-21":"春节","2-22":"春节","2-23":"春节","4-4":"清明","4-5":"清明","4-6":"清明","5-1":"劳动节","5-2":"劳动节","5-3":"劳动节","5-4":"劳动节","5-5":"劳动节","6-19":"端午","6-20":"端午","6-21":"端午","9-25":"中秋","9-26":"中秋","9-27":"中秋","10-1":"国庆","10-2":"国庆","10-3":"国庆","10-4":"国庆","10-5":"国庆","10-6":"国庆","10-7":"国庆"},
+                2027: {"1-1":"元旦","1-2":"元旦","1-3":"元旦","2-5":"春节","2-6":"春节","2-7":"春节","2-8":"春节","2-9":"春节","2-10":"春节","2-11":"春节","4-5":"清明","4-6":"清明","4-7":"清明","5-1":"劳动节","5-2":"劳动节","5-3":"劳动节","5-4":"劳动节","5-5":"劳动节","6-7":"端午","6-8":"端午","6-9":"端午","9-15":"中秋","9-16":"中秋","9-17":"中秋","10-1":"国庆","10-2":"国庆","10-3":"国庆","10-4":"国庆","10-5":"国庆","10-6":"国庆","10-7":"国庆"}
             };
-
-            // ============ 调休补班日期 ============
             const allYearWorkdays = {
-                2026: { "1-31": "补班", "2-7": "补班", "2-14": "补班", "4-25": "补班", "5-9": "补班", "6-13": "补班", "9-12": "补班",
-                    "10-10": "补班" },
-                2027: { "1-30": "补班", "2-6": "补班", "2-13": "补班", "4-24": "补班", "5-8": "补班", "6-12": "补班", "9-11": "补班",
-                    "10-9": "补班" },
+                2026: {"1-31":"补班","2-7":"补班","2-14":"补班","4-25":"补班","5-9":"补班","6-13":"补班","9-12":"补班","10-10":"补班"},
+                2027: {"1-30":"补班","2-6":"补班","2-13":"补班","4-24":"补班","5-8":"补班","6-12":"补班","9-11":"补班","10-9":"补班"}
             };
-
-            // ============ 二十四节气数据 ============
             const solarTermsData = {
-                2026: { "1-5": "小寒", "1-20": "大寒", "2-4": "立春", "2-18": "雨水", "3-5": "惊蛰", "3-20": "春分", "4-5": "清明", "4-20": "谷雨",
-                    "5-5": "立夏", "5-21": "小满", "6-5": "芒种", "6-21": "夏至", "7-7": "小暑", "7-22": "大暑", "8-7": "立秋", "8-23": "处暑",
-                    "9-7": "白露", "9-23": "秋分", "10-8": "寒露", "10-23": "霜降", "11-7": "立冬", "11-22": "小雪", "12-7": "大雪",
-                "12-22": "冬至" },
-                2027: { "1-5": "小寒", "1-20": "大寒", "2-4": "立春", "2-18": "雨水", "3-5": "惊蛰", "3-20": "春分", "4-5": "清明", "4-20": "谷雨",
-                    "5-5": "立夏", "5-21": "小满", "6-5": "芒种", "6-21": "夏至", "7-7": "小暑", "7-23": "大暑", "8-7": "立秋", "8-23": "处暑",
-                    "9-7": "白露", "9-23": "秋分", "10-8": "寒露", "10-23": "霜降", "11-7": "立冬", "11-22": "小雪", "12-7": "大雪",
-                "12-22": "冬至" },
+                2026: {"1-5":"小寒","1-20":"大寒","2-4":"立春","2-18":"雨水","3-5":"惊蛰","3-20":"春分","4-5":"清明","4-20":"谷雨","5-5":"立夏","5-21":"小满","6-5":"芒种","6-21":"夏至","7-7":"小暑","7-22":"大暑","8-7":"立秋","8-23":"处暑","9-7":"白露","9-23":"秋分","10-8":"寒露","10-23":"霜降","11-7":"立冬","11-22":"小雪","12-7":"大雪","12-22":"冬至"},
+                2027: {"1-5":"小寒","1-20":"大寒","2-4":"立春","2-18":"雨水","3-5":"惊蛰","3-20":"春分","4-5":"清明","4-20":"谷雨","5-5":"立夏","5-21":"小满","6-5":"芒种","6-21":"夏至","7-7":"小暑","7-23":"大暑","8-7":"立秋","8-23":"处暑","9-7":"白露","9-23":"秋分","10-8":"寒露","10-23":"霜降","11-7":"立冬","11-22":"小雪","12-7":"大雪","12-22":"冬至"}
             };
-
-            // ============ 固定纪念日 ============
-            const festivalMap = { "7-1": "建党节", "8-1": "建军节", "9-21": "国际和平日", "10-24": "联合国日", "12-10": "人权日" };
+            const festivalMap = {"7-1":"建党节","8-1":"建军节","9-21":"国际和平日","10-24":"联合国日","12-10":"人权日"};
             const peaceDays = ["9-21"];
 
-            // ============ 2026年农历 ============
+            // 农历2026
             const lunar2026 = {
-                1: { 1: "元旦", 2: "十四", 3: "十五", 4: "十六", 5: "十七", 6: "十八", 7: "十九", 8: "二十", 9: "廿一", 10: "廿二", 11: "廿三",
-                    12: "廿四", 13: "廿五", 14: "廿六", 15: "廿七", 16: "廿八", 17: "廿九", 18: "腊月", 19: "初二", 20: "初三", 21: "初四",
-                    22: "初五", 23: "初六", 24: "初七", 25: "初八", 26: "初九", 27: "初十", 28: "十一", 29: "十二", 30: "十三", 31: "十四" },
-                2: { 1: "十五", 2: "十六", 3: "十七", 4: "十八", 5: "十九", 6: "二十", 7: "廿一", 8: "廿二", 9: "廿三", 10: "廿四", 11: "廿五",
-                    12: "廿六", 13: "廿七", 14: "廿八", 15: "廿九", 16: "正月", 17: "初二", 18: "初三", 19: "初四", 20: "初五", 21: "初六",
-                    22: "初七", 23: "初八", 24: "初九", 25: "初十", 26: "十一", 27: "十二", 28: "十三" },
-                3: { 1: "十四", 2: "十五", 3: "十六", 4: "十七", 5: "十八", 6: "十九", 7: "二十", 8: "廿一", 9: "廿二", 10: "廿三", 11: "廿四",
-                    12: "廿五", 13: "廿六", 14: "廿七", 15: "廿八", 16: "廿九", 17: "三十", 18: "二月", 19: "初二", 20: "初三", 21: "初四",
-                    22: "初五", 23: "初六", 24: "初七", 25: "初八", 26: "初九", 27: "初十", 28: "十一", 29: "十二", 30: "十三", 31: "十四" },
-                4: { 1: "十五", 2: "十六", 3: "十七", 4: "十八", 5: "十九", 6: "二十", 7: "廿一", 8: "廿二", 9: "廿三", 10: "廿四", 11: "廿五",
-                    12: "廿六", 13: "廿七", 14: "廿八", 15: "廿九", 16: "三月", 17: "初二", 18: "初三", 19: "初四", 20: "初五", 21: "初六",
-                    22: "初七", 23: "初八", 24: "初九", 25: "初十", 26: "十一", 27: "十二", 28: "十三", 29: "十四", 30: "十五" },
-                5: { 1: "十六", 2: "十七", 3: "十八", 4: "十九", 5: "二十", 6: "廿一", 7: "廿二", 8: "廿三", 9: "廿四", 10: "廿五", 11: "廿六",
-                    12: "廿七", 13: "廿八", 14: "廿九", 15: "四月", 16: "初二", 17: "初三", 18: "初四", 19: "初五", 20: "初六", 21: "初七",
-                    22: "初八", 23: "初九", 24: "初十", 25: "十一", 26: "十二", 27: "十三", 28: "十四", 29: "十五", 30: "十六", 31: "十七" },
-                6: { 1: "十八", 2: "十九", 3: "二十", 4: "廿一", 5: "廿二", 6: "廿三", 7: "廿四", 8: "廿五", 9: "廿六", 10: "廿七", 11: "廿八",
-                    12: "廿九", 13: "五月", 14: "初二", 15: "初三", 16: "初四", 17: "初五", 18: "初六", 19: "初七", 20: "初八", 21: "初九",
-                    22: "初十", 23: "十一", 24: "十二", 25: "十三", 26: "十四", 27: "十五", 28: "十六", 29: "十七", 30: "十八" },
-                7: { 1: "建党节", 2: "十九", 3: "二十", 4: "廿一", 5: "廿二", 6: "廿三", 7: "小暑", 8: "廿五", 9: "廿六", 10: "廿七", 11: "廿八",
-                    12: "廿九", 13: "六月", 14: "初二", 15: "初伏", 16: "初四", 17: "初五", 18: "初六", 19: "初七", 20: "初八", 21: "初九",
-                    22: "初十", 23: "大暑", 24: "十二", 25: "中伏", 26: "十四", 27: "十五", 28: "十六", 29: "十七", 30: "十八", 31: "十九" },
-                8: { 1: "建军节", 2: "廿一", 3: "廿二", 4: "廿三", 5: "廿四", 6: "廿五", 7: "立秋", 8: "廿七", 9: "廿八", 10: "廿九", 11: "七月",
-                    12: "初二", 13: "初三", 14: "初四", 15: "初五", 16: "初六", 17: "初七", 18: "初八", 19: "初九", 20: "初十", 21: "十一",
-                    22: "十二", 23: "十三", 24: "十四", 25: "末伏", 26: "十六", 27: "十七", 28: "十八", 29: "十九", 30: "二十", 31: "廿一" },
-                9: { 1: "廿二", 2: "廿三", 3: "廿四", 4: "廿五", 5: "廿六", 6: "廿七", 7: "廿八", 8: "廿九", 9: "八月", 10: "初二", 11: "初三",
-                    12: "初四", 13: "初五", 14: "初六", 15: "初七", 16: "初八", 17: "初九", 18: "初十", 19: "十一", 20: "十二", 21: "十三",
-                    22: "十四", 23: "十五", 24: "十六", 25: "十七", 26: "十八", 27: "十九", 28: "二十", 29: "廿一", 30: "廿二" },
-                10: { 1: "国庆节", 2: "廿四", 3: "廿五", 4: "廿六", 5: "廿七", 6: "廿八", 7: "廿九", 8: "九月", 9: "初二", 10: "初三", 11: "初四",
-                    12: "初五", 13: "初六", 14: "初七", 15: "初八", 16: "初九", 17: "初十", 18: "十一", 19: "十二", 20: "十三", 21: "十四",
-                    22: "十五", 23: "十六", 24: "十七", 25: "十八", 26: "十九", 27: "二十", 28: "廿一", 29: "廿二", 30: "廿三", 31: "廿四" },
-                11: { 1: "廿五", 2: "廿六", 3: "廿七", 4: "廿八", 5: "廿九", 6: "十月", 7: "初二", 8: "初三", 9: "初四", 10: "初五", 11: "初六",
-                    12: "初七", 13: "初八", 14: "初九", 15: "初十", 16: "十一", 17: "十二", 18: "十三", 19: "十四", 20: "十五", 21: "十六",
-                    22: "十七", 23: "十八", 24: "十九", 25: "二十", 26: "廿一", 27: "廿二", 28: "廿三", 29: "廿四", 30: "廿五" },
-                12: { 1: "廿六", 2: "廿七", 3: "廿八", 4: "廿九", 5: "冬月", 6: "初二", 7: "初三", 8: "初四", 9: "初五", 10: "初六", 11: "初七",
-                    12: "初八", 13: "初九", 14: "初十", 15: "十一", 16: "十二", 17: "十三", 18: "十四", 19: "十五", 20: "十六", 21: "十七",
-                    22: "十八", 23: "十九", 24: "二十", 25: "廿一", 26: "廿二", 27: "廿三", 28: "廿四", 29: "廿五", 30: "廿六", 31: "廿七" },
+                1:{1:"元旦",2:"十四",3:"十五",4:"十六",5:"十七",6:"十八",7:"十九",8:"二十",9:"廿一",10:"廿二",11:"廿三",12:"廿四",13:"廿五",14:"廿六",15:"廿七",16:"廿八",17:"廿九",18:"腊月",19:"初二",20:"初三",21:"初四",22:"初五",23:"初六",24:"初七",25:"初八",26:"初九",27:"初十",28:"十一",29:"十二",30:"十三",31:"十四"},
+                2:{1:"十五",2:"十六",3:"十七",4:"十八",5:"十九",6:"二十",7:"廿一",8:"廿二",9:"廿三",10:"廿四",11:"廿五",12:"廿六",13:"廿七",14:"廿八",15:"廿九",16:"正月",17:"初二",18:"初三",19:"初四",20:"初五",21:"初六",22:"初七",23:"初八",24:"初九",25:"初十",26:"十一",27:"十二",28:"十三"},
+                3:{1:"十四",2:"十五",3:"十六",4:"十七",5:"十八",6:"十九",7:"二十",8:"廿一",9:"廿二",10:"廿三",11:"廿四",12:"廿五",13:"廿六",14:"廿七",15:"廿八",16:"廿九",17:"三十",18:"二月",19:"初二",20:"初三",21:"初四",22:"初五",23:"初六",24:"初七",25:"初八",26:"初九",27:"初十",28:"十一",29:"十二",30:"十三",31:"十四"},
+                4:{1:"十五",2:"十六",3:"十七",4:"十八",5:"十九",6:"二十",7:"廿一",8:"廿二",9:"廿三",10:"廿四",11:"廿五",12:"廿六",13:"廿七",14:"廿八",15:"廿九",16:"三月",17:"初二",18:"初三",19:"初四",20:"初五",21:"初六",22:"初七",23:"初八",24:"初九",25:"初十",26:"十一",27:"十二",28:"十三",29:"十四",30:"十五"},
+                5:{1:"十六",2:"十七",3:"十八",4:"十九",5:"二十",6:"廿一",7:"廿二",8:"廿三",9:"廿四",10:"廿五",11:"廿六",12:"廿七",13:"廿八",14:"廿九",15:"四月",16:"初二",17:"初三",18:"初四",19:"初五",20:"初六",21:"初七",22:"初八",23:"初九",24:"初十",25:"十一",26:"十二",27:"十三",28:"十四",29:"十五",30:"十六",31:"十七"},
+                6:{1:"十八",2:"十九",3:"二十",4:"廿一",5:"廿二",6:"廿三",7:"廿四",8:"廿五",9:"廿六",10:"廿七",11:"廿八",12:"廿九",13:"五月",14:"初二",15:"初三",16:"初四",17:"初五",18:"初六",19:"初七",20:"初八",21:"初九",22:"初十",23:"十一",24:"十二",25:"十三",26:"十四",27:"十五",28:"十六",29:"十七",30:"十八"},
+                7:{1:"建党节",2:"十九",3:"二十",4:"廿一",5:"廿二",6:"廿三",7:"小暑",8:"廿五",9:"廿六",10:"廿七",11:"廿八",12:"廿九",13:"六月",14:"初二",15:"初伏",16:"初四",17:"初五",18:"初六",19:"初七",20:"初八",21:"初九",22:"初十",23:"大暑",24:"十二",25:"中伏",26:"十四",27:"十五",28:"十六",29:"十七",30:"十八",31:"十九"},
+                8:{1:"建军节",2:"廿一",3:"廿二",4:"廿三",5:"廿四",6:"廿五",7:"立秋",8:"廿七",9:"廿八",10:"廿九",11:"七月",12:"初二",13:"初三",14:"初四",15:"初五",16:"初六",17:"初七",18:"初八",19:"初九",20:"初十",21:"十一",22:"十二",23:"十三",24:"十四",25:"末伏",26:"十六",27:"十七",28:"十八",29:"十九",30:"二十",31:"廿一"},
+                9:{1:"廿二",2:"廿三",3:"廿四",4:"廿五",5:"廿六",6:"廿七",7:"廿八",8:"廿九",9:"八月",10:"初二",11:"初三",12:"初四",13:"初五",14:"初六",15:"初七",16:"初八",17:"初九",18:"初十",19:"十一",20:"十二",21:"十三",22:"十四",23:"十五",24:"十六",25:"十七",26:"十八",27:"十九",28:"二十",29:"廿一",30:"廿二"},
+                10:{1:"国庆节",2:"廿四",3:"廿五",4:"廿六",5:"廿七",6:"廿八",7:"廿九",8:"九月",9:"初二",10:"初三",11:"初四",12:"初五",13:"初六",14:"初七",15:"初八",16:"初九",17:"初十",18:"十一",19:"十二",20:"十三",21:"十四",22:"十五",23:"十六",24:"十七",25:"十八",26:"十九",27:"二十",28:"廿一",29:"廿二",30:"廿三",31:"廿四"},
+                11:{1:"廿五",2:"廿六",3:"廿七",4:"廿八",5:"廿九",6:"十月",7:"初二",8:"初三",9:"初四",10:"初五",11:"初六",12:"初七",13:"初八",14:"初九",15:"初十",16:"十一",17:"十二",18:"十三",19:"十四",20:"十五",21:"十六",22:"十七",23:"十八",24:"十九",25:"二十",26:"廿一",27:"廿二",28:"廿三",29:"廿四",30:"廿五"},
+                12:{1:"廿六",2:"廿七",3:"廿八",4:"廿九",5:"冬月",6:"初二",7:"初三",8:"初四",9:"初五",10:"初六",11:"初七",12:"初八",13:"初九",14:"初十",15:"十一",16:"十二",17:"十三",18:"十四",19:"十五",20:"十六",21:"十七",22:"十八",23:"十九",24:"二十",25:"廿一",26:"廿二",27:"廿三",28:"廿四",29:"廿五",30:"廿六",31:"廿七"}
             };
 
-            // ============ 状态 ============
             const today = new Date();
-            const todayYear = today.getFullYear();
-            const todayMonth = today.getMonth() + 1;
-            const todayDay = today.getDate();
-            let currentShowYear = todayYear;
-            let currentShowMonth = todayMonth;
-            let currentModalDateKey = null;
+            const todayYear = today.getFullYear(), todayMonth = today.getMonth()+1, todayDay = today.getDate();
+            let currentShowYear = todayYear, currentShowMonth = todayMonth, currentModalDateKey = null;
 
-            // ============ localStorage记事管理 ============
+            // 记事本 localStorage
             const NOTES_KEY = 'calendar_peace_notes';
-
-            function loadAllNotes() {
-                try {
-                    const raw = localStorage.getItem(NOTES_KEY);
-                    return raw ? JSON.parse(raw) : {};
-                } catch (e) {
-                    return {};
-                }
-            }
-
-            function saveAllNotes(notes) {
-                try {
-                    localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
-                } catch (e) {
-                    console.warn('localStorage写入失败');
-                }
-            }
-
-            function getNotesForDate(dateKey) {
-                const all = loadAllNotes();
-                return all[dateKey] || [];
-            }
-
-            function addNoteToDate(dateKey, text) {
-                const all = loadAllNotes();
-                if (!all[dateKey]) all[dateKey] = [];
+            const loadNotes = () => { try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch(e) { return {}; } };
+            const saveNotes = (notes) => { try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch(e){} };
+            const getNotes = (dateKey) => loadNotes()[dateKey] || [];
+            const addNote = (dateKey, text) => {
+                const all = loadNotes(); if (!all[dateKey]) all[dateKey] = [];
                 const note = { id: Date.now(), text: text.trim(), createdAt: new Date().toISOString() };
-                all[dateKey].push(note);
-                saveAllNotes(all);
-                return note;
-            }
-
-            function deleteNoteFromDate(dateKey, noteId) {
-                const all = loadAllNotes();
-                if (!all[dateKey]) return;
+                all[dateKey].push(note); saveNotes(all); return note;
+            };
+            const deleteNote = (dateKey, noteId) => {
+                const all = loadNotes(); if (!all[dateKey]) return;
                 all[dateKey] = all[dateKey].filter(n => n.id !== noteId);
                 if (all[dateKey].length === 0) delete all[dateKey];
-                saveAllNotes(all);
-            }
+                saveNotes(all);
+            };
+            const hasNotes = (dateKey) => getNotes(dateKey).length > 0;
 
-            function hasNotesForDate(dateKey) {
-                const notes = getNotesForDate(dateKey);
-                return notes.length > 0;
-            }
+            function getLunar(y,m,d) { return (y===2026 && lunar2026[m]?.[d]) ? lunar2026[m][d] : ""; }
+            function isDup(lunar, holiday) { if(!lunar||!holiday) return false; return lunar===holiday || lunar.includes(holiday) || holiday.includes(lunar) || (lunar==="国庆节"&&holiday==="国庆")||(lunar==="元旦"&&holiday==="元旦"); }
 
-            // ============ 获取农历 ============
-            function getSimpleLunar(y, m, d) {
-                if (y === 2026 && lunar2026[m] && lunar2026[m][d]) return lunar2026[m][d];
-                return "";
-            }
-
-            function isDuplicateName(lunarTxt, holidayName) {
-                if (!lunarTxt || !holidayName) return false;
-                if (lunarTxt === holidayName) return true;
-                if (lunarTxt.includes(holidayName) || holidayName.includes(lunarTxt)) return true;
-                if (lunarTxt === "国庆节" && holidayName === "国庆") return true;
-                if (lunarTxt === "元旦" && holidayName === "元旦") return true;
-                return false;
-            }
-
-            // ============ 创建日期单元格 ============
-            function createDayCell(num, holidayName, lunarTxt, isOtherMonth, isTodayFlag, isHoliday, isFestival, isSolarTerm,
-                solarTermName, isWorkday, isPeaceDay, weekDay, dateKey) {
-                const div = document.createElement("div");
-                div.className = "day-cell";
+            function createDayCell(num, holidayName, lunarTxt, isOtherMonth, isTodayFlag, isHoliday, isFestival, isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, dateKey) {
+                const div = document.createElement("div"); div.className = "day-cell";
                 if (isOtherMonth) div.classList.add("other-month");
                 if (isTodayFlag) div.classList.add("today");
                 if (isHoliday && !isOtherMonth) div.classList.add("holiday");
@@ -1382,453 +558,176 @@
                 if (isSolarTerm && !isOtherMonth) div.classList.add("solar-term");
                 if (isWorkday && !isOtherMonth && !isHoliday) div.classList.add("workday-makeup");
                 if (isPeaceDay && !isOtherMonth) div.classList.add("peace-day");
-                if (!isOtherMonth) {
-                    if (weekDay === 6) div.classList.add("weekday-sat");
-                    if (weekDay === 0) div.classList.add("weekday-sun");
-                }
-                if (!isOtherMonth && dateKey) {
-                    div.setAttribute("data-date-key", dateKey);
-                    div.style.cursor = "pointer";
-                }
+                if (!isOtherMonth) { if (weekDay===6) div.classList.add("weekday-sat"); if (weekDay===0) div.classList.add("weekday-sun"); }
+                if (!isOtherMonth && dateKey) { div.setAttribute("data-date-key", dateKey); div.style.cursor = "pointer"; }
 
-                let innerHtml = `<span class="num">${num}</span>`;
+                let html = `<span class="num">${num}</span>`;
                 let displayLunar = lunarTxt;
-                if (isHoliday && isDuplicateName(lunarTxt, holidayName)) displayLunar = "";
-
-                if (isSolarTerm && solarTermName && !isOtherMonth) {
-                    innerHtml += `<span class="solar-term-name">${solarTermName}</span>`;
-                }
-                if (isHoliday && holidayName && !isOtherMonth) {
-                    innerHtml += `<span class="holiday-name">${holidayName}</span>`;
-                }
-                if (isWorkday && !isOtherMonth && !isHoliday) {
-                    innerHtml += `<span class="workday-tag">补班</span>`;
-                }
-                if (displayLunar) {
-                    innerHtml += `<span class="lunar">${displayLunar}</span>`;
-                } else if (!isOtherMonth && !displayLunar && !isHoliday && !isSolarTerm && !isWorkday && lunarTxt === "" &&
-                    currentShowYear !== 2026) {
-                    innerHtml += '<span class="lunar" style="visibility:hidden;">·</span>';
-                } else if (!displayLunar && !isHoliday && !isSolarTerm && !isWorkday && !isOtherMonth && lunarTxt === "") {
-                    innerHtml += '<span class="lunar" style="visibility:hidden;">·</span>';
-                }
-
-                // 记事红点
-                if (!isOtherMonth && dateKey && hasNotesForDate(dateKey)) {
-                    innerHtml += '<span class="note-dot"></span>';
-                }
-
-                div.innerHTML = innerHtml;
+                if (isHoliday && isDup(lunarTxt, holidayName)) displayLunar = "";
+                if (isSolarTerm && solarTermName && !isOtherMonth) html += `<span class="solar-term-name">${solarTermName}</span>`;
+                if (isHoliday && holidayName && !isOtherMonth) html += `<span class="holiday-name">${holidayName}</span>`;
+                if (isWorkday && !isOtherMonth && !isHoliday) html += `<span class="workday-tag">补班</span>`;
+                if (displayLunar) html += `<span class="lunar">${displayLunar}</span>`;
+                else if (!isOtherMonth && !displayLunar && !isHoliday && !isSolarTerm && !isWorkday && lunarTxt==="" && currentShowYear!==2026) html += '<span class="lunar" style="visibility:hidden;">·</span>';
+                else if (!displayLunar && !isHoliday && !isSolarTerm && !isWorkday && !isOtherMonth && lunarTxt==="") html += '<span class="lunar" style="visibility:hidden;">·</span>';
+                if (!isOtherMonth && dateKey && hasNotes(dateKey)) html += '<span class="note-dot"></span>';
+                div.innerHTML = html;
                 return div;
             }
 
-            // ============ 更新年月标题 ============
-            function updateYMTitle() {
-                yearText.textContent = currentShowYear;
-                monthText.textContent = currentShowMonth;
-            }
-
-            // ============ 渲染面板 ============
+            function updateYMTitle() { yearText.textContent = currentShowYear; monthText.textContent = currentShowMonth; }
             function renderYearPanel() {
                 yearPanel.innerHTML = "";
-                const startY = currentShowYear - 5;
-                const endY = currentShowYear + 5;
-                for (let y = startY; y <= endY; y++) {
-                    const item = document.createElement("div");
-                    item.className = "panel-item" + (y === currentShowYear ? " active" : "");
-                    item.textContent = y;
-                    item.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        currentShowYear = y;
-                        renderCalendar(currentShowYear, currentShowMonth);
-                        updateCountdown();
-                        closeAllPanel();
-                    });
+                for (let y=currentShowYear-5; y<=currentShowYear+5; y++) {
+                    const item = document.createElement("div"); item.className = "panel-item"+(y===currentShowYear?" active":"");
+                    item.textContent = y; item.onclick = (e) => { e.stopPropagation(); currentShowYear=y; renderCalendar(); updateCountdown(); closeAllPanel(); };
                     yearPanel.appendChild(item);
                 }
             }
-
             function renderMonthPanel() {
                 monthPanel.innerHTML = "";
-                for (let m = 1; m <= 12; m++) {
-                    const item = document.createElement("div");
-                    item.className = "panel-item" + (m === currentShowMonth ? " active" : "");
-                    item.textContent = m + "月";
-                    item.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        currentShowMonth = m;
-                        renderCalendar(currentShowYear, currentShowMonth);
-                        updateCountdown();
-                        closeAllPanel();
-                    });
+                for (let m=1; m<=12; m++) {
+                    const item = document.createElement("div"); item.className = "panel-item"+(m===currentShowMonth?" active":"");
+                    item.textContent = m+"月"; item.onclick = (e) => { e.stopPropagation(); currentShowMonth=m; renderCalendar(); updateCountdown(); closeAllPanel(); };
                     monthPanel.appendChild(item);
                 }
             }
-
-            function closeAllPanel() {
-                yearPanel.classList.remove("show");
-                monthPanel.classList.remove("show");
+            function closeAllPanel() { yearPanel.classList.remove("show"); monthPanel.classList.remove("show"); }
+            function togglePanel(show, hide, renderFn) {
+                const isShow = show.classList.contains("show"); closeAllPanel();
+                if (!isShow) { renderFn(); show.classList.add("show"); }
             }
 
-            function togglePanel(panelToShow, panelToHide, renderFn) {
-                const isShowing = panelToShow.classList.contains("show");
-                closeAllPanel();
-                if (!isShowing) {
-                    renderFn();
-                    panelToShow.classList.add("show");
-                }
-            }
-
-            // ============ 日历主渲染 ============
-            function renderCalendar(year, month) {
-                dayGrid.innerHTML = "";
-                updateYMTitle();
-                const yearHoliday = allYearHolidays[year] || {};
-                const yearWorkday = allYearWorkdays[year] || {};
-                const yearSolarTerms = solarTermsData[year] || {};
-
-                const firstDay = new Date(year, month - 1, 1).getDay();
-                const preDays = firstDay === 0 ? 6 : firstDay - 1;
-                const thisMonthTotal = new Date(year, month, 0).getDate();
-                const lastMonthTotal = new Date(year, month - 1, 0).getDate();
-
-                // 填充上月末尾
-                for (let i = 0; i < preDays; i++) {
-                    const dayNum = lastMonthTotal - preDays + i + 1;
-                    const cell = createDayCell(dayNum, "", "", true, false, false, false, false, "", false, false, -1,
-                    null);
-                    dayGrid.appendChild(cell);
-                }
-
-                // 填充本月
-                for (let d = 1; d <= thisMonthTotal; d++) {
-                    const dateKey = `${month}-${d}`;
-                    const fullDateKey = `${year}-${month}-${d}`;
-                    const weekDay = new Date(year, month - 1, d).getDay();
-                    const lunarTxt = getSimpleLunar(year, month, d);
+            function renderCalendar() {
+                dayGrid.innerHTML = ""; updateYMTitle();
+                const yearHoliday = allYearHolidays[currentShowYear] || {};
+                const yearWorkday = allYearWorkdays[currentShowYear] || {};
+                const yearSolarTerms = solarTermsData[currentShowYear] || {};
+                const firstDay = new Date(currentShowYear, currentShowMonth-1, 1).getDay();
+                const preDays = firstDay===0 ? 6 : firstDay-1;
+                const thisMonthTotal = new Date(currentShowYear, currentShowMonth, 0).getDate();
+                const lastMonthTotal = new Date(currentShowYear, currentShowMonth-1, 0).getDate();
+                for (let i=0; i<preDays; i++) dayGrid.appendChild(createDayCell(lastMonthTotal-preDays+i+1,"","",true,false,false,false,false,"",false,false,-1,null));
+                for (let d=1; d<=thisMonthTotal; d++) {
+                    const dateKey = `${currentShowMonth}-${d}`, fullKey = `${currentShowYear}-${currentShowMonth}-${d}`;
+                    const weekDay = new Date(currentShowYear, currentShowMonth-1, d).getDay();
+                    const lunarTxt = getLunar(currentShowYear, currentShowMonth, d);
                     const holidayName = yearHoliday[dateKey] || "";
-                    const isHoliday = !!holidayName;
-                    const isWorkday = !!yearWorkday[dateKey] && !isHoliday;
-                    const solarTermName = yearSolarTerms[dateKey] || "";
-                    const isSolarTerm = !!solarTermName;
-                    const isFestival = !!festivalMap[dateKey] && !isSolarTerm;
-                    const isPeaceDay = peaceDays.includes(dateKey);
-                    const isTodayFlag = (year === todayYear && month === todayMonth && d === todayDay);
-
-                    const cell = createDayCell(d, holidayName, lunarTxt, false, isTodayFlag, isHoliday, isFestival,
-                        isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, fullDateKey);
-                    dayGrid.appendChild(cell);
+                    const isHoliday = !!holidayName, isWorkday = !!yearWorkday[dateKey] && !isHoliday;
+                    const solarTermName = yearSolarTerms[dateKey] || "", isSolarTerm = !!solarTermName;
+                    const isFestival = !!festivalMap[dateKey] && !isSolarTerm, isPeaceDay = peaceDays.includes(dateKey);
+                    const isTodayFlag = (currentShowYear===todayYear && currentShowMonth===todayMonth && d===todayDay);
+                    dayGrid.appendChild(createDayCell(d, holidayName, lunarTxt, false, isTodayFlag, isHoliday, isFestival, isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, fullKey));
                 }
-
-                // 填充下月开头
-                const totalCells = dayGrid.children.length;
-                const fillNum = 42 - totalCells;
-                for (let i = 1; i <= fillNum; i++) {
-                    const cell = createDayCell(i, "", "", true, false, false, false, false, "", false, false, -1, null);
-                    dayGrid.appendChild(cell);
-                }
-
-                // 绑定事件
-                bindDayCellEvents();
+                const total = dayGrid.children.length;
+                for (let i=1; i<=42-total; i++) dayGrid.appendChild(createDayCell(i,"","",true,false,false,false,false,"",false,false,-1,null));
+                bindDayEvents();
             }
 
-            function bindDayCellEvents() {
-                const cells = dayGrid.querySelectorAll('.day-cell:not(.other-month)');
-                cells.forEach(cell => {
-                    const dateKey = cell.getAttribute('data-date-key');
-                    if (!dateKey) return;
-
-                    // 悬浮预览
-                    cell.addEventListener('mouseenter', (e) => {
-                        if (hasNotesForDate(dateKey)) {
-                            showNoteTooltip(e, dateKey);
-                        }
-                    });
-                    cell.addEventListener('mouseleave', () => {
-                        hideNoteTooltip();
-                    });
-                    cell.addEventListener('mousemove', (e) => {
-                        if (noteTooltip.classList.contains('show')) {
-                            positionTooltip(e);
-                        }
-                    });
-
-                    // 双击新建记事
-                    cell.addEventListener('dblclick', (e) => {
-                        e.stopPropagation();
-                        openNoteModal(dateKey);
-                    });
+            function bindDayEvents() {
+                dayGrid.querySelectorAll('.day-cell:not(.other-month)').forEach(cell => {
+                    const dateKey = cell.getAttribute('data-date-key'); if (!dateKey) return;
+                    cell.addEventListener('mouseenter', (e) => { if (hasNotes(dateKey)) showTooltip(e, dateKey); });
+                    cell.addEventListener('mouseleave', hideTooltip);
+                    cell.addEventListener('mousemove', (e) => { if (noteTooltip.classList.contains('show')) positionTooltip(e); });
+                    cell.addEventListener('dblclick', (e) => { e.stopPropagation(); openModal(dateKey); });
                 });
             }
 
-            // ============ 记事悬浮预览 ============
-            function showNoteTooltip(e, dateKey) {
-                const notes = getNotesForDate(dateKey);
-                if (notes.length === 0) return;
-                const [y, m, d] = dateKey.split('-');
+            function showTooltip(e, dateKey) {
+                const notes = getNotes(dateKey); if (!notes.length) return;
+                const [y,m,d] = dateKey.split('-');
                 let html = `<div class="tooltip-date">📌 ${y}年${m}月${d}日</div>`;
-                const maxShow = 3;
-                notes.slice(0, maxShow).forEach(n => {
-                    html +=
-                        `<div class="tooltip-item">${n.text.length > 20 ? n.text.slice(0,20)+'...' : n.text}</div>`;
-                });
-                if (notes.length > maxShow) html +=
-                    `<div class="tooltip-item" style="color:#999;">...共${notes.length}条记事</div>`;
-                noteTooltip.innerHTML = html;
-                noteTooltip.classList.add('show');
-                positionTooltip(e);
+                notes.slice(0,3).forEach(n => html += `<div class="tooltip-item">${n.text.length>20?n.text.slice(0,20)+'...':n.text}</div>`);
+                if (notes.length>3) html += `<div class="tooltip-item" style="color:#999;">...共${notes.length}条</div>`;
+                noteTooltip.innerHTML = html; noteTooltip.classList.add('show'); positionTooltip(e);
             }
-
-            function hideNoteTooltip() {
-                noteTooltip.classList.remove('show');
-            }
-
+            function hideTooltip() { noteTooltip.classList.remove('show'); }
             function positionTooltip(e) {
-                let x = e.clientX + 14;
-                let y = e.clientY - 10;
-                const tw = noteTooltip.offsetWidth;
-                const th = noteTooltip.offsetHeight;
-                if (x + tw > window.innerWidth - 10) x = e.clientX - tw - 14;
-                if (y + th > window.innerHeight - 10) y = e.clientY - th - 10;
-                if (x < 10) x = 10;
-                if (y < 10) y = 10;
-                noteTooltip.style.left = x + 'px';
-                noteTooltip.style.top = y + 'px';
+                let x = e.clientX+14, y = e.clientY-10;
+                const tw = noteTooltip.offsetWidth, th = noteTooltip.offsetHeight;
+                if (x+tw > window.innerWidth-10) x = e.clientX-tw-14;
+                if (y+th > window.innerHeight-10) y = e.clientY-th-10;
+                noteTooltip.style.left = Math.max(10, x)+'px'; noteTooltip.style.top = Math.max(10, y)+'px';
             }
 
-            // ============ 记事弹窗 ============
-            function openNoteModal(dateKey) {
-                currentModalDateKey = dateKey;
-                const [y, m, d] = dateKey.split('-');
-                modalDateLabel.textContent = `${y}年${m}月${d}日`;
-                modalNoteInput.value = '';
-                renderModalNotesList();
-                modalOverlay.classList.add('show');
-                setTimeout(() => modalNoteInput.focus(), 200);
+            function openModal(dateKey) {
+                currentModalDateKey = dateKey; const [y,m,d] = dateKey.split('-');
+                modalDateLabel.textContent = `${y}年${m}月${d}日`; modalNoteInput.value = ''; renderModalList();
+                modalOverlay.classList.add('show'); setTimeout(() => modalNoteInput.focus(), 200);
             }
-
-            function closeNoteModal() {
-                modalOverlay.classList.remove('show');
-                currentModalDateKey = null;
-                renderCalendar(currentShowYear, currentShowMonth);
+            function closeModal() { modalOverlay.classList.remove('show'); currentModalDateKey=null; renderCalendar(); }
+            function renderModalList() {
+                if (!currentModalDateKey) return; const notes = getNotes(currentModalDateKey);
+                modalNotesList.innerHTML = notes.length ? '' : '<div class="modal-empty">暂无记事</div>';
+                notes.forEach(n => {
+                    const div = document.createElement('div'); div.className = 'modal-note-item';
+                    const time = new Date(n.createdAt).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+                    div.innerHTML = `<span class="note-text">${escapeHtml(n.text)}</span><span class="note-time">${time}</span><button class="btn-del-note" data-id="${n.id}">✕</button>`;
+                    div.querySelector('.btn-del-note').onclick = (e) => { e.stopPropagation(); deleteNote(currentModalDateKey, n.id); renderModalList(); renderCalendar(); };
+                    modalNotesList.appendChild(div);
+                });
             }
-
-            function renderModalNotesList() {
-                if (!currentModalDateKey) return;
-                const notes = getNotesForDate(currentModalDateKey);
-                modalNotesList.innerHTML = '';
-                if (notes.length === 0) {
-                    modalNotesList.innerHTML = '<div class="modal-empty">暂无记事，快来添加吧~</div>';
-                } else {
-                    notes.forEach(n => {
-                        const div = document.createElement('div');
-                        div.className = 'modal-note-item';
-                        const timeStr = new Date(n.createdAt).toLocaleString('zh-CN', { month: 'numeric',
-                            day: 'numeric', hour: '2-digit', minute: '2-digit' });
-                        div.innerHTML = `
-                            <span class="note-text">${escapeHtml(n.text)}</span>
-                            <span class="note-time">${timeStr}</span>
-                            <button class="btn-del-note" data-id="${n.id}" title="删除">✕</button>
-                        `;
-                        div.querySelector('.btn-del-note').addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            deleteNoteFromDate(currentModalDateKey, n.id);
-                            renderModalNotesList();
-                            renderCalendar(currentShowYear, currentShowMonth);
-                        });
-                        modalNotesList.appendChild(div);
-                    });
-                }
-            }
-
-            function escapeHtml(str) {
-                const div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            }
-
+            function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
             function addNoteHandler() {
-                if (!currentModalDateKey) return;
-                const text = modalNoteInput.value.trim();
-                if (!text) return;
-                addNoteToDate(currentModalDateKey, text);
-                modalNoteInput.value = '';
-                renderModalNotesList();
-                renderCalendar(currentShowYear, currentShowMonth);
-                modalNoteInput.focus();
+                if (!currentModalDateKey) return; const text = modalNoteInput.value.trim(); if (!text) return;
+                addNote(currentModalDateKey, text); modalNoteInput.value = ''; renderModalList(); renderCalendar(); modalNoteInput.focus();
             }
 
-            // ============ 节日倒计时 ============
             function updateCountdown() {
-                const now = new Date();
-                const todayKey = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
-                const allHolidayDates = [];
-
-                for (const [yearStr, holidays] of Object.entries(allYearHolidays)) {
-                    const year = parseInt(yearStr);
+                const now = new Date(); const all = [];
+                for (const [year, holidays] of Object.entries(allYearHolidays)) {
                     const seen = new Set();
                     for (const [md, name] of Object.entries(holidays)) {
-                        if (seen.has(name)) continue;
-                        seen.add(name);
-                        const [m, d] = md.split('-').map(Number);
-                        const dateObj = new Date(year, m - 1, d);
-                        const dateKey = `${year}-${m}-${d}`;
-                        allHolidayDates.push({ dateKey, dateObj, name, year, month: m, day: d });
+                        if (seen.has(name)) continue; seen.add(name);
+                        const [m,d] = md.split('-').map(Number);
+                        all.push({ date: new Date(+year, m-1, d), name, year: +year, month: m, day: d });
                     }
                 }
-
-                allHolidayDates.sort((a, b) => a.dateObj - b.dateObj);
-
+                all.sort((a,b) => a.date-b.date);
                 const nowTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-                let nextHoliday = null;
-                for (const h of allHolidayDates) {
-                    if (h.dateObj.getTime() >= nowTime) {
-                        nextHoliday = h;
-                        break;
-                    }
-                }
-
-                if (nextHoliday) {
-                    const diffDays = Math.ceil((nextHoliday.dateObj.getTime() - nowTime) / (1000 * 60 * 60 * 24));
-                    let emoji = '🎉';
-                    if (nextHoliday.name === '春节') emoji = '🧧';
-                    if (nextHoliday.name === '中秋') emoji = '🌕';
-                    if (nextHoliday.name === '国庆') emoji = '🇨🇳';
-                    if (nextHoliday.name === '端午') emoji = '🐲';
-                    if (nextHoliday.name === '清明') emoji = '🌿';
-                    if (nextHoliday.name === '劳动节') emoji = '💪';
-                    if (nextHoliday.name === '元旦') emoji = '🎊';
-                    if (diffDays === 0) {
-                        countdownText.innerHTML =
-                            `今天是 <strong>${nextHoliday.name}</strong> ${emoji} 节日快乐！`;
-                    } else {
-                        countdownText.innerHTML =
-                            `距离 <strong>${nextHoliday.year}年${nextHoliday.month}月${nextHoliday.day}日 ${nextHoliday.name}</strong> 还有 <strong>${diffDays}</strong> 天 ${emoji}`;
-                    }
-                } else {
-                    countdownText.innerHTML = '🌟 所有节日已过，期待新的一年~';
-                }
+                const next = all.find(h => h.date.getTime() >= nowTime);
+                if (next) {
+                    const diff = Math.ceil((next.date.getTime()-nowTime)/(86400000));
+                    const emoji = {春节:'🧧',中秋:'🌕',国庆:'🇨🇳',端午:'🐲',清明:'🌿',劳动节:'💪',元旦:'🎊'}[next.name] || '🎉';
+                    countdownText.innerHTML = diff===0 ? `今天是 <strong>${next.name}</strong> ${emoji} 节日快乐！` : `距离 <strong>${next.year}年${next.month}月${next.day}日 ${next.name}</strong> 还有 <strong>${diff}</strong> 天 ${emoji}`;
+                } else countdownText.innerHTML = '🌟 所有节日已过，期待新的一年~';
             }
 
-            // ============ 回到今天 ============
-            function goToToday() {
-                if (currentShowYear === todayYear && currentShowMonth === todayMonth) {
-                    renderCalendar(currentShowYear, currentShowMonth);
-                    updateCountdown();
-                    return;
-                }
-                currentShowYear = todayYear;
-                currentShowMonth = todayMonth;
-                renderCalendar(currentShowYear, currentShowMonth);
-                updateCountdown();
-                closeAllPanel();
-            }
+            function goToday() { currentShowYear=todayYear; currentShowMonth=todayMonth; renderCalendar(); updateCountdown(); closeAllPanel(); }
 
-            // ============ 事件绑定 ============
-            document.getElementById("prevMonth").addEventListener("click", () => {
-                currentShowMonth--;
-                if (currentShowMonth < 1) { currentShowMonth = 12;
-                    currentShowYear--; }
-                renderCalendar(currentShowYear, currentShowMonth);
-                updateCountdown();
-                closeAllPanel();
-            });
-
-            document.getElementById("nextMonth").addEventListener("click", () => {
-                currentShowMonth++;
-                if (currentShowMonth > 12) { currentShowMonth = 1;
-                    currentShowYear++; }
-                renderCalendar(currentShowYear, currentShowMonth);
-                updateCountdown();
-                closeAllPanel();
-            });
-
-            btnToday.addEventListener("click", (e) => { e.stopPropagation();
-                goToToday(); });
-
-            yearText.addEventListener("click", (e) => { e.stopPropagation();
-                togglePanel(yearPanel, monthPanel, renderYearPanel); });
-            monthText.addEventListener("click", (e) => { e.stopPropagation();
-                togglePanel(monthPanel, yearPanel, renderMonthPanel); });
-            yearPanel.addEventListener("click", (e) => { e.stopPropagation(); });
-            monthPanel.addEventListener("click", (e) => { e.stopPropagation(); });
-
-            document.body.addEventListener("click", () => { closeAllPanel(); });
-            calendarBox.addEventListener("click", (e) => {
-                if (yearPanel.classList.contains("show") || monthPanel.classList.contains("show")) closeAllPanel();
-                e.stopPropagation();
-            });
-
-            // 滚轮切换月份
+            // 事件绑定
+            $("prevMonth").onclick = () => { currentShowMonth--; if(currentShowMonth<1){currentShowMonth=12;currentShowYear--;} renderCalendar(); updateCountdown(); closeAllPanel(); };
+            $("nextMonth").onclick = () => { currentShowMonth++; if(currentShowMonth>12){currentShowMonth=1;currentShowYear++;} renderCalendar(); updateCountdown(); closeAllPanel(); };
+            btnToday.onclick = (e) => { e.stopPropagation(); goToday(); };
+            yearText.onclick = (e) => { e.stopPropagation(); togglePanel(yearPanel, monthPanel, renderYearPanel); };
+            monthText.onclick = (e) => { e.stopPropagation(); togglePanel(monthPanel, yearPanel, renderMonthPanel); };
+            yearPanel.onclick = e => e.stopPropagation();
+            monthPanel.onclick = e => e.stopPropagation();
+            document.body.onclick = closeAllPanel;
+            calendarBox.addEventListener("click", (e) => { if(yearPanel.classList.contains("show")||monthPanel.classList.contains("show")) closeAllPanel(); e.stopPropagation(); });
             calendarBox.addEventListener("wheel", (e) => {
-                if (modalOverlay.classList.contains("show")) return;
-                if (yearPanel.classList.contains("show") || monthPanel.classList.contains("show")) return;
+                if (modalOverlay.classList.contains("show") || yearPanel.classList.contains("show") || monthPanel.classList.contains("show")) return;
                 e.preventDefault();
-                if (e.deltaY > 0) {
-                    currentShowMonth++;
-                    if (currentShowMonth > 12) { currentShowMonth = 1;
-                        currentShowYear++; }
-                } else {
-                    currentShowMonth--;
-                    if (currentShowMonth < 1) { currentShowMonth = 12;
-                        currentShowYear--; }
-                }
-                renderCalendar(currentShowYear, currentShowMonth);
-                updateCountdown();
-                closeAllPanel();
-            }, { passive: false });
-
-            // 键盘
+                if (e.deltaY>0) { currentShowMonth++; if(currentShowMonth>12){currentShowMonth=1;currentShowYear++;} }
+                else { currentShowMonth--; if(currentShowMonth<1){currentShowMonth=12;currentShowYear--;} }
+                renderCalendar(); updateCountdown(); closeAllPanel();
+            }, {passive: false});
             document.addEventListener("keydown", (e) => {
-                if (e.key === "Escape") { closeAllPanel();
-                    closeNoteModal(); return; }
+                if (e.key==="Escape") { closeAllPanel(); closeModal(); return; }
                 if (modalOverlay.classList.contains("show")) return;
-                if (e.key === "ArrowLeft" && !e.target.closest("input, textarea, select")) {
-                    e.preventDefault();
-                    currentShowMonth--;
-                    if (currentShowMonth < 1) { currentShowMonth = 12;
-                        currentShowYear--; }
-                    renderCalendar(currentShowYear, currentShowMonth);
-                    updateCountdown();
-                    closeAllPanel();
-                }
-                if (e.key === "ArrowRight" && !e.target.closest("input, textarea, select")) {
-                    e.preventDefault();
-                    currentShowMonth++;
-                    if (currentShowMonth > 12) { currentShowMonth = 1;
-                        currentShowYear++; }
-                    renderCalendar(currentShowYear, currentShowMonth);
-                    updateCountdown();
-                    closeAllPanel();
-                }
-                if (e.key === "t" && !e.target.closest("input, textarea, select") && !e.ctrlKey && !e.metaKey) {
-                    e.preventDefault();
-                    goToToday();
-                }
-                if (e.key === "Enter" && modalOverlay.classList.contains("show") && document.activeElement ===
-                    modalNoteInput) {
-                    e.preventDefault();
-                    addNoteHandler();
-                }
+                if (e.key==="ArrowLeft" && !e.target.closest("input,textarea,select")) { e.preventDefault(); currentShowMonth--; if(currentShowMonth<1){currentShowMonth=12;currentShowYear--;} renderCalendar(); updateCountdown(); closeAllPanel(); }
+                if (e.key==="ArrowRight" && !e.target.closest("input,textarea,select")) { e.preventDefault(); currentShowMonth++; if(currentShowMonth>12){currentShowMonth=1;currentShowYear++;} renderCalendar(); updateCountdown(); closeAllPanel(); }
+                if (e.key==="t" && !e.ctrlKey && !e.metaKey && !e.target.closest("input,textarea,select")) { e.preventDefault(); goToday(); }
+                if (e.key==="Enter" && modalOverlay.classList.contains("show") && document.activeElement===modalNoteInput) { e.preventDefault(); addNoteHandler(); }
             });
+            modalOverlay.onclick = (e) => { if (e.target===modalOverlay) closeModal(); };
+            btnCloseModal.onclick = closeModal;
+            btnAddNote.onclick = addNoteHandler;
+            window.addEventListener("resize", closeAllPanel);
 
-            // 弹窗事件
-            modalOverlay.addEventListener("click", (e) => {
-                if (e.target === modalOverlay) closeNoteModal();
-            });
-            btnCloseModal.addEventListener("click", closeNoteModal);
-            btnAddNote.addEventListener("click", addNoteHandler);
-            modalDialog.addEventListener("click", (e) => { e.stopPropagation(); });
-
-            window.addEventListener("resize", () => { closeAllPanel(); });
-
-            // ============ 初始化 ============
-            renderCalendar(currentShowYear, currentShowMonth);
-            updateCountdown();
-            setInterval(updateCountdown, 60000);
-
-            console.log("🕊 世界和平！日历已就绪");
-            console.log("💡 提示：滚轮切换月份 | 双击日期新建记事 | 悬浮红点日期预览记事 | ← → 切换月份 | T 回到今天 | ESC 关闭");
+            // 启动
+            renderCalendar(); updateCountdown(); setInterval(updateCountdown, 60000);
         })();
     </script>
 </body>
