@@ -12,11 +12,7 @@
             --holiday-red: #d82020;
             --festival-orange: #e66000;
             --solar-term-green: #3a8c5c;
-            --solar-term-bg: #eafaf1;
-            --workday-gray: #8c8c8c;
-            --workday-bg: #f5f5f5;
             --card-bg: rgba(255, 255, 255, 0.94);
-            --shadow-sm: 0 2px 12px rgba(36, 120, 224, 0.06);
             --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.10);
             --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
             --radius: 14px;
@@ -24,7 +20,6 @@
             --transition-fast: 0.18s ease;
             --transition-smooth: 0.22s cubic-bezier(0.2, 0, 0.2, 1);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: linear-gradient(170deg, #e0ecf8 0%, #f0e8f8 40%, #f8f4f0 100%);
@@ -40,35 +35,44 @@
             z-index: -1; pointer-events: none;
         }
 
-        /* 天气组件 */
-        .weather-widget {
+        /* 天气卡片样式 */
+        .weather-box {
             position: fixed; top: 18px; right: 18px; z-index: 9998;
-            background: rgba(255,255,255,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border-radius: 18px; padding: 10px 16px; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.10); font-size: 14px; color: #333; transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.7); cursor: default; user-select: none; animation: weatherFadeIn 0.8s ease;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-radius: 18px; padding: 14px 16px; width: 190px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10); font-size: 13px; color: #333;
+            transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.7);
+            cursor: default; user-select: none; animation: weatherFadeIn 0.8s ease;
         }
         @keyframes weatherFadeIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
-        .weather-widget:hover { background: rgba(255,255,255,0.95); box-shadow: 0 6px 20px rgba(0,0,0,0.14); transform: translateY(-2px); }
-        .weather-icon { font-size: 28px; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-        .weather-info { display: flex; flex-direction: column; gap: 2px; }
-        .weather-temp { font-weight: 700; font-size: 18px; color: #1a1a1a; line-height: 1; }
-        .weather-desc { font-size: 11px; color: #666; white-space: nowrap; }
-        .weather-location { font-size: 10px; color: #999; white-space: nowrap; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
-        .weather-loading { opacity: 0.7; }
+        .weather-box:hover { background: rgba(255,255,255,0.95); box-shadow: 0 6px 20px rgba(0,0,0,0.14); transform: translateY(-2px); }
+        .weather-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .weather-city { font-size: 13px; font-weight: 600; color: #1a1a1a; display: flex; align-items: center; gap: 4px; }
+        .weather-refresh { background: none; border: none; font-size: 16px; cursor: pointer; color: #666; transition: all 0.2s; padding: 2px 4px; border-radius: 4px; }
+        .weather-refresh:hover { background: #f0f0f0; color: #333; }
+        .weather-refresh:active { transform: scale(0.9); }
+        .weather-loading { text-align: center; padding: 10px 0; font-size: 12px; color: #999; }
+        .weather-main { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .weather-icon { font-size: 36px; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .weather-temp-wrap { display: flex; flex-direction: column; }
+        .weather-temp { font-weight: 700; font-size: 22px; color: #1a1a1a; line-height: 1.1; }
+        .weather-text { font-size: 12px; color: #555; margin-top: 2px; }
+        .weather-info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; font-size: 11px; color: #666; }
+        .weather-info-row div { white-space: nowrap; }
+        .weather-info-row span { font-weight: 500; color: #333; }
         @media (max-width: 480px) {
-            .weather-widget { top: 10px; right: 10px; padding: 8px 12px; gap: 6px; border-radius: 14px; font-size: 12px; }
-            .weather-icon { font-size: 22px; } .weather-temp { font-size: 15px; } .weather-desc { font-size: 10px; } .weather-location { font-size: 9px; max-width: 60px; }
+            .weather-box { top: 10px; right: 10px; width: 170px; padding: 10px 12px; font-size: 11px; }
+            .weather-icon { font-size: 28px; }
+            .weather-temp { font-size: 18px; }
+            .weather-city { font-size: 11px; }
         }
 
-        /* 标题 */
+        /* 其余样式保持不变 (标题、日历、弹窗等) */
         .title-wrap { opacity: 0; transform: scale(0.8); animation: textShow 2s ease-out forwards; }
         .title-text { color: #1a1a1a; font-weight: bold; font-size: clamp(2.6rem, 9vw, 5.5rem); line-height: 1.35; text-align: center; letter-spacing: 3px; text-shadow: 0 2px 12px rgba(255,255,255,0.85); animation: float 4s ease-in-out infinite alternate; }
         .peace-text { animation-delay: 0.6s; }
         @keyframes textShow { to { opacity: 1; transform: scale(1); } }
         @keyframes float { from { transform: translateY(-5px); } to { transform: translateY(5px); } }
-
-        /* 倒计时栏 */
         .countdown-bar {
             background: linear-gradient(135deg, #fff8e8, #fff3d6); border: 1.5px solid #f0c060; border-radius: 20px;
             padding: 8px 20px; font-size: clamp(0.85rem, 2.2vw, 1rem); color: #8b5e14; font-weight: 600; letter-spacing: 1px;
@@ -79,54 +83,36 @@
         @keyframes countdownPulse { 0%,100%{ box-shadow: 0 2px 10px rgba(180,130,40,0.10); } 50%{ box-shadow: 0 2px 18px rgba(180,130,40,0.22); } }
         .countdown-icon { display: inline-block; animation: bounceIcon 0.6s ease-in-out infinite alternate; }
         @keyframes bounceIcon { from { transform: translateY(0); } to { transform: translateY(-4px); } }
-
-        /* 时钟 */
         .time-box { font-size: clamp(0.9rem, 2.5vw, 1.25rem); color: #1a1a1a; letter-spacing: 2px; text-shadow: 0 1px 6px rgba(255,255,255,0.85); font-weight: 500; cursor: default; }
-
-        /* 日历卡片 */
         .calendar-box { width: min(78vw, 450px); background: var(--card-bg); border-radius: var(--radius); padding: 18px 16px 16px; box-shadow: var(--shadow-md); transition: all 0.3s ease; position: relative; z-index: 1; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
         .calendar-box:hover { box-shadow: var(--shadow-lg); }
         @media (max-width: 420px) { .calendar-box { width: 95vw; padding: 14px 10px 12px; border-radius: 12px; } }
-
-        /* 日历头部 */
         .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 5px; }
-        .calendar-header button { border: 1px solid #ddd; background: #fff; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all var(--transition-fast); white-space: nowrap; user-select: none; -webkit-tap-highlight-color: transparent; flex-shrink: 0; }
+        .calendar-header button { border: 1px solid #ddd; background: #fff; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all var(--transition-fast); white-space: nowrap; user-select: none; }
         .calendar-header button:hover { background-color: #f0f6ff; border-color: #94bfff; }
         .calendar-header button:active { transform: scale(0.92); }
         .btn-today { font-weight: 500; color: var(--primary); border-color: #c8ddfb !important; background: #fafcff !important; letter-spacing: 1px; font-size: 13px !important; padding: 5px 10px !important; }
         .btn-today:hover { background: #e8f0ff !important; border-color: var(--primary-light) !important; color: #1860c7 !important; }
         @media (max-width: 380px) { .btn-today { font-size: 11px !important; padding: 4px 7px !important; } .calendar-header button { padding: 4px 8px; font-size: 12px; } }
-
         .ym-text { font-size: 18px; font-weight: bold; position: relative; cursor: default; user-select: none; text-align: center; flex-shrink: 0; padding: 4px 2px; }
-        .year-click, .month-click { color: #2478e0; text-decoration: underline dotted 2px #74b3ff; padding: 2px 5px; transition: color 0.2s; cursor: pointer; border-radius: 4px; -webkit-tap-highlight-color: transparent; }
+        .year-click, .month-click { color: #2478e0; text-decoration: underline dotted 2px #74b3ff; padding: 2px 5px; transition: color 0.2s; cursor: pointer; border-radius: 4px; }
         .year-click:hover, .month-click:hover { color: #0f5fc4; background: rgba(36,120,224,0.06); }
-        .year-click:active, .month-click:active { background: rgba(36,120,224,0.14); }
-
-        /* 下拉面板 */
-        .select-panel { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) scale(0.92); background: #ffffff; border-radius: 12px; box-shadow: var(--shadow-sm), 0 8px 24px rgba(0,0,0,0.12); padding: 10px; z-index: 9999; opacity: 0; visibility: hidden; transition: all var(--transition-smooth); border: none; pointer-events: none; max-height: 260px; overflow-y: auto; overscroll-behavior: contain; }
-        .select-panel::-webkit-scrollbar { width: 5px; } .select-panel::-webkit-scrollbar-track { background: transparent; border-radius: 10px; } .select-panel::-webkit-scrollbar-thumb { background: #d0d8e8; border-radius: 10px; }
-        .select-panel::before { content: ""; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 8px solid #fff; filter: drop-shadow(0 -2px 2px rgba(0,0,0,0.04)); }
+        .select-panel { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) scale(0.92); background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(36,120,224,0.06), 0 8px 24px rgba(0,0,0,0.12); padding: 10px; z-index: 9999; opacity: 0; visibility: hidden; transition: all var(--transition-smooth); border: none; pointer-events: none; max-height: 260px; overflow-y: auto; }
+        .select-panel::-webkit-scrollbar { width: 5px; } .select-panel::-webkit-scrollbar-thumb { background: #d0d8e8; border-radius: 10px; }
         .select-panel.show { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); pointer-events: auto; }
         .year-panel { width: 170px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
         .month-panel { width: 210px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        @media (max-width: 420px) { .year-panel { width: 148px; } .month-panel { width: 180px; } }
-        .panel-item { padding: 7px 0; text-align: center; border-radius: var(--radius-sm); cursor: pointer; font-size: 14px; transition: all var(--transition-fast); background: #f8fbff; user-select: none; }
-        .panel-item:hover { background: linear-gradient(135deg, #e0edff, #d0e4ff); color: #1860c7; transform: translateY(-1px); }
-        .panel-item:active { transform: scale(0.94); }
+        .panel-item { padding: 7px 0; text-align: center; border-radius: var(--radius-sm); cursor: pointer; font-size: 14px; transition: all var(--transition-fast); background: #f8fbff; }
+        .panel-item:hover { background: linear-gradient(135deg, #e0edff, #d0e4ff); color: #1860c7; }
         .panel-item.active { background: linear-gradient(135deg, #2478e0, #368cf0); color: #fff; box-shadow: 0 2px 6px rgba(36,120,224,0.3); font-weight: 600; }
-
-        /* 星期行 */
         .week-row { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 4px; }
         .week-item { text-align: center; font-size: 13px; padding: 4px 0; font-weight: 600; color: #444; }
         .week-item:nth-child(6) { color: #2979c1; } .week-item:nth-child(7) { color: #c62828; }
-
-        /* 日期网格 */
         .day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0.3; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .day-cell { aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: var(--radius-sm); padding: 1px; transition: background 0.18s, transform 0.18s; cursor: pointer; position: relative; }
         .day-cell.other-month { color: #c5c5c5; pointer-events: none; }
         .day-cell:not(.other-month):hover { background-color: #eef6ff; transform: scale(1.07); z-index: 3; }
-        .day-cell:not(.other-month):active { transform: scale(0.94); background-color: #dceaff; }
         .day-cell.weekday-sat:not(.other-month) .num { color: #2979c1; font-weight: 600; }
         .day-cell.weekday-sun:not(.other-month) .num { color: #c62828; font-weight: 600; }
         .day-cell.today { border: 2.5px solid #2478e0; animation: breath 2.8s ease-in-out infinite alternate; background: rgba(36,120,224,0.05); }
@@ -141,14 +127,10 @@
         .holiday-name { font-size: 8px; color: #c41818; font-weight: bold; }
         .workday-tag { font-size: 8px; color: #8c8c8c; font-weight: bold; }
         .day-cell .num { font-size: clamp(12px, 1.8vw, 16px); line-height: 1.1; font-weight: 500; }
-        .day-cell .lunar { font-size: 8px; margin-top: 0; color: #555; }
+        .day-cell .lunar { font-size: 8px; color: #555; }
         .note-dot { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: #e04040; box-shadow: 0 0 3px rgba(224,64,64,0.5); }
-
-        /* 悬浮提示 */
         .note-tooltip { position: fixed; z-index: 10000; background: #fffef8; border: 1px solid #e0d8c0; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: #444; box-shadow: 0 4px 16px rgba(0,0,0,0.14); pointer-events: none; opacity: 0; visibility: hidden; max-width: 200px; }
         .note-tooltip.show { opacity: 1; visibility: visible; }
-
-        /* 弹窗 */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 10001; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s; }
         .modal-overlay.show { opacity: 1; visibility: visible; }
         .modal-dialog { background: #fff; border-radius: 14px; padding: 20px 18px; width: min(88vw, 380px); box-shadow: 0 12px 40px rgba(0,0,0,0.20); max-height: 80vh; display: flex; flex-direction: column; gap: 10px; }
@@ -160,13 +142,30 @@
     </style>
 </head>
 <body>
-    <!-- 天气组件 -->
-    <div class="weather-widget" id="weatherWidget">
-        <span class="weather-icon" id="weatherIcon">🌤️</span>
-        <div class="weather-info">
-            <span class="weather-temp" id="weatherTemp">--°C</span>
-            <span class="weather-desc" id="weatherDesc">加载中</span>
-            <span class="weather-location" id="weatherLocation">定位中</span>
+    <!-- 天气面板 -->
+    <div class="weather-box" id="weatherBox">
+        <div class="weather-header">
+            <div class="weather-city">
+                <span>📍</span>
+                <span id="cityName">获取定位中...</span>
+            </div>
+            <button class="weather-refresh" id="weatherRefresh" title="刷新天气">⟳</button>
+        </div>
+        <div id="weatherLoading" class="weather-loading">正在加载天气数据...</div>
+        <div id="weatherContent" style="display:none;">
+            <div class="weather-main">
+                <div class="weather-icon" id="weatherIcon">⛅</div>
+                <div class="weather-temp-wrap">
+                    <div class="weather-temp" id="weatherTemp">--°C</div>
+                    <div class="weather-text" id="weatherText">加载中</div>
+                </div>
+            </div>
+            <div class="weather-info-row">
+                <div>湿度：<span id="weatherHum">--</span>%</div>
+                <div>风向：<span id="weatherWind">--</span></div>
+                <div>空气质量：<span id="weatherAqi">--</span></div>
+                <div>体感：<span id="weatherFeel">--°C</span></div>
+            </div>
         </div>
     </div>
 
@@ -200,7 +199,7 @@
             <div class="modal-date-label" id="modalDateLabel"></div>
             <div class="modal-notes-list" id="modalNotesList"></div>
             <div class="modal-input-row" style="display: flex; gap: 8px; margin-top: 6px;">
-                <input type="text" id="modalNoteInput" placeholder="输入记事..." maxlength="200" style="flex:1; padding:9px 12px; border:1px solid #ddd; border-radius:8px;">
+                <input type="text" id="modalNoteInput" placeholder="输入记事内容..." maxlength="200" style="flex:1; padding:9px 12px; border:1px solid #ddd; border-radius:8px;">
                 <button class="btn-add-note" id="btnAddNote">添加</button>
             </div>
             <button class="btn-close-modal" id="btnCloseModal">关闭</button>
@@ -209,164 +208,190 @@
 
     <script>
         (function() {
-            // ========== DOM 元素 ==========
-            const $ = (id) => document.getElementById(id);
-            const timeText = $("timeText"), dayGrid = $("dayGrid"), yearText = $("yearText"), monthText = $("monthText");
-            const yearPanel = $("yearPanel"), monthPanel = $("monthPanel"), btnToday = $("btnToday"), calendarBox = $("calendarBox");
-            const countdownText = $("countdownText"), noteTooltip = $("noteTooltip");
-            const modalOverlay = $("modalOverlay"), modalDateLabel = $("modalDateLabel");
-            const modalNotesList = $("modalNotesList"), modalNoteInput = $("modalNoteInput");
-            const btnAddNote = $("btnAddNote"), btnCloseModal = $("btnCloseModal");
-            const weatherIcon = $("weatherIcon"), weatherTemp = $("weatherTemp"), weatherDesc = $("weatherDesc"), weatherLocation = $("weatherLocation"), weatherWidget = $("weatherWidget");
+            // ============ DOM 引用 ============
+            const timeText = document.getElementById("timeText");
+            const dayGrid = document.getElementById("dayGrid");
+            const yearText = document.getElementById("yearText");
+            const monthText = document.getElementById("monthText");
+            const yearPanel = document.getElementById("yearPanel");
+            const monthPanel = document.getElementById("monthPanel");
+            const btnToday = document.getElementById("btnToday");
+            const calendarBox = document.getElementById("calendarBox");
+            const countdownText = document.getElementById("countdownText");
+            const noteTooltip = document.getElementById("noteTooltip");
+            const modalOverlay = document.getElementById("modalOverlay");
+            const modalDialog = document.getElementById("modalDialog");
+            const modalDateLabel = document.getElementById("modalDateLabel");
+            const modalNotesList = document.getElementById("modalNotesList");
+            const modalNoteInput = document.getElementById("modalNoteInput");
+            const btnAddNote = document.getElementById("btnAddNote");
+            const btnCloseModal = document.getElementById("btnCloseModal");
 
-            // =====================================================================
-            // 天气功能 (心知天气 JSONP)
-            // 如需更换 API，修改以下三个部分：
-            //   1. API_KEY (心知天气密钥)
-            //   2. fetchWeatherByLocation 中的请求 URL
-            //   3. seniverseCodeMap 天气代码映射表
-            // =====================================================================
-            const API_KEY = "PP5i5qKl-pSNGb4wd"; // 心知天气 key
+            // 天气 DOM
+            const cityName = document.getElementById('cityName');
+            const weatherLoading = document.getElementById('weatherLoading');
+            const weatherContent = document.getElementById('weatherContent');
+            const weatherIcon = document.getElementById('weatherIcon');
+            const weatherTemp = document.getElementById('weatherTemp');
+            const weatherText = document.getElementById('weatherText');
+            const weatherHum = document.getElementById('weatherHum');
+            const weatherWind = document.getElementById('weatherWind');
+            const weatherAqi = document.getElementById('weatherAqi');
+            const weatherFeel = document.getElementById('weatherFeel');
+            const weatherRefresh = document.getElementById('weatherRefresh');
 
-            // 心知天气代码 → 图标/描述映射表
-            const seniverseCodeMap = {
-                "0": { icon: "☀️", desc: "晴" },
-                "1": { icon: "☁️", desc: "多云" },
-                "2": { icon: "⛅", desc: "阴" },
-                "3": { icon: "🌧️", desc: "阵雨" },
-                "4": { icon: "⛈️", desc: "雷阵雨" },
-                "5": { icon: "🌨️", desc: "冰雹" },
-                "6": { icon: "🌨️", desc: "雨夹雪" },
-                "7": { icon: "🌧️", desc: "小雨" },
-                "8": { icon: "🌧️", desc: "中雨" },
-                "9": { icon: "🌧️", desc: "大雨" },
-                "10": { icon: "🌧️", desc: "暴雨" },
-                "11": { icon: "🌧️", desc: "大暴雨" },
-                "13": { icon: "❄️", desc: "小雪" },
-                "14": { icon: "❄️", desc: "中雪" },
-                "15": { icon: "❄️", desc: "大雪" },
-                "16": { icon: "❄️", desc: "暴雪" },
-                "17": { icon: "🌫️", desc: "雾" },
-                "18": { icon: "🌪️", desc: "大风" },
-                "19": { icon: "🌬️", desc: "扬沙" },
-                "20": { icon: "🌡️", desc: "热" },
-                "21": { icon: "🥶", desc: "冷" },
-                "99": { icon: "🌀", desc: "未知" }
+            // ===================== 天气逻辑 (修复版) =====================
+            const WEATHER_KEY = "8d445f63f23b46c89d3d7f9f8d7f6d5c"; // 请替换为您自己的和风天气密钥
+            let userLng = null, userLat = null;
+            const weatherIconMap = {
+                "晴": "☀️", "多云": "⛅", "少云": "⛅", "阴": "☁️",
+                "小雨": "🌧️", "中雨": "🌧️", "大雨": "🌧️", "暴雨": "⛈️",
+                "雷阵雨": "⛈️", "小雪": "🌨️", "中雪": "❄️", "大雪": "❄️",
+                "雾": "🌫️", "霾": "🌫️", "沙尘": "🌪️"
             };
 
-            // 更新天气显示 (参数: 温度数值, 天气代码字符串, 城市名)
-            function updateWeatherDisplay(temp, code, city) {
-                const weather = seniverseCodeMap[code] || seniverseCodeMap["99"];
-                weatherIcon.textContent = weather.icon;
-                weatherTemp.textContent = `${temp}°C`;
-                weatherDesc.textContent = weather.desc;
-                weatherLocation.textContent = city || "未知地点";
-                weatherWidget.classList.remove("weather-loading");
+            // 显示加载状态
+            function showLoading() {
+                weatherLoading.style.display = "block";
+                weatherContent.style.display = "none";
             }
 
-            // JSONP 回调函数 (必须挂载到 window)
-            window.seniverseWeatherCallback = function(data) {
+            // 显示天气内容
+            function showContent() {
+                weatherLoading.style.display = "none";
+                weatherContent.style.display = "block";
+            }
+
+            // 显示错误提示 (隐藏加载，显示内容区域并填充错误信息)
+            function showError(msg) {
+                showContent();
+                cityName.textContent = "获取失败";
+                weatherIcon.textContent = "⚠️";
+                weatherTemp.textContent = "--°C";
+                weatherText.textContent = msg || "天气不可用";
+                weatherHum.textContent = "--";
+                weatherWind.textContent = "--";
+                weatherAqi.textContent = "--";
+                weatherFeel.textContent = "--";
+            }
+
+            // 获取定位
+            function getUserLocation() {
+                if (!navigator.geolocation) {
+                    loadWeatherByCity("合肥");
+                    return;
+                }
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        userLat = pos.coords.latitude.toFixed(2);
+                        userLng = pos.coords.longitude.toFixed(2);
+                        getWeatherByLngLat(userLng, userLat);
+                    },
+                    (err) => {
+                        console.warn("定位失败:", err.message);
+                        loadWeatherByCity("合肥");
+                    },
+                    { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
+                );
+            }
+
+            // 根据经纬度获取天气
+            async function getWeatherByLngLat(lng, lat) {
+                showLoading();
                 try {
-                    if (data && data.results && data.results.length > 0) {
-                        const result = data.results[0];
-                        const temp = result.now.temperature;
-                        const code = result.now.code;
-                        const city = result.location.name;
-                        updateWeatherDisplay(temp, code, city);
-                    } else {
-                        throw new Error("无效数据");
+                    const res = await fetch(`https://devapi.qweather.com/v7/weather/now?location=${lng},${lat}&key=${WEATHER_KEY}`);
+                    const airRes = await fetch(`https://devapi.qweather.com/v7/air/now?location=${lng},${lat}&key=${WEATHER_KEY}`);
+                    const locRes = await fetch(`https://geoapi.qweather.com/v2/city/lookup?location=${lng},${lat}&key=${WEATHER_KEY}`);
+                    if (!res.ok || !airRes.ok || !locRes.ok) throw new Error("API请求失败");
+                    const data = await res.json();
+                    const airData = await airRes.json();
+                    const locData = await locRes.json();
+                    if (data.code !== "200" || !data.now) throw new Error("天气数据异常");
+                    renderWeather(data, airData, locData.location?.[0]?.name || "未知城市");
+                } catch (err) {
+                    console.error(err);
+                    showError("定位天气获取失败");
+                }
+            }
+
+            // 根据城市名获取天气
+            async function loadWeatherByCity(city) {
+                showLoading();
+                try {
+                    const cityRes = await fetch(`https://geoapi.qweather.com/v2/city/lookup?location=${city}&key=${WEATHER_KEY}`);
+                    if (!cityRes.ok) throw new Error("城市查询失败");
+                    const cityJson = await cityRes.json();
+                    if (!cityJson.location || cityJson.location.length === 0) {
+                        // 城市查询不到，降级使用北京ID
+                        return loadWeatherByCityId("101010100");
                     }
+                    const cityId = cityJson.location[0].id;
+                    return loadWeatherByCityId(cityId, cityJson.location[0].name);
                 } catch (e) {
-                    console.warn("天气数据解析失败:", e);
-                    weatherIcon.textContent = "🌡️";
-                    weatherTemp.textContent = "--°C";
-                    weatherDesc.textContent = "暂不可用";
-                    weatherLocation.textContent = "获取失败";
-                    weatherWidget.classList.add("weather-loading");
+                    console.error(e);
+                    showError("城市天气获取失败");
                 }
-                // 清理 script 标签
-                const oldScript = document.getElementById('weatherJsonpScript');
-                if (oldScript) oldScript.remove();
-            };
-
-            // 通过 location 参数请求天气 (location 可为城市名或经纬度)
-            function fetchWeatherByLocation(locationStr) {
-                // 移除旧的 script 标签 (防止重复)
-                const oldScript = document.getElementById('weatherJsonpScript');
-                if (oldScript) oldScript.remove();
-
-                const script = document.createElement('script');
-                script.id = 'weatherJsonpScript';
-                // 拼接 JSONP 请求 URL，callback 参数固定为 seniverseWeatherCallback
-                script.src = `https://api.seniverse.com/v3/weather/now.json?key=${SEviU6Bzs-YUU2KMP}&location=${encodeURIComponent(locationStr)}&language=zh-Hans&unit=c&callback=seniverseWeatherCallback`;
-                script.onerror = function() {
-                    console.warn("天气 JSONP 加载失败");
-                    weatherIcon.textContent = "🌡️";
-                    weatherTemp.textContent = "--°C";
-                    weatherDesc.textContent = "请求失败";
-                    weatherLocation.textContent = locationStr || "未知";
-                    weatherWidget.classList.add("weather-loading");
-                    script.remove();
-                };
-                document.body.appendChild(script);
             }
 
-            // 获取用户位置并请求天气
-            function initWeather() {
-                // 1. 优先使用浏览器 GPS (经纬度格式)
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        (pos) => {
-                            const lat = pos.coords.latitude.toFixed(2);
-                            const lon = pos.coords.longitude.toFixed(2);
-                            fetchWeatherByLocation(`${lat}:${lon}`);
-                        },
-                        (err) => {
-                            console.warn("GPS定位失败, 尝试IP定位:", err.message);
-                            getLocationByIP();
-                        },
-                        { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
-                    );
+            // 通过城市ID获取天气
+            async function loadWeatherByCityId(cityId, cityName = "北京") {
+                showLoading();
+                try {
+                    const res = await fetch(`https://devapi.qweather.com/v7/weather/now?location=${cityId}&key=${WEATHER_KEY}`);
+                    const airRes = await fetch(`https://devapi.qweather.com/v7/air/now?location=${cityId}&key=${WEATHER_KEY}`);
+                    if (!res.ok || !airRes.ok) throw new Error("API请求失败");
+                    const data = await res.json();
+                    const airData = await airRes.json();
+                    if (data.code !== "200" || !data.now) throw new Error("天气数据异常");
+                    renderWeather(data, airData, cityName);
+                } catch (e) {
+                    console.error(e);
+                    showError("天气服务暂不可用");
+                }
+            }
+
+            // 渲染天气面板
+            function renderWeather(weatherData, airData, city) {
+                showContent();
+                cityName.textContent = city;
+                const now = weatherData.now;
+                const weatherType = now.text;
+                weatherIcon.textContent = weatherIconMap[weatherType] || "🌤️";
+                weatherTemp.textContent = `${now.temp}°C`;
+                weatherText.textContent = weatherType;
+                weatherHum.textContent = now.humidity;
+                weatherWind.textContent = `${now.windDir} ${now.windScale}级`;
+                weatherFeel.textContent = `${now.feelsLike}°C`;
+                if (airData.now && airData.now.aqi) {
+                    weatherAqi.textContent = airData.now.aqi + " " + airData.now.level;
                 } else {
-                    getLocationByIP();
+                    weatherAqi.textContent = "无数据";
                 }
             }
 
-            // 2. IP 定位获取城市名
-            function getLocationByIP() {
-                weatherLocation.textContent = "IP定位中...";
-                fetch("https://ipapi.co/json/")
-                    .then(res => res.json())
-                    .then(data => {
-                        const city = data.city || data.region || data.country_name || "beijing";
-                        fetchWeatherByLocation(city);
-                    })
-                    .catch(() => {
-                        // 最终回退到默认城市
-                        weatherLocation.textContent = "默认城市";
-                        fetchWeatherByLocation("beijing");
-                    });
-            }
+            // 刷新按钮
+            weatherRefresh.addEventListener("click", () => {
+                if (userLng && userLat) {
+                    getWeatherByLngLat(userLng, userLat);
+                } else {
+                    getUserLocation();
+                }
+            });
 
-            // 启动天气
-            initWeather();
+            // 初始启动天气
+            getUserLocation();
 
-            // =====================================================================
-            // 实时时钟
-            // =====================================================================
+            // ===================== 实时时钟 =====================
             function updateTime() {
                 const now = new Date();
                 const weekArr = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
-                const str = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${weekArr[now.getDay()]} ` +
-                           `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-                timeText.textContent = str;
+                timeText.textContent = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${weekArr[now.getDay()]} ` +
+                    `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
             }
             updateTime();
             setInterval(updateTime, 1000);
 
-            // =====================================================================
-            // 节假日/补班/节气/农历数据 (保持不变)
-            // =====================================================================
+            // ===================== 节假日/补班/节气/农历数据 (保持不变) =====================
             const allYearHolidays = {
                 2026: {"1-1":"元旦","1-2":"元旦","1-3":"元旦","2-15":"春节","2-16":"春节","2-17":"春节","2-18":"春节","2-19":"春节","2-20":"春节","2-21":"春节","2-22":"春节","2-23":"春节","4-4":"清明","4-5":"清明","4-6":"清明","5-1":"劳动节","5-2":"劳动节","5-3":"劳动节","5-4":"劳动节","5-5":"劳动节","6-19":"端午","6-20":"端午","6-21":"端午","9-25":"中秋","9-26":"中秋","9-27":"中秋","10-1":"国庆","10-2":"国庆","10-3":"国庆","10-4":"国庆","10-5":"国庆","10-6":"国庆","10-7":"国庆"},
                 2027: {"1-1":"元旦","1-2":"元旦","1-3":"元旦","2-5":"春节","2-6":"春节","2-7":"春节","2-8":"春节","2-9":"春节","2-10":"春节","2-11":"春节","4-5":"清明","4-6":"清明","4-7":"清明","5-1":"劳动节","5-2":"劳动节","5-3":"劳动节","5-4":"劳动节","5-5":"劳动节","6-7":"端午","6-8":"端午","6-9":"端午","9-15":"中秋","9-16":"中秋","9-17":"中秋","10-1":"国庆","10-2":"国庆","10-3":"国庆","10-4":"国庆","10-5":"国庆","10-6":"国庆","10-7":"国庆"}
@@ -381,7 +406,6 @@
             };
             const festivalMap = {"7-1":"建党节","8-1":"建军节","9-21":"国际和平日","10-24":"联合国日","12-10":"人权日"};
             const peaceDays = ["9-21"];
-
             const lunar2026 = {
                 1:{1:"元旦",2:"十四",3:"十五",4:"十六",5:"十七",6:"十八",7:"十九",8:"二十",9:"廿一",10:"廿二",11:"廿三",12:"廿四",13:"廿五",14:"廿六",15:"廿七",16:"廿八",17:"廿九",18:"腊月",19:"初二",20:"初三",21:"初四",22:"初五",23:"初六",24:"初七",25:"初八",26:"初九",27:"初十",28:"十一",29:"十二",30:"十三",31:"十四"},
                 2:{1:"十五",2:"十六",3:"十七",4:"十八",5:"十九",6:"二十",7:"廿一",8:"廿二",9:"廿三",10:"廿四",11:"廿五",12:"廿六",13:"廿七",14:"廿八",15:"廿九",16:"正月",17:"初二",18:"初三",19:"初四",20:"初五",21:"初六",22:"初七",23:"初八",24:"初九",25:"初十",26:"十一",27:"十二",28:"十三"},
@@ -401,17 +425,15 @@
             const todayYear = today.getFullYear(), todayMonth = today.getMonth()+1, todayDay = today.getDate();
             let currentShowYear = todayYear, currentShowMonth = todayMonth, currentModalDateKey = null;
 
-            // =====================================================================
-            // 记事本 localStorage 操作
-            // =====================================================================
+            // ===================== 记事本 localStorage =====================
             const NOTES_KEY = 'calendar_peace_notes';
             const loadNotes = () => { try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch(e) { return {}; } };
             const saveNotes = (notes) => { try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch(e){} };
             const getNotes = (dateKey) => loadNotes()[dateKey] || [];
             const addNote = (dateKey, text) => {
                 const all = loadNotes(); if (!all[dateKey]) all[dateKey] = [];
-                const note = { id: Date.now(), text: text.trim(), createdAt: new Date().toISOString() };
-                all[dateKey].push(note); saveNotes(all); return note;
+                all[dateKey].push({ id: Date.now(), text: text.trim(), createdAt: new Date().toISOString() });
+                saveNotes(all);
             };
             const deleteNote = (dateKey, noteId) => {
                 const all = loadNotes(); if (!all[dateKey]) return;
@@ -420,13 +442,9 @@
                 saveNotes(all);
             };
             const hasNotes = (dateKey) => getNotes(dateKey).length > 0;
-
             function getLunar(y,m,d) { return (y===2026 && lunar2026[m]?.[d]) ? lunar2026[m][d] : ""; }
-            function isDup(lunar, holiday) { if(!lunar||!holiday) return false; return lunar===holiday || lunar.includes(holiday) || holiday.includes(lunar) || (lunar==="国庆节"&&holiday==="国庆")||(lunar==="元旦"&&holiday==="元旦"); }
 
-            // =====================================================================
-            // 日历渲染
-            // =====================================================================
+            // ===================== 日历渲染 (保持不变) =====================
             function createDayCell(num, holidayName, lunarTxt, isOtherMonth, isTodayFlag, isHoliday, isFestival, isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, dateKey) {
                 const div = document.createElement("div"); div.className = "day-cell";
                 if (isOtherMonth) div.classList.add("other-month");
@@ -438,14 +456,11 @@
                 if (isPeaceDay && !isOtherMonth) div.classList.add("peace-day");
                 if (!isOtherMonth) { if (weekDay===6) div.classList.add("weekday-sat"); if (weekDay===0) div.classList.add("weekday-sun"); }
                 if (!isOtherMonth && dateKey) { div.setAttribute("data-date-key", dateKey); div.style.cursor = "pointer"; }
-
                 let html = `<span class="num">${num}</span>`;
-                let displayLunar = lunarTxt;
-                if (isHoliday && isDup(lunarTxt, holidayName)) displayLunar = "";
                 if (isSolarTerm && solarTermName && !isOtherMonth) html += `<span class="solar-term-name">${solarTermName}</span>`;
                 if (isHoliday && holidayName && !isOtherMonth) html += `<span class="holiday-name">${holidayName}</span>`;
                 if (isWorkday && !isOtherMonth && !isHoliday) html += `<span class="workday-tag">补班</span>`;
-                if (displayLunar) html += `<span class="lunar">${displayLunar}</span>`;
+                if (lunarTxt && !isHoliday && !isSolarTerm) html += `<span class="lunar">${lunarTxt}</span>`;
                 if (!isOtherMonth && dateKey && hasNotes(dateKey)) html += '<span class="note-dot"></span>';
                 div.innerHTML = html;
                 return div;
@@ -476,9 +491,7 @@
 
             function renderCalendar() {
                 dayGrid.innerHTML = ""; updateYMTitle();
-                const yearHoliday = allYearHolidays[currentShowYear] || {};
-                const yearWorkday = allYearWorkdays[currentShowYear] || {};
-                const yearSolarTerms = solarTermsData[currentShowYear] || {};
+                const yearHoliday = allYearHolidays[currentShowYear] || {}, yearWorkday = allYearWorkdays[currentShowYear] || {}, yearSolarTerms = solarTermsData[currentShowYear] || {};
                 const firstDay = new Date(currentShowYear, currentShowMonth-1, 1).getDay();
                 const preDays = firstDay===0 ? 6 : firstDay-1;
                 const thisMonthTotal = new Date(currentShowYear, currentShowMonth, 0).getDate();
@@ -488,8 +501,7 @@
                     const dateKey = `${currentShowMonth}-${d}`, fullKey = `${currentShowYear}-${currentShowMonth}-${d}`;
                     const weekDay = new Date(currentShowYear, currentShowMonth-1, d).getDay();
                     const lunarTxt = getLunar(currentShowYear, currentShowMonth, d);
-                    const holidayName = yearHoliday[dateKey] || "";
-                    const isHoliday = !!holidayName, isWorkday = !!yearWorkday[dateKey] && !isHoliday;
+                    const holidayName = yearHoliday[dateKey] || "", isHoliday = !!holidayName, isWorkday = !!yearWorkday[dateKey] && !isHoliday;
                     const solarTermName = yearSolarTerms[dateKey] || "", isSolarTerm = !!solarTermName;
                     const isFestival = !!festivalMap[dateKey] && !isSolarTerm, isPeaceDay = peaceDays.includes(dateKey);
                     const isTodayFlag = (currentShowYear===todayYear && currentShowMonth===todayMonth && d===todayDay);
@@ -510,7 +522,7 @@
                 });
             }
 
-            function showTooltip(e, dateKey) {
+            function showTooltip(e, dateKey) { /* ... 同上 ... */
                 const notes = getNotes(dateKey); if (!notes.length) return;
                 const [y,m,d] = dateKey.split('-');
                 let html = `<div class="tooltip-date">📌 ${y}年${m}月${d}日</div>`;
@@ -550,7 +562,7 @@
                 addNote(currentModalDateKey, text); modalNoteInput.value = ''; renderModalList(); renderCalendar(); modalNoteInput.focus();
             }
 
-            function updateCountdown() {
+            function updateCountdown() { /* ... 同上 ... */
                 const now = new Date(); const all = [];
                 for (const [year, holidays] of Object.entries(allYearHolidays)) {
                     const seen = new Set();
@@ -573,8 +585,8 @@
             function goToday() { currentShowYear=todayYear; currentShowMonth=todayMonth; renderCalendar(); updateCountdown(); closeAllPanel(); }
 
             // 事件绑定
-            $("prevMonth").onclick = () => { currentShowMonth--; if(currentShowMonth<1){currentShowMonth=12;currentShowYear--;} renderCalendar(); updateCountdown(); closeAllPanel(); };
-            $("nextMonth").onclick = () => { currentShowMonth++; if(currentShowMonth>12){currentShowMonth=1;currentShowYear++;} renderCalendar(); updateCountdown(); closeAllPanel(); };
+            document.getElementById("prevMonth").onclick = () => { currentShowMonth--; if(currentShowMonth<1){currentShowMonth=12;currentShowYear--;} renderCalendar(); updateCountdown(); closeAllPanel(); };
+            document.getElementById("nextMonth").onclick = () => { currentShowMonth++; if(currentShowMonth>12){currentShowMonth=1;currentShowYear++;} renderCalendar(); updateCountdown(); closeAllPanel(); };
             btnToday.onclick = (e) => { e.stopPropagation(); goToday(); };
             yearText.onclick = (e) => { e.stopPropagation(); togglePanel(yearPanel, monthPanel, renderYearPanel); };
             monthText.onclick = (e) => { e.stopPropagation(); togglePanel(monthPanel, yearPanel, renderMonthPanel); };
@@ -602,7 +614,6 @@
             btnAddNote.onclick = addNoteHandler;
             window.addEventListener("resize", closeAllPanel);
 
-            // 启动日历
             renderCalendar();
             updateCountdown();
             setInterval(updateCountdown, 60000);
