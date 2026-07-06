@@ -1003,13 +1003,80 @@
         </div>
     </div>
 
-    <!-- 其余HTML结构不变... -->
-    
+    <div class="title-wrap">
+        <p class="title-text">我们的愿望是~</p>
+    </div>
+    <div class="title-wrap peace-wrap">
+        <p class="title-text peace-text">世界和平！</p>
+    </div>
+    <div class="countdown-bar" id="countdownBar">
+        <span class="countdown-icon">📅</span> <span id="countdownText">加载中...</span>
+    </div>
+    <div class="time-box" id="timeText"></div>
+    <div class="calendar-box" id="calendarBox">
+        <div class="calendar-header">
+            <button class="btn-today" id="btnToday" title="回到今天">🕊 今天</button>
+            <button id="prevMonth" title="上个月">◀</button>
+            <div class="ym-text" id="ymTitle">
+                <span class="year-click" id="yearText">2026</span>年<span class="month-click" id="monthText">7</span>月
+                <div class="select-panel year-panel" id="yearPanel"></div>
+                <div class="select-panel month-panel" id="monthPanel"></div>
+            </div>
+            <button id="nextMonth" title="下个月">▶</button>
+        </div>
+        <div class="week-row">
+            <div class="week-item">一</div><div class="week-item">二</div><div class="week-item">三</div>
+            <div class="week-item">四</div><div class="week-item">五</div><div class="week-item">六</div><div class="week-item">日</div>
+        </div>
+        <div class="day-grid" id="dayGrid"></div>
+    </div>
+
+    <!-- 记事悬浮预览 -->
+    <div class="note-tooltip" id="noteTooltip"></div>
+
+    <!-- 记事编辑弹窗 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-dialog" id="modalDialog">
+            <h3>📝 记事本</h3>
+            <div class="modal-date-label" id="modalDateLabel"></div>
+            <div class="modal-notes-list" id="modalNotesList">
+                <div class="modal-empty">暂无记事，快来添加吧~</div>
+            </div>
+            <div class="modal-input-row">
+                <input type="text" id="modalNoteInput" placeholder="输入记事内容..." maxlength="200">
+                <button class="btn-add-note" id="btnAddNote">添加</button>
+            </div>
+            <button class="btn-close-modal" id="btnCloseModal">关闭</button>
+        </div>
+    </div>
+
     <script>
         (function() {
-            // ... 其他变量和函数保持不变 ...
+            // ============ DOM引用 ============
+            const timeText = document.getElementById("timeText");
+            const dayGrid = document.getElementById("dayGrid");
+            const yearText = document.getElementById("yearText");
+            const monthText = document.getElementById("monthText");
+            const yearPanel = document.getElementById("yearPanel");
+            const monthPanel = document.getElementById("monthPanel");
+            const btnToday = document.getElementById("btnToday");
+            const calendarBox = document.getElementById("calendarBox");
+            const countdownText = document.getElementById("countdownText");
+            const noteTooltip = document.getElementById("noteTooltip");
+            const modalOverlay = document.getElementById("modalOverlay");
+            const modalDialog = document.getElementById("modalDialog");
+            const modalDateLabel = document.getElementById("modalDateLabel");
+            const modalNotesList = document.getElementById("modalNotesList");
+            const modalNoteInput = document.getElementById("modalNoteInput");
+            const btnAddNote = document.getElementById("btnAddNote");
+            const btnCloseModal = document.getElementById("btnCloseModal");
+            const weatherIcon = document.getElementById("weatherIcon");
+            const weatherTemp = document.getElementById("weatherTemp");
+            const weatherDesc = document.getElementById("weatherDesc");
+            const weatherLocation = document.getElementById("weatherLocation");
+            const weatherWidget = document.getElementById("weatherWidget");
 
-            // ============ 天气功能（修复版） ============
+              // ============ 天气功能（修复版） ============
             const weatherCodeMap = {
                 0: { icon: "☀️", desc: "晴天" },
                 1: { icon: "🌤️", desc: "少云" },
@@ -1136,189 +1203,6 @@
             }
 
             // 启动天气
-            initWeather();
-
-
-    <div class="title-wrap">
-        <p class="title-text">我们的愿望是~</p>
-    </div>
-    <div class="title-wrap peace-wrap">
-        <p class="title-text peace-text">世界和平！</p>
-    </div>
-    <div class="countdown-bar" id="countdownBar">
-        <span class="countdown-icon">📅</span> <span id="countdownText">加载中...</span>
-    </div>
-    <div class="time-box" id="timeText"></div>
-    <div class="calendar-box" id="calendarBox">
-        <div class="calendar-header">
-            <button class="btn-today" id="btnToday" title="回到今天">🕊 今天</button>
-            <button id="prevMonth" title="上个月">◀</button>
-            <div class="ym-text" id="ymTitle">
-                <span class="year-click" id="yearText">2026</span>年<span class="month-click" id="monthText">7</span>月
-                <div class="select-panel year-panel" id="yearPanel"></div>
-                <div class="select-panel month-panel" id="monthPanel"></div>
-            </div>
-            <button id="nextMonth" title="下个月">▶</button>
-        </div>
-        <div class="week-row">
-            <div class="week-item">一</div><div class="week-item">二</div><div class="week-item">三</div>
-            <div class="week-item">四</div><div class="week-item">五</div><div class="week-item">六</div><div class="week-item">日</div>
-        </div>
-        <div class="day-grid" id="dayGrid"></div>
-    </div>
-
-    <!-- 记事悬浮预览 -->
-    <div class="note-tooltip" id="noteTooltip"></div>
-
-    <!-- 记事编辑弹窗 -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-dialog" id="modalDialog">
-            <h3>📝 记事本</h3>
-            <div class="modal-date-label" id="modalDateLabel"></div>
-            <div class="modal-notes-list" id="modalNotesList">
-                <div class="modal-empty">暂无记事，快来添加吧~</div>
-            </div>
-            <div class="modal-input-row">
-                <input type="text" id="modalNoteInput" placeholder="输入记事内容..." maxlength="200">
-                <button class="btn-add-note" id="btnAddNote">添加</button>
-            </div>
-            <button class="btn-close-modal" id="btnCloseModal">关闭</button>
-        </div>
-    </div>
-
-    <script>
-        (function() {
-            // ============ DOM引用 ============
-            const timeText = document.getElementById("timeText");
-            const dayGrid = document.getElementById("dayGrid");
-            const yearText = document.getElementById("yearText");
-            const monthText = document.getElementById("monthText");
-            const yearPanel = document.getElementById("yearPanel");
-            const monthPanel = document.getElementById("monthPanel");
-            const btnToday = document.getElementById("btnToday");
-            const calendarBox = document.getElementById("calendarBox");
-            const countdownText = document.getElementById("countdownText");
-            const noteTooltip = document.getElementById("noteTooltip");
-            const modalOverlay = document.getElementById("modalOverlay");
-            const modalDialog = document.getElementById("modalDialog");
-            const modalDateLabel = document.getElementById("modalDateLabel");
-            const modalNotesList = document.getElementById("modalNotesList");
-            const modalNoteInput = document.getElementById("modalNoteInput");
-            const btnAddNote = document.getElementById("btnAddNote");
-            const btnCloseModal = document.getElementById("btnCloseModal");
-            const weatherIcon = document.getElementById("weatherIcon");
-            const weatherTemp = document.getElementById("weatherTemp");
-            const weatherDesc = document.getElementById("weatherDesc");
-            const weatherLocation = document.getElementById("weatherLocation");
-            const weatherWidget = document.getElementById("weatherWidget");
-
-            // ============ 天气功能 ============
-            const weatherCodeMap = {
-                0: { icon: "☀️", desc: "晴天" },
-                1: { icon: "🌤️", desc: "少云" },
-                2: { icon: "⛅", desc: "多云" },
-                3: { icon: "☁️", desc: "阴天" },
-                45: { icon: "🌫️", desc: "雾" },
-                48: { icon: "🌫️", desc: "雾凇" },
-                51: { icon: "🌦️", desc: "小毛毛雨" },
-                53: { icon: "🌦️", desc: "毛毛雨" },
-                55: { icon: "🌧️", desc: "大毛毛雨" },
-                61: { icon: "🌧️", desc: "小雨" },
-                63: { icon: "🌧️", desc: "中雨" },
-                65: { icon: "🌧️", desc: "大雨" },
-                71: { icon: "❄️", desc: "小雪" },
-                73: { icon: "❄️", desc: "中雪" },
-                75: { icon: "❄️", desc: "大雪" },
-                80: { icon: "🌦️", desc: "阵雨" },
-                81: { icon: "🌧️", desc: "中阵雨" },
-                82: { icon: "🌧️", desc: "大阵雨" },
-                95: { icon: "⛈️", desc: "雷暴" },
-                96: { icon: "⛈️", desc: "雷暴伴冰雹" },
-                99: { icon: "⛈️", desc: "强雷暴伴冰雹" }
-            };
-
-            function updateWeatherDisplay(temp, code, city) {
-                const weather = weatherCodeMap[code] || { icon: "🌡️", desc: "未知" };
-                weatherIcon.textContent = weather.icon;
-                weatherTemp.textContent = `${Math.round(temp)}°C`;
-                weatherDesc.textContent = weather.desc;
-                weatherLocation.textContent = city || "当前位置";
-                weatherWidget.classList.remove("weather-loading");
-            }
-
-            function fetchWeather(lat, lon) {
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data && data.current_weather) {
-                            const temp = data.current_weather.temperature;
-                            const code = data.current_weather.weathercode;
-                            // 获取城市名
-                            getCityName(lat, lon).then(city => {
-                                updateWeatherDisplay(temp, code, city);
-                            }).catch(() => {
-                                updateWeatherDisplay(temp, code, "当前位置");
-                            });
-                        } else {
-                            throw new Error("天气数据无效");
-                        }
-                    })
-                    .catch(err => {
-                        console.warn("天气获取失败:", err);
-                        weatherIcon.textContent = "🌡️";
-                        weatherTemp.textContent = "--°C";
-                        weatherDesc.textContent = "天气不可用";
-                        weatherLocation.textContent = "获取失败";
-                        weatherWidget.classList.add("weather-loading");
-                    });
-            }
-
-            function getCityName(lat, lon) {
-                const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&accept-language=zh`;
-                return fetch(url)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data && data.address) {
-                            const addr = data.address;
-                            return addr.city || addr.town || addr.county || addr.state || addr.country ||
-                                "未知地点";
-                        }
-                        return "未知地点";
-                    })
-                    .catch(() => "未知地点");
-            }
-
-            function initWeather() {
-                if (!navigator.geolocation) {
-                    weatherIcon.textContent = "📍";
-                    weatherTemp.textContent = "--°C";
-                    weatherDesc.textContent = "无定位权限";
-                    weatherLocation.textContent = "无法获取";
-                    return;
-                }
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        fetchWeather(lat, lon);
-                    },
-                    (error) => {
-                        console.warn("定位失败:", error);
-                        weatherIcon.textContent = "📍";
-                        weatherTemp.textContent = "--°C";
-                        weatherDesc.textContent = "定位失败";
-                        weatherLocation.textContent = "请授权位置";
-                        weatherWidget.classList.add("weather-loading");
-                    }, {
-                        enableHighAccuracy: false,
-                        timeout: 8000,
-                        maximumAge: 300000
-                    }
-                );
-            }
-
-            // 页面加载后初始化天气
             initWeather();
 
             // ============ 实时时钟 ============
