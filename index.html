@@ -1,623 +1,1941 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>世界和平！</title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <style>
-        :root {
-            --primary: #2478e0;
-            --primary-light: #74b3ff;
-            --holiday-red: #d82020;
-            --festival-orange: #e66000;
-            --solar-term-green: #3a8c5c;
-            --card-bg: rgba(255, 255, 255, 0.94);
-            --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.10);
-            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
-            --radius: 14px;
-            --radius-sm: 8px;
-            --transition-fast: 0.18s ease;
-            --transition-smooth: 0.22s cubic-bezier(0.2, 0, 0.2, 1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: linear-gradient(170deg, #e0ecf8 0%, #f0e8f8 40%, #f8f4f0 100%);
-            background-image: url("bg.jpg");
-            background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            overflow-x: hidden; gap: 16px; padding: 16px 10px 24px; position: relative;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-        }
-        body::before {
-            content: ""; position: fixed; inset: 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.28) 40%, rgba(255,255,255,0.40) 100%);
-            z-index: -1; pointer-events: none;
-        }
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>世界和平！</title>
+ <link rel="shortcut icon" href="favicon.ico">
+ <style>
+ /* ===== CSS 变量系统 ===== */
+ :root {
+ --primary: #2478e0;
+ --primary-light: #74b3ff;
+ --holiday-red: #d82020;
+ --festival-orange: #e66000;
+ --solar-term-green: #3a8c5c;
+ --solar-term-bg: #eafaf1;
+ --workday-gray: #8c8c8c;
+ --workday-bg: #f5f5f5;
+ --saturday-blue: #2979c1;
+ --sunday-red: #c62828;
+ --card-bg: rgba(255, 255, 255, 0.94);
+ --shadow-sm: 0 2px 12px rgba(36, 120, 224, 0.06);
+ --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.10);
+ --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+ --shadow-glow: 0 8px 24px rgba(0, 0, 0, 0.10);
+ --radius: 14px;
+ --radius-sm: 8px;
+ --transition-fast: 0.18s ease;
+ --transition-smooth: 0.22s cubic-bezier(0.2, 0, 0.2, 1);
+ --bg-overlay: rgba(255, 255, 255, 0.15);
+ /* 主题色 */
+ --theme-bg-1: #e0ecf8;
+ --theme-bg-2: #f0e8f8;
+ --theme-bg-3: #f8f4f0;
+ --text-color: #1a1a1a;
+ }
 
-        /* 天气卡片样式 */
-        .weather-box {
-            position: fixed; top: 18px; right: 18px; z-index: 9998;
-            background: rgba(255,255,255,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border-radius: 18px; padding: 14px 16px; width: 190px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.10); font-size: 13px; color: #333;
-            transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.7);
-            cursor: default; user-select: none; animation: weatherFadeIn 0.8s ease;
-        }
-        @keyframes weatherFadeIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
-        .weather-box:hover { background: rgba(255,255,255,0.95); box-shadow: 0 6px 20px rgba(0,0,0,0.14); transform: translateY(-2px); }
-        .weather-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-        .weather-city { font-size: 13px; font-weight: 600; color: #1a1a1a; display: flex; align-items: center; gap: 4px; }
-        .weather-refresh { background: none; border: none; font-size: 16px; cursor: pointer; color: #666; transition: all 0.2s; padding: 2px 4px; border-radius: 4px; }
-        .weather-refresh:hover { background: #f0f0f0; color: #333; }
-        .weather-refresh:active { transform: scale(0.9); }
-        .weather-loading { text-align: center; padding: 10px 0; font-size: 12px; color: #999; }
-        .weather-main { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-        .weather-icon { font-size: 36px; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-        .weather-temp-wrap { display: flex; flex-direction: column; }
-        .weather-temp { font-weight: 700; font-size: 22px; color: #1a1a1a; line-height: 1.1; }
-        .weather-text { font-size: 12px; color: #555; margin-top: 2px; }
-        .weather-info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; font-size: 11px; color: #666; }
-        .weather-info-row div { white-space: nowrap; }
-        .weather-info-row span { font-weight: 500; color: #333; }
-        @media (max-width: 480px) {
-            .weather-box { top: 10px; right: 10px; width: 170px; padding: 10px 12px; font-size: 11px; }
-            .weather-icon { font-size: 28px; }
-            .weather-temp { font-size: 18px; }
-            .weather-city { font-size: 11px; }
-        }
+ /* ===== 夜间模式 ===== */
+ body.dark-mode {
+ --theme-bg-1: #1a1e2e;
+ --theme-bg-2: #1d2235;
+ --theme-bg-3: #1b1f30;
+ --text-color: #d8dce8;
+ --card-bg: rgba(30, 35, 55, 0.94);
+ --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.40);
+ --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.50);
+ --primary: #5a9fff;
+ --primary-light: #74b3ff;
+ --solar-term-bg: rgba(58, 140, 92, 0.2);
+ --workday-bg: rgba(80,80,80,0.3);
+ }
+ body.dark-mode .title-text {
+ color: #d8dce8;
+ text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+ }
+ body.dark-mode .time-box { color: #c8cce0; text-shadow: 0 1px 6px rgba(0,0,0,0.4); }
+ body.dark-mode .countdown-bar { background: linear-gradient(135deg, #2a2e40, #252838); border-color: #4a5070; color: #a0a8c8; }
+ body.dark-mode .calendar-box { background: rgba(28, 33, 52, 0.94); }
+ body.dark-mode .week-row { border-bottom-color: #333655; }
+ body.dark-mode .week-item { color: #a0a8c8; }
+ body.dark-mode .panel-item { background: #252838; color: #c8cce0; }
+ body.dark-mode .panel-item:hover { background: linear-gradient(135deg, #2e3560, #263050); color: #94b8ff; }
+ body.dark-mode .panel-item.active { background: linear-gradient(135deg, #5a9fff, #4090ff); }
+ body.dark-mode .calendar-header button { background: #252838; border-color: #3a3f5c; color: #c8cce0; }
+ body.dark-mode .calendar-header button:hover { background: #2e3560; border-color: #5a9fff; }
+ body.dark-mode .modal-dialog { background: #1e2438; }
+ body.dark-mode .modal-note-item { background: #252838; border-color: #333655; }
+ body.dark-mode .modal-note-item:hover { background: #2a2f48; }
+ body.dark-mode .modal-notes-list::-webkit-scrollbar-thumb { background: #3a4060; }
+ body.dark-mode .modal-input-row input { background: #252838; border-color: #3a4060; color: #d8dce8; }
+ body.dark-mode .btn-today { color: #5a9fff !important; border-color: #3a5070 !important; background: #1e2438 !important; }
+ body.dark-mode .btn-today:hover { background: #252a40 !important; color: #74b3ff !important; }
+ body.dark-mode .day-cell.other-month .lunar { color: #4a4f6a; }
+ body.dark-mode .day-cell.other-month { color: #5a5f7a; }
+ body.dark-mode .workday-makeup { background: rgba(80,80,80,0.2); }
+ body.dark-mode .note-tooltip { background: #252838; border-color: #3a4060; }
+ body.dark-mode .weather-card { background: rgba(28, 33, 52, 0.92); }
+ body.dark-mode .weather-toggle-btn { background: rgba(28,33,52,0.88); border-color: rgba(90,159,255,0.3); color: #5a9fff; }
+ body.dark-mode body::before { background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 100%); }
+ body.dark-mode .day-cell .lunar { color: #8a8eb0; }
+ body.dark-mode .holiday-name { color: #ff7070; }
+ body.dark-mode .solar-term-name { color: #6fbf9a; }
+ body.dark-mode .year-click, body.dark-mode .month-click { color: #5a9fff; text-decoration-color: #3a6090; }
+ body.dark-mode .btn-close-modal { background: #252838; border-color: #3a4060; color: #a0a8c8; }
+ body.dark-mode .btn-add-note { background: #5a9fff; }
+ body.dark-mode .btn-add-note:hover { background: #4090ff; }
+ body.dark-mode .btn-del-note:hover { background: rgba(200,50,50,0.15) !important; }
+ body.dark-mode .note-dot { background: #e05050; }
+ body.dark-mode .btn-del-note { color: #a07070; }
+ body.dark-mode .weather-search-bar input { background: rgba(28,33,52,0.9); border-color: #3a4060; color: #d8dce8; }
+ body.dark-mode .weather-search-bar .btn-go { background: #5a9fff; border-color: #5a9fff; }
+ body.dark-mode .btn-del-note { color: #a07070; }
+ body.dark-mode .solar-term { background: rgba(58,140,92,0.15) !important; }
+ body.dark-mode .day-cell.festival { background: rgba(230,96,0,0.1) !important; }
+ body.dark-mode .day-cell.holiday { background: rgba(216,32,32,0.1) !important; }
+ body.dark-mode .peace-day { background: rgba(36,120,224,0.08) !important; }
+ body.dark-mode .day-cell.today { border-color: #5a9fff !important; background: rgba(36,120,224,0.05); }
+ body.dark-mode .day-cell.today .num { color: #5a9fff !important; }
+ body.dark-mode .weather-refresh-btn { color: #5a70a0; }
+ body.dark-mode .weather-refresh-btn:hover { background: #252838; color: #5a9fff; }
+ body.dark-mode .weather-card:hover { box-shadow: 0 6px 20px rgba(90,159,255,0.2); }
+ body.dark-mode .weather-toggle-btn:hover { background: rgba(28,33,52,0.95); }
+ body.dark-mode .modal-date-label { color: #888; }
+ body.dark-mode .modal-empty { color: #555; }
+ body.dark-mode .weather-detail { color: #8090b0; }
+ body.dark-mode .weather-city { color: #8090b0; }
+ body.dark-mode .holiday-name { color: #ff7070; }
+ body.dark-mode .workday-tag { color: #8090b0; }
+ body.dark-mode .festival-tip-box { background: rgba(28,33,52,0.95); border-color: #3a4060; }
+ body.dark-mode .greeting-sub { color: #8090b0; }
+ body.dark-mode .theme-toggle-btn { background: rgba(28,33,52,0.88); border-color: rgba(90,159,255,0.2); color: #8090b0; }
+ body.dark-mode .theme-toggle-btn:hover { background: rgba(28,33,52,0.95); color: #d8dce8; }
+ body.dark-mode .view-toggle-btn { background: rgba(28,33,52,0.88); border-color: rgba(90,159,255,0.2); color: #8090b0; }
+ body.dark-mode .view-toggle-btn:hover { background: rgba(28,33,52,0.95); color: #d8dce8; }
+ body.dark-mode .view-toggle-btn.active { background: rgba(90,159,255,0.2); border-color: #5a9fff; color: #5a9fff; }
+ body.dark-mode .lang-toggle-btn { background: rgba(28,33,52,0.88); border-color: rgba(90,159,255,0.2); color: #8090b0; }
+ body.dark-mode .lang-toggle-btn:hover { background: rgba(28,33,52,0.95); color: #d8dce8; }
+ body.dark-mode .lang-toggle-btn.active { background: rgba(90,159,255,0.2); border-color: #5a9fff; color: #5a9fff; }
+ body.dark-mode .dashboard-card { background: rgba(28,33,52,0.92); }
+ body.dark-mode .dash-value { color: #d8dce8; }
+ body.dark-mode .dash-label { color: #7a8098; }
+ body.dark-mode .backup-btn { background: rgba(28,33,52,0.88); border-color: #3a4060; color: #8090b0; }
+ body.dark-mode .backup-btn:hover { background: rgba(28,33,52,0.95); border-color: #5a9fff; }
+ body.dark-mode .note-search-input { background: rgba(28,33,52,0.9); border-color: #3a4060; color: #d8dce8; }
+ body.dark-mode .note-search-input::placeholder { color: #5a6080; }
+ body.dark-mode .year-click:hover, body.dark-mode .month-click:hover { background: rgba(90,159,255,0.1); }
+ body.dark-mode .weather-search-bar .btn-cancel-search { background: #252838; border-color: #3a4060; color: #8090b0; }
+ body.dark-mode .weather-loading span { color: #5a6a8a; }
 
-        /* 其余样式保持不变 (标题、日历、弹窗等) */
-        .title-wrap { opacity: 0; transform: scale(0.8); animation: textShow 2s ease-out forwards; }
-        .title-text { color: #1a1a1a; font-weight: bold; font-size: clamp(2.6rem, 9vw, 5.5rem); line-height: 1.35; text-align: center; letter-spacing: 3px; text-shadow: 0 2px 12px rgba(255,255,255,0.85); animation: float 4s ease-in-out infinite alternate; }
-        .peace-text { animation-delay: 0.6s; }
-        @keyframes textShow { to { opacity: 1; transform: scale(1); } }
-        @keyframes float { from { transform: translateY(-5px); } to { transform: translateY(5px); } }
-        .countdown-bar {
-            background: linear-gradient(135deg, #fff8e8, #fff3d6); border: 1.5px solid #f0c060; border-radius: 20px;
-            padding: 8px 20px; font-size: clamp(0.85rem, 2.2vw, 1rem); color: #8b5e14; font-weight: 600; letter-spacing: 1px;
-            text-align: center; box-shadow: 0 2px 10px rgba(180,130,40,0.10); animation: countdownPulse 3s ease-in-out infinite;
-            cursor: default; user-select: none; max-width: 90vw; transition: all 0.3s ease;
-        }
-        .countdown-bar:hover { background: linear-gradient(135deg, #fff5d8, #ffedc4); box-shadow: 0 4px 16px rgba(180,130,40,0.16); transform: translateY(-2px); }
-        @keyframes countdownPulse { 0%,100%{ box-shadow: 0 2px 10px rgba(180,130,40,0.10); } 50%{ box-shadow: 0 2px 18px rgba(180,130,40,0.22); } }
-        .countdown-icon { display: inline-block; animation: bounceIcon 0.6s ease-in-out infinite alternate; }
-        @keyframes bounceIcon { from { transform: translateY(0); } to { transform: translateY(-4px); } }
-        .time-box { font-size: clamp(0.9rem, 2.5vw, 1.25rem); color: #1a1a1a; letter-spacing: 2px; text-shadow: 0 1px 6px rgba(255,255,255,0.85); font-weight: 500; cursor: default; }
-        .calendar-box { width: min(78vw, 450px); background: var(--card-bg); border-radius: var(--radius); padding: 18px 16px 16px; box-shadow: var(--shadow-md); transition: all 0.3s ease; position: relative; z-index: 1; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        .calendar-box:hover { box-shadow: var(--shadow-lg); }
-        @media (max-width: 420px) { .calendar-box { width: 95vw; padding: 14px 10px 12px; border-radius: 12px; } }
-        .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 5px; }
-        .calendar-header button { border: 1px solid #ddd; background: #fff; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all var(--transition-fast); white-space: nowrap; user-select: none; }
-        .calendar-header button:hover { background-color: #f0f6ff; border-color: #94bfff; }
-        .calendar-header button:active { transform: scale(0.92); }
-        .btn-today { font-weight: 500; color: var(--primary); border-color: #c8ddfb !important; background: #fafcff !important; letter-spacing: 1px; font-size: 13px !important; padding: 5px 10px !important; }
-        .btn-today:hover { background: #e8f0ff !important; border-color: var(--primary-light) !important; color: #1860c7 !important; }
-        @media (max-width: 380px) { .btn-today { font-size: 11px !important; padding: 4px 7px !important; } .calendar-header button { padding: 4px 8px; font-size: 12px; } }
-        .ym-text { font-size: 18px; font-weight: bold; position: relative; cursor: default; user-select: none; text-align: center; flex-shrink: 0; padding: 4px 2px; }
-        .year-click, .month-click { color: #2478e0; text-decoration: underline dotted 2px #74b3ff; padding: 2px 5px; transition: color 0.2s; cursor: pointer; border-radius: 4px; }
-        .year-click:hover, .month-click:hover { color: #0f5fc4; background: rgba(36,120,224,0.06); }
-        .select-panel { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) scale(0.92); background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(36,120,224,0.06), 0 8px 24px rgba(0,0,0,0.12); padding: 10px; z-index: 9999; opacity: 0; visibility: hidden; transition: all var(--transition-smooth); border: none; pointer-events: none; max-height: 260px; overflow-y: auto; }
-        .select-panel::-webkit-scrollbar { width: 5px; } .select-panel::-webkit-scrollbar-thumb { background: #d0d8e8; border-radius: 10px; }
-        .select-panel.show { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); pointer-events: auto; }
-        .year-panel { width: 170px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .month-panel { width: 210px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .panel-item { padding: 7px 0; text-align: center; border-radius: var(--radius-sm); cursor: pointer; font-size: 14px; transition: all var(--transition-fast); background: #f8fbff; }
-        .panel-item:hover { background: linear-gradient(135deg, #e0edff, #d0e4ff); color: #1860c7; }
-        .panel-item.active { background: linear-gradient(135deg, #2478e0, #368cf0); color: #fff; box-shadow: 0 2px 6px rgba(36,120,224,0.3); font-weight: 600; }
-        .week-row { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-        .week-item { text-align: center; font-size: 13px; padding: 4px 0; font-weight: 600; color: #444; }
-        .week-item:nth-child(6) { color: #2979c1; } .week-item:nth-child(7) { color: #c62828; }
-        .day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0.3; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .day-cell { aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: var(--radius-sm); padding: 1px; transition: background 0.18s, transform 0.18s; cursor: pointer; position: relative; }
-        .day-cell.other-month { color: #c5c5c5; pointer-events: none; }
-        .day-cell:not(.other-month):hover { background-color: #eef6ff; transform: scale(1.07); z-index: 3; }
-        .day-cell.weekday-sat:not(.other-month) .num { color: #2979c1; font-weight: 600; }
-        .day-cell.weekday-sun:not(.other-month) .num { color: #c62828; font-weight: 600; }
-        .day-cell.today { border: 2.5px solid #2478e0; animation: breath 2.8s ease-in-out infinite alternate; background: rgba(36,120,224,0.05); }
-        @keyframes breath { from { box-shadow: 0 0 4px #74b3ff; } to { box-shadow: 0 0 16px #4096ff; } }
-        .day-cell.holiday { background-color: #fff4f4; } .day-cell.holiday .num { color: #d82020; font-weight: bold; }
-        .day-cell.workday-makeup { background-color: #f5f5f5; } .day-cell.workday-makeup .num { color: #8c8c8c; font-weight: 600; }
-        .day-cell.festival .num { color: #e66000; font-weight: 500; } .day-cell.festival { background-color: #fffaf5; }
-        .day-cell.solar-term { background-color: #eafaf1; } .day-cell.solar-term .num { color: #3a8c5c; font-weight: 600; }
-        .day-cell.peace-day { background-color: #f0f7ff; position: relative; }
-        .day-cell.peace-day::after { content: "🕊"; position: absolute; top: 1px; right: 2px; font-size: 7px; opacity: 0.7; }
-        .solar-term-name { font-size: 8px; color: #3a8c5c; font-weight: bold; }
-        .holiday-name { font-size: 8px; color: #c41818; font-weight: bold; }
-        .workday-tag { font-size: 8px; color: #8c8c8c; font-weight: bold; }
-        .day-cell .num { font-size: clamp(12px, 1.8vw, 16px); line-height: 1.1; font-weight: 500; }
-        .day-cell .lunar { font-size: 8px; color: #555; }
-        .note-dot { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: #e04040; box-shadow: 0 0 3px rgba(224,64,64,0.5); }
-        .note-tooltip { position: fixed; z-index: 10000; background: #fffef8; border: 1px solid #e0d8c0; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: #444; box-shadow: 0 4px 16px rgba(0,0,0,0.14); pointer-events: none; opacity: 0; visibility: hidden; max-width: 200px; }
-        .note-tooltip.show { opacity: 1; visibility: visible; }
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 10001; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s; }
-        .modal-overlay.show { opacity: 1; visibility: visible; }
-        .modal-dialog { background: #fff; border-radius: 14px; padding: 20px 18px; width: min(88vw, 380px); box-shadow: 0 12px 40px rgba(0,0,0,0.20); max-height: 80vh; display: flex; flex-direction: column; gap: 10px; }
-        .modal-notes-list { max-height: 180px; overflow-y: auto; }
-        .modal-note-item { display: flex; align-items: center; justify-content: space-between; background: #fafaf7; border-radius: 8px; padding: 8px 10px; gap: 8px; font-size: 13px; border: 1px solid #eee; }
-        .btn-del-note { background: none; border: none; color: #d88; cursor: pointer; font-size: 14px; padding: 2px 6px; }
-        .btn-add-note { background: #2478e0; color: #fff; border: none; padding: 9px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-        .btn-close-modal { background: #f5f5f5; border: 1px solid #ddd; padding: 8px; border-radius: 8px; cursor: pointer; text-align: center; }
-    </style>
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body {
+ background: linear-gradient(170deg, var(--theme-bg-1) 0%, var(--theme-bg-2) 40%, var(--theme-bg-3) 100%);
+ min-height: 100vh;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ overflow-x: hidden;
+ gap: 14px;
+ padding: 16px 10px 24px;
+ position: relative;
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+ transition: background 0.5s ease;
+ }
+ body::before {
+ content: "";
+ position: fixed;
+ inset: 0;
+ background: linear-gradient(180deg,
+ rgba(255, 255, 255, 0.15) 0%,
+ rgba(255, 255, 255, 0.28) 40%,
+ rgba(255, 255, 255, 0.40) 100%);
+ z-index: -1;
+ pointer-events: none;
+ transition: background 0.5s ease;
+ }
+ body.dark-mode::before {
+ background: linear-gradient(180deg,
+ rgba(0,0,0,0.05) 0%,
+ rgba(0,0,0,0.1) 100%);
+ }
+
+ /* ===== 右上角工具栏 ===== */
+ .topbar {
+ position: fixed;
+ top: 12px;
+ right: 12px;
+ z-index: 9998;
+ display: flex;
+ flex-direction: column;
+ align-items: flex-end;
+ gap: 6px;
+ }
+
+ /* ===== 工具按钮组 ===== */
+ .toolbar-row {
+ display: flex;
+ gap: 5px;
+ align-items: center;
+ }
+ .toolbar-btn {
+ background: rgba(255, 255, 255, 0.88);
+ backdrop-filter: blur(10px);
+ -webkit-backdrop-filter: blur(10px);
+ border: 1.5px solid rgba(36,120,224,0.18);
+ border-radius: 20px;
+ padding: 5px 12px;
+ font-size: 12px;
+ color: #2478e0;
+ font-weight: 600;
+ cursor: pointer;
+ box-shadow: 0 2px 8px rgba(36,120,224,0.08);
+ transition: all 0.2s;
+ display: flex;
+ align-items: center;
+ gap: 5px;
+ letter-spacing: 0.5px;
+ white-space: nowrap;
+ }
+ .toolbar-btn:hover {
+ background: rgba(255,255,255,0.95);
+ box-shadow: 0 4px 12px rgba(36,120,224,0.16);
+ transform: translateY(-1px);
+ }
+ .toolbar-btn:active { transform: scale(0.95); }
+ .toolbar-btn.active {
+ background: rgba(36,120,224,0.12);
+ border-color: #2478e0;
+ }
+
+ .view-toggle-btn { font-size: 11px; padding: 5px 10px; }
+ .lang-toggle-btn { font-size: 11px; padding: 5px 10px; }
+
+ /* ===== 天气卡片 ===== */
+ .weather-widget {
+ display: flex;
+ flex-direction: column;
+ align-items: flex-end;
+ gap: 5px;
+ }
+ .weather-card {
+ background: rgba(255, 255, 255, 0.92);
+ backdrop-filter: blur(10px);
+ -webkit-backdrop-filter: blur(10px);
+ border-radius: 12px;
+ padding: 10px 14px;
+ box-shadow: 0 4px 16px rgba(36, 120, 224, 0.12), 0 1px 4px rgba(0,0,0,0.08);
+ cursor: default;
+ user-select: none;
+ min-width: 190px;
+ opacity: 0;
+ transform: translateY(-8px);
+ transition: all 0.3s ease;
+ pointer-events: none;
+ }
+ .weather-card.show {
+ opacity: 1;
+ transform: translateY(0);
+ pointer-events: auto;
+ }
+ .weather-card:hover {
+ box-shadow: 0 6px 20px rgba(36,120,224,0.18), 0 2px 6px rgba(0,0,0,0.10);
+ transform: translateY(-1px);
+ }
+ .weather-main {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ }
+ .weather-emoji { font-size: 28px; line-height: 1; flex-shrink: 0; }
+ .weather-temp-block { display: flex; flex-direction: column; }
+ .weather-city { font-size: 12px; color: #666; font-weight: 500; letter-spacing: 0.5px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+ .weather-temp { font-size: 20px; font-weight: 700; color: var(--text-color); line-height: 1.1; }
+ .weather-detail { font-size: 11px; color: #888; margin-top: 3px; display: flex; gap: 8px; flex-wrap: wrap; }
+ .weather-detail span { white-space: nowrap; }
+ .weather-forecast { margin-top: 6px; padding-top: 6px; border-top: 1px solid #eee; display: flex; gap: 8px; justify-content: space-around; font-size: 10px; color: #888; }
+ .weather-forecast-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+ .weather-forecast-item .f-emoji { font-size: 16px; }
+ .weather-forecast-item .f-day { color: #aaa; font-size: 9px; }
+ .weather-loading { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #999; padding: 4px 0; }
+ .weather-loading .spinner { width: 14px; height: 14px; border: 2px solid #d0d8e8; border-top-color: #2478e0; border-radius: 50%; animation: spin 0.8s linear infinite; }
+ @keyframes spin { to { transform: rotate(360deg); } }
+ .weather-error { font-size: 11px; color: #d82020; display: flex; align-items: center; gap: 4px; }
+ .weather-refresh-btn { background: none; border: none; cursor: pointer; font-size: 11px; color: #aaa; padding: 2px 4px; border-radius: 4px; transition: all 0.15s; line-height: 1; margin-top: 2px; display: block; }
+ .weather-refresh-btn:hover { background: #f0f6ff; color: #2478e0; }
+ .weather-toggle-btn { background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1.5px solid rgba(36,120,224,0.2); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: #2478e0; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(36,120,224,0.10); transition: all 0.2s; display: flex; align-items: center; gap: 5px; letter-spacing: 0.5px; }
+ .weather-toggle-btn:hover { background: rgba(255,255,255,0.95); box-shadow: 0 4px 12px rgba(36,120,224,0.16); transform: translateY(-1px); }
+ .weather-search-bar { display: flex; gap: 5px; align-items: center; opacity: 0; transform: translateY(-4px); transition: all 0.25s ease; pointer-events: none; height: 0; overflow: hidden; }
+ .weather-search-bar.show { opacity: 1; transform: translateY(0); pointer-events: auto; height: auto; }
+ .weather-search-bar input { border: 1px solid #ddd; border-radius: 6px; padding: 5px 9px; font-size: 12px; outline: none; font-family: inherit; width: 130px; transition: border 0.2s; background: rgba(255,255,255,0.9); }
+ .weather-search-bar input:focus { border-color: #74b3ff; box-shadow: 0 0 0 2px rgba(36,120,224,0.08); }
+ .weather-search-bar .btn-go, .weather-search-bar .btn-cancel-search { border: 1px solid #ddd; background: #fff; border-radius: 6px; padding: 5px 9px; font-size: 11px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+ .weather-search-bar .btn-go { background: #2478e0; color: #fff; border-color: #2478e0; }
+ .weather-search-bar .btn-go:hover { background: #1a60c0; }
+ .weather-search-bar .btn-cancel-search:hover { background: #f5f5f5; }
+
+ /* ===== 标题区域 ===== */
+ .title-wrap {
+ opacity: 0;
+ transform: scale(0.8);
+ animation: textShow 2s ease-out forwards;
+ position: relative;
+ }
+ .title-text {
+ color: var(--text-color);
+ font-weight: bold;
+ font-size: clamp(2.2rem, 8vw, 5rem);
+ line-height: 1.3;
+ text-align: center;
+ letter-spacing: 3px;
+ text-shadow: 0 2px 12px rgba(255, 255, 255, 0.85);
+ animation: gentleFloat 5s ease-in-out infinite alternate;
+ transition: color 0.5s;
+ }
+ .peace-text { animation-delay: 0.6s; }
+ @keyframes textShow { to { opacity: 1; transform: scale(1); } }
+ @keyframes gentleFloat {
+ from { transform: translateY(-3px) rotate(-0.3deg); }
+ to { transform: translateY(3px) rotate(0.3deg); }
+ }
+ .greeting-sub {
+ font-size: clamp(0.7rem, 2vw, 0.9rem);
+ color: #888;
+ text-align: center;
+ margin-top: -6px;
+ letter-spacing: 1px;
+ animation: textShow 2.5s ease-out forwards;
+ opacity: 0;
+ animation-delay: 1.2s;
+ transition: color 0.5s;
+ }
+
+ /* 飞鸽动画 */
+ .dove-container {
+ position: fixed;
+ top: 0; left: 0; width: 100%; height: 100%;
+ pointer-events: none;
+ z-index: 0;
+ overflow: hidden;
+ }
+ .dove {
+ position: absolute;
+ font-size: 16px;
+ opacity: 0;
+ animation: doveFly 18s linear infinite;
+ }
+ @keyframes doveFly {
+ 0% { opacity: 0; transform: translateX(-60px) translateY(0) rotate(-10deg); }
+ 5% { opacity: 0.4; }
+ 40% { opacity: 0.3; }
+ 95% { opacity: 0.2; }
+ 100% { opacity: 0; transform: translateX(calc(100vw + 60px)) translateY(-80px) rotate(10deg); }
+ }
+
+ /* ===== 倒计时提示栏 ===== */
+ .countdown-bar {
+ background: linear-gradient(135deg, #fff8e8, #fff3d6);
+ border: 1.5px solid #f0c060;
+ border-radius: 20px;
+ padding: 7px 20px;
+ font-size: clamp(0.82rem, 2vw, 0.96rem);
+ color: #8b5e14;
+ font-weight: 600;
+ letter-spacing: 1px;
+ text-align: center;
+ box-shadow: 0 2px 10px rgba(180, 130, 40, 0.10);
+ cursor: default;
+ user-select: none;
+ max-width: 90vw;
+ transition: all 0.3s ease, background 0.5s, border-color 0.5s, color 0.5s;
+ }
+ .countdown-bar:hover {
+ background: linear-gradient(135deg, #fff5d8, #ffedc4);
+ box-shadow: 0 4px 16px rgba(180, 130, 40, 0.16);
+ transform: translateY(-2px);
+ }
+ @keyframes countdownPulse {
+ 0%, 100% { box-shadow: 0 2px 10px rgba(180, 130, 40, 0.10); }
+ 50% { box-shadow: 0 2px 18px rgba(180, 130, 40, 0.22); }
+ }
+ body.dark-mode .countdown-bar { animation: countdownPulseDark 3s ease-in-out infinite; }
+ @keyframes countdownPulseDark {
+ 0%, 100% { box-shadow: 0 2px 10px rgba(90,159,255,0.08); }
+ 50% { box-shadow: 0 2px 18px rgba(90,159,255,0.18); }
+ }
+ .countdown-icon { display: inline-block; animation: bounceIcon 0.6s ease-in-out infinite alternate; }
+ @keyframes bounceIcon { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+
+ /* ===== 时钟 ===== */
+ .time-box {
+ font-size: clamp(0.88rem, 2.4vw, 1.2rem);
+ color: var(--text-color);
+ letter-spacing: 2px;
+ text-shadow: 0 1px 6px rgba(255, 255, 255, 0.85);
+ font-weight: 500;
+ transition: all 0.3s ease, color 0.5s;
+ cursor: default;
+ }
+
+ /* ===== 仪表盘概览 ===== */
+ .dashboard-row {
+ display: flex;
+ gap: 8px;
+ flex-wrap: wrap;
+ justify-content: center;
+ max-width: min(78vw, 460px);
+ width: 100%;
+ }
+ .dashboard-card {
+ background: var(--card-bg);
+ backdrop-filter: blur(8px);
+ -webkit-backdrop-filter: blur(8px);
+ border-radius: 10px;
+ padding: 8px 14px;
+ box-shadow: var(--shadow-sm);
+ flex: 1;
+ min-width: 100px;
+ text-align: center;
+ transition: all 0.3s, background 0.5s;
+ }
+ .dash-value { font-size: 15px; font-weight: 700; color: var(--text-color); }
+ .dash-label { font-size: 10px; color: #888; letter-spacing: 0.5px; margin-top: 1px; }
+ .dash-icon { font-size: 16px; }
+
+ /* ===== 节日温馨提示 ===== */
+ .festival-tip-box {
+ position: fixed;
+ bottom: 20px;
+ left: 50%;
+ transform: translateX(-50%) translateY(120%);
+ background: rgba(255, 248, 230, 0.97);
+ border: 1.5px solid #f0c060;
+ border-radius: 12px;
+ padding: 12px 18px;
+ max-width: min(88vw, 380px);
+ width: auto;
+ box-shadow: 0 6px 24px rgba(180,130,40,0.15);
+ z-index: 9997;
+ transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+ cursor: default;
+ }
+ .festival-tip-box.show { transform: translateX(-50%) translateY(0); }
+ .festival-tip-box .tip-title { font-size: 13px; font-weight: 700; color: #8b5e14; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+ .festival-tip-box .tip-body { font-size: 12px; color: #666; line-height: 1.5; }
+ .festival-tip-close { background: none; border: none; cursor: pointer; color: #c8a870; font-size: 14px; padding: 0 4px; float: right; }
+ .festival-tip-close:hover { color: #8b5e14; }
+
+ /* ===== 日历卡片 ===== */
+ .calendar-box {
+ width: min(78vw, 450px);
+ background: var(--card-bg);
+ border-radius: var(--radius);
+ padding: 16px 14px 14px;
+ box-shadow: var(--shadow-md);
+ transition: all 0.3s ease, background 0.5s;
+ position: relative;
+ z-index: 1;
+ backdrop-filter: blur(8px);
+ -webkit-backdrop-filter: blur(8px);
+ }
+ .calendar-box:hover { box-shadow: var(--shadow-lg); }
+ @media (max-width: 420px) {
+ .calendar-box { width: 95vw; padding: 12px 8px 10px; border-radius: 12px; }
+ }
+
+ /* ===== 日历头部 ===== */
+ .calendar-header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ margin-bottom: 10px;
+ gap: 4px;
+ flex-wrap: nowrap;
+ }
+ .calendar-header button {
+ border: 1px solid #ddd;
+ background: #fff;
+ padding: 5px 11px;
+ border-radius: 6px;
+ cursor: pointer;
+ font-size: 14px;
+ transition: all var(--transition-fast);
+ white-space: nowrap;
+ user-select: none;
+ -webkit-tap-highlight-color: transparent;
+ flex-shrink: 0;
+ }
+ .calendar-header button:hover { background-color: #f0f6ff; border-color: #94bfff; }
+ .calendar-header button:active { transform: scale(0.92); }
+ .btn-today {
+ font-weight: 500;
+ color: var(--primary);
+ border-color: #c8ddfb !important;
+ background: #fafcff !important;
+ letter-spacing: 1px;
+ font-size: 13px !important;
+ padding: 5px 10px !important;
+ }
+ .btn-today:hover { background: #e8f0ff !important; border-color: var(--primary-light) !important; color: #1860c7 !important; }
+ .ym-text {
+ font-size: 17px;
+ font-weight: bold;
+ position: relative;
+ cursor: default;
+ user-select: none;
+ text-align: center;
+ flex-shrink: 0;
+ padding: 4px 2px;
+ }
+ .year-click, .month-click {
+ color: var(--primary);
+ text-decoration: underline dotted 2px var(--primary-light);
+ padding: 2px 5px;
+ transition: color 0.2s, background 0.2s;
+ cursor: pointer;
+ border-radius: 4px;
+ -webkit-tap-highlight-color: transparent;
+ }
+ .year-click:hover, .month-click:hover { color: #0f5fc4; background: rgba(36, 120, 224, 0.06); }
+
+ /* ===== 下拉面板 ===== */
+ .select-panel {
+ position: absolute;
+ top: calc(100% + 8px);
+ left: 50%;
+ transform: translateX(-50%) scale(0.92);
+ background: #ffffff;
+ border-radius: 12px;
+ box-shadow: var(--shadow-sm), var(--shadow-glow);
+ padding: 8px;
+ z-index: 9999;
+ opacity: 0;
+ visibility: hidden;
+ transition: all var(--transition-smooth);
+ border: none;
+ pointer-events: none;
+ max-height: 240px;
+ overflow-y: auto;
+ overscroll-behavior: contain;
+ }
+ .select-panel::-webkit-scrollbar { width: 4px; }
+ .select-panel::-webkit-scrollbar-track { background: transparent; border-radius: 10px; }
+ .select-panel::-webkit-scrollbar-thumb { background: #d0d8e8; border-radius: 10px; }
+ .select-panel::before {
+ content: "";
+ position: absolute;
+ top: -7px;
+ left: 50%;
+ transform: translateX(-50%);
+ width: 0; height: 0;
+ border-left: 7px solid transparent;
+ border-right: 7px solid transparent;
+ border-bottom: 7px solid #fff;
+ filter: drop-shadow(0 -1px 2px rgba(0,0,0,0.04));
+ }
+ .select-panel.show { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); pointer-events: auto; }
+ .year-panel { width: 165px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+ .month-panel { width: 205px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+ .panel-item {
+ padding: 6px 0;
+ text-align: center;
+ border-radius: var(--radius-sm);
+ cursor: pointer;
+ font-size: 13px;
+ transition: all var(--transition-fast);
+ background: #f8fbff;
+ user-select: none;
+ -webkit-tap-highlight-color: transparent;
+ white-space: nowrap;
+ }
+ .panel-item:hover { background: linear-gradient(135deg, #e0edff, #d0e4ff); color: #1860c7; transform: translateY(-1px); }
+ .panel-item:active { transform: scale(0.94); }
+ .panel-item.active { background: linear-gradient(135deg, var(--primary), #368cf0); color: #ffffff; box-shadow: 0 2px 6px rgba(36, 120, 224, 0.3); font-weight: 600; }
+ @media (max-width: 420px) {
+ .year-panel { width: 145px; }
+ .month-panel { width: 175px; }
+ .panel-item { font-size: 11px; padding: 4px 0; }
+ }
+
+ /* ===== 星期行 ===== */
+ .week-row {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ margin-bottom: 4px;
+ border-bottom: 1px solid #eee;
+ padding-bottom: 3px;
+ }
+ .week-item { text-align: center; font-size: 12px; padding: 3px 0; font-weight: 600; color: #444; letter-spacing: 0.5px; cursor: default; transition: color 0.3s; }
+ .week-item:nth-child(6) { color: #2979c1; }
+ .week-item:nth-child(7) { color: #c62828; }
+
+ /* ===== 日期网格 ===== */
+ .day-grid {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 2px;
+ }
+ .day-grid.slide-left { animation: slideLeft 0.3s ease forwards; }
+ .day-grid.slide-right { animation: slideRight 0.3s ease forwards; }
+ @keyframes slideLeft {
+ from { opacity: 0.5; transform: translateX(20px); }
+ to { opacity: 1; transform: translateX(0); }
+ }
+ @keyframes slideRight {
+ from { opacity: 0.5; transform: translateX(-20px); }
+ to { opacity: 1; transform: translateX(0); }
+ }
+
+ .day-cell {
+ aspect-ratio: 1 / 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ border-radius: var(--radius-sm);
+ padding: 1px;
+ transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+ cursor: pointer;
+ position: relative;
+ min-width: 0;
+ -webkit-tap-highlight-color: transparent;
+ outline: none;
+ }
+ .day-cell:focus-visible { box-shadow: 0 0 0 2px var(--primary); }
+ .day-cell.other-month { color: #c5c5c5; pointer-events: none; cursor: default; }
+ .day-cell.other-month .lunar { color: #d5d5d5; }
+ .day-cell:not(.other-month):hover { background-color: #eef6ff; transform: scale(1.08); z-index: 3; }
+ .day-cell:not(.other-month):active { transform: scale(0.94); background-color: #dceaff; }
+ .day-cell.weekday-sat:not(.other-month) .num { color: #2979c1; font-weight: 600; }
+ .day-cell.weekday-sun:not(.other-month) .num { color: #c62828; font-weight: 600; }
+ .day-cell.today { border: 2.5px solid var(--primary); animation: breath 2.8s ease-in-out infinite alternate; background: rgba(36, 120, 224, 0.05); z-index: 2; }
+ @keyframes breath {
+ from { box-shadow: 0 0 4px var(--primary-light), inset 0 0 4px rgba(36,120,224,0.04); }
+ to { box-shadow: 0 0 14px var(--primary-light), inset 0 0 8px rgba(36,120,224,0.10); }
+ }
+ .day-cell.today .num { font-weight: 800; color: var(--primary); }
+ .day-cell.holiday { background-color: #fff4f4; }
+ .day-cell.holiday .num { color: #d82020; font-weight: bold; }
+ .day-cell.holiday:hover { background-color: #ffe8e8 !important; }
+ .day-cell.workday-makeup { background-color: var(--workday-bg); }
+ .day-cell.workday-makeup .num { color: var(--workday-gray); font-weight: 600; }
+ .day-cell.workday-makeup:hover { background-color: #eaeaea !important; }
+ .workday-tag { font-size: 8px; color: var(--workday-gray); font-weight: bold; line-height: 1; white-space: nowrap; }
+ .day-cell.festival { background-color: #fffaf5; }
+ .day-cell.festival .num { color: #e66000; font-weight: 500; }
+ .day-cell.festival:hover { background-color: #fff2e0 !important; }
+ .day-cell.solar-term { background-color: var(--solar-term-bg); }
+ .day-cell.solar-term .num { color: var(--solar-term-green); font-weight: 600; }
+ .day-cell.solar-term:hover { background-color: #d8f4e2 !important; }
+ .solar-term-name { font-size: 8px; color: var(--solar-term-green); font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+ .day-cell.peace-day { background-color: #f0f7ff; position: relative; }
+ .day-cell.peace-day::after { content: "🕊"; position: absolute; top: 1px; right: 2px; font-size: 6px; line-height: 1; opacity: 0.7; pointer-events: none; }
+ .holiday-name { font-size: 8px; color: #c41818; font-weight: bold; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; transition: color 0.3s; }
+ .day-cell .num { font-size: clamp(11px, 1.7vw, 15px); line-height: 1.1; font-weight: 500; transition: color 0.3s; }
+ .day-cell .lunar { font-size: 8px; margin-top: 0px; color: #555; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; transition: color 0.3s; }
+ .note-dot { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: #e04040; box-shadow: 0 0 3px rgba(224,64,64,0.5); pointer-events: none; z-index: 1; }
+
+ /* ===== 记事悬浮预览 ===== */
+ .note-tooltip {
+ position: fixed;
+ z-index: 10000;
+ background: #fffef8;
+ border: 1px solid #e0d8c0;
+ border-radius: 8px;
+ padding: 8px 12px;
+ font-size: 12px;
+ color: #444;
+ box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+ pointer-events: none;
+ opacity: 0;
+ visibility: hidden;
+ transition: opacity 0.15s ease;
+ max-width: 200px;
+ word-break: break-word;
+ line-height: 1.4;
+ }
+ .note-tooltip.show { opacity: 1; visibility: visible; }
+ .note-tooltip .tooltip-date { font-weight: 700; color: var(--primary); margin-bottom: 3px; font-size: 11px; }
+ .note-tooltip .tooltip-item { padding: 1px 0; border-bottom: 1px dotted #eee; font-size: 11px; }
+ .note-tooltip .tooltip-item:last-child { border-bottom: none; }
+
+ /* ===== 记事弹窗 ===== */
+ .modal-overlay {
+ position: fixed;
+ inset: 0;
+ background: rgba(0,0,0,0.45);
+ z-index: 10001;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ opacity: 0;
+ visibility: hidden;
+ transition: all 0.2s ease;
+ cursor: pointer;
+ }
+ .modal-overlay.show { opacity: 1; visibility: visible; }
+ .modal-dialog {
+ background: #fff;
+ border-radius: 14px;
+ padding: 18px 16px;
+ width: min(90vw, 400px);
+ box-shadow: 0 12px 40px rgba(0,0,0,0.20);
+ cursor: default;
+ max-height: 82vh;
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ animation: modalIn 0.25s ease;
+ transition: background 0.5s;
+ }
+ @keyframes modalIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+ .modal-dialog h3 { font-size: 16px; color: var(--primary); text-align: center; margin: 0; letter-spacing: 1px; }
+ .modal-date-label { text-align: center; font-size: 13px; color: #666; margin-bottom: 2px; transition: color 0.3s; }
+
+ /* 记事搜索 */
+ .note-search-row {
+ display: flex;
+ gap: 6px;
+ align-items: center;
+ }
+ .note-search-input {
+ flex: 1;
+ padding: 7px 10px;
+ border: 1px solid #ddd;
+ border-radius: 8px;
+ font-size: 13px;
+ outline: none;
+ transition: border 0.2s;
+ font-family: inherit;
+ }
+ .note-search-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(36,120,224,0.08); }
+ .btn-search-notes {
+ background: #f5f5f5;
+ border: 1px solid #ddd;
+ border-radius: 8px;
+ padding: 7px 10px;
+ font-size: 12px;
+ cursor: pointer;
+ transition: all 0.15s;
+ }
+ .btn-search-notes:hover { background: #e8f0ff; border-color: var(--primary-light); color: var(--primary); }
+
+ /* 搜索结果列表 */
+ .note-search-results {
+ max-height: 160px;
+ overflow-y: auto;
+ display: flex;
+ flex-direction: column;
+ gap: 5px;
+ padding-right: 4px;
+ }
+ .note-search-results::-webkit-scrollbar { width: 4px; }
+ .note-search-results::-webkit-scrollbar-thumb { background: #d0d8e8; border-radius: 8px; }
+ .note-search-item {
+ display: flex;
+ align-items: flex-start;
+ justify-content: space-between;
+ background: #f8f7ff;
+ border-radius: 8px;
+ padding: 7px 10px;
+ gap: 6px;
+ font-size: 12px;
+ border: 1px solid #e8e4f8;
+ cursor: pointer;
+ transition: all 0.15s;
+ }
+ .note-search-item:hover { background: #f0edff; border-color: var(--primary-light); }
+ .note-search-item .nsi-date { font-weight: 700; color: var(--primary); font-size: 11px; white-space: nowrap; flex-shrink: 0; }
+ .note-search-item .nsi-text { flex: 1; word-break: break-word; line-height: 1.4; color: #555; }
+
+ .modal-notes-list {
+ max-height: 150px;
+ overflow-y: auto;
+ display: flex;
+ flex-direction: column;
+ gap: 5px;
+ padding-right: 4px;
+ }
+ .modal-notes-list::-webkit-scrollbar { width: 4px; }
+ .modal-notes-list::-webkit-scrollbar-thumb { background: #d0d8e8; border-radius: 8px; }
+ .modal-note-item {
+ display: flex;
+ align-items: flex-start;
+ justify-content: space-between;
+ background: #fafaf7;
+ border-radius: 8px;
+ padding: 7px 10px;
+ gap: 8px;
+ font-size: 13px;
+ border: 1px solid #eee;
+ transition: all 0.15s;
+ }
+ .modal-note-item:hover { background: #fff8f0; border-color: #e8d8c0; }
+ .modal-note-item .note-text { flex: 1; word-break: break-word; line-height: 1.4; }
+ .modal-note-item .note-time { font-size: 10px; color: #aaa; white-space: nowrap; flex-shrink: 0; }
+ .btn-del-note { background: none; border: none; color: #d88; cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 4px; transition: all 0.15s; flex-shrink: 0; line-height: 1; }
+ .btn-del-note:hover { background: #fff0f0; color: #c0392b; }
+ .btn-edit-note { background: none; border: none; color: #88a; cursor: pointer; font-size: 13px; padding: 2px 4px; border-radius: 4px; transition: all 0.15s; flex-shrink: 0; }
+ .btn-edit-note:hover { background: #f0f0ff; color: var(--primary); }
+ .modal-input-row { display: flex; gap: 8px; }
+ .modal-input-row input { flex: 1; padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.2s; font-family: inherit; }
+ .modal-input-row input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(36,120,224,0.08); }
+ .btn-add-note { background: var(--primary); color: #fff; border: none; padding: 9px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; letter-spacing: 1px; transition: all 0.2s; white-space: nowrap; }
+ .btn-add-note:hover { background: #1a60c0; }
+ .btn-add-note:active { transform: scale(0.94); }
+ .btn-close-modal { background: #f5f5f5; border: 1px solid #ddd; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.2s; text-align: center; letter-spacing: 1px; }
+ .btn-close-modal:hover { background: #eaeaea; }
+ .modal-empty { text-align: center; color: #bbb; font-size: 13px; padding: 12px 0; }
+ .modal-footer-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+ .backup-btn { background: rgba(255,255,255,0.88); border: 1px solid #ddd; border-radius: 8px; padding: 7px 14px; font-size: 12px; cursor: pointer; transition: all 0.15s; color: #888; display: flex; align-items: center; gap: 5px; }
+ .backup-btn:hover { background: #f0f6ff; border-color: var(--primary-light); color: var(--primary); }
+
+ /* ===== 响应式 ===== */
+ @media (max-width: 380px) {
+ .day-cell .num { font-size: 10px; }
+ .day-cell .lunar { font-size: 7px; }
+ .holiday-name, .solar-term-name, .workday-tag { font-size: 6px; }
+ .note-dot { width: 4px; height: 4px; bottom: 2px; }
+ .dashboard-card { padding: 6px 10px; min-width: 85px; }
+ .dash-value { font-size: 13px; }
+ }
+ @media (max-width: 360px) {
+ .calendar-box { padding: 10px 4px 10px; }
+ .ym-text { font-size: 15px; }
+ .day-grid { gap: 1px; }
+ .day-cell { border-radius: 4px; }
+ .week-item { font-size: 10px; }
+ .modal-dialog { padding: 12px 8px; }
+ }
+ @media (max-width: 600px) {
+ .topbar { top: 8px; right: 8px; }
+ .weather-card { min-width: 165px; }
+ .toolbar-btn { font-size: 10px; padding: 4px 8px; }
+ }
+ </style>
 </head>
 <body>
-    <!-- 天气面板 -->
-    <div class="weather-box" id="weatherBox">
-        <div class="weather-header">
-            <div class="weather-city">
-                <span>📍</span>
-                <span id="cityName">获取定位中...</span>
-            </div>
-            <button class="weather-refresh" id="weatherRefresh" title="刷新天气">⟳</button>
-        </div>
-        <div id="weatherLoading" class="weather-loading">正在加载天气数据...</div>
-        <div id="weatherContent" style="display:none;">
-            <div class="weather-main">
-                <div class="weather-icon" id="weatherIcon">⛅</div>
-                <div class="weather-temp-wrap">
-                    <div class="weather-temp" id="weatherTemp">--°C</div>
-                    <div class="weather-text" id="weatherText">加载中</div>
-                </div>
-            </div>
-            <div class="weather-info-row">
-                <div>湿度：<span id="weatherHum">--</span>%</div>
-                <div>风向：<span id="weatherWind">--</span></div>
-                <div>空气质量：<span id="weatherAqi">--</span></div>
-                <div>体感：<span id="weatherFeel">--°C</span></div>
-            </div>
-        </div>
-    </div>
 
-    <div class="title-wrap"><p class="title-text">我们的愿望是~</p></div>
-    <div class="title-wrap peace-wrap"><p class="title-text peace-text">世界和平！</p></div>
-    <div class="countdown-bar"><span class="countdown-icon">📅</span> <span id="countdownText">加载中...</span></div>
-    <div class="time-box" id="timeText"></div>
+ <!-- 飞鸽动画容器 -->
+ <div class="dove-container" id="doveContainer"></div>
 
-    <div class="calendar-box" id="calendarBox">
-        <div class="calendar-header">
-            <button class="btn-today" id="btnToday">🕊 今天</button>
-            <button id="prevMonth">◀</button>
-            <div class="ym-text">
-                <span class="year-click" id="yearText">2026</span>年<span class="month-click" id="monthText">7</span>月
-                <div class="select-panel year-panel" id="yearPanel"></div>
-                <div class="select-panel month-panel" id="monthPanel"></div>
-            </div>
-            <button id="nextMonth">▶</button>
-        </div>
-        <div class="week-row">
-            <div class="week-item">一</div><div class="week-item">二</div><div class="week-item">三</div>
-            <div class="week-item">四</div><div class="week-item">五</div><div class="week-item">六</div><div class="week-item">日</div>
-        </div>
-        <div class="day-grid" id="dayGrid"></div>
-    </div>
+ <!-- ===== 右上角工具栏 ===== -->
+ <div class="topbar">
+ <div class="toolbar-row">
+ <button class="toolbar-btn theme-toggle-btn" id="themeToggleBtn" title="切换主题" aria-label="切换深色/浅色模式">🌙 深色</button>
+ <button class="toolbar-btn lang-toggle-btn active" id="langToggleBtn" title="切换语言">🌐 中文</button>
+ </div>
+ <div class="toolbar-row">
+ <button class="toolbar-btn view-toggle-btn active" id="viewMonthBtn" title="月视图" aria-label="月视图">📅 月</button>
+ <button class="toolbar-btn view-toggle-btn" id="viewWeekBtn" title="周视图" aria-label="周视图">📆 周</button>
+ </div>
 
-    <div class="note-tooltip" id="noteTooltip"></div>
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-dialog">
-            <h3>📝 记事本</h3>
-            <div class="modal-date-label" id="modalDateLabel"></div>
-            <div class="modal-notes-list" id="modalNotesList"></div>
-            <div class="modal-input-row" style="display: flex; gap: 8px; margin-top: 6px;">
-                <input type="text" id="modalNoteInput" placeholder="输入记事内容..." maxlength="200" style="flex:1; padding:9px 12px; border:1px solid #ddd; border-radius:8px;">
-                <button class="btn-add-note" id="btnAddNote">添加</button>
-            </div>
-            <button class="btn-close-modal" id="btnCloseModal">关闭</button>
-        </div>
-    </div>
+ <!-- 天气 -->
+ <div class="weather-widget">
+ <button class="weather-toggle-btn" id="weatherToggleBtn" title="查看天气" aria-label="查看天气">📍 天气加载中</button>
+ <div class="weather-card" id="weatherCard">
+ <div id="weatherContent">
+ <div class="weather-loading"><div class="spinner"></div><span>正在获取天气...</span></div>
+ </div>
+ <button class="weather-refresh-btn" id="weatherRefreshBtn" title="刷新天气" aria-label="刷新天气">⟳</button>
+ </div>
+ <div class="weather-search-bar" id="weatherSearchBar">
+ <input type="text" id="weatherCityInput" placeholder="搜索城市，如：北京" maxlength="30" aria-label="输入城市名">
+ <button class="btn-go" id="btnWeatherGo">查看</button>
+ <button class="btn-cancel-search" id="btnWeatherCancel">取消</button>
+ </div>
+ </div>
+ </div>
 
-    <script>
-        (function() {
-            // ============ DOM 引用 ============
-            const timeText = document.getElementById("timeText");
-            const dayGrid = document.getElementById("dayGrid");
-            const yearText = document.getElementById("yearText");
-            const monthText = document.getElementById("monthText");
-            const yearPanel = document.getElementById("yearPanel");
-            const monthPanel = document.getElementById("monthPanel");
-            const btnToday = document.getElementById("btnToday");
-            const calendarBox = document.getElementById("calendarBox");
-            const countdownText = document.getElementById("countdownText");
-            const noteTooltip = document.getElementById("noteTooltip");
-            const modalOverlay = document.getElementById("modalOverlay");
-            const modalDialog = document.getElementById("modalDialog");
-            const modalDateLabel = document.getElementById("modalDateLabel");
-            const modalNotesList = document.getElementById("modalNotesList");
-            const modalNoteInput = document.getElementById("modalNoteInput");
-            const btnAddNote = document.getElementById("btnAddNote");
-            const btnCloseModal = document.getElementById("btnCloseModal");
+ <!-- 标题 -->
+ <div class="title-wrap"><p class="title-text">我们的愿望是~</p></div>
+ <div class="title-wrap"><p class="title-text peace-text">世界和平！</p></div>
+ <p class="greeting-sub" id="greetingSub"></p>
 
-            // 天气 DOM
-            const cityName = document.getElementById('cityName');
-            const weatherLoading = document.getElementById('weatherLoading');
-            const weatherContent = document.getElementById('weatherContent');
-            const weatherIcon = document.getElementById('weatherIcon');
-            const weatherTemp = document.getElementById('weatherTemp');
-            const weatherText = document.getElementById('weatherText');
-            const weatherHum = document.getElementById('weatherHum');
-            const weatherWind = document.getElementById('weatherWind');
-            const weatherAqi = document.getElementById('weatherAqi');
-            const weatherFeel = document.getElementById('weatherFeel');
-            const weatherRefresh = document.getElementById('weatherRefresh');
+ <!-- 仪表盘 -->
+ <div class="dashboard-row" id="dashboardRow">
+ <div class="dashboard-card" title="当前节气">
+ <div class="dash-icon">🌿</div>
+ <div class="dash-value" id="dashSolarTerm">—</div>
+ <div class="dash-label" id="dashSolarTermLabel">节气</div>
+ </div>
+ <div class="dashboard-card" title="今日距元旦">
+ <div class="dash-icon">🎊</div>
+ <div class="dash-value" id="dashNewYear">—</div>
+ <div class="dash-label" id="dashNewYearLabel">距元旦</div>
+ </div>
+ <div class="dashboard-card" title="本月记事">
+ <div class="dash-icon">📝</div>
+ <div class="dash-value" id="dashNotes">0</div>
+ <div class="dash-label" id="dashNotesLabel">本月记事</div>
+ </div>
+ </div>
 
-            // ===================== 天气逻辑 (修复版) =====================
-            const WEATHER_KEY = "937f0bbe222641968c27e1243d07f7a9"; // 请替换为您自己的和风天气密钥
-            let userLng = null, userLat = null;
-            const weatherIconMap = {
-                "晴": "☀️", "多云": "⛅", "少云": "⛅", "阴": "☁️",
-                "小雨": "🌧️", "中雨": "🌧️", "大雨": "🌧️", "暴雨": "⛈️",
-                "雷阵雨": "⛈️", "小雪": "🌨️", "中雪": "❄️", "大雪": "❄️",
-                "雾": "🌫️", "霾": "🌫️", "沙尘": "🌪️"
-            };
+ <!-- 倒计时 -->
+ <div class="countdown-bar" id="countdownBar" role="status" aria-live="polite">
+ <span class="countdown-icon">📅</span> <span id="countdownText">加载中...</span>
+ </div>
 
-            // 显示加载状态
-            function showLoading() {
-                weatherLoading.style.display = "block";
-                weatherContent.style.display = "none";
-            }
+ <!-- 时钟 -->
+ <div class="time-box" id="timeText" aria-live="off"></div>
 
-            // 显示天气内容
-            function showContent() {
-                weatherLoading.style.display = "none";
-                weatherContent.style.display = "block";
-            }
+ <!-- 日历 -->
+ <div class="calendar-box" id="calendarBox">
+ <div class="calendar-header">
+ <button class="btn-today" id="btnToday" title="回到今天 (T)">🕊 今天</button>
+ <button id="prevMonth" title="上个月 (←)" aria-label="上个月">◀</button>
+ <div class="ym-text" id="ymTitle">
+ <span class="year-click" id="yearText" role="button" tabindex="0" aria-label="选择年份">2026</span>年
+ <span class="month-click" id="monthText" role="button" tabindex="0" aria-label="选择月份">7</span>月
+ <div class="select-panel year-panel" id="yearPanel" role="listbox" aria-label="选择年份"></div>
+ <div class="select-panel month-panel" id="monthPanel" role="listbox" aria-label="选择月份"></div>
+ </div>
+ <button id="nextMonth" title="下个月 (→)" aria-label="下个月">▶</button>
+ </div>
+ <div class="week-row" id="weekRow" role="row"></div>
+ <div class="day-grid" id="dayGrid" role="grid" aria-label="日历网格"></div>
+ </div>
 
-            // 显示错误提示 (隐藏加载，显示内容区域并填充错误信息)
-            function showError(msg) {
-                showContent();
-                cityName.textContent = "获取失败";
-                weatherIcon.textContent = "⚠️";
-                weatherTemp.textContent = "--°C";
-                weatherText.textContent = msg || "天气不可用";
-                weatherHum.textContent = "--";
-                weatherWind.textContent = "--";
-                weatherAqi.textContent = "--";
-                weatherFeel.textContent = "--";
-            }
+ <!-- 记事悬浮预览 -->
+ <div class="note-tooltip" id="noteTooltip" role="tooltip"></div>
 
-            // 获取定位
-            function getUserLocation() {
-                if (!navigator.geolocation) {
-                    loadWeatherByCity("合肥");
-                    return;
-                }
-                navigator.geolocation.getCurrentPosition(
-                    (pos) => {
-                        userLat = pos.coords.latitude.toFixed(2);
-                        userLng = pos.coords.longitude.toFixed(2);
-                        getWeatherByLngLat(userLng, userLat);
-                    },
-                    (err) => {
-                        console.warn("定位失败:", err.message);
-                        loadWeatherByCity("合肥");
-                    },
-                    { enableHighAccuracy: false, timeout: 5000, maximumAge: 600000 }
-                );
-            }
+ <!-- 记事编辑弹窗 -->
+ <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal-dialog">
+ <h3 id="modalTitle">📝 记事本</h3>
+ <div class="modal-date-label" id="modalDateLabel"></div>
 
-            // 根据经纬度获取天气
-            async function getWeatherByLngLat(lng, lat) {
-                showLoading();
-                try {
-                    const res = await fetch(`https://devapi.qweather.com/v7/weather/now?location=${lng},${lat}&key=${WEATHER_KEY}`);
-                    const airRes = await fetch(`https://devapi.qweather.com/v7/air/now?location=${lng},${lat}&key=${WEATHER_KEY}`);
-                    const locRes = await fetch(`https://geoapi.qweather.com/v2/city/lookup?location=${lng},${lat}&key=${WEATHER_KEY}`);
-                    if (!res.ok || !airRes.ok || !locRes.ok) throw new Error("API请求失败");
-                    const data = await res.json();
-                    const airData = await airRes.json();
-                    const locData = await locRes.json();
-                    if (data.code !== "200" || !data.now) throw new Error("天气数据异常");
-                    renderWeather(data, airData, locData.location?.[0]?.name || "未知城市");
-                } catch (err) {
-                    console.error(err);
-                    showError("定位天气获取失败");
-                }
-            }
+ <!-- 搜索记事 -->
+ <div class="note-search-row" id="noteSearchRow" style="display:none;">
+ <input type="text" class="note-search-input" id="noteSearchInput" placeholder="搜索所有记事..." maxlength="200">
+ <button class="btn-search-notes" id="btnSearchNotes">🔍</button>
+ </div>
+ <div class="note-search-results" id="noteSearchResults" style="display:none;"></div>
 
-            // 根据城市名获取天气
-            async function loadWeatherByCity(city) {
-                showLoading();
-                try {
-                    const cityRes = await fetch(`https://geoapi.qweather.com/v2/city/lookup?location=${city}&key=${WEATHER_KEY}`);
-                    if (!cityRes.ok) throw new Error("城市查询失败");
-                    const cityJson = await cityRes.json();
-                    if (!cityJson.location || cityJson.location.length === 0) {
-                        // 城市查询不到，降级使用北京ID
-                        return loadWeatherByCityId("101010100");
-                    }
-                    const cityId = cityJson.location[0].id;
-                    return loadWeatherByCityId(cityId, cityJson.location[0].name);
-                } catch (e) {
-                    console.error(e);
-                    showError("城市天气获取失败");
-                }
-            }
+ <div class="modal-notes-list" id="modalNotesList">
+ <div class="modal-empty">暂无记事，快来添加吧~</div>
+ </div>
+ <div class="modal-input-row">
+ <input type="text" id="modalNoteInput" placeholder="输入记事内容..." maxlength="200" aria-label="记事内容">
+ <button class="btn-add-note" id="btnAddNote">添加</button>
+ </div>
+ <div class="modal-footer-btns">
+ <button class="backup-btn" id="btnExportNotes" title="导出记事">📤 导出</button>
+ <button class="backup-btn" id="btnImportNotes" title="导入记事">📥 导入</button>
+ <input type="file" id="importFileInput" accept=".json" style="display:none;">
+ <button class="backup-btn" id="btnShowSearch" title="搜索记事">🔍 搜索</button>
+ <button class="btn-close-modal" id="btnCloseModal">关闭</button>
+ </div>
+ </div>
+ </div>
 
-            // 通过城市ID获取天气
-            async function loadWeatherByCityId(cityId, cityName = "北京") {
-                showLoading();
-                try {
-                    const res = await fetch(`https://devapi.qweather.com/v7/weather/now?location=${cityId}&key=${WEATHER_KEY}`);
-                    const airRes = await fetch(`https://devapi.qweather.com/v7/air/now?location=${cityId}&key=${WEATHER_KEY}`);
-                    if (!res.ok || !airRes.ok) throw new Error("API请求失败");
-                    const data = await res.json();
-                    const airData = await airRes.json();
-                    if (data.code !== "200" || !data.now) throw new Error("天气数据异常");
-                    renderWeather(data, airData, cityName);
-                } catch (e) {
-                    console.error(e);
-                    showError("天气服务暂不可用");
-                }
-            }
+ <!-- 节日温馨提示 -->
+ <div class="festival-tip-box" id="festivalTipBox">
+ <button class="festival-tip-close" id="festivalTipClose" aria-label="关闭">✕</button>
+ <div class="tip-title" id="festivalTipTitle">🎉 春节</div>
+ <div class="tip-body" id="festivalTipBody"></div>
+ </div>
 
-            // 渲染天气面板
-            function renderWeather(weatherData, airData, city) {
-                showContent();
-                cityName.textContent = city;
-                const now = weatherData.now;
-                const weatherType = now.text;
-                weatherIcon.textContent = weatherIconMap[weatherType] || "🌤️";
-                weatherTemp.textContent = `${now.temp}°C`;
-                weatherText.textContent = weatherType;
-                weatherHum.textContent = now.humidity;
-                weatherWind.textContent = `${now.windDir} ${now.windScale}级`;
-                weatherFeel.textContent = `${now.feelsLike}°C`;
-                if (airData.now && airData.now.aqi) {
-                    weatherAqi.textContent = airData.now.aqi + " " + airData.now.level;
-                } else {
-                    weatherAqi.textContent = "无数据";
-                }
-            }
+<script>
+// ================================================================
+// 世界和平日历 — 完整版 v2.0
+// ================================================================
+(function() {
+'use strict';
 
-            // 刷新按钮
-            weatherRefresh.addEventListener("click", () => {
-                if (userLng && userLat) {
-                    getWeatherByLngLat(userLng, userLat);
-                } else {
-                    getUserLocation();
-                }
-            });
+// ===== 多语言系统 =====
+const I18N = {
+ zh: {
+ weekDays: ['一','二','三','四','五','六','日'],
+ weekDaysFull: ['周一','周二','周三','周四','周五','周六','周日'],
+ monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+ greeting: {
+ morning: '早安 ☀️ 新的一天，从世界和平开始~',
+ afternoon: '下午好 🌤️ 记得微笑，世界需要你~',
+ evening: '晚上好 🌙 仰望同一片星空，世界和平~',
+ night: '夜深了 🌌 愿梦里有和平~'
+ },
+ festivalTips: {
+ '春节': '🎊 贴春联、放鞭炮、吃年夜饭、拜年！正月里要说吉利话哦~',
+ '元宵节': '🏮 赏花灯、吃元宵、猜灯谜，团团圆圆过佳节！',
+ '清明': '🌿 踏青扫墓，追思先人，宜亲近自然~',
+ '端午': '🐲 赛龙舟、吃粽子、挂艾草，驱邪祈福！',
+ '中秋': '🌕 赏月、吃月饼、团圆饭，天涯共此时~',
+ '国庆': '🇨🇳 普天同庆！10月1日是新中国成立纪念日~',
+ '元旦': '🎊 新年快乐！许下新年愿望，为世界和平祈福~',
+ '劳动节': '💪 致敬每一位劳动者！劳动最光荣~',
+ '七夕': '💕 牛郎织女相会日，有情人的节日哦~',
+ '重阳': '🍂 登高望远，敬老爱老，秋日宜登高~',
+ '小寒': '❄️ 天寒地冻，注意保暖！喝热汤、添衣物~',
+ '大寒': '🥶 一年中最冷的时候，防寒保暖是关键~',
+ '立春': '🌱 春天来了！万物复苏，宜立志~',
+ '春分': '🌸 昼夜平分，春天过半，宜踏青~',
+ '谷雨': '🌧️ 雨生百谷，播种好时节~',
+ '立夏': '☀️ 夏天开始，养心防暑~',
+ '小满': '🌾 小麦籽粒渐满，夏收在望~',
+ '芒种': '🌾 忙于收割，也忙于播种~',
+ '夏至': '☀️ 白天最长，记得防暑~',
+ '小暑': '🔥 暑气渐盛，宜静心~',
+ '大暑': '🥵 一年最热，注意防暑降温~',
+ '立秋': '🍂 秋天来了，收货的季节~',
+ '处暑': '🍃 暑气消退，早晚渐凉~',
+ '白露': '💧 露凝而白，记得添衣~',
+ '秋分': '🍁 昼夜平分，秋天过半~',
+ '寒露': '🍂 露气寒冷，预防秋燥~',
+ '霜降': '❄️ 霜降大地，冬天将近~',
+ '立冬': '🧥 冬天来了，收藏的季节~',
+ '小雪': '❄️ 初雪降临，浪漫的时节~',
+ '大雪': '❄️ 雪量增大，注意保暖~',
+ '冬至': '🥟 白天最短，吃饺子/汤圆进补！'
+ },
+ dashSolarTerm: '节气',
+ dashNewYear: '距元旦',
+ dashNotes: '本月记事',
+ noResults: '没有找到匹配的记事',
+ loading: '正在获取天气...',
+ weatherError: '获取失败，点击重试'
+ },
+ en: {
+ weekDays: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+ weekDaysFull: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+ monthNames: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+ greeting: {
+ morning: 'Good Morning ☀️ A new day begins with peace~',
+ afternoon: 'Good Afternoon 🌤️ Keep smiling, the world needs you~',
+ evening: 'Good Evening 🌙 Under the same sky, world peace~',
+ night: 'Good Night 🌌 May your dreams be filled with peace~'
+ },
+ festivalTips: {
+ 'Spring Festival': '🎊 Spring couplets, firecrackers, reunion dinner, and greetings!',
+ 'Lantern Festival': '🏮 Enjoy lanterns, eat tangyuan, solve riddles!',
+ 'Qingming': '🌿 Outing and tomb sweeping, connect with nature~',
+ 'Dragon Boat': '🐲 Dragon boat races, zongzi, wormwood for protection!',
+ 'Mid-Autumn': '🌕 Moon viewing, mooncakes, family reunion~',
+ 'National Day': '🇨🇳 Celebration! October 1st marks new China~',
+ "New Year's Day": '🎊 Happy New Year! Make a wish for world peace~',
+ 'Labor Day': '💪 Salute to every worker!',
+ 'Laba': '🍚 Laba porridge tradition, warm and nourishing~',
+ },
+ dashSolarTerm: 'Solar Term',
+ dashNewYear: 'Days to NY',
+ dashNotes: 'Notes/Mo',
+ noResults: 'No matching notes',
+ loading: 'Loading weather...',
+ weatherError: 'Failed, tap to retry'
+ }
+};
 
-            // 初始启动天气
-            getUserLocation();
+let currentLang = localStorage.getItem('cal_lang') || 'zh';
+function t(key) {
+ return I18N[currentLang][key] || key;
+}
+function tGreeting() {
+ const h = new Date().getHours();
+ if (h >= 6 && h < 12) return t('greeting').morning;
+ if (h >= 12 && h < 18) return t('greeting').afternoon;
+ if (h >= 18 && h < 23) return t('greeting').evening;
+ return t('greeting').night;
+}
 
-            // ===================== 实时时钟 =====================
-            function updateTime() {
-                const now = new Date();
-                const weekArr = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
-                timeText.textContent = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${weekArr[now.getDay()]} ` +
-                    `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-            }
-            updateTime();
-            setInterval(updateTime, 1000);
+// ===== DOM引用 =====
+const $ = id => document.getElementById(id);
+const timeText = $('timeText');
+const dayGrid = $('dayGrid');
+const yearText = $('yearText');
+const monthText = $('monthText');
+const yearPanel = $('yearPanel');
+const monthPanel = $('monthPanel');
+const btnToday = $('btnToday');
+const calendarBox = $('calendarBox');
+const countdownText = $('countdownText');
+const noteTooltip = $('noteTooltip');
+const modalOverlay = $('modalOverlay');
+const modalDialog = modalOverlay.querySelector('.modal-dialog');
+const modalDateLabel = $('modalDateLabel');
+const modalNotesList = $('modalNotesList');
+const modalNoteInput = $('modalNoteInput');
+const btnAddNote = $('btnAddNote');
+const btnCloseModal = $('btnCloseModal');
+const weekRow = $('weekRow');
+const greetingSub = $('greetingSub');
 
-            // ===================== 节假日/补班/节气/农历数据 (保持不变) =====================
-            const allYearHolidays = {
-                2026: {"1-1":"元旦","1-2":"元旦","1-3":"元旦","2-15":"春节","2-16":"春节","2-17":"春节","2-18":"春节","2-19":"春节","2-20":"春节","2-21":"春节","2-22":"春节","2-23":"春节","4-4":"清明","4-5":"清明","4-6":"清明","5-1":"劳动节","5-2":"劳动节","5-3":"劳动节","5-4":"劳动节","5-5":"劳动节","6-19":"端午","6-20":"端午","6-21":"端午","9-25":"中秋","9-26":"中秋","9-27":"中秋","10-1":"国庆","10-2":"国庆","10-3":"国庆","10-4":"国庆","10-5":"国庆","10-6":"国庆","10-7":"国庆"},
-                2027: {"1-1":"元旦","1-2":"元旦","1-3":"元旦","2-5":"春节","2-6":"春节","2-7":"春节","2-8":"春节","2-9":"春节","2-10":"春节","2-11":"春节","4-5":"清明","4-6":"清明","4-7":"清明","5-1":"劳动节","5-2":"劳动节","5-3":"劳动节","5-4":"劳动节","5-5":"劳动节","6-7":"端午","6-8":"端午","6-9":"端午","9-15":"中秋","9-16":"中秋","9-17":"中秋","10-1":"国庆","10-2":"国庆","10-3":"国庆","10-4":"国庆","10-5":"国庆","10-6":"国庆","10-7":"国庆"}
-            };
-            const allYearWorkdays = {
-                2026: {"1-31":"补班","2-7":"补班","2-14":"补班","4-25":"补班","5-9":"补班","6-13":"补班","9-12":"补班","10-10":"补班"},
-                2027: {"1-30":"补班","2-6":"补班","2-13":"补班","4-24":"补班","5-8":"补班","6-12":"补班","9-11":"补班","10-9":"补班"}
-            };
-            const solarTermsData = {
-                2026: {"1-5":"小寒","1-20":"大寒","2-4":"立春","2-18":"雨水","3-5":"惊蛰","3-20":"春分","4-5":"清明","4-20":"谷雨","5-5":"立夏","5-21":"小满","6-5":"芒种","6-21":"夏至","7-7":"小暑","7-22":"大暑","8-7":"立秋","8-23":"处暑","9-7":"白露","9-23":"秋分","10-8":"寒露","10-23":"霜降","11-7":"立冬","11-22":"小雪","12-7":"大雪","12-22":"冬至"},
-                2027: {"1-5":"小寒","1-20":"大寒","2-4":"立春","2-18":"雨水","3-5":"惊蛰","3-20":"春分","4-5":"清明","4-20":"谷雨","5-5":"立夏","5-21":"小满","6-5":"芒种","6-21":"夏至","7-7":"小暑","7-23":"大暑","8-7":"立秋","8-23":"处暑","9-7":"白露","9-23":"秋分","10-8":"寒露","10-23":"霜降","11-7":"立冬","11-22":"小雪","12-7":"大雪","12-22":"冬至"}
-            };
-            const festivalMap = {"7-1":"建党节","8-1":"建军节","9-21":"国际和平日","10-24":"联合国日","12-10":"人权日"};
-            const peaceDays = ["9-21"];
-            const lunar2026 = {
-                1:{1:"元旦",2:"十四",3:"十五",4:"十六",5:"十七",6:"十八",7:"十九",8:"二十",9:"廿一",10:"廿二",11:"廿三",12:"廿四",13:"廿五",14:"廿六",15:"廿七",16:"廿八",17:"廿九",18:"腊月",19:"初二",20:"初三",21:"初四",22:"初五",23:"初六",24:"初七",25:"初八",26:"初九",27:"初十",28:"十一",29:"十二",30:"十三",31:"十四"},
-                2:{1:"十五",2:"十六",3:"十七",4:"十八",5:"十九",6:"二十",7:"廿一",8:"廿二",9:"廿三",10:"廿四",11:"廿五",12:"廿六",13:"廿七",14:"廿八",15:"廿九",16:"正月",17:"初二",18:"初三",19:"初四",20:"初五",21:"初六",22:"初七",23:"初八",24:"初九",25:"初十",26:"十一",27:"十二",28:"十三"},
-                3:{1:"十四",2:"十五",3:"十六",4:"十七",5:"十八",6:"十九",7:"二十",8:"廿一",9:"廿二",10:"廿三",11:"廿四",12:"廿五",13:"廿六",14:"廿七",15:"廿八",16:"廿九",17:"三十",18:"二月",19:"初二",20:"初三",21:"初四",22:"初五",23:"初六",24:"初七",25:"初八",26:"初九",27:"初十",28:"十一",29:"十二",30:"十三",31:"十四"},
-                4:{1:"十五",2:"十六",3:"十七",4:"十八",5:"十九",6:"二十",7:"廿一",8:"廿二",9:"廿三",10:"廿四",11:"廿五",12:"廿六",13:"廿七",14:"廿八",15:"廿九",16:"三月",17:"初二",18:"初三",19:"初四",20:"初五",21:"初六",22:"初七",23:"初八",24:"初九",25:"初十",26:"十一",27:"十二",28:"十三",29:"十四",30:"十五"},
-                5:{1:"十六",2:"十七",3:"十八",4:"十九",5:"二十",6:"廿一",7:"廿二",8:"廿三",9:"廿四",10:"廿五",11:"廿六",12:"廿七",13:"廿八",14:"廿九",15:"四月",16:"初二",17:"初三",18:"初四",19:"初五",20:"初六",21:"初七",22:"初八",23:"初九",24:"初十",25:"十一",26:"十二",27:"十三",28:"十四",29:"十五",30:"十六",31:"十七"},
-                6:{1:"十八",2:"十九",3:"二十",4:"廿一",5:"廿二",6:"廿三",7:"廿四",8:"廿五",9:"廿六",10:"廿七",11:"廿八",12:"廿九",13:"五月",14:"初二",15:"初三",16:"初四",17:"初五",18:"初六",19:"初七",20:"初八",21:"初九",22:"初十",23:"十一",24:"十二",25:"十三",26:"十四",27:"十五",28:"十六",29:"十七",30:"十八"},
-                7:{1:"建党节",2:"十九",3:"二十",4:"廿一",5:"廿二",6:"廿三",7:"小暑",8:"廿五",9:"廿六",10:"廿七",11:"廿八",12:"廿九",13:"六月",14:"初二",15:"初伏",16:"初四",17:"初五",18:"初六",19:"初七",20:"初八",21:"初九",22:"初十",23:"大暑",24:"十二",25:"中伏",26:"十四",27:"十五",28:"十六",29:"十七",30:"十八",31:"十九"},
-                8:{1:"建军节",2:"廿一",3:"廿二",4:"廿三",5:"廿四",6:"廿五",7:"立秋",8:"廿七",9:"廿八",10:"廿九",11:"七月",12:"初二",13:"初三",14:"初四",15:"初五",16:"初六",17:"初七",18:"初八",19:"初九",20:"初十",21:"十一",22:"十二",23:"十三",24:"十四",25:"末伏",26:"十六",27:"十七",28:"十八",29:"十九",30:"二十",31:"廿一"},
-                9:{1:"廿二",2:"廿三",3:"廿四",4:"廿五",5:"廿六",6:"廿七",7:"廿八",8:"廿九",9:"八月",10:"初二",11:"初三",12:"初四",13:"初五",14:"初六",15:"初七",16:"初八",17:"初九",18:"初十",19:"十一",20:"十二",21:"十三",22:"十四",23:"十五",24:"十六",25:"十七",26:"十八",27:"十九",28:"二十",29:"廿一",30:"廿二"},
-                10:{1:"国庆节",2:"廿四",3:"廿五",4:"廿六",5:"廿七",6:"廿八",7:"廿九",8:"九月",9:"初二",10:"初三",11:"初四",12:"初五",13:"初六",14:"初七",15:"初八",16:"初九",17:"初十",18:"十一",19:"十二",20:"十三",21:"十四",22:"十五",23:"十六",24:"十七",25:"十八",26:"十九",27:"二十",28:"廿一",29:"廿二",30:"廿三",31:"廿四"},
-                11:{1:"廿五",2:"廿六",3:"廿七",4:"廿八",5:"廿九",6:"十月",7:"初二",8:"初三",9:"初四",10:"初五",11:"初六",12:"初七",13:"初八",14:"初九",15:"初十",16:"十一",17:"十二",18:"十三",19:"十四",20:"十五",21:"十六",22:"十七",23:"十八",24:"十九",25:"二十",26:"廿一",27:"廿二",28:"廿三",29:"廿四",30:"廿五"},
-                12:{1:"廿六",2:"廿七",3:"廿八",4:"廿九",5:"冬月",6:"初二",7:"初三",8:"初四",9:"初五",10:"初六",11:"初七",12:"初八",13:"初九",14:"初十",15:"十一",16:"十二",17:"十三",18:"十四",19:"十五",20:"十六",21:"十七",22:"十八",23:"十九",24:"二十",25:"廿一",26:"廿二",27:"廿三",28:"廿四",29:"廿五",30:"廿六",31:"廿七"}
-            };
+// ===== 状态 =====
+const today = new Date();
+const todayYear = today.getFullYear();
+const todayMonth = today.getMonth() + 1;
+const todayDay = today.getDate();
+let currentShowYear = todayYear;
+let currentShowMonth = todayMonth;
+let currentModalDateKey = null;
+let lastMinute = -1; // 用于节流倒计时更新
 
-            const today = new Date();
-            const todayYear = today.getFullYear(), todayMonth = today.getMonth()+1, todayDay = today.getDate();
-            let currentShowYear = todayYear, currentShowMonth = todayMonth, currentModalDateKey = null;
+// ===== 农历数据 2026-2027 =====
+const lunarData = {
+ 2026: {
+ 1:{1:'元旦',2:'十四',3:'十五',4:'十六',5:'十七',6:'十八',7:'十九',8:'二十',9:'廿一',10:'廿二',11:'廿三',12:'廿四',13:'廿五',14:'廿六',15:'廿七',16:'廿八',17:'廿九',18:'腊月',19:'初二',20:'初三',21:'初四',22:'初五',23:'初六',24:'初七',25:'初八',26:'初九',27:'初十',28:'十一',29:'十二',30:'十三',31:'十四'},
+ 2:{1:'十五',2:'十六',3:'十七',4:'十八',5:'十九',6:'二十',7:'廿一',8:'廿二',9:'廿三',10:'廿四',11:'廿五',12:'廿六',13:'廿七',14:'廿八',15:'廿九',16:'正月',17:'初二',18:'初三',19:'初四',20:'初五',21:'初六',22:'初七',23:'初八',24:'初九',25:'初十',26:'十一',27:'十二',28:'十三'},
+ 3:{1:'十四',2:'十五',3:'十六',4:'十七',5:'十八',6:'十九',7:'二十',8:'廿一',9:'廿二',10:'廿三',11:'廿四',12:'廿五',13:'廿六',14:'廿七',15:'廿八',16:'廿九',17:'三十',18:'二月',19:'初二',20:'初三',21:'初四',22:'初五',23:'初六',24:'初七',25:'初八',26:'初九',27:'初十',28:'十一',29:'十二',30:'十三',31:'十四'},
+ 4:{1:'十五',2:'十六',3:'十七',4:'十八',5:'十九',6:'二十',7:'廿一',8:'廿二',9:'廿三',10:'廿四',11:'廿五',12:'廿六',13:'廿七',14:'廿八',15:'廿九',16:'三月',17:'初二',18:'初三',19:'初四',20:'初五',21:'初六',22:'初七',23:'初八',24:'初九',25:'初十',26:'十一',27:'十二',28:'十三',29:'十四',30:'十五'},
+ 5:{1:'十六',2:'十七',3:'十八',4:'十九',5:'二十',6:'廿一',7:'廿二',8:'廿三',9:'廿四',10:'廿五',11:'廿六',12:'廿七',13:'廿八',14:'廿九',15:'四月',16:'初二',17:'初三',18:'初四',19:'初五',20:'初六',21:'初七',22:'初八',23:'初九',24:'初十',25:'十一',26:'十二',27:'十三',28:'十四',29:'十五',30:'十六',31:'十七'},
+ 6:{1:'十八',2:'十九',3:'二十',4:'廿一',5:'廿二',6:'廿三',7:'廿四',8:'廿五',9:'廿六',10:'廿七',11:'廿八',12:'廿九',13:'五月',14:'初二',15:'初三',16:'初四',17:'初五',18:'初六',19:'初七',20:'初八',21:'初九',22:'初十',23:'十一',24:'十二',25:'十三',26:'十四',27:'十五',28:'十六',29:'十七',30:'十八'},
+ 7:{1:'建党节',2:'十九',3:'二十',4:'廿一',5:'廿二',6:'廿三',7:'小暑',8:'廿五',9:'廿六',10:'廿七',11:'廿八',12:'廿九',13:'六月',14:'初二',15:'初伏',16:'初四',17:'初五',18:'初六',19:'初七',20:'初八',21:'初九',22:'初十',23:'大暑',24:'十二',25:'中伏',26:'十四',27:'十五',28:'十六',29:'十七',30:'十八',31:'十九'},
+ 8:{1:'建军节',2:'廿一',3:'廿二',4:'廿三',5:'廿四',6:'廿五',7:'立秋',8:'廿七',9:'廿八',10:'廿九',11:'七月',12:'初二',13:'初三',14:'初四',15:'初五',16:'初六',17:'初七',18:'初八',19:'初九',20:'初十',21:'十一',22:'十二',23:'十三',24:'十四',25:'末伏',26:'十六',27:'十七',28:'十八',29:'十九',30:'二十',31:'廿一'},
+ 9:{1:'廿二',2:'廿三',3:'廿四',4:'廿五',5:'廿六',6:'廿七',7:'廿八',8:'廿九',9:'八月',10:'初二',11:'初三',12:'初四',13:'初五',14:'初六',15:'初七',16:'初八',17:'初九',18:'初十',19:'十一',20:'十二',21:'十三',22:'十四',23:'十五',24:'十六',25:'十七',26:'十八',27:'十九',28:'二十',29:'廿一',30:'廿二'},
+ 10:{1:'国庆节',2:'廿四',3:'廿五',4:'廿六',5:'廿七',6:'廿八',7:'廿九',8:'九月',9:'初二',10:'初三',11:'初四',12:'初五',13:'初六',14:'初七',15:'初八',16:'初九',17:'初十',18:'十一',19:'十二',20:'十三',21:'十四',22:'十五',23:'十六',24:'十七',25:'十八',26:'十九',27:'二十',28:'廿一',29:'廿二',30:'廿三',31:'廿四'},
+ 11:{1:'廿五',2:'廿六',3:'廿七',4:'廿八',5:'廿九',6:'十月',7:'初二',8:'初三',9:'初四',10:'初五',11:'初六',12:'初七',13:'初八',14:'初九',15:'初十',16:'十一',17:'十二',18:'十三',19:'十四',20:'十五',21:'十六',22:'十七',23:'十八',24:'十九',25:'二十',26:'廿一',27:'廿二',28:'廿三',29:'廿四',30:'廿五'},
+ 12:{1:'廿六',2:'廿七',3:'廿八',4:'廿九',5:'冬月',6:'初二',7:'初三',8:'初四',9:'初五',10:'初六',11:'初七',12:'初八',13:'初九',14:'初十',15:'十一',16:'十二',17:'十三',18:'十四',19:'十五',20:'十六',21:'十七',22:'十八',23:'十九',24:'二十',25:'廿一',26:'廿二',27:'廿三',28:'廿四',29:'廿五',30:'廿六',31:'廿七'}
+ },
+ 2027: {
+ 1:{1:'元旦',2:'十四',3:'十五',4:'十六',5:'十七',6:'十八',7:'十九',8:'二十',9:'廿一',10:'廿二',11:'廿三',12:'廿四',13:'廿五',14:'廿六',15:'廿七',16:'廿八',17:'廿九',18:'腊月',19:'初二',20:'初三',21:'初四',22:'初五',23:'初六',24:'初七',25:'初八',26:'初九',27:'初十',28:'十一',29:'十二',30:'十三',31:'十四'},
+ 2:{1:'十五',2:'十六',3:'十七',4:'十八',5:'十九',6:'二十',7:'廿一',8:'廿二',9:'廿三',10:'廿四',11:'廿五',12:'廿六',13:'廿七',14:'廿八',15:'廿九',16:'三十',17:'正月',18:'初二',19:'初三',20:'初四',21:'初五',22:'初六',23:'初七',24:'初八',25:'初九',26:'初十',27:'十一',28:'十二',29:'十三'},
+ 3:{1:'十四',2:'十五',3:'十六',4:'十七',5:'十八',6:'十九',7:'二十',8:'廿一',9:'廿二',10:'廿三',11:'廿四',12:'廿五',13:'廿六',14:'廿七',15:'廿八',16:'廿九',17:'三十',18:'二月',19:'初二',20:'初三',21:'初四',22:'初五',23:'初六',24:'初七',25:'初八',26:'初九',27:'初十',28:'十一',29:'十二',30:'十三',31:'十四'},
+ 4:{1:'十五',2:'十六',3:'十七',4:'十八',5:'十九',6:'二十',7:'廿一',8:'廿二',9:'廿三',10:'廿四',11:'廿五',12:'廿六',13:'廿七',14:'廿八',15:'廿九',16:'三月',17:'初二',18:'初三',19:'初四',20:'初五',21:'初六',22:'初七',23:'初八',24:'初九',25:'初十',26:'十一',27:'十二',28:'十三',29:'十四',30:'十五'},
+ 5:{1:'十六',2:'十七',3:'十八',4:'十九',5:'二十',6:'廿一',7:'廿二',8:'廿三',9:'廿四',10:'廿五',11:'廿六',12:'廿七',13:'廿八',14:'廿九',15:'四月',16:'初二',17:'初三',18:'初四',19:'初五',20:'初六',21:'初七',22:'初八',23:'初九',24:'初十',25:'十一',26:'十二',27:'十三',28:'十四',29:'十五',30:'十六',31:'十七'},
+ 6:{1:'十八',2:'十九',3:'二十',4:'廿一',5:'廿二',6:'廿三',7:'廿四',8:'廿五',9:'廿六',10:'廿七',11:'廿八',12:'廿九',13:'三十',14:'五月',15:'初二',16:'初三',17:'初四',18:'初五',19:'初六',20:'初七',21:'初八',22:'初九',23:'初十',24:'十一',25:'十二',26:'十三',27:'十四',28:'十五',29:'十六',30:'十七'},
+ 7:{1:'建党节',2:'十九',3:'二十',4:'廿一',5:'廿二',6:'廿三',7:'小暑',8:'廿五',9:'廿六',10:'廿七',11:'廿八',12:'廿九',13:'六月',14:'初二',15:'初三',16:'初四',17:'初五',18:'初六',19:'初七',20:'初八',21:'初九',22:'初十',23:'大暑',24:'十二',25:'十三',26:'十四',27:'十五',28:'十六',29:'十七',30:'十八',31:'十九'},
+ 8:{1:'建军节',2:'廿一',3:'廿二',4:'廿三',5:'廿四',6:'廿五',7:'立秋',8:'廿七',9:'廿八',10:'廿九',11:'七月',12:'初二',13:'初三',14:'初四',15:'初五',16:'初六',17:'初七',18:'初八',19:'初九',20:'初十',21:'十一',22:'十二',23:'十三',24:'十四',25:'十五',26:'十六',27:'十七',28:'十八',29:'十九',30:'二十',31:'廿一'},
+ 9:{1:'廿二',2:'廿三',3:'廿四',4:'廿五',5:'廿六',6:'廿七',7:'廿八',8:'廿九',9:'八月',10:'初二',11:'初三',12:'初四',13:'初五',14:'初六',15:'初七',16:'初八',17:'初九',18:'初十',19:'十一',20:'十二',21:'十三',22:'十四',23:'十五',24:'十六',25:'十七',26:'十八',27:'十九',28:'二十',29:'廿一',30:'廿二'},
+ 10:{1:'国庆节',2:'廿四',3:'廿五',4:'廿六',5:'廿七',6:'廿八',7:'廿九',8:'九月',9:'初二',10:'初三',11:'初四',12:'初五',13:'初六',14:'初七',15:'初八',16:'初九',17:'初十',18:'十一',19:'十二',20:'十三',21:'十四',22:'十五',23:'十六',24:'十七',25:'十八',26:'十九',27:'二十',28:'廿一',29:'廿二',30:'廿三',31:'廿四'},
+ 11:{1:'廿五',2:'廿六',3:'廿七',4:'廿八',5:'廿九',6:'三十',7:'十月',8:'初二',9:'初三',10:'初四',11:'初五',12:'初六',13:'初七',14:'初八',15:'初九',16:'初十',17:'十一',18:'十二',19:'十三',20:'十四',21:'十五',22:'十六',23:'十七',24:'十八',25:'十九',26:'二十',27:'廿一',28:'廿二',29:'廿三',30:'廿四'},
+ 12:{1:'廿五',2:'廿六',3:'廿七',4:'廿八',5:'廿九',6:'冬月',7:'初二',8:'初三',9:'初四',10:'初五',11:'初六',12:'初七',13:'初八',14:'初九',15:'初十',16:'十一',17:'十二',18:'十三',19:'十四',20:'十五',21:'十六',22:'十七',23:'十八',24:'十九',25:'二十',26:'廿一',27:'廿二',28:'廿三',29:'廿四',30:'廿五',31:'廿六'}
+ }
+};
 
-            // ===================== 记事本 localStorage =====================
-            const NOTES_KEY = 'calendar_peace_notes';
-            const loadNotes = () => { try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch(e) { return {}; } };
-            const saveNotes = (notes) => { try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch(e){} };
-            const getNotes = (dateKey) => loadNotes()[dateKey] || [];
-            const addNote = (dateKey, text) => {
-                const all = loadNotes(); if (!all[dateKey]) all[dateKey] = [];
-                all[dateKey].push({ id: Date.now(), text: text.trim(), createdAt: new Date().toISOString() });
-                saveNotes(all);
-            };
-            const deleteNote = (dateKey, noteId) => {
-                const all = loadNotes(); if (!all[dateKey]) return;
-                all[dateKey] = all[dateKey].filter(n => n.id !== noteId);
-                if (all[dateKey].length === 0) delete all[dateKey];
-                saveNotes(all);
-            };
-            const hasNotes = (dateKey) => getNotes(dateKey).length > 0;
-            function getLunar(y,m,d) { return (y===2026 && lunar2026[m]?.[d]) ? lunar2026[m][d] : ""; }
+// ===== 节假日数据 =====
+const allYearHolidays = {
+ 2026: { "1-1":"元旦","1-2":"元旦","1-3":"元旦","2-15":"春节","2-16":"春节","2-17":"春节","2-18":"春节","2-19":"春节","2-20":"春节","2-21":"春节","2-22":"春节","2-23":"春节","4-4":"清明","4-5":"清明","4-6":"清明","5-1":"劳动节","5-2":"劳动节","5-3":"劳动节","5-4":"劳动节","5-5":"劳动节","6-19":"端午","6-20":"端午","6-21":"端午","9-25":"中秋","9-26":"中秋","9-27":"中秋","10-1":"国庆","10-2":"国庆","10-3":"国庆","10-4":"国庆","10-5":"国庆","10-6":"国庆","10-7":"国庆" },
+ 2027: { "1-1":"元旦","1-2":"元旦","1-3":"元旦","2-5":"春节","2-6":"春节","2-7":"春节","2-8":"春节","2-9":"春节","2-10":"春节","2-11":"春节","4-5":"清明","4-6":"清明","4-7":"清明","5-1":"劳动节","5-2":"劳动节","5-3":"劳动节","5-4":"劳动节","5-5":"劳动节","6-7":"端午","6-8":"端午","6-9":"端午","9-15":"中秋","9-16":"中秋","9-17":"中秋","10-1":"国庆","10-2":"国庆","10-3":"国庆","10-4":"国庆","10-5":"国庆","10-6":"国庆","10-7":"国庆" }
+};
+const allYearWorkdays = {
+ 2026: { "1-31":"补班","2-7":"补班","2-14":"补班","4-25":"补班","5-9":"补班","6-13":"补班","9-12":"补班","10-10":"补班" },
+ 2027: { "1-30":"补班","2-6":"补班","2-13":"补班","4-24":"补班","5-8":"补班","6-12":"补班","9-11":"补班","10-9":"补班" }
+};
+const solarTermsData = {
+ 2026: { "1-5":"小寒","1-20":"大寒","2-4":"立春","2-18":"雨水","3-5":"惊蛰","3-20":"春分","4-5":"清明","4-20":"谷雨","5-5":"立夏","5-21":"小满","6-5":"芒种","6-21":"夏至","7-7":"小暑","7-22":"大暑","8-7":"立秋","8-23":"处暑","9-7":"白露","9-23":"秋分","10-8":"寒露","10-23":"霜降","11-7":"立冬","11-22":"小雪","12-7":"大雪","12-22":"冬至" },
+ 2027: { "1-5":"小寒","1-20":"大寒","2-4":"立春","2-18":"雨水","3-5":"惊蛰","3-20":"春分","4-5":"清明","4-20":"谷雨","5-5":"立夏","5-21":"小满","6-5":"芒种","6-21":"夏至","7-7":"小暑","7-23":"大暑","8-7":"立秋","8-23":"处暑","9-7":"白露","9-23":"秋分","10-8":"寒露","10-23":"霜降","11-7":"立冬","11-22":"小雪","12-7":"大雪","12-22":"冬至" }
+};
+const festivalMap = { "7-1":"建党节","8-1":"建军节","9-21":"国际和平日","10-24":"联合国日","12-10":"人权日" };
+const peaceDays = ["9-21"];
 
-            // ===================== 日历渲染 (保持不变) =====================
-            function createDayCell(num, holidayName, lunarTxt, isOtherMonth, isTodayFlag, isHoliday, isFestival, isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, dateKey) {
-                const div = document.createElement("div"); div.className = "day-cell";
-                if (isOtherMonth) div.classList.add("other-month");
-                if (isTodayFlag) div.classList.add("today");
-                if (isHoliday && !isOtherMonth) div.classList.add("holiday");
-                if (isFestival && !isOtherMonth && !isHoliday && !isSolarTerm) div.classList.add("festival");
-                if (isSolarTerm && !isOtherMonth) div.classList.add("solar-term");
-                if (isWorkday && !isOtherMonth && !isHoliday) div.classList.add("workday-makeup");
-                if (isPeaceDay && !isOtherMonth) div.classList.add("peace-day");
-                if (!isOtherMonth) { if (weekDay===6) div.classList.add("weekday-sat"); if (weekDay===0) div.classList.add("weekday-sun"); }
-                if (!isOtherMonth && dateKey) { div.setAttribute("data-date-key", dateKey); div.style.cursor = "pointer"; }
-                let html = `<span class="num">${num}</span>`;
-                if (isSolarTerm && solarTermName && !isOtherMonth) html += `<span class="solar-term-name">${solarTermName}</span>`;
-                if (isHoliday && holidayName && !isOtherMonth) html += `<span class="holiday-name">${holidayName}</span>`;
-                if (isWorkday && !isOtherMonth && !isHoliday) html += `<span class="workday-tag">补班</span>`;
-                if (lunarTxt && !isHoliday && !isSolarTerm) html += `<span class="lunar">${lunarTxt}</span>`;
-                if (!isOtherMonth && dateKey && hasNotes(dateKey)) html += '<span class="note-dot"></span>';
-                div.innerHTML = html;
-                return div;
-            }
+// ===== 记事管理 =====
+const NOTES_KEY = 'calendar_peace_notes';
+function loadAllNotes() { try { const r = localStorage.getItem(NOTES_KEY); return r ? JSON.parse(r) : {}; } catch(e) { return {}; } }
+function saveAllNotes(notes) { try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch(e) {} }
+function getNotesForDate(dateKey) { return loadAllNotes()[dateKey] || []; }
+function addNoteToDate(dateKey, text) {
+ const all = loadAllNotes();
+ if (!all[dateKey]) all[dateKey] = [];
+ all[dateKey].push({ id: Date.now(), text: text.trim(), createdAt: new Date().toISOString() });
+ saveAllNotes(all);
+ return all[dateKey];
+}
+function updateNoteInDate(dateKey, noteId, newText) {
+ const all = loadAllNotes();
+ if (!all[dateKey]) return;
+ const note = all[dateKey].find(n => n.id === noteId);
+ if (note) { note.text = newText.trim(); note.updatedAt = new Date().toISOString(); }
+ saveAllNotes(all);
+}
+function deleteNoteFromDate(dateKey, noteId) {
+ const all = loadAllNotes();
+ if (!all[dateKey]) return;
+ all[dateKey] = all[dateKey].filter(n => n.id !== noteId);
+ if (all[dateKey].length === 0) delete all[dateKey];
+ saveAllNotes(all);
+}
+function searchNotes(keyword) {
+ if (!keyword.trim()) return [];
+ const kw = keyword.toLowerCase();
+ const all = loadAllNotes();
+ const results = [];
+ for (const [dateKey, notes] of Object.entries(all)) {
+ for (const note of notes) {
+ if (note.text.toLowerCase().includes(kw)) {
+ results.push({ dateKey, ...note });
+ }
+ }
+ }
+ return results;
+}
+function hasNotesForDate(dateKey) { return getNotesForDate(dateKey).length > 0; }
 
-            function updateYMTitle() { yearText.textContent = currentShowYear; monthText.textContent = currentShowMonth; }
-            function renderYearPanel() {
-                yearPanel.innerHTML = "";
-                for (let y=currentShowYear-5; y<=currentShowYear+5; y++) {
-                    const item = document.createElement("div"); item.className = "panel-item"+(y===currentShowYear?" active":"");
-                    item.textContent = y; item.onclick = (e) => { e.stopPropagation(); currentShowYear=y; renderCalendar(); updateCountdown(); closeAllPanel(); };
-                    yearPanel.appendChild(item);
-                }
-            }
-            function renderMonthPanel() {
-                monthPanel.innerHTML = "";
-                for (let m=1; m<=12; m++) {
-                    const item = document.createElement("div"); item.className = "panel-item"+(m===currentShowMonth?" active":"");
-                    item.textContent = m+"月"; item.onclick = (e) => { e.stopPropagation(); currentShowMonth=m; renderCalendar(); updateCountdown(); closeAllPanel(); };
-                    monthPanel.appendChild(item);
-                }
-            }
-            function closeAllPanel() { yearPanel.classList.remove("show"); monthPanel.classList.remove("show"); }
-            function togglePanel(show, hide, renderFn) {
-                const isShow = show.classList.contains("show"); closeAllPanel();
-                if (!isShow) { renderFn(); show.classList.add("show"); }
-            }
+// ===== 农历获取 =====
+function getSimpleLunar(y, m, d) {
+ if (lunarData[y] && lunarData[y][m] && lunarData[y][m][d]) return lunarData[y][m][d];
+ return '';
+}
+function isDuplicateName(lunarTxt, holidayName) {
+ if (!lunarTxt || !holidayName) return false;
+ if (lunarTxt === holidayName) return true;
+ if (lunarTxt.includes(holidayName) || holidayName.includes(lunarTxt)) return true;
+ if (lunarTxt === '国庆节' && holidayName === '国庆') return true;
+ if (lunarTxt === '元旦' && holidayName === '元旦') return true;
+ return false;
+}
 
-            function renderCalendar() {
-                dayGrid.innerHTML = ""; updateYMTitle();
-                const yearHoliday = allYearHolidays[currentShowYear] || {}, yearWorkday = allYearWorkdays[currentShowYear] || {}, yearSolarTerms = solarTermsData[currentShowYear] || {};
-                const firstDay = new Date(currentShowYear, currentShowMonth-1, 1).getDay();
-                const preDays = firstDay===0 ? 6 : firstDay-1;
-                const thisMonthTotal = new Date(currentShowYear, currentShowMonth, 0).getDate();
-                const lastMonthTotal = new Date(currentShowYear, currentShowMonth-1, 0).getDate();
-                for (let i=0; i<preDays; i++) dayGrid.appendChild(createDayCell(lastMonthTotal-preDays+i+1,"","",true,false,false,false,false,"",false,false,-1,null));
-                for (let d=1; d<=thisMonthTotal; d++) {
-                    const dateKey = `${currentShowMonth}-${d}`, fullKey = `${currentShowYear}-${currentShowMonth}-${d}`;
-                    const weekDay = new Date(currentShowYear, currentShowMonth-1, d).getDay();
-                    const lunarTxt = getLunar(currentShowYear, currentShowMonth, d);
-                    const holidayName = yearHoliday[dateKey] || "", isHoliday = !!holidayName, isWorkday = !!yearWorkday[dateKey] && !isHoliday;
-                    const solarTermName = yearSolarTerms[dateKey] || "", isSolarTerm = !!solarTermName;
-                    const isFestival = !!festivalMap[dateKey] && !isSolarTerm, isPeaceDay = peaceDays.includes(dateKey);
-                    const isTodayFlag = (currentShowYear===todayYear && currentShowMonth===todayMonth && d===todayDay);
-                    dayGrid.appendChild(createDayCell(d, holidayName, lunarTxt, false, isTodayFlag, isHoliday, isFestival, isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, fullKey));
-                }
-                const total = dayGrid.children.length;
-                for (let i=1; i<=42-total; i++) dayGrid.appendChild(createDayCell(i,"","",true,false,false,false,false,"",false,false,-1,null));
-                bindDayEvents();
-            }
+// ===== 星期行渲染 =====
+function renderWeekRow() {
+ const days = currentLang === 'zh' ? I18N.zh.weekDays : I18N.en.weekDays;
+ weekRow.innerHTML = '';
+ days.forEach((d, i) => {
+ const div = document.createElement('div');
+ div.className = 'week-item' + (i === 5 ? ' weekday-sat' : '') + (i === 6 ? ' weekday-sun' : '');
+ div.setAttribute('role', 'columnheader');
+ div.setAttribute('aria-label', (currentLang==='zh'?'':I18N.en.weekDaysFull[i]+', ') + d);
+ div.textContent = d;
+ weekRow.appendChild(div);
+ });
+}
 
-            function bindDayEvents() {
-                dayGrid.querySelectorAll('.day-cell:not(.other-month)').forEach(cell => {
-                    const dateKey = cell.getAttribute('data-date-key'); if (!dateKey) return;
-                    cell.addEventListener('mouseenter', (e) => { if (hasNotes(dateKey)) showTooltip(e, dateKey); });
-                    cell.addEventListener('mouseleave', hideTooltip);
-                    cell.addEventListener('mousemove', (e) => { if (noteTooltip.classList.contains('show')) positionTooltip(e); });
-                    cell.addEventListener('dblclick', (e) => { e.stopPropagation(); openModal(dateKey); });
-                });
-            }
+// ===== 创建日期格子 =====
+function createDayCell(num, holidayName, lunarTxt, isOtherMonth, isTodayFlag, isHoliday, isFestival, isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, dateKey) {
+ const div = document.createElement('div');
+ div.className = 'day-cell';
+ div.setAttribute('role', 'gridcell');
+ div.setAttribute('tabindex', isOtherMonth ? '-1' : '0');
+ if (isOtherMonth) div.classList.add('other-month');
+ if (isTodayFlag) div.classList.add('today');
+ if (isHoliday && !isOtherMonth) div.classList.add('holiday');
+ if (isFestival && !isOtherMonth && !isHoliday && !isSolarTerm) div.classList.add('festival');
+ if (isSolarTerm && !isOtherMonth) div.classList.add('solar-term');
+ if (isWorkday && !isOtherMonth && !isHoliday) div.classList.add('workday-makeup');
+ if (isPeaceDay && !isOtherMonth) div.classList.add('peace-day');
+ if (!isOtherMonth) {
+ if (weekDay === 6) div.classList.add('weekday-sat');
+ if (weekDay === 0) div.classList.add('weekday-sun');
+ }
+ if (!isOtherMonth && dateKey) {
+ div.setAttribute('data-date-key', dateKey);
+ div.setAttribute('aria-label', dateKey + (holidayName ? ' '+holidayName : '') + ' ' + lunarTxt);
+ }
 
-            function showTooltip(e, dateKey) { /* ... 同上 ... */
-                const notes = getNotes(dateKey); if (!notes.length) return;
-                const [y,m,d] = dateKey.split('-');
-                let html = `<div class="tooltip-date">📌 ${y}年${m}月${d}日</div>`;
-                notes.slice(0,3).forEach(n => html += `<div class="tooltip-item">${n.text.length>20?n.text.slice(0,20)+'...':n.text}</div>`);
-                if (notes.length>3) html += `<div class="tooltip-item" style="color:#999;">...共${notes.length}条</div>`;
-                noteTooltip.innerHTML = html; noteTooltip.classList.add('show'); positionTooltip(e);
-            }
-            function hideTooltip() { noteTooltip.classList.remove('show'); }
-            function positionTooltip(e) {
-                let x = e.clientX+14, y = e.clientY-10;
-                const tw = noteTooltip.offsetWidth, th = noteTooltip.offsetHeight;
-                if (x+tw > window.innerWidth-10) x = e.clientX-tw-14;
-                if (y+th > window.innerHeight-10) y = e.clientY-th-10;
-                noteTooltip.style.left = Math.max(10, x)+'px'; noteTooltip.style.top = Math.max(10, y)+'px';
-            }
+ let inner = `<span class="num">${num}</span>`;
+ let displayLunar = lunarTxt;
+ if (isHoliday && isDuplicateName(lunarTxt, holidayName)) displayLunar = '';
+ if (isSolarTerm && solarTermName && !isOtherMonth) inner += `<span class="solar-term-name">${solarTermName}</span>`;
+ if (isHoliday && holidayName && !isOtherMonth) inner += `<span class="holiday-name">${holidayName}</span>`;
+ if (isWorkday && !isOtherMonth && !isHoliday) inner += `<span class="workday-tag">${currentLang==='zh'?'补班':'Work'}</span>`;
+ if (displayLunar) inner += `<span class="lunar">${displayLunar}</span>`;
+ else if (!isOtherMonth && !displayLunar && !isHoliday && !isSolarTerm && !isWorkday) inner += '<span class="lunar" style="visibility:hidden;">·</span>';
+ if (!isOtherMonth && dateKey && hasNotesForDate(dateKey)) inner += '<span class="note-dot"></span>';
+ div.innerHTML = inner;
+ return div;
+}
 
-            function openModal(dateKey) {
-                currentModalDateKey = dateKey; const [y,m,d] = dateKey.split('-');
-                modalDateLabel.textContent = `${y}年${m}月${d}日`; modalNoteInput.value = ''; renderModalList();
-                modalOverlay.classList.add('show'); setTimeout(() => modalNoteInput.focus(), 200);
-            }
-            function closeModal() { modalOverlay.classList.remove('show'); currentModalDateKey=null; renderCalendar(); }
-            function renderModalList() {
-                if (!currentModalDateKey) return; const notes = getNotes(currentModalDateKey);
-                modalNotesList.innerHTML = notes.length ? '' : '<div class="modal-empty">暂无记事</div>';
-                notes.forEach(n => {
-                    const div = document.createElement('div'); div.className = 'modal-note-item';
-                    const time = new Date(n.createdAt).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
-                    div.innerHTML = `<span class="note-text">${escapeHtml(n.text)}</span><span class="note-time">${time}</span><button class="btn-del-note" data-id="${n.id}">✕</button>`;
-                    div.querySelector('.btn-del-note').onclick = (e) => { e.stopPropagation(); deleteNote(currentModalDateKey, n.id); renderModalList(); renderCalendar(); };
-                    modalNotesList.appendChild(div);
-                });
-            }
-            function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
-            function addNoteHandler() {
-                if (!currentModalDateKey) return; const text = modalNoteInput.value.trim(); if (!text) return;
-                addNote(currentModalDateKey, text); modalNoteInput.value = ''; renderModalList(); renderCalendar(); modalNoteInput.focus();
-            }
+// ===== 渲染面板 =====
+function renderYearPanel() {
+ yearPanel.innerHTML = '';
+ const startY = currentShowYear - 5, endY = currentShowYear + 5;
+ for (let y = startY; y <= endY; y++) {
+ const item = document.createElement('div');
+ item.className = 'panel-item' + (y === currentShowYear ? ' active' : '');
+ item.setAttribute('role', 'option');
+ item.textContent = y;
+ item.addEventListener('click', e => {
+ e.stopPropagation();
+ switchMonth(currentShowYear, y, 'none');
+ closeAllPanel();
+ });
+ yearPanel.appendChild(item);
+ }
+}
+function renderMonthPanel() {
+ monthPanel.innerHTML = '';
+ const names = I18N[currentLang].monthNames;
+ for (let m = 1; m <= 12; m++) {
+ const item = document.createElement('div');
+ item.className = 'panel-item' + (m === currentShowMonth ? ' active' : '');
+ item.setAttribute('role', 'option');
+ item.textContent = currentLang === 'zh' ? m+'月' : names[m-1];
+ item.addEventListener('click', e => {
+ e.stopPropagation();
+ switchMonth(y => y, currentShowYear, m, 'none');
+ closeAllPanel();
+ });
+ monthPanel.appendChild(item);
+ }
+}
+function closeAllPanel() { yearPanel.classList.remove('show'); monthPanel.classList.remove('show'); }
+function togglePanel(panelToShow, panelToHide, renderFn) {
+ const isShowing = panelToShow.classList.contains('show');
+ closeAllPanel();
+ if (!isShowing) { renderFn(); panelToShow.classList.add('show'); }
+}
 
-            function updateCountdown() { /* ... 同上 ... */
-                const now = new Date(); const all = [];
-                for (const [year, holidays] of Object.entries(allYearHolidays)) {
-                    const seen = new Set();
-                    for (const [md, name] of Object.entries(holidays)) {
-                        if (seen.has(name)) continue; seen.add(name);
-                        const [m,d] = md.split('-').map(Number);
-                        all.push({ date: new Date(+year, m-1, d), name, year: +year, month: m, day: d });
-                    }
-                }
-                all.sort((a,b) => a.date-b.date);
-                const nowTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-                const next = all.find(h => h.date.getTime() >= nowTime);
-                if (next) {
-                    const diff = Math.ceil((next.date.getTime()-nowTime)/(86400000));
-                    const emoji = {春节:'🧧',中秋:'🌕',国庆:'🇨🇳',端午:'🐲',清明:'🌿',劳动节:'💪',元旦:'🎊'}[next.name] || '🎉';
-                    countdownText.innerHTML = diff===0 ? `今天是 <strong>${next.name}</strong> ${emoji} 节日快乐！` : `距离 <strong>${next.year}年${next.month}月${next.day}日 ${next.name}</strong> 还有 <strong>${diff}</strong> 天 ${emoji}`;
-                } else countdownText.innerHTML = '🌟 所有节日已过，期待新的一年~';
-            }
+// ===== 月份切换动画 =====
+function switchMonth(direction, year, month, anim = 'left') {
+ const cls = anim === 'left' ? 'slide-left' : anim === 'right' ? 'slide-right' : '';
+ dayGrid.classList.remove('slide-left','slide-right');
+ void dayGrid.offsetWidth; // 强制重排
+ if (cls) dayGrid.classList.add(cls);
+ if (direction === 'prev') { currentShowMonth--; if (currentShowMonth < 1) { currentShowMonth = 12; currentShowYear--; } }
+ else if (direction === 'next') { currentShowMonth++; if (currentShowMonth > 12) { currentShowMonth = 1; currentShowYear++; } }
+ else { if (year !== undefined) currentShowYear = year; if (month !== undefined) currentShowMonth = month; }
+ renderCalendar();
+ updateCountdown();
+ updateDashboard();
+}
 
-            function goToday() { currentShowYear=todayYear; currentShowMonth=todayMonth; renderCalendar(); updateCountdown(); closeAllPanel(); }
+// ===== 日历主渲染 =====
+function renderCalendar() {
+ dayGrid.innerHTML = '';
+ yearText.textContent = currentShowYear;
+ monthText.textContent = currentShowMonth;
+ yearText.setAttribute('aria-label', currentLang==='zh' ? `当前年份 ${currentShowYear}，点击选择` : `Year ${currentShowYear}, click to select`);
+ monthText.setAttribute('aria-label', currentLang==='zh' ? `当前月份 ${currentShowMonth}，点击选择` : `Month ${currentShowMonth}, click to select`);
 
-            // 事件绑定
-            document.getElementById("prevMonth").onclick = () => { currentShowMonth--; if(currentShowMonth<1){currentShowMonth=12;currentShowYear--;} renderCalendar(); updateCountdown(); closeAllPanel(); };
-            document.getElementById("nextMonth").onclick = () => { currentShowMonth++; if(currentShowMonth>12){currentShowMonth=1;currentShowYear++;} renderCalendar(); updateCountdown(); closeAllPanel(); };
-            btnToday.onclick = (e) => { e.stopPropagation(); goToday(); };
-            yearText.onclick = (e) => { e.stopPropagation(); togglePanel(yearPanel, monthPanel, renderYearPanel); };
-            monthText.onclick = (e) => { e.stopPropagation(); togglePanel(monthPanel, yearPanel, renderMonthPanel); };
-            yearPanel.onclick = e => e.stopPropagation();
-            monthPanel.onclick = e => e.stopPropagation();
-            document.body.onclick = closeAllPanel;
-            calendarBox.addEventListener("click", (e) => { if(yearPanel.classList.contains("show")||monthPanel.classList.contains("show")) closeAllPanel(); e.stopPropagation(); });
-            calendarBox.addEventListener("wheel", (e) => {
-                if (modalOverlay.classList.contains("show") || yearPanel.classList.contains("show") || monthPanel.classList.contains("show")) return;
-                e.preventDefault();
-                if (e.deltaY>0) { currentShowMonth++; if(currentShowMonth>12){currentShowMonth=1;currentShowYear++;} }
-                else { currentShowMonth--; if(currentShowMonth<1){currentShowMonth=12;currentShowYear--;} }
-                renderCalendar(); updateCountdown(); closeAllPanel();
-            }, {passive: false});
-            document.addEventListener("keydown", (e) => {
-                if (e.key==="Escape") { closeAllPanel(); closeModal(); return; }
-                if (modalOverlay.classList.contains("show")) return;
-                if (e.key==="ArrowLeft" && !e.target.closest("input,textarea,select")) { e.preventDefault(); currentShowMonth--; if(currentShowMonth<1){currentShowMonth=12;currentShowYear--;} renderCalendar(); updateCountdown(); closeAllPanel(); }
-                if (e.key==="ArrowRight" && !e.target.closest("input,textarea,select")) { e.preventDefault(); currentShowMonth++; if(currentShowMonth>12){currentShowMonth=1;currentShowYear++;} renderCalendar(); updateCountdown(); closeAllPanel(); }
-                if (e.key==="t" && !e.ctrlKey && !e.metaKey && !e.target.closest("input,textarea,select")) { e.preventDefault(); goToday(); }
-                if (e.key==="Enter" && modalOverlay.classList.contains("show") && document.activeElement===modalNoteInput) { e.preventDefault(); addNoteHandler(); }
-            });
-            modalOverlay.onclick = (e) => { if (e.target===modalOverlay) closeModal(); };
-            btnCloseModal.onclick = closeModal;
-            btnAddNote.onclick = addNoteHandler;
-            window.addEventListener("resize", closeAllPanel);
+ const yearHoliday = allYearHolidays[currentShowYear] || {};
+ const yearWorkday = allYearWorkdays[currentShowYear] || {};
+ const yearSolarTerms = solarTermsData[currentShowYear] || {};
 
-            renderCalendar();
-            updateCountdown();
-            setInterval(updateCountdown, 60000);
-        })();
-    </script>
+ const firstDay = new Date(currentShowYear, currentShowMonth - 1, 1).getDay();
+ const preDays = firstDay === 0 ? 6 : firstDay - 1;
+ const thisMonthTotal = new Date(currentShowYear, currentShowMonth, 0).getDate();
+ const lastMonthTotal = new Date(currentShowYear, currentShowMonth - 1, 0).getDate();
+
+ for (let i = 0; i < preDays; i++) {
+ const dayNum = lastMonthTotal - preDays + i + 1;
+ dayGrid.appendChild(createDayCell(dayNum,'','',true,false,false,false,false,'',false,false,-1,null));
+ }
+ for (let d = 1; d <= thisMonthTotal; d++) {
+ const dateKey = `${currentShowMonth}-${d}`;
+ const fullDateKey = `${currentShowYear}-${currentShowMonth}-${d}`;
+ const weekDay = new Date(currentShowYear, currentShowMonth - 1, d).getDay();
+ const lunarTxt = getSimpleLunar(currentShowYear, currentShowMonth, d);
+ const holidayName = yearHoliday[dateKey] || '';
+ const isHoliday = !!holidayName;
+ const isWorkday = !!yearWorkday[dateKey] && !isHoliday;
+ const solarTermName = yearSolarTerms[dateKey] || '';
+ const isSolarTerm = !!solarTermName;
+ const isFestival = !!festivalMap[dateKey] && !isSolarTerm;
+ const isPeaceDay = peaceDays.includes(dateKey);
+ const isTodayFlag = (currentShowYear === todayYear && currentShowMonth === todayMonth && d === todayDay);
+ dayGrid.appendChild(createDayCell(d, holidayName, lunarTxt, false, isTodayFlag, isHoliday, isFestival, isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, fullDateKey));
+ }
+ const totalCells = dayGrid.children.length;
+ for (let i = 1; i <= 42 - totalCells; i++) {
+ dayGrid.appendChild(createDayCell(i,'','',true,false,false,false,false,'',false,false,-1,null));
+ }
+ bindDayCellEvents();
+}
+
+// ===== 记事格子事件 =====
+function bindDayCellEvents() {
+ dayGrid.querySelectorAll('.day-cell:not(.other-month)').forEach(cell => {
+ const dateKey = cell.getAttribute('data-date-key');
+ if (!dateKey) return;
+ cell.addEventListener('mouseenter', e => { if (hasNotesForDate(dateKey)) showNoteTooltip(e, dateKey); });
+ cell.addEventListener('mouseleave', hideNoteTooltip);
+ cell.addEventListener('mousemove', e => { if (noteTooltip.classList.contains('show')) positionTooltip(e); });
+ cell.addEventListener('dblclick', e => { e.stopPropagation(); openNoteModal(dateKey); });
+ cell.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openNoteModal(dateKey); } });
+ cell.addEventListener('focus', e => { if (hasNotesForDate(dateKey)) showNoteTooltip(e, dateKey); });
+ cell.addEventListener('blur', hideNoteTooltip);
+ });
+}
+
+// ===== 记事悬浮预览 =====
+function showNoteTooltip(e, dateKey) {
+ const notes = getNotesForDate(dateKey);
+ if (!notes.length) return;
+ const [y,m,d] = dateKey.split('-');
+ let html = `<div class="tooltip-date">📌 ${y}${currentLang==='zh'?'年':'/'}${m}${currentLang==='zh'?'月':'/'}${d}${currentLang==='zh'?'日':''}</div>`;
+ notes.slice(0,3).forEach(n => { html += `<div class="tooltip-item">${escapeHtml(n.text.length>18?n.text.slice(0,18)+'...':n.text)}</div>`; });
+ if (notes.length > 3) html += `<div class="tooltip-item" style="color:#999;">...${currentLang==='zh'?'共':'Total'} ${notes.length} ${currentLang==='zh'?'条':'items'}</div>`;
+ noteTooltip.innerHTML = html;
+ noteTooltip.classList.add('show');
+ positionTooltip(e);
+}
+function hideNoteTooltip() { noteTooltip.classList.remove('show'); }
+function positionTooltip(e) {
+ let x = e.clientX + 14, y = e.clientY - 10;
+ const tw = noteTooltip.offsetWidth, th = noteTooltip.offsetHeight;
+ if (x + tw > window.innerWidth - 10) x = e.clientX - tw - 14;
+ if (y + th > window.innerHeight - 10) y = e.clientY - th - 10;
+ if (x < 10) x = 10; if (y < 10) y = 10;
+ noteTooltip.style.left = x + 'px'; noteTooltip.style.top = y + 'px';
+}
+
+// ===== 记事弹窗 =====
+let editingNoteId = null;
+function openNoteModal(dateKey) {
+ currentModalDateKey = dateKey;
+ editingNoteId = null;
+ modalNoteInput.value = '';
+ btnAddNote.textContent = currentLang==='zh' ? '添加' : 'Add';
+ const [y,m,d] = dateKey.split('-');
+ modalDateLabel.textContent = `${y}${currentLang==='zh'?'年':'/'}${m}${currentLang==='zh'?'月':'/'}${d}${currentLang==='zh'?'日':''}`;
+ hideSearchResults();
+ $('noteSearchRow').style.display = 'none';
+ renderModalNotesList();
+ modalOverlay.classList.add('show');
+ setTimeout(() => modalNoteInput.focus(), 200);
+}
+function closeNoteModal() {
+ modalOverlay.classList.remove('show');
+ currentModalDateKey = null;
+ editingNoteId = null;
+ renderCalendar();
+}
+function renderModalNotesList() {
+ const notes = getNotesForDate(currentModalDateKey || '');
+ modalNotesList.innerHTML = '';
+ if (!notes.length) {
+ modalNotesList.innerHTML = `<div class="modal-empty">${currentLang==='zh'?'暂无记事，快来添加吧~':'No notes yet, add one~'}</div>`;
+ return;
+ }
+ notes.forEach(n => {
+ const div = document.createElement('div');
+ div.className = 'modal-note-item';
+ const timeStr = new Date(n.createdAt).toLocaleString(currentLang==='zh'?'zh-CN':'en-US', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+ div.innerHTML = `
+ <span class="note-text">${escapeHtml(n.text)}</span>
+ <span class="note-time">${timeStr}</span>
+ <button class="btn-edit-note" data-id="${n.id}" title="${currentLang==='zh'?'修改':'Edit'}" aria-label="${currentLang==='zh'?'修改记事':'Edit note'}">✎</button>
+ <button class="btn-del-note" data-id="${n.id}" title="${currentLang==='zh'?'删除':'Delete'}" aria-label="${currentLang==='zh'?'删除记事':'Delete note'}">✕</button>
+ `;
+ div.querySelector('.btn-del-note').addEventListener('click', e => {
+ deleteNoteFromDate(currentModalDateKey, n.id);
+ renderModalNotesList();
+ renderCalendar(); updateDashboard();
+ });
+ div.querySelector('.btn-edit-note').addEventListener('click', e => {
+ editingNoteId = n.id;
+ modalNoteInput.value = n.text;
+ modalNoteInput.focus();
+ btnAddNote.textContent = currentLang==='zh'?'保存':'Save';
+ });
+ modalNotesList.appendChild(div);
+ });
+}
+function addNoteHandler() {
+ if (!currentModalDateKey) return;
+ const text = modalNoteInput.value.trim();
+ if (!text) return;
+ if (editingNoteId) {
+ updateNoteInDate(currentModalDateKey, editingNoteId, text);
+ editingNoteId = null;
+ btnAddNote.textContent = currentLang==='zh'?'添加':'Add';
+ } else {
+ addNoteToDate(currentModalDateKey, text);
+ }
+ modalNoteInput.value = '';
+ renderModalNotesList();
+ renderCalendar();
+ updateDashboard();
+ modalNoteInput.focus();
+}
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+// ===== 记事搜索 =====
+let isSearchMode = false;
+function toggleSearchMode() {
+ isSearchMode = !isSearchMode;
+ $('noteSearchRow').style.display = isSearchMode ? 'flex' : 'none';
+ hideSearchResults();
+ if (isSearchMode) { $('noteSearchInput').focus(); modalNotesList.style.display = 'none'; }
+ else { modalNotesList.style.display = ''; }
+}
+function doSearch() {
+ const kw = $('noteSearchInput').value.trim();
+ if (!kw) { hideSearchResults(); return; }
+ const results = searchNotes(kw);
+ renderSearchResults(results);
+}
+function hideSearchResults() { $('noteSearchResults').style.display = 'none'; $('noteSearchResults').innerHTML = ''; }
+function renderSearchResults(results) {
+ const box = $('noteSearchResults');
+ if (!results.length) { box.innerHTML = `<div class="modal-empty">${currentLang==='zh'?'没有找到匹配的记事':'No matching notes found'}</div>`; box.style.display = ''; return; }
+ box.innerHTML = '';
+ results.forEach(r => {
+ const [y,m,d] = r.dateKey.split('-');
+ const div = document.createElement('div');
+ div.className = 'note-search-item';
+ div.innerHTML = `<span class="nsi-date">${y}${currentLang==='zh'?'年':'/'}${m}${currentLang==='zh'?'月':'/'}${d}${currentLang==='zh'?'日':''}</span><span class="nsi-text">${escapeHtml(r.text)}</span>`;
+ div.addEventListener('click', () => {
+ constym = parseInt(y), tm = parseInt(m);
+ if (currentShowYear !== ym || currentShowMonth !== tm) {
+ currentShowYear = ym; currentShowMonth = tm; renderCalendar(); updateCountdown(); updateDashboard();
+ }
+ hideSearchResults(); isSearchMode = false; $('noteSearchRow').style.display = 'none';
+ modalNotesList.style.display = '';
+ openNoteModal(r.dateKey);
+ });
+ box.appendChild(div);
+ });
+ box.style.display = '';
+}
+
+// ===== 导出导入 =====
+function exportNotes() {
+ const all = loadAllNotes();
+ const blob = new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' });
+ const a = document.createElement('a');
+ a.href = URL.createObjectURL(blob);
+ a.download = `peace-calendar-notes-${new Date().toISOString().slice(0,10)}.json`;
+ a.click();
+}
+function importNotes(file) {
+ const reader = new FileReader();
+ reader.onload = e => {
+ try {
+ const data = JSON.parse(e.target.result);
+ if (typeof data === 'object' && data !== null) {
+ const all = loadAllNotes();
+ const merged = { ...all, ...data };
+ saveAllNotes(merged);
+ renderCalendar(); updateDashboard();
+ alert(currentLang==='zh' ? `✅ 导入成功！` : '✅ Imported successfully!');
+ } else throw new Error('Invalid format');
+ } catch(err) { alert(currentLang==='zh' ? '⚠️ 导入失败，文件格式错误' : '⚠️ Import failed: invalid format'); }
+ };
+ reader.readAsText(file);
+}
+
+// ===== 节日倒计时 ===== (节流版)
+let lastCountdownMinute = -1;
+function updateCountdown() {
+ const now = new Date();
+ const minute = now.getMinutes();
+ if (minute === lastCountdownMinute) return; // 节流：同分钟不重复更新
+ lastCountdownMinute = minute;
+
+ const nowTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+ const allHolidayDates = [];
+ for (const [yearStr, holidays] of Object.entries(allYearHolidays)) {
+ const year = parseInt(yearStr);
+ const seen = new Set();
+ for (const [md, name] of Object.entries(holidays)) {
+ if (seen.has(name)) continue; seen.add(name);
+ const [m,d] = md.split('-').map(Number);
+ const dateObj = new Date(year, m-1, d);
+ if (dateObj.getTime() >= nowTime) allHolidayDates.push({ dateObj, name, year, month: m, day: d });
+ }
+ }
+ allHolidayDates.sort((a,b) => a.dateObj - b.dateObj);
+ const next = allHolidayDates[0];
+ if (!next) { countdownText.innerHTML = currentLang==='zh' ? '🌟 所有节日已过，期待新的一年~' : "🌟 All holidays passed, look forward to the new year~"; return; }
+ const diffDays = Math.ceil((next.dateObj.getTime() - nowTime) / 86400000);
+ let emoji = '🎉';
+ const emap = {'春节':'🧧','中秋':'🌕','国庆':'🇨🇳','端午':'🐲','清明':'🌿','劳动节':'💪','元旦':'🎊','元宵节':'🏮'};
+ if (emap[next.name]) emoji = emap[next.name];
+ if (diffDays === 0) countdownText.innerHTML = `${currentLang==='zh'?'今天是':'Today is'} <strong>${next.name}</strong> ${emoji} ${currentLang==='zh'?'节日快乐！':'Happy holiday!'}`;
+ else countdownText.innerHTML = `${currentLang==='zh'?'距离':'Until'} <strong>${next.year}${currentLang==='zh'?'年':'/'}${next.month}${currentLang==='zh'?'月':'/'}${next.day} ${next.name}</strong> ${currentLang==='zh'?'还有':'in'} <strong>${diffDays}</strong> ${currentLang==='zh'?'天':'days'} ${emoji}`;
+}
+
+// ===== 仪表盘 =====
+function updateDashboard() {
+ // 节气
+ const todayKey = `${todayMonth}-${todayDay}`;
+ const st = solarTermsData[todayYear] && solarTermsData[todayYear][todayKey] || '';
+ $('dashSolarTerm').textContent = st || (currentLang==='zh'?'无':'None');
+ $('dashSolarTermLabel').textContent = currentLang==='zh'?'节气':'Solar Term';
+
+ // 距元旦
+ const ny = new Date(todayYear + 1, 0, 1).getTime();
+ const nyDays = Math.ceil((ny - new Date(todayYear, todayMonth-1, todayDay).getTime()) / 86400000);
+ $('dashNewYear').textContent = nyDays;
+ $('dashNewYearLabel').textContent = currentLang==='zh'?'天到元旦':'Days to NY';
+
+ // 本月记事数
+ const all = loadAllNotes();
+ const monthPrefix = `${currentShowYear}-${currentShowMonth}`;
+ let count = 0;
+ for (const [k, notes] of Object.entries(all)) {
+ if (k.startsWith(monthPrefix)) count += notes.length;
+ }
+ $('dashNotes').textContent = count;
+ $('dashNotesLabel').textContent = currentLang==='zh'?'本月记事':'Notes/Mo';
+}
+
+// ===== 实时时钟 =====
+function updateTime() {
+ const now = new Date();
+ const y = now.getFullYear(), mo = now.getMonth()+1, d = now.getDate();
+ const weekArr = currentLang==='zh'
+ ? ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
+ : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+ const week = weekArr[now.getDay()];
+ const h = String(now.getHours()).padStart(2,'0');
+ const mi = String(now.getMinutes()).padStart(2,'0');
+ const s = String(now.getSeconds()).padStart(2,'0');
+ timeText.textContent = `${y}${currentLang==='zh'?'年':'/'}${String(mo).padStart(2,'0')}${currentLang==='zh'?'月':'/'}${String(d).padStart(2,'0')} ${week} ${h}:${mi}:${s}`;
+
+ // 节流倒计时
+ if (now.getMinutes() !== lastMinute) {
+ lastMinute = now.getMinutes();
+ updateCountdown();
+ updateGreeting();
+ }
+}
+function updateGreeting() {
+ greetingSub.textContent = tGreeting();
+}
+
+// ===== 节日温馨提示弹窗 =====
+function checkFestivalTip() {
+ const todayKey = `${todayYear}-${todayMonth}-${todayDay}`;
+ const holidayName = allYearHolidays[todayYear] && allYearHolidays[todayYear][`${todayMonth}-${todayDay}`] || '';
+ const solarName = solarTermsData[todayYear] && solarTermsData[todayYear][`${todayMonth}-${todayDay}`] || '';
+ const name = holidayName || solarName;
+ const tip = I18N[currentLang].festivalTips[name] || I18N[currentLang].festivalTips[holidayName] || I18N[currentLang].festivalTips[solarName];
+ if (!tip) return;
+ if (sessionStorage.getItem('tip_shown_' + todayKey)) return;
+ sessionStorage.setItem('tip_shown_' + todayKey, '1');
+ const box = $('festivalTipBox');
+ $('festivalTipTitle').textContent = holidayName ? `🎉 ${name}` : `🌿 ${name}`;
+ $('festivalTipBody').textContent = tip;
+ setTimeout(() => box.classList.add('show'), 1500);
+ setTimeout(() => box.classList.remove('show'), 10000);
+}
+$('festivalTipClose').addEventListener('click', () => $('festivalTipBox').classList.remove('show'));
+
+// ===== 飞鸽动画 =====
+function spawnDoves() {
+ const container = $('doveContainer');
+ if (!container) return;
+ const msgs = ['🕊️', '☮️', '✌️', '🌍', '🕊️'];
+ for (let i = 0; i < 4; i++) {
+ const dove = document.createElement('div');
+ dove.className = 'dove';
+ dove.textContent = msgs[i % msgs.length];
+ dove.style.top = (10 + Math.random() * 60) + '%';
+ dove.style.animationDelay = (i * 4 + Math.random() * 3) + 's';
+ dove.style.animationDuration = (16 + Math.random() * 8) + 's';
+ dove.style.fontSize = (12 + Math.random() * 8) + 'px';
+ container.appendChild(dove);
+ }
+}
+
+// ===== 深色模式 =====
+function applyTheme(dark) {
+ if (dark) { document.body.classList.add('dark-mode'); $('themeToggleBtn').textContent = '☀️ 浅色'; $('themeToggleBtn').setAttribute('aria-label', currentLang==='zh'?'切换到浅色模式':'Switch to light mode'); }
+ else { document.body.classList.remove('dark-mode'); $('themeToggleBtn').textContent = '🌙 深色'; $('themeToggleBtn').setAttribute('aria-label', currentLang==='zh'?'切换到深色模式':'Switch to dark mode'); }
+}
+$('themeToggleBtn').addEventListener('click', () => {
+ const dark = !document.body.classList.contains('dark-mode');
+ try { localStorage.setItem('cal_theme', dark ? 'dark' : 'light'); } catch(e) {}
+ applyTheme(dark);
+});
+
+// ===== 语言切换 =====
+function applyLang(lang) {
+ currentLang = lang;
+ try { localStorage.setItem('cal_lang', lang); } catch(e) {}
+ $('langToggleBtn').textContent = lang === 'zh' ? '🌐 中文' : '🌐 EN';
+ $('langToggleBtn').setAttribute('aria-label', lang==='zh'?'Switch to English':'切换到中文');
+ renderWeekRow();
+ renderCalendar();
+ updateCountdown();
+ updateDashboard();
+ updateGreeting();
+ renderYearPanel();
+ renderMonthPanel();
+ $('modalTitle').textContent = currentLang==='zh'?'📝 记事本':'📝 Notes';
+ btnAddNote.textContent = editingNoteId ? (currentLang==='zh'?'保存':'Save') : (currentLang==='zh'?'添加':'Add');
+ modalNoteInput.placeholder = currentLang==='zh'?'输入记事内容...':'Enter note...';
+ $('noteSearchInput').placeholder = currentLang==='zh'?'搜索所有记事...':'Search all notes...';
+ $('btnExportNotes').innerHTML = (currentLang==='zh'?'📤 导出':'📤 Export');
+ $('btnImportNotes').innerHTML = (currentLang==='zh'?'📥 导入':'📥 Import');
+ $('btnShowSearch').innerHTML = (currentLang==='zh'?'🔍 搜索':'🔍 Search');
+ $('btnCloseModal').textContent = currentLang==='zh'?'关闭':'Close';
+ $('btnToday').textContent = currentLang==='zh'?'🕊 今天':'🕊 Today';
+ $('weatherCityInput').placeholder = currentLang==='zh'?'搜索城市，如：北京':'Search city, e.g. Beijing';
+ $('btnWeatherGo').textContent = currentLang==='zh'?'查看':'Go';
+ $('btnWeatherCancel').textContent = currentLang==='zh'?'取消':'Cancel';
+ const toggleBtn = $('weatherToggleBtn');
+ toggleBtn.innerHTML = '📍 ' + (currentLang==='zh'?'天气加载中':'Loading...');
+ checkFestivalTip();
+}
+$('langToggleBtn').addEventListener('click', () => {
+ applyLang(currentLang === 'zh' ? 'en' : 'zh');
+});
+$('viewMonthBtn').addEventListener('click', () => {
+ $('viewMonthBtn').classList.add('active'); $('viewWeekBtn').classList.remove('active');
+ renderWeekRow(); renderCalendar();
+});
+$('viewWeekBtn').addEventListener('click', () => {
+ // 周视图：显示本周7天日历
+ $('viewWeekBtn').classList.add('active'); $('viewMonthBtn').classList.remove('active');
+ const now = new Date();
+ const dayOfWeek = now.getDay();
+ const monday = new Date(now); monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+ dayGrid.innerHTML = '';
+ for (let i = 0; i < 7; i++) {
+ const dd = new Date(monday); dd.setDate(monday.getDate() + i);
+ const y = dd.getFullYear(), m = dd.getMonth()+1, d = dd.getDate();
+ const dateKey = `${m}-${d}`;
+ const fullDateKey = `${y}-${m}-${d}`;
+ const weekDay = dd.getDay();
+ const lunarTxt = getSimpleLunar(y, m, d);
+ const holidayName = (allYearHolidays[y] || {})[dateKey] || '';
+ const isHoliday = !!holidayName;
+ const solarTermName = (solarTermsData[y] || {})[dateKey] || '';
+ const isSolarTerm = !!solarTermName;
+ const isFestival = !!festivalMap[dateKey] && !isSolarTerm;
+ const isPeaceDay = peaceDays.includes(dateKey);
+ const isTodayFlag = (y === todayYear && m === todayMonth && d === todayDay);
+ const isWorkday = !!(allYearWorkdays[y] && allYearWorkdays[y][dateKey]) && !isHoliday;
+ const cell = createDayCell(d, holidayName, lunarTxt, false, isTodayFlag, isHoliday, isFestival, isSolarTerm, solarTermName, isWorkday, isPeaceDay, weekDay, fullDateKey);
+ dayGrid.appendChild(cell);
+ }
+ bindDayCellEvents();
+});
+
+// ===== 事件绑定 =====
+$('prevMonth').addEventListener('click', () => switchMonth('prev', null, null, 'right'));
+$('nextMonth').addEventListener('click', () => switchMonth('next', null, null, 'left'));
+btnToday.addEventListener('click', e => {
+ e.stopPropagation();
+ if (currentShowYear === todayYear && currentShowMonth === todayMonth) { renderCalendar(); updateCountdown(); updateDashboard(); return; }
+ currentShowYear = todayYear; currentShowMonth = todayMonth;
+ switchMonth('none', null, null, 'none');
+ $('viewMonthBtn').click();
+ closeAllPanel();
+});
+yearText.addEventListener('click', e => { e.stopPropagation(); togglePanel(yearPanel, monthPanel, renderYearPanel); });
+monthText.addEventListener('click', e => { e.stopPropagation(); togglePanel(monthPanel, yearPanel, renderMonthPanel); });
+yearPanel.addEventListener('click', e => e.stopPropagation());
+monthPanel.addEventListener('click', e => e.stopPropagation());
+document.body.addEventListener('click', () => closeAllPanel());
+
+// 滚轮
+calendarBox.addEventListener('wheel', e => {
+ if (modalOverlay.classList.contains('show') || yearPanel.classList.contains('show') || monthPanel.classList.contains('show')) return;
+ e.preventDefault();
+ if (e.deltaY > 0) switchMonth('next', null, null, 'left');
+ else switchMonth('prev', null, null, 'right');
+}, { passive: false });
+
+// 触摸滑动
+let touchStartX = 0;
+calendarBox.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+calendarBox.addEventListener('touchend', e => {
+ const dx = e.changedTouches[0].clientX - touchStartX;
+ if (Math.abs(dx) > 60) {
+ if (dx < 0) switchMonth('next', null, null, 'left');
+ else switchMonth('prev', null, null, 'right');
+ }
+});
+
+// 键盘
+document.addEventListener('keydown', e => {
+ if (e.key === 'Escape') { closeAllPanel(); closeNoteModal(); return; }
+ if (modalOverlay.classList.contains('show')) {
+ if (e.key === 'Enter' && document.activeElement === modalNoteInput) { e.preventDefault(); addNoteHandler(); }
+ return;
+ }
+ if (e.key === 'ArrowLeft' && !e.target.closest('input,textarea,select')) { e.preventDefault(); switchMonth('prev', null, null, 'right'); }
+ if (e.key === 'ArrowRight' && !e.target.closest('input,textarea,select')) { e.preventDefault(); switchMonth('next', null, null, 'left'); }
+ if ((e.key === 't' || e.key === 'T') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); btnToday.click(); }
+});
+
+// 弹窗
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeNoteModal(); });
+btnCloseModal.addEventListener('click', closeNoteModal);
+btnAddNote.addEventListener('click', addNoteHandler);
+modalDialog.addEventListener('click', e => e.stopPropagation());
+$('btnShowSearch').addEventListener('click', toggleSearchMode);
+$('btnSearchNotes').addEventListener('click', doSearch);
+$('noteSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } if (e.key === 'Escape') { hideSearchResults(); } });
+$('btnExportNotes').addEventListener('click', exportNotes);
+$('btnImportNotes').addEventListener('click', () => $('importFileInput').click());
+$('importFileInput').addEventListener('change', e => { if (e.target.files[0]) importNotes(e.target.files[0]); e.target.value = ''; });
+window.addEventListener('resize', () => closeAllPanel());
+
+// ===== 天气模块 =====
+const weatherCard = $('weatherCard');
+const weatherContent = $('weatherContent');
+const weatherToggleBtn = $('weatherToggleBtn');
+const weatherRefreshBtn = $('weatherRefreshBtn');
+const weatherSearchBar = $('weatherSearchBar');
+const weatherCityInput = $('weatherCityInput');
+const btnWeatherGo = $('btnWeatherGo');
+const btnWeatherCancel = $('btnWeatherCancel');
+const WEATHER_CITY_KEY = 'weather_city';
+const WEATHER_REFRESH_KEY = 'weather_refresh';
+let weatherTimer = null;
+let currentCity = null;
+
+function weatherEmoji(code, isDay) {
+ const c = code || '';
+ const m = {
+ 'Sunny': isDay ? '☀️' : '🌙', 'Clear': isDay ? '☀️' : '🌙',
+ 'Partly cloudy': isDay ? '⛅' : '☁️', 'Cloudy': '☁️', 'Overcast': '☁️',
+ 'Mist': '🌫️', 'Fog': '🌫️', 'Light drizzle': '🌦️', 'Drizzle': '🌧️',
+ 'Light rain': '🌧️', 'Moderate rain': '🌧️', 'Heavy rain': '🌧️',
+ 'Light snow': '🌨️', 'Snow': '❄️', 'Heavy snow': '❄️',
+ 'Thunderstorm': '⛈️', 'Light shower': '🌦️', 'Shower': '🌧️',
+ 'Light Rain': '🌧️', 'Moderate Rain': '🌧️', 'Heavy Rain': '🌧️',
+ };
+ if (m[c]) return m[c];
+ if (c.toLowerCase().includes('rain') || c.toLowerCase().includes('drizzle')) return '🌧️';
+ if (c.toLowerCase().includes('snow')) return '❄️';
+ if (c.toLowerCase().includes('thunder')) return '⛈️';
+ if (c.toLowerCase().includes('fog') || c.toLowerCase().includes('mist')) return '🌫️';
+ if (c.toLowerCase().includes('cloud')) return '☁️';
+ if (c.toLowerCase().includes('sunny') || c.toLowerCase().includes('clear')) return isDay ? '☀️' : '🌙';
+ return '🌡️';
+}
+
+function renderWeatherCard(city, temp, feelsLike, humidity, wind, condition, isDay, forecast) {
+ const emoji = weatherEmoji(condition, isDay);
+ let html = `
+ <div class="weather-main">
+ <span class="weather-emoji">${emoji}</span>
+ <div class="weather-temp-block">
+ <div class="weather-city" title="${city}">${city}</div>
+ <div class="weather-temp">${temp}</div>
+ </div>
+ </div>
+ <div class="weather-detail">
+ <span>${currentLang==='zh'?'体感':'Feels'} ${feelsLike}</span>
+ <span>💧 ${humidity}</span>
+ <span>💨 ${wind}</span>
+ </div>`;
+ if (forecast && forecast.length) {
+ html += `<div class="weather-forecast">`;
+ forecast.forEach(f => {
+ const dayName = currentLang==='zh'
+ ? ['','','','','','','六','日','','一','二','三','四','五'][new Date(f.date + 'T12:00:00').getDay()] || f.date.slice(-2)+'日'
+ : ['','','','','','','Sat','Sun','','Mon','Tue','Wed','Thu','Fri'][new Date(f.date + 'T12:00:00').getDay()] || f.date.slice(-2);
+ html += `<div class="weather-forecast-item"><span class="f-day">${dayName}</span><span class="f-emoji">${weatherEmoji(f.desc, true)}</span><span>${f.max}°</span></div>`;
+ });
+ html += `</div>`;
+ }
+ weatherContent.innerHTML = html;
+ const btnText = `${emoji} ${temp}`;
+ weatherToggleBtn.innerHTML = '📍 ' + btnText;
+ weatherToggleBtn.setAttribute('aria-label', `${city} ${temp} ${condition}`);
+}
+
+function showWeatherLoading() {
+ weatherContent.innerHTML = `<div class="weather-loading"><div class="spinner"></div><span>${currentLang==='zh'?'正在获取天气...':'Loading weather...'}</span></div>`;
+ weatherToggleBtn.innerHTML = '📍 ' + (currentLang==='zh'?'加载中':'Loading...');
+}
+function showWeatherError(msg) {
+ weatherContent.innerHTML = `<div class="weather-error"><span>⚠️</span><span>${msg}</span></div>`;
+ weatherToggleBtn.innerHTML = '📍 ' + (currentLang==='zh'?'获取失败':'Error');
+}
+
+async function fetchWeather(city) {
+ showWeatherLoading();
+ try {
+ const encodedCity = encodeURIComponent(city || '');
+ const url = city ? `https://wttr.in/${encodedCity}?format=j1` : `https://wttr.in/?format=j1`;
+ const resp = await fetch(url);
+ if (!resp.ok) throw new Error('network');
+ const data = await resp.json();
+ const current = data.current_condition && data.current_condition[0];
+ if (!current) throw new Error('no data');
+ const temp = current.temp_C + '°C';
+ const feelsLike = current.FeelsLikeC + '°C';
+ const humidity = current.humidity + '%';
+ const wind = current.windspeedKmph + ' km/h';
+ const condition = current.weatherDesc && current.weatherDesc[0] && current.weatherDesc[0].value || '';
+ const obsTime = current.observation_time ? parseInt(current.observation_time) : 12;
+ const isDay = obsTime >= 6 && obsTime < 20;
+ // 城市名
+ const nearestArea = data.nearest_area && data.nearest_area[0];
+ let cityName = city || (currentLang==='zh'?'当前位置':'Current location');
+ if (nearestArea && nearestArea.areaName) cityName = nearestArea.areaName[0].value || cityName;
+
+ // 3天预报
+ const forecast = [];
+ if (data.weather && data.weather.length >= 3) {
+ for (let fi = 1; fi <= 2; fi++) {
+ const w = data.weather[fi];
+ if (w) {
+ const desc = w.hourly && w.hourly[4] && w.hourly[4].weatherDesc && w.hourly[4].weatherDesc[0] && w.hourly[4].weatherDesc[0].value || '';
+ const maxC = w.maxtempC || '';
+ forecast.push({ date: w.date, max: maxC, desc });
+ }
+ }
+ }
+ renderWeatherCard(cityName, temp, feelsLike, humidity, wind, condition, isDay, forecast);
+ weatherCard.classList.add('show');
+ } catch(err) {
+ console.warn('Weather fetch failed:', err);
+ showWeatherError(currentLang==='zh'?'获取失败，点击重试':'Failed, tap to retry');
+ weatherCard.classList.add('show');
+ }
+}
+
+function toggleWeatherCard() {
+ if (weatherSearchBar.classList.contains('show')) { weatherSearchBar.classList.remove('show'); return; }
+ weatherCard.classList.toggle('show');
+}
+function showWeatherSearch() { weatherSearchBar.classList.add('show'); weatherCityInput.value = ''; setTimeout(() => weatherCityInput.focus(), 50); }
+function hideWeatherSearch() { weatherSearchBar.classList.remove('show'); weatherCityInput.value = ''; }
+function submitWeatherCity() {
+ let city = weatherCityInput.value.trim();
+ if (!city) return;
+ try { localStorage.setItem(WEATHER_CITY_KEY, city); } catch(e) {}
+ currentCity = city;
+ fetchWeather(city);
+ hideWeatherSearch();
+}
+weatherToggleBtn.addEventListener('click', e => { e.stopPropagation(); toggleWeatherCard(); });
+weatherRefreshBtn.addEventListener('click', e => { e.stopPropagation(); fetchWeather(currentCity); });
+btnWeatherGo.addEventListener('click', e => { e.stopPropagation(); submitWeatherCity(); });
+btnWeatherCancel.addEventListener('click', e => { e.stopPropagation(); hideWeatherSearch(); });
+weatherCityInput.addEventListener('keydown', e => {
+ if (e.key === 'Enter') { e.preventDefault(); submitWeatherCity(); }
+ if (e.key === 'Escape') { e.stopPropagation(); hideWeatherSearch(); }
+});
+// 长按切换城市搜索
+let pressTimer = null;
+weatherToggleBtn.addEventListener('touchstart', () => { pressTimer = setTimeout(() => { showWeatherSearch(); }, 600); });
+weatherToggleBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
+weatherToggleBtn.addEventListener('mousedown', () => { pressTimer = setTimeout(() => { showWeatherSearch(); }, 600); });
+weatherToggleBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
+
+function initWeather() {
+ let savedCity = null, refreshInterval = 30;
+ try {
+ savedCity = localStorage.getItem(WEATHER_CITY_KEY);
+ refreshInterval = parseInt(localStorage.getItem(WEATHER_REFRESH_KEY) || '30');
+ } catch(e) {}
+ currentCity = savedCity || null;
+ fetchWeather(currentCity);
+ if (weatherTimer) clearInterval(weatherTimer);
+ const ms = Math.max(5, Math.min(refreshInterval, 120)) * 60 * 1000;
+ weatherTimer = setInterval(() => fetchWeather(currentCity), ms);
+}
+
+// ===== 初始化 =====
+function init() {
+ // 恢复主题
+ try {
+ const savedTheme = localStorage.getItem('cal_theme');
+ applyTheme(savedTheme === 'dark');
+ } catch(e) {}
+ // 恢复语言
+ try {
+ const savedLang = localStorage.getItem('cal_lang');
+ if (savedLang) { currentLang = savedLang; applyLang(savedLang); }
+ } catch(e) {}
+ renderWeekRow();
+ renderCalendar();
+ updateCountdown();
+ updateDashboard();
+ updateGreeting();
+ spawnDoves();
+ initWeather();
+ setInterval(updateTime, 1000);
+ setInterval(updateCountdown, 60000);
+ checkFestivalTip();
+ console.log('🕊 世界和平！日历 v2.0 已就绪 | Ctrl+D 收藏~');
+ console.log('💡 快捷键: ←→切换月份 | T回到今天 | ESC关闭弹窗 | 月份年份点击可跳转 | 长按天气按钮搜索城市');
+}
+init();
+
+})();
+</script>
 </body>
 </html>
