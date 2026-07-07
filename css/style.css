@@ -1,0 +1,2764 @@
+/* ===== CSS 变量系统 ===== */
+        :root {
+            --primary: #2478e0;
+            --primary-light: #74b3ff;
+            --holiday-red: #d82020;
+            --festival-orange: #e66000;
+            --solar-term-green: #3a8c5c;
+            --solar-term-bg: #eafaf1;
+            --workday-gray: #8c8c8c;
+            --workday-bg: #f5f5f5;
+            --saturday-blue: #2979c1;
+            --sunday-red: #c62828;
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --shadow-sm: 0 2px 12px rgba(36, 120, 224, 0.06);
+            --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.10);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --shadow-glow: 0 8px 24px rgba(0, 0, 0, 0.10);
+            --radius: 14px;
+            --radius-sm: 8px;
+            --transition-fast: 0.18s ease;
+            --transition-smooth: 0.22s cubic-bezier(0.2, 0, 0.2, 1);
+            --bg-overlay: rgba(255, 255, 255, 0.15);
+            --theme-bg-1: #e0ecf8;
+            --theme-bg-2: #f0e8f8;
+            --theme-bg-3: #f8f4f0;
+            --text-color: #1a1a1a;
+            --gold: #d4a843;
+            --gold-light: #f0d878;
+            --wish-star-color: #f5c842;
+        }
+
+        /* ===== 夜间模式 ===== */
+        body.dark-mode {
+            --theme-bg-1: #1a1e2e;
+            --theme-bg-2: #1d2235;
+            --theme-bg-3: #1b1f30;
+            --text-color: #d8dce8;
+            --card-bg: rgba(30, 35, 55, 0.94);
+            --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.40);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.50);
+            --primary: #5a9fff;
+            --primary-light: #74b3ff;
+            --solar-term-bg: rgba(58, 140, 92, 0.2);
+            --workday-bg: rgba(80, 80, 80, 0.3);
+            --gold: #e8c860;
+            --gold-light: #ffe890;
+            --wish-star-color: #f5d860;
+        }
+        body.dark-mode .title-text {
+            color: #d8dce8;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+        }
+        body.dark-mode .time-box {
+            color: #c8cce0;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode .countdown-bar {
+            background: linear-gradient(135deg, #2a2e40, #252838);
+            border-color: #4a5070;
+            color: #a0a8c8;
+        }
+        body.dark-mode .calendar-box {
+            background: rgba(28, 33, 52, 0.94);
+        }
+        body.dark-mode .week-row {
+            border-bottom-color: #333655;
+        }
+        body.dark-mode .week-item {
+            color: #a0a8c8;
+        }
+        body.dark-mode .panel-item {
+            background: #252838;
+            color: #c8cce0;
+        }
+        body.dark-mode .panel-item:hover {
+            background: linear-gradient(135deg, #2e3560, #263050);
+            color: #94b8ff;
+        }
+        body.dark-mode .panel-item.active {
+            background: linear-gradient(135deg, #5a9fff, #4090ff);
+        }
+        body.dark-mode .calendar-header button {
+            background: #252838;
+            border-color: #3a3f5c;
+            color: #c8cce0;
+        }
+        body.dark-mode .calendar-header button:hover {
+            background: #2e3560;
+            border-color: #5a9fff;
+        }
+        body.dark-mode .modal-dialog {
+            background: #1e2438;
+        }
+        body.dark-mode .modal-note-item {
+            background: #252838;
+            border-color: #333655;
+        }
+        body.dark-mode .modal-note-item:hover {
+            background: #2a2f48;
+        }
+        body.dark-mode .modal-notes-list::-webkit-scrollbar-thumb {
+            background: #3a4060;
+        }
+        body.dark-mode .modal-input-row input {
+            background: #252838;
+            border-color: #3a4060;
+            color: #d8dce8;
+        }
+        body.dark-mode .btn-today {
+            color: #5a9fff !important;
+            border-color: #3a5070 !important;
+            background: #1e2438 !important;
+        }
+        body.dark-mode .btn-today:hover {
+            background: #252a40 !important;
+            color: #74b3ff !important;
+        }
+        body.dark-mode .day-cell.other-month .lunar {
+            color: #4a4f6a;
+        }
+        body.dark-mode .day-cell.other-month {
+            color: #5a5f7a;
+        }
+        body.dark-mode .workday-makeup {
+            background: rgba(80, 80, 80, 0.2);
+        }
+        body.dark-mode .note-tooltip {
+            background: #252838;
+            border-color: #3a4060;
+        }
+        body.dark-mode .weather-card {
+            background: rgba(28, 33, 52, 0.92);
+        }
+        body.dark-mode .weather-toggle-btn {
+            background: rgba(28, 33, 52, 0.88);
+            border-color: rgba(90, 159, 255, 0.3);
+            color: #5a9fff;
+        }
+        body.dark-mode .day-cell .lunar {
+            color: #8a8eb0;
+        }
+        body.dark-mode .solar-term-name {
+            color: #6fbf9a;
+        }
+        body.dark-mode .year-click,
+        body.dark-mode .month-click {
+            color: #5a9fff;
+            text-decoration-color: #3a6090;
+        }
+        body.dark-mode .btn-close-modal {
+            background: #252838;
+            border-color: #3a4060;
+            color: #a0a8c8;
+        }
+        body.dark-mode .btn-add-note {
+            background: #5a9fff;
+        }
+        body.dark-mode .btn-add-note:hover {
+            background: #4090ff;
+        }
+        body.dark-mode .btn-del-note:hover {
+            background: rgba(200, 50, 50, 0.15) !important;
+        }
+        body.dark-mode .note-dot {
+            background: #e05050;
+        }
+        body.dark-mode .btn-del-note {
+            color: #a07070;
+        }
+        body.dark-mode .weather-search-bar input {
+            background: rgba(28, 33, 52, 0.9);
+            border-color: #3a4060;
+            color: #d8dce8;
+        }
+        body.dark-mode .weather-search-bar .btn-go {
+            background: #5a9fff;
+            border-color: #5a9fff;
+        }
+        body.dark-mode .solar-term {
+            background: rgba(58, 140, 92, 0.15) !important;
+        }
+        body.dark-mode .day-cell.festival {
+            background: rgba(230, 96, 0, 0.1) !important;
+        }
+        body.dark-mode .day-cell.holiday {
+            background: rgba(216, 32, 32, 0.1) !important;
+        }
+        body.dark-mode .peace-day {
+            background: rgba(36, 120, 224, 0.08) !important;
+        }
+        body.dark-mode .day-cell.today {
+            border-color: #5a9fff !important;
+            background: rgba(36, 120, 224, 0.05);
+        }
+        body.dark-mode .day-cell.today .num {
+            color: #5a9fff !important;
+        }
+        body.dark-mode .weather-refresh-btn {
+            color: #5a70a0;
+        }
+        body.dark-mode .weather-refresh-btn:hover {
+            background: #252838;
+            color: #5a9fff;
+        }
+        body.dark-mode .weather-card:hover {
+            box-shadow: 0 6px 20px rgba(90, 159, 255, 0.2);
+        }
+        body.dark-mode .weather-toggle-btn:hover {
+            background: rgba(28, 33, 52, 0.95);
+        }
+        body.dark-mode .modal-date-label {
+            color: #888;
+        }
+        body.dark-mode .modal-empty {
+            color: #555;
+        }
+        body.dark-mode .weather-detail {
+            color: #8090b0;
+        }
+        body.dark-mode .weather-city {
+            color: #8090b0;
+        }
+        body.dark-mode .workday-tag {
+            color: #8090b0;
+        }
+        body.dark-mode .festival-tip-box {
+            background: rgba(28, 33, 52, 0.95);
+            border-color: #3a4060;
+        }
+        body.dark-mode .greeting-sub {
+            color: #8090b0;
+        }
+        body.dark-mode .theme-toggle-btn {
+            background: rgba(28, 33, 52, 0.88);
+            border-color: rgba(90, 159, 255, 0.2);
+            color: #8090b0;
+        }
+        body.dark-mode .theme-toggle-btn:hover {
+            background: rgba(28, 33, 52, 0.95);
+            color: #d8dce8;
+        }
+        body.dark-mode .view-toggle-btn {
+            background: rgba(28, 33, 52, 0.88);
+            border-color: rgba(90, 159, 255, 0.2);
+            color: #8090b0;
+        }
+        body.dark-mode .view-toggle-btn:hover {
+            background: rgba(28, 33, 52, 0.95);
+            color: #d8dce8;
+        }
+        body.dark-mode .view-toggle-btn.active {
+            background: rgba(90, 159, 255, 0.2);
+            border-color: #5a9fff;
+            color: #5a9fff;
+        }
+        body.dark-mode .lang-toggle-btn {
+            background: rgba(28, 33, 52, 0.88);
+            border-color: rgba(90, 159, 255, 0.2);
+            color: #8090b0;
+        }
+        body.dark-mode .lang-toggle-btn:hover {
+            background: rgba(28, 33, 52, 0.95);
+            color: #d8dce8;
+        }
+        body.dark-mode .lang-toggle-btn.active {
+            background: rgba(90, 159, 255, 0.2);
+            border-color: #5a9fff;
+            color: #5a9fff;
+        }
+        body.dark-mode .dashboard-card {
+            background: rgba(28, 33, 52, 0.92);
+        }
+        body.dark-mode .dash-value {
+            color: #d8dce8;
+        }
+        body.dark-mode .dash-label {
+            color: #7a8098;
+        }
+        body.dark-mode .backup-btn {
+            background: rgba(28, 33, 52, 0.88);
+            border-color: #3a4060;
+            color: #8090b0;
+        }
+        body.dark-mode .backup-btn:hover {
+            background: rgba(28, 33, 52, 0.95);
+            border-color: #5a9fff;
+        }
+        body.dark-mode .note-search-input {
+            background: rgba(28, 33, 52, 0.9);
+            border-color: #3a4060;
+            color: #d8dce8;
+        }
+        body.dark-mode .note-search-input::placeholder {
+            color: #5a6080;
+        }
+        body.dark-mode .year-click:hover,
+        body.dark-mode .month-click:hover {
+            background: rgba(90, 159, 255, 0.1);
+        }
+        body.dark-mode .weather-search-bar .btn-cancel-search {
+            background: #252838;
+            border-color: #3a4060;
+            color: #8090b0;
+        }
+        body.dark-mode .weather-loading span {
+            color: #5a6a8a;
+        }
+        /* ===== 新增：暗色模式适配 ===== */
+        body.dark-mode .peace-quote-carousel {
+            color: #b0b8d0;
+            background: rgba(28, 33, 52, 0.7);
+            border-color: #3a4060;
+        }
+        body.dark-mode .world-clock-card {
+            background: rgba(28, 33, 52, 0.88);
+            border-color: #3a4060;
+            color: #c8cce0;
+        }
+        body.dark-mode .world-clock-card .wc-city {
+            color: #8090b0;
+        }
+        body.dark-mode .world-clock-card .wc-time {
+            color: #d8dce8;
+        }
+        body.dark-mode .wish-star-fab {
+            background: rgba(40, 35, 20, 0.9);
+            border-color: rgba(240, 200, 80, 0.4);
+            box-shadow: 0 0 20px rgba(240, 200, 80, 0.25);
+        }
+        body.dark-mode .wish-modal-card {
+            background: #1e2438;
+            border-color: #3a4060;
+            color: #d8dce8;
+        }
+        body.dark-mode .wish-modal-card input {
+            background: #252838;
+            border-color: #3a4060;
+            color: #d8dce8;
+        }
+        body.dark-mode .wish-history-item {
+            background: #252838;
+            border-color: #333655;
+        }
+        body.dark-mode .wish-close-btn {
+            color: #8090b0;
+        }
+        body.dark-mode .wish-close-btn:hover {
+            color: #d8dce8;
+        }
+        body.dark-mode .peace-day-particle {
+            filter: brightness(1.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(170deg, var(--theme-bg-1) 0%, var(--theme-bg-2) 40%, var(--theme-bg-3) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            gap: 14px;
+            padding: 16px 10px 24px;
+            position: relative;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            transition: background 0.5s ease;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.15) 0%,
+                    rgba(255, 255, 255, 0.28) 40%,
+                    rgba(255, 255, 255, 0.40) 100%);
+            z-index: -1;
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+        body.dark-mode::before {
+            background: linear-gradient(180deg,
+                    rgba(0, 0, 0, 0.05) 0%,
+                    rgba(0, 0, 0, 0.1) 100%);
+        }
+
+        /* ===== 右上角工具栏 ===== */
+        .topbar {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+        .toolbar-row {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        .toolbar-btn {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(36, 120, 224, 0.18);
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 12px;
+            color: #2478e0;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(36, 120, 224, 0.08);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .toolbar-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(36, 120, 224, 0.16);
+            transform: translateY(-1px);
+        }
+        .toolbar-btn:active {
+            transform: scale(0.95);
+        }
+        .toolbar-btn.active {
+            background: rgba(36, 120, 224, 0.12);
+            border-color: #2478e0;
+        }
+        .view-toggle-btn {
+            font-size: 11px;
+            padding: 5px 10px;
+        }
+        .lang-toggle-btn {
+            font-size: 11px;
+            padding: 5px 10px;
+        }
+
+        /* ===== 天气卡片 ===== */
+        .weather-widget {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+        .weather-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 10px 14px;
+            box-shadow: 0 4px 16px rgba(36, 120, 224, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
+            cursor: default;
+            user-select: none;
+            min-width: 190px;
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .weather-card.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .weather-card:hover {
+            box-shadow: 0 6px 20px rgba(36, 120, 224, 0.18), 0 2px 6px rgba(0, 0, 0, 0.10);
+            transform: translateY(-1px);
+        }
+        .weather-main {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .weather-emoji {
+            font-size: 28px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .weather-temp-block {
+            display: flex;
+            flex-direction: column;
+        }
+        .weather-city {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .weather-temp {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-color);
+            line-height: 1.1;
+        }
+        .weather-detail {
+            font-size: 11px;
+            color: #888;
+            margin-top: 3px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .weather-detail span {
+            white-space: nowrap;
+        }
+        .weather-forecast {
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 8px;
+            justify-content: space-around;
+            font-size: 10px;
+            color: #888;
+        }
+        .weather-forecast-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        .weather-forecast-item .f-emoji {
+            font-size: 16px;
+        }
+        .weather-forecast-item .f-day {
+            color: #aaa;
+            font-size: 9px;
+        }
+        .weather-loading {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #999;
+            padding: 4px 0;
+        }
+        .weather-loading .spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #d0d8e8;
+            border-top-color: #2478e0;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .weather-error {
+            font-size: 11px;
+            color: #d82020;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .weather-refresh-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 11px;
+            color: #aaa;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: all 0.15s;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+        .weather-refresh-btn:hover {
+            background: #f0f6ff;
+            color: #2478e0;
+        }
+        .weather-toggle-btn {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(36, 120, 224, 0.2);
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 12px;
+            color: #2478e0;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(36, 120, 224, 0.10);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            letter-spacing: 0.5px;
+        }
+        .weather-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(36, 120, 224, 0.16);
+            transform: translateY(-1px);
+        }
+        .weather-search-bar {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+            height: 0;
+            overflow: hidden;
+        }
+        .weather-search-bar.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            height: auto;
+        }
+        .weather-search-bar input {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 5px 9px;
+            font-size: 12px;
+            outline: none;
+            font-family: inherit;
+            width: 130px;
+            transition: border 0.2s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .weather-search-bar input:focus {
+            border-color: #74b3ff;
+            box-shadow: 0 0 0 2px rgba(36, 120, 224, 0.08);
+        }
+        .weather-search-bar .btn-go,
+        .weather-search-bar .btn-cancel-search {
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 6px;
+            padding: 5px 9px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .weather-search-bar .btn-go {
+            background: #2478e0;
+            color: #fff;
+            border-color: #2478e0;
+        }
+        .weather-search-bar .btn-go:hover {
+            background: #1a60c0;
+        }
+        .weather-search-bar .btn-cancel-search:hover {
+            background: #f5f5f5;
+        }
+
+        /* ===== 标题区域 ===== */
+        .title-wrap {
+            opacity: 0;
+            transform: scale(0.8);
+            animation: textShow 2s ease-out forwards;
+            position: relative;
+        }
+        .title-text {
+            color: var(--text-color);
+            font-weight: bold;
+            font-size: clamp(2.2rem, 8vw, 5rem);
+            line-height: 1.3;
+            text-align: center;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 12px rgba(255, 255, 255, 0.85);
+            animation: gentleFloat 5s ease-in-out infinite alternate;
+            transition: color 0.5s;
+        }
+        .peace-text {
+            animation-delay: 0.6s;
+        }
+        @keyframes textShow {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes gentleFloat {
+            from {
+                transform: translateY(-3px) rotate(-0.3deg);
+            }
+            to {
+                transform: translateY(3px) rotate(0.3deg);
+            }
+        }
+        .greeting-sub {
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            color: #888;
+            text-align: center;
+            margin-top: -6px;
+            letter-spacing: 1px;
+            animation: textShow 2.5s ease-out forwards;
+            opacity: 0;
+            animation-delay: 1.2s;
+            transition: color 0.5s;
+        }
+
+        /* ===== 飞鸽动画 ===== */
+        .dove-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .dove {
+            position: absolute;
+            font-size: 16px;
+            opacity: 0;
+            animation: doveFly 18s linear infinite;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .dove:hover {
+            transform: scale(1.5) !important;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+        }
+        @keyframes doveFly {
+            0% {
+                opacity: 0;
+                transform: translateX(-60px) translateY(0) rotate(-10deg);
+            }
+            5% {
+                opacity: 0.4;
+            }
+            40% {
+                opacity: 0.3;
+            }
+            95% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(calc(100vw + 60px)) translateY(-80px) rotate(10deg);
+            }
+        }
+
+        /* ===== 新增：和平语录轮播 ===== */
+        .peace-quote-carousel {
+            max-width: min(88vw, 500px);
+            width: 100%;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 18px;
+            border: 1px solid rgba(36, 120, 224, 0.1);
+            text-align: center;
+            font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+            color: #555;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            cursor: default;
+            user-select: none;
+            transition: all 0.5s ease, background 0.5s, border-color 0.5s, color 0.5s;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .peace-quote-carousel .quote-text {
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .peace-quote-carousel .quote-text.fade-out {
+            opacity: 0;
+            transform: translateY(-12px);
+        }
+        .peace-quote-carousel .quote-icon {
+            display: inline-block;
+            margin-right: 6px;
+            animation: quoteIconBounce 2s ease-in-out infinite;
+        }
+        @keyframes quoteIconBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* ===== 新增：世界时钟行 - 已移至左下角固定 ===== */
+        .world-clocks-row {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9994;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-width: 120px;
+        }
+        .world-clock-card {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 10px;
+            padding: 6px 10px;
+            border: 1px solid rgba(36, 120, 224, 0.1);
+            text-align: center;
+            transition: all 0.3s, background 0.5s, border-color 0.5s;
+            cursor: default;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        .world-clock-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(36, 120, 224, 0.12);
+        }
+        .world-clock-card .wc-emoji {
+            font-size: 16px;
+            line-height: 1;
+        }
+        .world-clock-card .wc-city {
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .world-clock-card .wc-time {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-color);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        /* ===== 新增：许愿星浮动按钮 ===== */
+        .wish-star-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 20px;
+            z-index: 9995;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 250, 235, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 2px solid rgba(212, 168, 67, 0.4);
+            cursor: pointer;
+            box-shadow: 0 0 22px rgba(240, 200, 80, 0.3), 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: wishStarGlow 2.5s ease-in-out infinite;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .wish-star-fab:hover {
+            transform: scale(1.12);
+            box-shadow: 0 0 35px rgba(240, 200, 80, 0.5), 0 6px 18px rgba(0, 0, 0, 0.14);
+        }
+        .wish-star-fab:active {
+            transform: scale(0.9);
+        }
+        @keyframes wishStarGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 22px rgba(240, 200, 80, 0.3), 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(240, 200, 80, 0.55), 0 4px 20px rgba(0, 0, 0, 0.15);
+            }
+        }
+        .wish-star-fab .fab-emoji {
+            animation: fabStarSpin 4s linear infinite;
+            display: inline-block;
+            line-height: 1;
+        }
+        @keyframes fabStarSpin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                transform: rotate(90deg) scale(1.1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1);
+            }
+            75% {
+                transform: rotate(270deg) scale(1.1);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        /* ===== 新增：许愿弹窗 ===== */
+        .wish-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 10002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .wish-modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .wish-modal-card {
+            background: #fffef9;
+            border-radius: 16px;
+            padding: 20px 18px;
+            width: min(88vw, 350px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            animation: wishModalIn 0.3s ease;
+            border: 1px solid rgba(212, 168, 67, 0.3);
+        }
+        @keyframes wishModalIn {
+            from {
+                transform: translateY(30px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        .wish-modal-card h3 {
+            text-align: center;
+            color: var(--gold);
+            font-size: 17px;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+        .wish-modal-card .wish-input-row {
+            display: flex;
+            gap: 8px;
+        }
+        .wish-modal-card .wish-input-row input {
+            flex: 1;
+            padding: 9px 12px;
+            border: 1.5px solid #e0d8c0;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            font-family: inherit;
+            transition: border 0.2s;
+            background: #fffef8;
+        }
+        .wish-modal-card .wish-input-row input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.1);
+        }
+        .wish-modal-card .btn-wish-submit {
+            background: linear-gradient(135deg, var(--gold), #c89830);
+            color: #fff;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .wish-modal-card .btn-wish-submit:hover {
+            background: linear-gradient(135deg, #e0b850, #b88820);
+            transform: translateY(-1px);
+        }
+        .wish-modal-card .btn-wish-submit:active {
+            transform: scale(0.94);
+        }
+        .wish-history {
+            max-height: 120px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .wish-history::-webkit-scrollbar {
+            width: 4px;
+        }
+        .wish-history::-webkit-scrollbar-thumb {
+            background: #d0d8e8;
+            border-radius: 8px;
+        }
+        .wish-history-item {
+            background: #fdfaf2;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: #666;
+            border: 1px solid #f0e8d0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .wish-history-item .wh-star {
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+        .wish-close-btn {
+            background: none;
+            border: none;
+            color: #bbb;
+            cursor: pointer;
+            font-size: 16px;
+            align-self: flex-end;
+            padding: 2px 8px;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+        .wish-close-btn:hover {
+            color: #888;
+            background: #f5f5f5;
+        }
+        .wish-empty {
+            text-align: center;
+            color: #ccc;
+            font-size: 12px;
+            padding: 8px 0;
+        }
+
+        /* ===== 新增：许愿星星升空粒子 ===== */
+        .wish-star-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10003;
+            font-size: 20px;
+            animation: wishStarRise 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes wishStarRise {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0.4) rotate(0deg);
+            }
+            30% {
+                opacity: 1;
+                transform: translate(var(--wx), var(--wy)) scale(1.2) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--wx2), var(--wy2)) scale(0.1) rotate(540deg);
+            }
+        }
+
+        /* ===== 新增：和平日金色粒子 ===== */
+        .peace-day-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10004;
+            font-size: 22px;
+            animation: peaceDayFall 4s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+        @keyframes peaceDayFall {
+            0% {
+                opacity: 1;
+                transform: translateY(-10vh) translateX(0) rotate(0deg) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(15vh) translateX(var(--pdx)) rotate(180deg) scale(1.1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(110vh) translateX(var(--pdx2)) rotate(720deg) scale(0.2);
+            }
+        }
+
+        /* ===== 彩蛋：全屏和平祝福弹窗 ===== */
+        .peace-easter-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: radial-gradient(ellipse at center, #0a0a2e 0%, #000010 50%, #000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .peace-easter-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .peace-easter-stars {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20% 30%, white, transparent),
+                radial-gradient(1px 1px at 40% 70%, white, transparent),
+                radial-gradient(1px 1px at 60% 20%, white, transparent),
+                radial-gradient(1px 1px at 80% 50%, white, transparent),
+                radial-gradient(1px 1px at 15% 80%, white, transparent),
+                radial-gradient(1px 1px at 50% 50%, white, transparent),
+                radial-gradient(1px 1px at 75% 85%, white, transparent),
+                radial-gradient(1px 1px at 30% 15%, white, transparent),
+                radial-gradient(1.5px 1.5px at 90% 10%, white, transparent),
+                radial-gradient(1.5px 1.5px at 10% 60%, white, transparent),
+                radial-gradient(2px 2px at 65% 40%, #ffeb99, transparent),
+                radial-gradient(2px 2px at 25% 45%, #b3d9ff, transparent);
+            background-size: 100% 100%;
+            animation: twinkle 4s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes twinkle {
+            from {
+                opacity: 0.4;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .peace-easter-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px 20px;
+            animation: easterAppear 1.2s ease-out;
+            cursor: default;
+        }
+        @keyframes easterAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) translateY(30px);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.05) translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .peace-easter-emoji {
+            font-size: clamp(60px, 12vw, 100px);
+            display: block;
+            margin-bottom: 10px;
+            animation: doveFloat 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.6));
+        }
+        @keyframes doveFloat {
+            from {
+                transform: translateY(-8px) rotate(-3deg);
+            }
+            to {
+                transform: translateY(8px) rotate(3deg);
+            }
+        }
+        .peace-easter-title {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, #ffeb99, #fff, #b3d9ff, #fff, #ffeb99);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+            animation: shimmer 3s linear infinite;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+        }
+        @keyframes shimmer {
+            to {
+                background-position: 200% center;
+            }
+        }
+        .peace-easter-subtitle {
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
+            color: #b3d9ff;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            opacity: 0.85;
+        }
+        .peace-easter-languages {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 18px;
+            margin: 25px 0;
+            font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+            color: #e0e8ff;
+            letter-spacing: 1px;
+            line-height: 1.8;
+        }
+        .peace-easter-languages span {
+            padding: 2px 6px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        .peace-easter-languages span:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .peace-easter-msg {
+            font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+            color: #c0d0f0;
+            line-height: 1.9;
+            max-width: 560px;
+            margin: 25px auto;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+        }
+        .peace-easter-ascii {
+            font-family: 'Courier New', monospace;
+            font-size: clamp(8px, 1.6vw, 13px);
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.1;
+            margin: 20px 0;
+            white-space: pre;
+            user-select: none;
+        }
+        .peace-easter-hearts {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .peace-easter-hearts span {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            animation: heartRise 8s linear infinite;
+        }
+        @keyframes heartRise {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .peace-easter-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            z-index: 3;
+            animation: hintPulse 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes hintPulse {
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+        @media (max-width: 480px) {
+            .peace-easter-languages {
+                gap: 6px 10px;
+            }
+            .peace-easter-msg {
+                line-height: 1.7;
+            }
+            .peace-easter-ascii {
+                font-size: 7px;
+            }
+        }
+
+        /* ===== 倒计时提示栏 ===== */
+        .countdown-bar {
+            background: linear-gradient(135deg, #fff8e8, #fff3d6);
+            border: 1.5px solid #f0c060;
+            border-radius: 20px;
+            padding: 7px 20px;
+            font-size: clamp(0.82rem, 2vw, 0.96rem);
+            color: #8b5e14;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(180, 130, 40, 0.10);
+            cursor: default;
+            user-select: none;
+            max-width: 90vw;
+            transition: all 0.3s ease, background 0.5s, border-color 0.5s, color 0.5s;
+        }
+        .countdown-bar:hover {
+            background: linear-gradient(135deg, #fff5d8, #ffedc4);
+            box-shadow: 0 4px 16px rgba(180, 130, 40, 0.16);
+            transform: translateY(-2px);
+        }
+        @keyframes countdownPulse {
+            0%,
+            100% {
+                box-shadow: 0 2px 10px rgba(180, 130, 40, 0.10);
+            }
+            50% {
+                box-shadow: 0 2px 18px rgba(180, 130, 40, 0.22);
+            }
+        }
+        body.dark-mode .countdown-bar {
+            animation: countdownPulseDark 3s ease-in-out infinite;
+        }
+        @keyframes countdownPulseDark {
+            0%,
+            100% {
+                box-shadow: 0 2px 10px rgba(90, 159, 255, 0.08);
+            }
+            50% {
+                box-shadow: 0 2px 18px rgba(90, 159, 255, 0.18);
+            }
+        }
+        .countdown-icon {
+            display: inline-block;
+            animation: bounceIcon 0.6s ease-in-out infinite alternate;
+        }
+        @keyframes bounceIcon {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-4px);
+            }
+        }
+
+        /* ===== 时钟 ===== */
+        .time-box {
+            font-size: clamp(0.88rem, 2.4vw, 1.2rem);
+            color: var(--text-color);
+            letter-spacing: 2px;
+            text-shadow: 0 1px 6px rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            transition: all 0.3s ease, color 0.5s;
+            cursor: default;
+        }
+
+        /* ===== 仪表盘概览 ===== */
+        .dashboard-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: min(78vw, 460px);
+            width: 100%;
+        }
+        .dashboard-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 10px;
+            padding: 8px 14px;
+            box-shadow: var(--shadow-sm);
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            transition: all 0.3s, background 0.5s;
+        }
+        .dash-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        .dash-label {
+            font-size: 10px;
+            color: #888;
+            letter-spacing: 0.5px;
+            margin-top: 1px;
+        }
+        .dash-icon {
+            font-size: 16px;
+        }
+
+        /* ===== 节日温馨提示 ===== */
+        .festival-tip-box {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            background: rgba(255, 248, 230, 0.97);
+            border: 1.5px solid #f0c060;
+            border-radius: 12px;
+            padding: 12px 18px;
+            max-width: min(88vw, 380px);
+            width: auto;
+            box-shadow: 0 6px 24px rgba(180, 130, 40, 0.15);
+            z-index: 9997;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: default;
+        }
+        .festival-tip-box.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        .festival-tip-box .tip-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #8b5e14;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .festival-tip-box .tip-body {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+        .festival-tip-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #c8a870;
+            font-size: 14px;
+            padding: 0 4px;
+            float: right;
+        }
+        .festival-tip-close:hover {
+            color: #8b5e14;
+        }
+
+        /* ===== 日历卡片 ===== */
+        .calendar-box {
+            width: min(78vw, 450px);
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 16px 14px 14px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease, background 0.5s;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .calendar-box:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        @media (max-width: 420px) {
+            .calendar-box {
+                width: 95vw;
+                padding: 12px 8px 10px;
+                border-radius: 12px;
+            }
+        }
+
+        /* ===== 日历头部 ===== */
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            gap: 4px;
+            flex-wrap: nowrap;
+        }
+        .calendar-header button {
+            border: 1px solid #ddd;
+            background: #fff;
+            padding: 5px 11px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            flex-shrink: 0;
+        }
+        .calendar-header button:hover {
+            background-color: #f0f6ff;
+            border-color: #94bfff;
+        }
+        .calendar-header button:active {
+            transform: scale(0.92);
+        }
+        .btn-today {
+            font-weight: 500;
+            color: var(--primary);
+            border-color: #c8ddfb !important;
+            background: #fafcff !important;
+            letter-spacing: 1px;
+            font-size: 13px !important;
+            padding: 5px 10px !important;
+        }
+        .btn-today:hover {
+            background: #e8f0ff !important;
+            border-color: var(--primary-light) !important;
+            color: #1860c7 !important;
+        }
+        .ym-text {
+            font-size: 17px;
+            font-weight: bold;
+            position: relative;
+            cursor: default;
+            user-select: none;
+            text-align: center;
+            flex-shrink: 0;
+            padding: 4px 2px;
+        }
+        .year-click,
+        .month-click {
+            color: var(--primary);
+            text-decoration: underline dotted 2px var(--primary-light);
+            padding: 2px 5px;
+            transition: color 0.2s, background 0.2s;
+            cursor: pointer;
+            border-radius: 4px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .year-click:hover,
+        .month-click:hover {
+            color: #0f5fc4;
+            background: rgba(36, 120, 224, 0.06);
+        }
+
+        /* ===== 下拉面板 ===== */
+        .select-panel {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%) scale(0.92);
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm), var(--shadow-glow);
+            padding: 8px;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-smooth);
+            border: none;
+            pointer-events: none;
+            max-height: 240px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+        .select-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+        .select-panel::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+        .select-panel::-webkit-scrollbar-thumb {
+            background: #d0d8e8;
+            border-radius: 10px;
+        }
+        .select-panel::before {
+            content: "";
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid #fff;
+            filter: drop-shadow(0 -1px 2px rgba(0, 0, 0, 0.04));
+        }
+        .select-panel.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+            pointer-events: auto;
+        }
+        .year-panel {
+            width: 165px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+        .month-panel {
+            width: 205px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+        .panel-item {
+            padding: 6px 0;
+            text-align: center;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 13px;
+            transition: all var(--transition-fast);
+            background: #f8fbff;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
+        }
+        .panel-item:hover {
+            background: linear-gradient(135deg, #e0edff, #d0e4ff);
+            color: #1860c7;
+            transform: translateY(-1px);
+        }
+        .panel-item:active {
+            transform: scale(0.94);
+        }
+        .panel-item.active {
+            background: linear-gradient(135deg, var(--primary), #368cf0);
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(36, 120, 224, 0.3);
+            font-weight: 600;
+        }
+        @media (max-width: 420px) {
+            .year-panel {
+                width: 145px;
+            }
+            .month-panel {
+                width: 175px;
+            }
+            .panel-item {
+                font-size: 11px;
+                padding: 4px 0;
+            }
+        }
+
+        /* ===== 星期行 ===== */
+        .week-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin-bottom: 4px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 3px;
+        }
+        .week-item {
+            text-align: center;
+            font-size: 12px;
+            padding: 3px 0;
+            font-weight: 600;
+            color: #444;
+            letter-spacing: 0.5px;
+            cursor: default;
+            transition: color 0.3s;
+        }
+        .week-item:nth-child(6) {
+            color: #2979c1;
+        }
+        .week-item:nth-child(7) {
+            color: #c62828;
+        }
+
+        /* ===== 日期网格 ===== */
+        .day-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+        .day-grid.slide-left {
+            animation: slideLeft 0.3s ease forwards;
+        }
+        .day-grid.slide-right {
+            animation: slideRight 0.3s ease forwards;
+        }
+        @keyframes slideLeft {
+            from {
+                opacity: 0.5;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideRight {
+            from {
+                opacity: 0.5;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .day-cell {
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            padding: 1px;
+            transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+            cursor: pointer;
+            position: relative;
+            min-width: 0;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+        .day-cell:focus-visible {
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        .day-cell.other-month {
+            color: #c5c5c5;
+            pointer-events: none;
+            cursor: default;
+        }
+        .day-cell.other-month .lunar {
+            color: #d5d5d5;
+        }
+        .day-cell:not(.other-month):hover {
+            background-color: #eef6ff;
+            transform: scale(1.08);
+            z-index: 3;
+        }
+        .day-cell:not(.other-month):active {
+            transform: scale(0.94);
+            background-color: #dceaff;
+        }
+        .day-cell.weekday-sat:not(.other-month) .num {
+            color: #2979c1;
+            font-weight: 600;
+        }
+        .day-cell.weekday-sun:not(.other-month) .num {
+            color: #c62828;
+            font-weight: 600;
+        }
+        .day-cell.today {
+            border: 2.5px solid var(--primary);
+            animation: breath 2.8s ease-in-out infinite alternate;
+            background: rgba(36, 120, 224, 0.05);
+            z-index: 2;
+        }
+        @keyframes breath {
+            from {
+                box-shadow: 0 0 4px var(--primary-light), inset 0 0 4px rgba(36, 120, 224, 0.04);
+            }
+            to {
+                box-shadow: 0 0 14px var(--primary-light), inset 0 0 8px rgba(36, 120, 224, 0.10);
+            }
+        }
+        .day-cell.today .num {
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .day-cell.holiday {
+            background-color: #fff4f4;
+        }
+        .day-cell.holiday .num {
+            color: #d82020;
+            font-weight: bold;
+        }
+        .day-cell.holiday:hover {
+            background-color: #ffe8e8 !important;
+        }
+        .day-cell.workday-makeup {
+            background-color: var(--workday-bg);
+        }
+        .day-cell.workday-makeup .num {
+            color: var(--workday-gray);
+            font-weight: 600;
+        }
+        .day-cell.workday-makeup:hover {
+            background-color: #eaeaea !important;
+        }
+        .workday-tag {
+            font-size: 8px;
+            color: var(--workday-gray);
+            font-weight: bold;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .day-cell.festival {
+            background-color: #fffaf5;
+        }
+        .day-cell.festival .num {
+            color: #e66000;
+            font-weight: 500;
+        }
+        .day-cell.festival:hover {
+            background-color: #fff2e0 !important;
+        }
+        .day-cell.solar-term {
+            background-color: var(--solar-term-bg);
+        }
+        .day-cell.solar-term .num {
+            color: var(--solar-term-green);
+            font-weight: 600;
+        }
+        .day-cell.solar-term:hover {
+            background-color: #d8f4e2 !important;
+        }
+        .solar-term-name {
+            font-size: 8px;
+            color: var(--solar-term-green);
+            font-weight: bold;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .day-cell.peace-day {
+            background-color: #f0f7ff;
+            position: relative;
+        }
+        .day-cell.peace-day::after {
+            content: "🕊";
+            position: absolute;
+            top: 1px;
+            right: 2px;
+            font-size: 6px;
+            line-height: 1;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .holiday-name {
+            font-size: 8px;
+            color: #c41818;
+            font-weight: bold;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            transition: color 0.3s;
+        }
+        .day-cell .num {
+            font-size: clamp(11px, 1.7vw, 15px);
+            line-height: 1.1;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .day-cell .lunar {
+            font-size: 8px;
+            margin-top: 0px;
+            color: #555;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            transition: color 0.3s;
+        }
+        .note-dot {
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #e04040;
+            box-shadow: 0 0 3px rgba(224, 64, 64, 0.5);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ===== 记事悬浮预览 ===== */
+        .note-tooltip {
+            position: fixed;
+            z-index: 10000;
+            background: #fffef8;
+            border: 1px solid #e0d8c0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #444;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease;
+            max-width: 200px;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        .note-tooltip.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .note-tooltip .tooltip-date {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 3px;
+            font-size: 11px;
+        }
+        .note-tooltip .tooltip-item {
+            padding: 1px 0;
+            border-bottom: 1px dotted #eee;
+            font-size: 11px;
+        }
+        .note-tooltip .tooltip-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ===== 记事弹窗 ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-dialog {
+            background: #fff;
+            border-radius: 14px;
+            padding: 18px 16px;
+            width: min(90vw, 400px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.20);
+            cursor: default;
+            max-height: 82vh;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: modalIn 0.25s ease;
+            transition: background 0.5s;
+        }
+        @keyframes modalIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-dialog h3 {
+            font-size: 16px;
+            color: var(--primary);
+            text-align: center;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        .modal-date-label {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 2px;
+            transition: color 0.3s;
+        }
+        .note-search-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .note-search-input {
+            flex: 1;
+            padding: 7px 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            transition: border 0.2s;
+            font-family: inherit;
+        }
+        .note-search-input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 2px rgba(36, 120, 224, 0.08);
+        }
+        .btn-search-notes {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .btn-search-notes:hover {
+            background: #e8f0ff;
+            border-color: var(--primary-light);
+            color: var(--primary);
+        }
+        .note-search-results {
+            max-height: 160px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding-right: 4px;
+        }
+        .note-search-results::-webkit-scrollbar {
+            width: 4px;
+        }
+        .note-search-results::-webkit-scrollbar-thumb {
+            background: #d0d8e8;
+            border-radius: 8px;
+        }
+        .note-search-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            background: #f8f7ff;
+            border-radius: 8px;
+            padding: 7px 10px;
+            gap: 6px;
+            font-size: 12px;
+            border: 1px solid #e8e4f8;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .note-search-item:hover {
+            background: #f0edff;
+            border-color: var(--primary-light);
+        }
+        .note-search-item .nsi-date {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 11px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .note-search-item .nsi-text {
+            flex: 1;
+            word-break: break-word;
+            line-height: 1.4;
+            color: #555;
+        }
+        .modal-notes-list {
+            max-height: 150px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding-right: 4px;
+        }
+        .modal-notes-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-notes-list::-webkit-scrollbar-thumb {
+            background: #d0d8e8;
+            border-radius: 8px;
+        }
+        .modal-note-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            background: #fafaf7;
+            border-radius: 8px;
+            padding: 7px 10px;
+            gap: 8px;
+            font-size: 13px;
+            border: 1px solid #eee;
+            transition: all 0.15s;
+        }
+        .modal-note-item:hover {
+            background: #fff8f0;
+            border-color: #e8d8c0;
+        }
+        .modal-note-item .note-text {
+            flex: 1;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        .modal-note-item .note-time {
+            font-size: 10px;
+            color: #aaa;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .btn-del-note {
+            background: none;
+            border: none;
+            color: #d88;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.15s;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .btn-del-note:hover {
+            background: #fff0f0;
+            color: #c0392b;
+        }
+        .btn-edit-note {
+            background: none;
+            border: none;
+            color: #88a;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+        .btn-edit-note:hover {
+            background: #f0f0ff;
+            color: var(--primary);
+        }
+        .modal-input-row {
+            display: flex;
+            gap: 8px;
+        }
+        .modal-input-row input {
+            flex: 1;
+            padding: 9px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s;
+            font-family: inherit;
+        }
+        .modal-input-row input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(36, 120, 224, 0.08);
+        }
+        .btn-add-note {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-add-note:hover {
+            background: #1a60c0;
+        }
+        .btn-add-note:active {
+            transform: scale(0.94);
+        }
+        .btn-close-modal {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .btn-close-modal:hover {
+            background: #eaeaea;
+        }
+        .modal-empty {
+            text-align: center;
+            color: #bbb;
+            font-size: 13px;
+            padding: 12px 0;
+        }
+        .modal-footer-btns {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .backup-btn {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 7px 14px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .backup-btn:hover {
+            background: #f0f6ff;
+            border-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        /* ===== 星空背景画布 ===== */
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+        #starCanvas.show {
+            opacity: 1;
+        }
+
+        /* ===== 彩蛋粒子 ===== */
+        .egg-particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 18px;
+            z-index: 99999;
+            animation: eggFly 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes eggFly {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            60% {
+                opacity: 0.9;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.3) rotate(var(--rot));
+            }
+        }
+
+        /* ===== 流星 ===== */
+        .shooting-star {
+            position: fixed;
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(180, 200, 255, 0));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99998;
+            animation: starShot 0.9s ease-out forwards;
+            transform-origin: left center;
+        }
+        @keyframes starShot {
+            0% {
+                opacity: 1;
+                transform: translateX(0) translateY(0) scaleX(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(200px) translateY(120px) scaleX(0.1);
+            }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 380px) {
+            .day-cell .num {
+                font-size: 10px;
+            }
+            .day-cell .lunar {
+                font-size: 7px;
+            }
+            .holiday-name,
+            .solar-term-name,
+            .workday-tag {
+                font-size: 6px;
+            }
+            .note-dot {
+                width: 4px;
+                height: 4px;
+                bottom: 2px;
+            }
+            .dashboard-card {
+                padding: 6px 10px;
+                min-width: 85px;
+            }
+            .dash-value {
+                font-size: 13px;
+            }
+            .wish-star-fab {
+                width: 42px;
+                height: 42px;
+                bottom: 16px;
+                right: 12px;
+                font-size: 22px;
+            }
+            .world-clock-card {
+                padding: 4px 8px;
+                gap: 4px;
+            }
+            .world-clock-card .wc-emoji { font-size: 14px; }
+            .world-clock-card .wc-city { font-size: 10px; }
+            .world-clock-card .wc-time { font-size: 11px; }
+            .world-clocks-row {
+                left: 8px;
+                bottom: 8px;
+                max-width: 100px;
+            }
+        }
+        @media (max-width: 360px) {
+            .calendar-box {
+                padding: 10px 4px 10px;
+            }
+            .ym-text {
+                font-size: 15px;
+            }
+            .day-grid {
+                gap: 1px;
+            }
+            .day-cell {
+                border-radius: 4px;
+            }
+            .week-item {
+                font-size: 10px;
+            }
+            .modal-dialog {
+                padding: 12px 8px;
+            }
+        }
+        @media (max-width: 600px) {
+            .topbar {
+                top: 8px;
+                right: 8px;
+            }
+            .weather-card {
+                min-width: 165px;
+            }
+            .toolbar-btn {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            .wish-star-fab {
+                width: 44px;
+                height: 44px;
+                bottom: 18px;
+                right: 14px;
+                font-size: 24px;
+            }
+            .world-clocks-row {
+                left: 10px;
+                bottom: 10px;
+                max-width: 110px;
+                gap: 4px;
+            }
+            .world-clock-card {
+                padding: 5px 8px;
+                gap: 5px;
+            }
+            .world-clock-card .wc-emoji { font-size: 15px; }
+            .world-clock-card .wc-city { font-size: 10px; }
+            .world-clock-card .wc-time { font-size: 12px; }
+        }
+        /* ===== 增强版：主题色系统 ===== */
+        :root[data-theme="ocean"] {
+            --primary: #2478e0;
+            --primary-light: #74b3ff;
+        }
+        :root[data-theme="forest"] {
+            --primary: #2a9d5c;
+            --primary-light: #6dd89a;
+        }
+        :root[data-theme="sakura"] {
+            --primary: #d45a8a;
+            --primary-light: #f0a0c0;
+        }
+        :root[data-theme="sunset"] {
+            --primary: #e08030;
+            --primary-light: #ffb060;
+        }
+        body.dark-mode[data-theme="forest"] {
+            --primary: #4dc87a;
+            --primary-light: #7de8a0;
+        }
+        body.dark-mode[data-theme="sakura"] {
+            --primary: #f080a8;
+            --primary-light: #ffb0d0;
+        }
+        body.dark-mode[data-theme="sunset"] {
+            --primary: #f0a050;
+            --primary-light: #ffc880;
+        }
+
+        /* 主题色选择器 */
+        .theme-color-picker {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 4px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 8px;
+            display: flex;
+            gap: 6px;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-4px);
+            transition: all 0.2s ease;
+            z-index: 9999;
+        }
+        .theme-color-picker.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .color-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .color-dot:hover {
+            transform: scale(1.2);
+        }
+        .color-dot.active {
+            border-color: #fff;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        .color-dot[data-color="ocean"] { background: #2478e0; }
+        .color-dot[data-color="forest"] { background: #2a9d5c; }
+        .color-dot[data-color="sakura"] { background: #d45a8a; }
+        .color-dot[data-color="sunset"] { background: #e08030; }
+
+        /* ===== 增强版：纪念日样式 ===== */
+        .day-cell.anniversary {
+            border: 2px solid var(--gold) !important;
+            background: linear-gradient(135deg, rgba(212, 168, 67, 0.08), rgba(240, 216, 120, 0.08));
+        }
+        .day-cell.anniversary::before {
+            content: "🎁";
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            font-size: 7px;
+            line-height: 1;
+            pointer-events: none;
+        }
+        body.dark-mode .day-cell.anniversary {
+            border-color: var(--gold) !important;
+            background: rgba(212, 168, 67, 0.1);
+        }
+        .anniversary-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: linear-gradient(135deg, var(--gold), #c89830);
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        /* ===== 增强版：晚安模式 ===== */
+        .goodnight-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            background: radial-gradient(ellipse at center, #0a0a2e 0%, #000010 50%, #000 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.5s ease, visibility 1.5s ease;
+            cursor: pointer;
+        }
+        .goodnight-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .goodnight-text {
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffeb99, #fff, #b3d9ff, #fff, #ffeb99);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 8px;
+            animation: shimmer 3s linear infinite;
+            z-index: 2;
+        }
+        .goodnight-sub {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: #8090b0;
+            letter-spacing: 3px;
+            margin-top: 12px;
+            z-index: 2;
+        }
+        .goodnight-hint {
+            position: absolute;
+            bottom: 30px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 1px;
+            animation: hintPulse 2s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* ===== 增强版：统计面板 ===== */
+        .stats-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .stats-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .stats-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px 20px;
+            width: min(90vw, 420px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+            cursor: default;
+            animation: modalIn 0.3s ease;
+        }
+        body.dark-mode .stats-card {
+            background: #1e2438;
+        }
+        .stats-card h3 {
+            text-align: center;
+            color: var(--primary);
+            margin: 0 0 16px;
+            font-size: 17px;
+            letter-spacing: 2px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .stats-item {
+            background: #f8f7ff;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e8e4f8;
+        }
+        body.dark-mode .stats-item {
+            background: #252838;
+            border-color: #333655;
+        }
+        .stats-item .si-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .stats-item .si-label {
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .stats-close-btn {
+            display: block;
+            margin: 0 auto;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 8px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        body.dark-mode .stats-close-btn {
+            background: #252838;
+            border-color: #3a4060;
+            color: #a0a8c8;
+        }
+        .stats-close-btn:hover { background: #eaeaea; }
+
+        /* ===== 增强版：打字机光标 ===== */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--primary);
+            margin-left: 2px;
+            animation: blink 0.8s step-end infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ===== 增强版：许愿删除按钮 ===== */
+        .wish-history-item {
+            position: relative;
+        }
+        .wish-del-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: all 0.15s;
+        }
+        .wish-history-item:hover .wish-del-btn {
+            opacity: 1;
+        }
+        .wish-del-btn:hover {
+            color: #e05050;
+            background: rgba(224, 80, 80, 0.1);
+        }
+
+        /* ===== 增强版：提醒徽章 ===== */
+        .reminder-badge {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10005;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px 24px;
+            box-shadow: var(--shadow-lg);
+            max-width: min(90vw, 360px);
+            text-align: center;
+            animation: modalIn 0.3s ease;
+            border: 2px solid var(--gold);
+        }
+        .reminder-badge h4 {
+            color: var(--gold);
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+        .reminder-badge p {
+            color: var(--text-color);
+            font-size: 14px;
+            margin: 0 0 12px;
+            line-height: 1.5;
+        }
+        .reminder-badge button {
+            background: var(--gold);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ===== 增强版：纪念日复选框 ===== */
+        .anniversary-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+        .anniversary-row label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .anniversary-row input[type="checkbox"] {
+            accent-color: var(--gold);
+        }
+        body.dark-mode .anniversary-row { color: #a0a8c8; }
+
+
+        /* ===== 加载遮罩 ===== */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(170deg, #e0ecf8, #f0e8f8, #f8f4f0);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease;
+        }
+        .page-loader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .page-loader .loader-emoji {
+            font-size: 48px;
+            animation: gentleFloat 2s ease-in-out infinite alternate;
+        }
+        .page-loader .loader-text {
+            margin-top: 12px;
+            color: #888;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+/* ===== 加载遮罩 ===== */
+.page-loader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(170deg, #e0ecf8, #f0e8f8, #f8f4f0);
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease;
+}
+.page-loader.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+.page-loader .loader-emoji {
+    font-size: 48px;
+    animation: gentleFloat 2s ease-in-out infinite alternate;
+}
+.page-loader .loader-text {
+    margin-top: 12px;
+    color: #888;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
