@@ -3414,6 +3414,85 @@
                     "8-7": "立秋", "8-23": "处暑", "9-7": "白露", "9-23": "秋分", "10-8": "寒露", "10-23": "霜降", "11-7": "立冬",
                     "11-22": "小雪", "12-7": "大雪", "12-22": "冬至" }
             };
+
+            /* ===== 节气天文计算 ===== */
+            (function() {
+                var TERM_NAMES = ['小寒','大寒','立春','雨水','惊蛰','春分','清明','谷雨',
+                    '立夏','小满','芒种','夏至','小暑','大暑','立秋','处暑',
+                    '白露','秋分','寒露','霜降','立冬','小雪','大雪','冬至'];
+                var TERM_LONS = [285,300,315,330,345,0,15,30,45,60,75,90,105,120,135,150,165,180,195,210,225,240,255,270];
+                var BASE_MD = [[1,5],[1,20],[2,4],[2,19],[3,5],[3,20],[4,4],[4,20],[5,5],[5,21],[6,5],[6,21],[7,7],[7,22],[8,7],[8,23],[9,7],[9,23],[10,8],[10,23],[11,7],[11,22],[12,7],[12,22]];
+
+                function dateToJD(y, m, d) {
+                    if (m <= 2) { y--; m += 12; }
+                    var A = Math.floor(y / 100);
+                    var B = 2 - A + Math.floor(A / 4);
+                    return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524.5;
+                }
+
+                function jdToDate(jd) {
+                    jd += 0.5;
+                    var Z = Math.floor(jd);
+                    var A;
+                    if (Z < 2299161) { A = Z; }
+                    else { var alpha = Math.floor((Z - 1867216.25) / 36524.25); A = Z + 1 + alpha - Math.floor(alpha / 4); }
+                    var B = A + 1524;
+                    var C = Math.floor((B - 122.1) / 365.25);
+                    var D = Math.floor(365.25 * C);
+                    var E = Math.floor((B - D) / 30.6001);
+                    var day = B - D - Math.floor(30.6001 * E);
+                    var month = E < 14 ? E - 1 : E - 13;
+                    var year = month > 2 ? C - 4716 : C - 4715;
+                    return { y: year, m: month, d: day };
+                }
+
+                function sunLon(jd) {
+                    var T = (jd - 2451545.0) / 36525.0;
+                    var L0 = 280.46646 + 36000.76983 * T + 0.0003032 * T * T;
+                    var M = 357.52911 + 35999.05029 * T - 0.0001537 * T * T;
+                    var Mrad = M * Math.PI / 180;
+                    var C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * Math.sin(Mrad)
+                          + (0.019993 - 0.000101 * T) * Math.sin(2 * Mrad)
+                          + 0.000289 * Math.sin(3 * Mrad);
+                    var lon = L0 + C;
+                    var omega = 125.04 - 1934.136 * T;
+                    lon = lon - 0.00569 - 0.00478 * Math.sin(omega * Math.PI / 180);
+                    return ((lon % 360) + 360) % 360;
+                }
+
+                function findTermJD(year, targetLon) {
+                    var idx = Math.round(targetLon / 15) % 24;
+                    var bm = BASE_MD[idx][0], bd = BASE_MD[idx][1];
+                    var jd = dateToJD(year, bm, bd);
+                    for (var i = 0; i < 50; i++) {
+                        var lon = sunLon(jd);
+                        var diff = targetLon - lon;
+                        if (diff > 180) diff -= 360;
+                        if (diff < -180) diff += 360;
+                        if (Math.abs(diff) < 0.0001) break;
+                        jd += diff / 360 * 365.25;
+                    }
+                    return jd;
+                }
+
+                window.calcSolarTerms = function(year) {
+                    if (solarTermsData[year]) return solarTermsData[year];
+                    var result = {};
+                    for (var i = 0; i < 24; i++) {
+                        var jd = findTermJD(year, TERM_LONS[i]);
+                        var dt = jdToDate(jd);
+                        var key = dt.m + '-' + dt.d;
+                        if (!result[key]) result[key] = TERM_NAMES[i];
+                    }
+                    solarTermsData[year] = result;
+                    return result;
+                };
+            })();
+
+            /* 获取某年节气数据（硬编码优先，否则自动计算） */
+            function getSolarTerms(year) {
+                return solarTermsData[year] || window.calcSolarTerms(year);
+            }
             const festivalMap = { "7-1": "建党节", "8-1": "建军节", "9-21": "国际和平日", "10-24": "联合国日", "12-10": "人权日" };
             const peaceDays = ["9-21"];
 
@@ -3925,7 +4004,7 @@
                     `Month ${currentShowMonth}, click to select`);
                 const yearHoliday = allYearHolidays[currentShowYear] || {};
                 const yearWorkday = allYearWorkdays[currentShowYear] || {};
-                const yearSolarTerms = solarTermsData[currentShowYear] || {};
+                const yearSolarTerms = getSolarTerms(currentShowYear);
                 const firstDay = new Date(currentShowYear, currentShowMonth - 1, 1).getDay();
                 const preDays = firstDay === 0 ? 6 : firstDay - 1;
                 const thisMonthTotal = new Date(currentShowYear, currentShowMonth, 0).getDate();
@@ -4215,7 +4294,7 @@
 
             function updateDashboard() {
                 const todayKey = `${todayMonth}-${todayDay}`;
-                const st = solarTermsData[todayYear] && solarTermsData[todayYear][todayKey] || '';
+                const st = getSolarTerms(todayYear)[todayKey] || '';
                 $('dashSolarTerm').textContent = st || (currentLang === 'zh' ? '无' : 'None');
                 $('dashSolarTermLabel').textContent = currentLang === 'zh' ? '节气' : 'Solar Term';
                 const ny = new Date(todayYear + 1, 0, 1).getTime();
@@ -4287,7 +4366,7 @@
                 const holidayName = allYearHolidays[todayYear] && allYearHolidays[todayYear][
                     `${todayMonth}-${todayDay}`
                 ] || '';
-                const solarName = solarTermsData[todayYear] && solarTermsData[todayYear][
+                const solarName = getSolarTerms(todayYear)[
                     `${todayMonth}-${todayDay}`
                 ] || '';
                 const name = holidayName || solarName;
@@ -4469,7 +4548,7 @@
                     const lunarTxt = getSimpleLunar(y, m, d);
                     const holidayName = (allYearHolidays[y] || {})[dateKey] || '';
                     const isHoliday = !!holidayName;
-                    const solarTermName = (solarTermsData[y] || {})[dateKey] || '';
+                    const solarTermName = getSolarTerms(y)[dateKey] || '';
                     const isSolarTerm = !!solarTermName;
                     const isFestival = !!festivalMap[dateKey] && !isSolarTerm;
                     const isPeaceDay = peaceDays.includes(dateKey);
@@ -5143,15 +5222,15 @@
                     ];
 
                     function findTermDate(termName) {
-                        var yd = solarTermsData[new Date().getFullYear()] || {};
+                        var yd = getSolarTerms(new Date().getFullYear());
                         for (var k in yd) { if (yd[k] === termName) { var p = k.split('-'); return p[0]+'月'+p[1]+'日'; } }
                         return '';
                     }
                     function getCurTerm() {
-                        var n = new Date(); return (solarTermsData[n.getFullYear()]||{})[(n.getMonth()+1)+'-'+n.getDate()] || '';
+                        var n = new Date(); return getSolarTerms(n.getFullYear())[(n.getMonth()+1)+'-'+n.getDate()] || '';
                     }
                     function isTermPast(termName) {
-                        var yd = solarTermsData[new Date().getFullYear()] || {};
+                        var yd = getSolarTerms(new Date().getFullYear());
                         var now = new Date(); var today = new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
                         for (var k in yd) { if (yd[k]===termName) { var p=k.split('-'); if (new Date(now.getFullYear(),p[0]-1,p[1]).getTime()<today) return true; } }
                         return false;
