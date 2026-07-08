@@ -37,6 +37,72 @@
             --wish-star-color: #f5c842;
         }
 
+        /* ===== 节日/节气提示弹窗 ===== */
+        .festival-tip-box {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid color-mix(in srgb, var(--primary) 25%, transparent);
+            border-left: 3px solid var(--primary);
+            border-radius: 14px;
+            padding: 14px 40px 14px 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 0 20px color-mix(in srgb, var(--primary) 12%, transparent);
+            max-width: min(80vw, 380px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s ease, transform 1.2s ease, visibility 1.2s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .festival-tip-box.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .festival-tip-close {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+        .festival-tip-close:hover {
+            background: rgba(0, 0, 0, 0.06);
+            color: #333;
+        }
+        .festival-tip-close::before {
+            content: '✕';
+        }
+        .tip-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 4px;
+        }
+        .tip-body {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        body.dark-mode .festival-tip-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ddd;
+        }
+        body.dark-mode .tip-body {
+            color: #a0a8c8;
+        }
+
         /* ===== 夜间模式 ===== */
         body.dark-mode {
             --theme-bg-1: #1a1e2e;
@@ -209,6 +275,29 @@
         body.dark-mode .day-cell.today .num {
             color: #5a9fff !important;
         }
+        .day-cell.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-light);
+            background: transparent;
+        }
+        body.has-gradient .day-cell.selected {
+            border-color: transparent;
+            background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+                        linear-gradient(135deg, #2478e0, #7c3aed, #e11d48) border-box;
+            border-width: 2px;
+            border-style: solid;
+            box-shadow: 0 0 8px rgba(124, 58, 237, 0.3);
+        }
+        body.dark-mode.has-gradient .day-cell.selected {
+            background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+                        linear-gradient(135deg, #5a9fff, #a78bfa, #fb7185) border-box;
+            box-shadow: 0 0 8px rgba(167, 139, 250, 0.3);
+        }
+        body.dark-mode .day-cell.selected {
+            border-color: #5a9fff;
+            box-shadow: 0 0 0 2px rgba(90, 159, 255, 0.3);
+            background: rgba(90, 159, 255, 0.08);
+        }
         body.dark-mode .weather-refresh-btn {
             color: #5a70a0;
         }
@@ -242,7 +331,8 @@
         }
         body.dark-mode .festival-tip-box {
             background: rgba(28, 33, 52, 0.95);
-            border-color: #3a4060;
+            border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+            border-left-color: var(--primary);
         }
         body.dark-mode .greeting-sub {
             color: #8090b0;
@@ -462,6 +552,61 @@
             padding: 5px 10px;
         }
 
+        /* ===== 主题色选择器 ===== */
+        .theme-color-wrapper {
+            position: relative;
+        }
+        .theme-color-popup {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(36, 120, 224, 0.18);
+            border-radius: 14px;
+            padding: 10px 14px;
+            gap: 10px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+            z-index: 10000;
+            animation: fadeInScale 0.15s ease;
+        }
+        .theme-color-popup.show {
+            display: flex;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9) translateY(-4px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .theme-dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2.5px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0;
+            outline: none;
+        }
+        .theme-dot:hover {
+            transform: scale(1.25);
+        }
+        .theme-dot.active {
+            border-color: #fff;
+            box-shadow: 0 0 0 2.5px var(--primary), 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .theme-dot[data-color="blue"]   { background: #2478e0; }
+        .theme-dot[data-color="purple"] { background: #7c3aed; }
+        .theme-dot[data-color="rose"]   { background: #e11d48; }
+        .theme-dot[data-color="teal"]   { background: #0d9488; }
+        .theme-dot[data-color="gradient"] { background: linear-gradient(135deg, #2478e0, #7c3aed, #e11d48); }
+
+        body.dark-mode .theme-color-popup {
+            background: rgba(30, 35, 55, 0.95);
+            border-color: #4a5070;
+        }
+
         /* ===== 天气卡片 ===== */
         .weather-widget {
             display: flex;
@@ -481,7 +626,7 @@
             min-width: 190px;
             opacity: 0;
             transform: translateY(-8px);
-            transition: all 0.3s ease;
+            transition: opacity 1s ease, transform 0.3s ease;
             pointer-events: none;
         }
         .weather-card.show {
@@ -1434,7 +1579,60 @@
             font-size: 16px;
         }
 
-       
+        /* ===== 年度进度条 ===== */
+        .year-progress-wrap {
+            width: 100%;
+            max-width: min(78vw, 460px);
+            margin-top: 6px;
+        }
+        .year-progress-label {
+            font-size: 10px;
+            color: #999;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+            text-align: right;
+        }
+        .year-progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .year-progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        body.has-gradient .year-progress-fill {
+            background: linear-gradient(90deg, #2478e0, #7c3aed, #e11d48);
+        }
+        body.dark-mode.has-gradient .year-progress-fill {
+            background: linear-gradient(90deg, #5a9fff, #a78bfa, #fb7185);
+        }
+        body.dark-mode .year-progress-bar {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* ===== 日历格子入场动画 ===== */
+        @keyframes cellFadeIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .day-cell.animate-in {
+            animation: cellFadeIn 0.25s ease backwards;
+        }
+
+        /* ===== 季节底色 ===== */
+        body.season-spring { background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 30%, #f0f9ff 100%); }
+        body.season-summer { background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 30%, #fff7ed 100%); }
+        body.season-autumn { background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 30%, #fef7ed 100%); }
+        body.season-winter { background: linear-gradient(135deg, #f0f4ff 0%, #eef2ff 30%, #f5f3ff 100%); }
+        body.dark-mode.season-spring { background: linear-gradient(135deg, #0a1a12 0%, #0d1f15 30%, #0a1520 100%); }
+        body.dark-mode.season-summer { background: linear-gradient(135deg, #1a1508 0%, #1f1a0d 30%, #1a1208 100%); }
+        body.dark-mode.season-autumn { background: linear-gradient(135deg, #1a0f0f 0%, #1f1212 30%, #1a150d 100%); }
+        body.dark-mode.season-winter { background: linear-gradient(135deg, #0d1020 0%, #0f1225 30%, #12102a 100%); }
 
         /* ===== 日历卡片 ===== */
         .calendar-box {
@@ -1695,6 +1893,7 @@
             align-items: center;
             justify-content: center;
             border-radius: var(--radius-sm);
+            border: 1.5px solid transparent;
             padding: 1px;
             transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
             cursor: pointer;
@@ -2348,6 +2547,327 @@
             .world-clock-card .wc-city { font-size: 10px; }
             .world-clock-card .wc-time { font-size: 12px; }
         }
+
+        /* ===== 24节气弹窗 ===== */
+        .solar-terms-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 9998;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+        .solar-terms-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .solar-terms-panel {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.88);
+            z-index: 9999;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 18px;
+            padding: 0;
+            width: min(92vw, 480px);
+            max-height: 85vh;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255,255,255,0.08);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s cubic-bezier(0.2, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .solar-terms-panel.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .solar-terms-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .solar-terms-header h3 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .solar-terms-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+        .solar-terms-close:hover {
+            background: rgba(0,0,0,0.06);
+            color: #333;
+        }
+        body.dark-mode .solar-terms-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: #ddd;
+        }
+        .solar-terms-body {
+            padding: 12px 16px 16px;
+            overflow-y: auto;
+            max-height: calc(85vh - 60px);
+        }
+        .solar-terms-body::-webkit-scrollbar { width: 4px; }
+        .solar-terms-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 2px; }
+        .solar-terms-season {
+            margin-bottom: 14px;
+        }
+        .solar-terms-season:last-child { margin-bottom: 0; }
+        .solar-terms-season-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #888;
+            margin-bottom: 8px;
+            padding-left: 4px;
+            letter-spacing: 1px;
+        }
+        .solar-terms-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+        .solar-term-item {
+            background: var(--solar-term-bg);
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+        .solar-term-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 140, 92, 0.18);
+        }
+        .solar-term-item.current {
+            background: linear-gradient(135deg, #3a8c5c, #2d7a4a);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(58, 140, 92, 0.3);
+        }
+        .solar-term-item.current .st-name,
+        .solar-term-item.current .st-date {
+            color: #fff;
+        }
+        .solar-term-item.past {
+            opacity: 0.55;
+        }
+        .st-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--solar-term-green);
+            margin-bottom: 2px;
+        }
+        .st-date {
+            font-size: 10px;
+            color: #999;
+        }
+        body.dark-mode .solar-terms-panel {
+            background: rgba(30, 30, 40, 0.95);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        body.dark-mode .solar-terms-header {
+            border-bottom-color: rgba(255,255,255,0.06);
+        }
+        body.dark-mode .solar-term-item {
+            background: rgba(58, 140, 92, 0.15);
+        }
+        body.dark-mode .solar-term-item.current {
+            background: linear-gradient(135deg, #3a8c5c, #4a9c6a);
+        }
+        @media (max-width: 400px) {
+            .solar-terms-grid { grid-template-columns: repeat(3, 1fr); }
+            .solar-terms-panel { width: 96vw; }
+        }
+
+        /* ===== 全年节假日弹窗 ===== */
+        .holiday-list-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 9998;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+        .holiday-list-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .holiday-list-panel {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.88);
+            z-index: 9999;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 18px;
+            padding: 0;
+            width: min(92vw, 440px);
+            max-height: 85vh;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255,255,255,0.08);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s cubic-bezier(0.2, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .holiday-list-panel.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .holiday-list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .holiday-list-header h3 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .holiday-list-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+        .holiday-list-close:hover {
+            background: rgba(0,0,0,0.06);
+            color: #333;
+        }
+        body.dark-mode .holiday-list-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: #ddd;
+        }
+        .holiday-list-body {
+            padding: 12px 16px 16px;
+            overflow-y: auto;
+            max-height: calc(85vh - 60px);
+        }
+        .holiday-list-body::-webkit-scrollbar { width: 4px; }
+        .holiday-list-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 2px; }
+        .holiday-month-group {
+            margin-bottom: 14px;
+        }
+        .holiday-month-group:last-child { margin-bottom: 0; }
+        .holiday-month-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #888;
+            margin-bottom: 8px;
+            padding-left: 4px;
+            letter-spacing: 1px;
+        }
+        .holiday-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(216, 32, 32, 0.06);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            transition: all 0.2s;
+            cursor: default;
+        }
+        .holiday-item:last-child { margin-bottom: 0; }
+        .holiday-item:hover {
+            transform: translateX(3px);
+            background: rgba(216, 32, 32, 0.1);
+        }
+        .holiday-item.current {
+            background: linear-gradient(135deg, #d82020, #c41e1e);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(216, 32, 32, 0.3);
+        }
+        .holiday-item.current .hl-name,
+        .holiday-item.current .hl-date,
+        .holiday-item.current .hl-days {
+            color: #fff;
+        }
+        .holiday-item.past {
+            opacity: 0.5;
+        }
+        .holiday-item.upcoming {
+            border-left: 3px solid var(--holiday-red);
+        }
+        .hl-emoji {
+            font-size: 20px;
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+        }
+        .hl-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .hl-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--holiday-red);
+        }
+        .hl-date {
+            font-size: 11px;
+            color: #999;
+            margin-top: 1px;
+        }
+        .hl-days {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--holiday-red);
+            flex-shrink: 0;
+            text-align: right;
+            min-width: 48px;
+        }
+        body.dark-mode .holiday-list-panel {
+            background: rgba(30, 30, 40, 0.95);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        body.dark-mode .holiday-list-header {
+            border-bottom-color: rgba(255,255,255,0.06);
+        }
+        body.dark-mode .holiday-item {
+            background: rgba(216, 32, 32, 0.12);
+        }
+        body.dark-mode .holiday-item.current {
+            background: linear-gradient(135deg, #d82020, #e83030);
+        }
+        @media (max-width: 400px) {
+            .holiday-list-panel { width: 96vw; }
+        }
     </style>
 </head>
 <body>
@@ -2364,6 +2884,16 @@
         <div class="toolbar-row">
             <button class="toolbar-btn view-toggle-btn active" id="viewMonthBtn" title="月视图" aria-label="月视图">📅 月</button>
             <button class="toolbar-btn view-toggle-btn" id="viewWeekBtn" title="周视图" aria-label="周视图">📆 周</button>
+            <div class="theme-color-wrapper">
+                <button class="toolbar-btn" id="themeColorBtn" title="主题色" aria-label="切换主题色">🎨 主题色</button>
+                <div class="theme-color-popup" id="themeColorPopup">
+                    <button class="theme-dot active" data-color="blue" title="蓝色"></button>
+                    <button class="theme-dot" data-color="purple" title="紫色"></button>
+                    <button class="theme-dot" data-color="rose" title="玫红"></button>
+                    <button class="theme-dot" data-color="teal" title="青绿"></button>
+                    <button class="theme-dot" data-color="gradient" title="渐变"></button>
+                </div>
+            </div>
         </div>
         <div class="weather-widget">
             <button class="weather-toggle-btn" id="weatherToggleBtn" title="查看天气" aria-label="查看天气">📍 天气加载中</button>
@@ -2386,9 +2916,25 @@
     <div class="title-wrap"><p class="title-text peace-text">世界和平！</p></div>
     <p class="greeting-sub" id="greetingSub"></p>
 
+    <!-- ===== 和平语录轮播 ===== -->
+    <div class="peace-quote-carousel" id="peaceQuoteCarousel">
+        <span class="quote-icon">🕊</span>
+        <span class="quote-text" id="quoteText">愿世界和平，万物共生。</span>
+    </div>
+
+    <!-- 24节气弹窗 -->
+    <div class="solar-terms-overlay" id="solarTermsOverlay"></div>
+    <div class="solar-terms-panel" id="solarTermsPanel">
+        <div class="solar-terms-header">
+            <h3>🌿 二十四节气</h3>
+            <button class="solar-terms-close" id="solarTermsClose">✕</button>
+        </div>
+        <div class="solar-terms-body" id="solarTermsBody"></div>
+    </div>
+
     <!-- 仪表盘 -->
     <div class="dashboard-row" id="dashboardRow">
-        <div class="dashboard-card" title="当前节气">
+        <div class="dashboard-card" title="当前节气" id="dashSolarTermCard">
             <div class="dash-icon">🌿</div>
             <div class="dash-value" id="dashSolarTerm">—</div>
             <div class="dash-label" id="dashSolarTermLabel">节气</div>
@@ -2405,15 +2951,27 @@
         </div>
     </div>
 
-    <!-- 倒计时 -->
-    <div class="countdown-bar" id="countdownBar" role="status" aria-live="polite">
-        <span class="countdown-icon">📅</span> <span id="countdownText">加载中...</span>
+    <!-- 年度进度条 -->
+    <div class="year-progress-wrap">
+        <div class="year-progress-label" id="yearProgressLabel"></div>
+        <div class="year-progress-bar">
+            <div class="year-progress-fill" id="yearProgressFill" style="width:0%"></div>
+        </div>
     </div>
 
-    <!-- ===== 新增：和平语录轮播 ===== -->
-    <div class="peace-quote-carousel" id="peaceQuoteCarousel">
-        <span class="quote-icon">🕊</span>
-        <span class="quote-text" id="quoteText">愿世界和平，万物共生。</span>
+    <!-- 全年节假日弹窗 -->
+    <div class="holiday-list-overlay" id="holidayListOverlay"></div>
+    <div class="holiday-list-panel" id="holidayListPanel">
+        <div class="holiday-list-header">
+            <h3>📅 全年节假日</h3>
+            <button class="holiday-list-close" id="holidayListClose">✕</button>
+        </div>
+        <div class="holiday-list-body" id="holidayListBody"></div>
+    </div>
+
+    <!-- 倒计时 -->
+    <div class="countdown-bar" id="countdownBar" role="status" aria-live="polite" style="cursor:pointer;">
+        <span class="countdown-icon">📅</span> <span id="countdownText">加载中...</span>
     </div>
 
     <!-- 时钟 -->
@@ -2862,68 +3420,114 @@
             // ===== 新增：和平语录数据（已扩充） =====
             const peaceQuotes = {
                 zh: [
-                    '愿世界和平，万物共生。',
-                    '和平不是没有冲突，而是以公正化解冲突。',
-                    '每一个微笑都是和平的种子。',
-                    '战火熄灭之处，鲜花终将盛开。',
-                    '和平，是给未来最好的礼物。',
-                    '同一片星空下，我们都是一家人。',
-                    '让爱代替仇恨，让理解代替偏见。',
-                    '和平从心开始，从每一个善意的举动开始。',
-                    '孩子们的笑声，是和平最美的旋律。',
-                    '世界很大，但和平可以把我们连在一起。',
-                    '放下武器，拥抱彼此。',
-                    '愿每一个角落都有阳光照进。',
-                    '和平不是梦想，是我们共同的选择。',
-                    '跨越国界，我们都是地球的守护者。',
-                    '温柔的力量，可以改变世界。',
-                    // 以下为新添加的语录
-                    '和平不是没有冲突，而是用对话代替暴力。',
-                    '世界和平始于每个人的内心。',
-                    '如果你想要和平，不要去和你的敌人说，去和你的朋友说。',
-                    '和平不是遥不可及的梦想，而是我们每天的选择。',
-                    '在和平中生活是最大的幸福。',
-                    '和平是世界上最美丽的词汇。',
-                    '真正的和平不是战争的缺席，而是正义的在场。',
-                    '和平的代价是永恒的警惕，和平的回报是永恒的幸福。',
-                    '让和平像阳光一样普照大地。',
-                    '和平不是一个目标，而是一条道路。',
-                    '世界上最强大的力量是和平的力量。',
-                    '爱与和平是宇宙的终极答案。',
-                    '和平从我们每个人开始，从今天开始。',
-                    '愿这世界充满理解与宽容。'
+                    '愿世界和平，万物共生。—— 佚名',
+                    '和平不是没有冲突，而是以公正化解冲突。—— J.F.肯尼迪',
+                    '每一个微笑都是和平的种子。—— 佚名',
+                    '战火熄灭之处，鲜花终将盛开。—— 佚名',
+                    '和平，是给未来最好的礼物。—— 佚名',
+                    '同一片星空下，我们都是一家人。—— 佚名',
+                    '让爱代替仇恨，让理解代替偏见。—— 曼德拉',
+                    '和平从心开始，从每一个善意的举动开始。—— 佚名',
+                    '孩子们的笑声，是和平最美的旋律。—— 佚名',
+                    '世界很大，但和平可以把我们连在一起。—— 佚名',
+                    '放下武器，拥抱彼此。—— 佚名',
+                    '愿每一个角落都有阳光照进。—— 佚名',
+                    '和平不是梦想，是我们共同的选择。—— 科菲·安南',
+                    '跨越国界，我们都是地球的守护者。—— 佚名',
+                    '温柔的力量，可以改变世界。—— 甘地',
+                    '和平不是没有冲突，而是用对话代替暴力。—— 科菲·安南',
+                    '世界和平始于每个人的内心。—— 佚名',
+                    '如果你想要和平，不要去和你的敌人说，去和你的朋友说。—— 帕特里斯·卢蒙巴',
+                    '和平不是遥不可及的梦想，而是我们每天的选择。—— 佚名',
+                    '在和平中生活是最大的幸福。—— 亚里士多德',
+                    '和平是世界上最美丽的词汇。—— 马丁·路德·金',
+                    '真正的和平不是战争的缺席，而是正义的在场。—— J.F.肯尼迪',
+                    '和平的代价是永恒的警惕，和平的回报是永恒的幸福。—— J.F.肯尼迪',
+                    '让和平像阳光一样普照大地。—— 佚名',
+                    '和平不是一个目标，而是一条道路。—— 马丁·路德·金',
+                    '世界上最强大的力量是和平的力量。—— 曼德拉',
+                    '爱与和平是宇宙的终极答案。—— 佚名',
+                    '和平从我们每个人开始，从今天开始。—— 科菲·安南',
+                    '愿这世界充满理解与宽容。—— 佚名',
+                    '没有比和平更崇高的追求，没有比战争更愚昧的行为。—— 佚名',
+                    '和平是人类最伟大的理想。—— 甘地',
+                    '以眼还眼，世界只会更盲目。—— 甘地',
+                    '非暴力是最大的力量。—— 甘地',
+                    '战争不决定谁对了，只决定谁留下了。—— 伯特兰·罗素',
+                    '和平不能靠武力维持，只有靠理解才能实现。—— 爱因斯坦',
+                    '世界和平的敌人是无知和偏见。—— 罗曼·罗兰',
+                    '真正的和平来自内心的安宁。—— 达赖喇嘛',
+                    '没有什么比和平更珍贵。—— 西塞罗',
+                    '我们无法在仇恨中建立和平，只有爱才能做到。—— 马丁·路德·金',
+                    '和平不是一瞬间的事，而是每天的努力。—— 科菲·安南',
+                    '如果我们要教导真正的和平，我们要教导同情。—— 达赖喇嘛',
+                    '和平是最美丽的花朵。—— 梵高',
+                    '宁可在和平中吃粗茶淡饭，也不要在战争中享山珍海味。—— 佚名',
+                    '永远不要低估一颗和平的心。—— 曼德拉',
+                    '人类的最终目标是和平共处。—— 联合国宪章',
+                    '每个人心中都有一盏和平的灯。—— 泰戈尔',
+                    '世界上没有通向和平的道路，和平本身就是道路。—— 甘地',
+                    '愿和平之光照耀每一个人。—— 佚名',
+                    '我们必须学会像兄弟一样共存，否则就会像愚人一样灭亡。—— 马丁·路德·金',
+                    '和平是最高的正义。—— 维吉尔',
+                    '人类的悲剧在于，我们总是准备战争，却从未准备好和平。—— 佚名',
+                    '真正的勇士追求和平。—— 孔子',
+                    '和而不同，美美与共。—— 费孝通'
                 ],
                 en: [
-                    'May peace prevail on Earth.',
-                    'Peace is not the absence of conflict, but the presence of justice.',
-                    'Every smile plants a seed of peace.',
-                    'Where war ends, flowers begin to bloom.',
-                    'Peace is the greatest gift we can give to the future.',
-                    'Under the same sky, we are all one family.',
-                    'Let love replace hatred, understanding replace prejudice.',
-                    'Peace begins with a single kind act.',
-                    "Children's laughter is the sweetest melody of peace.",
-                    'The world is vast, but peace connects us all.',
-                    'Lay down arms, embrace one another.',
-                    'May sunlight reach every corner of the world.',
-                    'Peace is not a dream, it is our shared choice.',
-                    'Across borders, we are all guardians of Earth.',
-                    'Gentle strength can change the world.',
-                    // 新添加的英文语录
-                    'Peace is not absence of conflict, it is dialogue instead of violence.',
-                    'World peace begins in the heart of each individual.',
-                    'If you want peace, talk to your friends, not your enemies.',
-                    'Peace is not a distant dream, but a daily choice.',
-                    'To live in peace is the greatest happiness.',
-                    'Peace is the most beautiful word in any language.',
-                    'True peace is not the absence of war, but the presence of justice.',
-                    'The price of peace is eternal vigilance, the reward is eternal happiness.',
-                    'Let peace shine upon the Earth like the sun.',
-                    'Peace is not a destination, it is a path.',
-                    'The most powerful force in the world is the force of peace.',
-                    'Love and peace are the ultimate answers of the universe.',
-                    'Peace starts with each of us, starting today.',
-                    'May this world be filled with understanding and tolerance.'
+                    'May peace prevail on Earth. — Unknown',
+                    'Peace is not the absence of conflict, but the presence of justice. — J.F. Kennedy',
+                    'Every smile plants a seed of peace. — Unknown',
+                    'Where war ends, flowers begin to bloom. — Unknown',
+                    'Peace is the greatest gift we can give to the future. — Unknown',
+                    'Under the same sky, we are all one family. — Unknown',
+                    'Let love replace hatred, understanding replace prejudice. — Nelson Mandela',
+                    'Peace begins with a single kind act. — Unknown',
+                    "Children's laughter is the sweetest melody of peace. — Unknown",
+                    'The world is vast, but peace connects us all. — Unknown',
+                    'Lay down arms, embrace one another. — Unknown',
+                    'May sunlight reach every corner of the world. — Unknown',
+                    'Peace is not a dream, it is our shared choice. — Kofi Annan',
+                    'Across borders, we are all guardians of Earth. — Unknown',
+                    'Gentle strength can change the world. — Mahatma Gandhi',
+                    'Peace is not absence of conflict, it is dialogue instead of violence. — Kofi Annan',
+                    'World peace begins in the heart of each individual. — Unknown',
+                    'If you want peace, talk to your friends, not your enemies. — Patrice Lumumba',
+                    'Peace is not a distant dream, but a daily choice. — Unknown',
+                    'To live in peace is the greatest happiness. — Aristotle',
+                    'Peace is the most beautiful word in any language. — Martin Luther King Jr.',
+                    'True peace is not the absence of war, but the presence of justice. — J.F. Kennedy',
+                    'The price of peace is eternal vigilance, the reward is eternal happiness. — J.F. Kennedy',
+                    'Let peace shine upon the Earth like the sun. — Unknown',
+                    'Peace is not a destination, it is a path. — Martin Luther King Jr.',
+                    'The most powerful force in the world is the force of peace. — Nelson Mandela',
+                    'Love and peace are the ultimate answers of the universe. — Unknown',
+                    'Peace starts with each of us, starting today. — Kofi Annan',
+                    'May this world be filled with understanding and tolerance. — Unknown',
+                    'There is no pursuit more noble than peace, no act more foolish than war. — Unknown',
+                    'Peace is the greatest ideal of humanity. — Mahatma Gandhi',
+                    'An eye for an eye makes the whole world blind. — Mahatma Gandhi',
+                    'Non-violence is the greatest force. — Mahatma Gandhi',
+                    'War does not determine who is right — only who is left. — Bertrand Russell',
+                    'Peace cannot be kept by force; it can only be achieved by understanding. — Albert Einstein',
+                    'The enemies of world peace are ignorance and prejudice. — Romain Rolland',
+                    'True peace comes from inner peace. — Dalai Lama',
+                    'Nothing is more precious than peace. — Cicero',
+                    'We cannot build peace with hatred; only love can do that. — Martin Luther King Jr.',
+                    'Peace is not a moment, it is a daily effort. — Kofi Annan',
+                    'If we are to teach real peace, we must teach compassion. — Dalai Lama',
+                    'Peace is the most beautiful flower. — Vincent van Gogh',
+                    'Better to eat bread in peace than feast in war. — Unknown',
+                    'Never underestimate a heart at peace. — Nelson Mandela',
+                    'The ultimate goal of humanity is peaceful coexistence. — United Nations Charter',
+                    'Everyone carries a lamp of peace within. — Rabindranath Tagore',
+                    'There is no way to peace; peace is the way. — Mahatma Gandhi',
+                    'May the light of peace shine upon everyone. — Unknown',
+                    'We must learn to live together as brothers, or perish together as fools. — Martin Luther King Jr.',
+                    'Peace is the highest justice. — Virgil',
+                    'The tragedy of humanity is that we are always prepared for war, never for peace. — Unknown',
+                    'The true warrior seeks peace. — Confucius',
+                    'Harmony in diversity, beauty shared by all. — Fei Xiaotong'
                 ]
             };
             let quoteIndex = 0;
@@ -3280,7 +3884,17 @@
             }
 
             function closeAllPanel() { yearPanel.classList.remove('show');
-                monthPanel.classList.remove('show'); }
+                monthPanel.classList.remove('show');
+                /* 同时关闭节气和节假日弹窗 */
+                const stO = document.getElementById('solarTermsOverlay');
+                const stP = document.getElementById('solarTermsPanel');
+                const hlO = document.getElementById('holidayListOverlay');
+                const hlP = document.getElementById('holidayListPanel');
+                if (stO) stO.classList.remove('show');
+                if (stP) stP.classList.remove('show');
+                if (hlO) hlO.classList.remove('show');
+                if (hlP) hlP.classList.remove('show');
+            }
 
             function togglePanel(panelToShow, panelToHide, renderFn) {
                 const isShowing = panelToShow.classList.contains('show');
@@ -3343,12 +3957,21 @@
                     dayGrid.appendChild(createDayCell(i, '', '', true, false, false, false, false, '', false, false, -1, null));
                 }
                 bindDayCellEvents();
+                /* 日历格子入场动画 */
+                dayGrid.querySelectorAll('.day-cell:not(.other-month)').forEach((cell, i) => {
+                    cell.classList.add('animate-in');
+                    cell.style.animationDelay = (i * 18) + 'ms';
+                });
             }
 
             function bindDayCellEvents() {
                 dayGrid.querySelectorAll('.day-cell:not(.other-month)').forEach(cell => {
                     const dateKey = cell.getAttribute('data-date-key');
                     if (!dateKey) return;
+                    cell.addEventListener('click', () => {
+                        dayGrid.querySelectorAll('.day-cell.selected').forEach(c => c.classList.remove('selected'));
+                        cell.classList.add('selected');
+                    });
                     cell.addEventListener('mouseenter', e => { if (hasNotesForDate(dateKey))
                             showNoteTooltip(e, dateKey); });
                     cell.addEventListener('mouseleave', hideNoteTooltip);
@@ -3607,7 +4230,33 @@
                 }
                 $('dashNotes').textContent = count;
                 $('dashNotesLabel').textContent = currentLang === 'zh' ? '本月记事' : 'Notes/Mo';
+                /* 年度进度条 */
+                updateYearProgress();
             }
+
+            function updateYearProgress() {
+                const now = new Date();
+                const start = new Date(now.getFullYear(), 0, 1).getTime();
+                const end = new Date(now.getFullYear() + 1, 0, 1).getTime();
+                const pct = Math.min(100, ((now.getTime() - start) / (end - start) * 100));
+                $('yearProgressFill').style.width = pct.toFixed(1) + '%';
+                $('yearProgressLabel').textContent = currentLang === 'zh'
+                    ? `今年已过 ${pct.toFixed(1)}%`
+                    : `Year passed ${pct.toFixed(1)}%`;
+            }
+
+            /* 季节底色 */
+            function applySeasonClass() {
+                const m = new Date().getMonth(); /* 0-11 */
+                const cls = m <= 1 || m === 11 ? 'season-winter'
+                    : m <= 4 ? 'season-spring'
+                    : m <= 7 ? 'season-summer'
+                    : m <= 10 ? 'season-autumn'
+                    : 'season-winter';
+                document.body.classList.remove('season-spring', 'season-summer', 'season-autumn', 'season-winter');
+                document.body.classList.add(cls);
+            }
+            applySeasonClass();
 
             function updateTime() {
                 const now = new Date();
@@ -3654,6 +4303,17 @@
                 setTimeout(() => box.classList.remove('show'), 10000);
             }
             $('festivalTipClose').addEventListener('click', () => $('festivalTipBox').classList.remove('show'));
+            /* 滚动时联动收起弹窗 */
+            let scrollDismissTimer = null;
+            window.addEventListener('scroll', () => {
+                const box = $('festivalTipBox');
+                if (!box.classList.contains('show')) return;
+                if (scrollDismissTimer) return;
+                scrollDismissTimer = setTimeout(() => {
+                    box.classList.remove('show');
+                    scrollDismissTimer = null;
+                }, 200);
+            }, { passive: true });
 
             function spawnDoves() {
                 const container = $('doveContainer');
@@ -3679,12 +4339,69 @@
                     $('themeToggleBtn').textContent = '🌙 深色';
                     $('themeToggleBtn').setAttribute('aria-label', currentLang === 'zh' ? '切换到深色模式' :
                         'Switch to dark mode'); }
+                /* 切换明暗时重新应用当前主题色 */
+                try {
+                    const curColor = localStorage.getItem('cal_theme_color') || 'blue';
+                    applyThemeColor(curColor);
+                } catch (e) {}
             }
             $('themeToggleBtn').addEventListener('click', () => {
                 const dark = !document.body.classList.contains('dark-mode');
                 try { localStorage.setItem('cal_theme', dark ? 'dark' : 'light'); } catch (e) {}
                 applyTheme(dark);
             });
+
+            /* 主题色切换 */
+            const themeColors = {
+                blue:     { primary: '#2478e0', primaryLight: '#74b3ff' },
+                purple:   { primary: '#7c3aed', primaryLight: '#a78bfa' },
+                rose:     { primary: '#e11d48', primaryLight: '#fb7185' },
+                teal:     { primary: '#0d9488', primaryLight: '#5eead4' },
+                gradient: { primary: '#7c3aed', primaryLight: '#e11d48' }
+            };
+            const darkThemeColors = {
+                blue:     { primary: '#5a9fff', primaryLight: '#74b3ff' },
+                purple:   { primary: '#a78bfa', primaryLight: '#c4b5fd' },
+                rose:     { primary: '#fb7185', primaryLight: '#fda4af' },
+                teal:     { primary: '#5eead4', primaryLight: '#99f6e4' },
+                gradient: { primary: '#a78bfa', primaryLight: '#fb7185' }
+            };
+            let currentThemeColor = 'blue';
+            function applyThemeColor(colorName) {
+                currentThemeColor = colorName;
+                const isDark = document.body.classList.contains('dark-mode');
+                const palette = isDark ? darkThemeColors : themeColors;
+                const c = palette[colorName] || palette.blue;
+                document.documentElement.style.setProperty('--primary', c.primary);
+                document.documentElement.style.setProperty('--primary-light', c.primaryLight);
+                document.body.classList.toggle('has-gradient', colorName === 'gradient');
+                try { localStorage.setItem('cal_theme_color', colorName); } catch (e) {}
+                document.querySelectorAll('.theme-dot').forEach(d => {
+                    d.classList.toggle('active', d.dataset.color === colorName);
+                });
+            }
+            /* 弹出/关闭色盘 */
+            $('themeColorBtn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                $('themeColorPopup').classList.toggle('show');
+            });
+            /* 点击色点选色 */
+            document.querySelectorAll('.theme-dot').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    applyThemeColor(dot.dataset.color);
+                    $('themeColorPopup').classList.remove('show');
+                });
+            });
+            /* 点击外部关闭 */
+            document.addEventListener('click', () => {
+                $('themeColorPopup').classList.remove('show');
+            });
+            /* 恢复保存的主题色 */
+            try {
+                const savedColor = localStorage.getItem('cal_theme_color');
+                if (savedColor && themeColors[savedColor]) applyThemeColor(savedColor);
+            } catch (e) {}
 
             function applyLang(lang) {
                 currentLang = lang;
@@ -3693,7 +4410,7 @@
                 $('langToggleBtn').setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
                 renderWeekRow();
                 renderCalendar();
-                updateCountdown();
+                lastCountdownMinute = -1; updateCountdown();
                 updateDashboard();
                 updateGreeting();
                 renderYearPanel();
@@ -4085,6 +4802,16 @@
             }
             weatherToggleBtn.addEventListener('click', e => { e.stopPropagation();
                 toggleWeatherCard(); });
+            /* 滚动时联动收起天气卡片 */
+            let weatherScrollTimer = null;
+            window.addEventListener('scroll', () => {
+                if (!weatherCard.classList.contains('show')) return;
+                if (weatherScrollTimer) return;
+                weatherScrollTimer = setTimeout(() => {
+                    weatherCard.classList.remove('show');
+                    weatherScrollTimer = null;
+                }, 200);
+            }, { passive: true });
             weatherRefreshBtn.addEventListener('click', e => { e.stopPropagation();
                 fetchWeather(currentCity); });
             btnWeatherGo.addEventListener('click', e => { e.stopPropagation();
@@ -4245,27 +4972,6 @@
                 });
             })();
 
-            (function() {
-                $('countdownBar').style.cursor = 'pointer';
-                $('countdownBar').addEventListener('click', e => {
-                    const rect = $('countdownBar').getBoundingClientRect();
-                    const emojis = ['📅', '🎉', '🎊', '✨', '⭐', '💫'];
-                    spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 22, emojis);
-                });
-            })();
-
-            (function() {
-                const dashCard = document.querySelector('.dashboard-card');
-                if (dashCard) {
-                    dashCard.style.cursor = 'pointer';
-                    dashCard.addEventListener('click', () => {
-                        const rect = dashCard.getBoundingClientRect();
-                        const emojis = ['🌿', '🌱', '🌸', '☀️', '🍃', '✨'];
-                        spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 18, emojis);
-                    });
-                }
-            })();
-
             initStarfield();
             checkHolidayConfetti();
 
@@ -4419,6 +5125,126 @@
                 checkPeaceDay();
                 checkPeaceDayEnhanced();
                 showEasterHint();
+
+                /* ===== 节气弹窗绑定 ===== */
+                (function() {
+                    var stOverlay = document.getElementById('solarTermsOverlay');
+                    var stPanel = document.getElementById('solarTermsPanel');
+                    var stBody = document.getElementById('solarTermsBody');
+                    var stClose = document.getElementById('solarTermsClose');
+                    var stCard = document.getElementById('dashSolarTermCard');
+                    if (!stOverlay || !stPanel || !stBody || !stClose || !stCard) { console.warn('节气弹窗元素缺失'); return; }
+
+                    var termsGroups = [
+                        { s: '🌸 春', t: ['立春','雨水','惊蛰','春分','清明','谷雨'] },
+                        { s: '☀️ 夏', t: ['立夏','小满','芒种','夏至','小暑','大暑'] },
+                        { s: '🍂 秋', t: ['立秋','处暑','白露','秋分','寒露','霜降'] },
+                        { s: '❄️ 冬', t: ['立冬','小雪','大雪','冬至','小寒','大寒'] }
+                    ];
+
+                    function findTermDate(termName) {
+                        var yd = solarTermsData[new Date().getFullYear()] || {};
+                        for (var k in yd) { if (yd[k] === termName) { var p = k.split('-'); return p[0]+'月'+p[1]+'日'; } }
+                        return '';
+                    }
+                    function getCurTerm() {
+                        var n = new Date(); return (solarTermsData[n.getFullYear()]||{})[(n.getMonth()+1)+'-'+n.getDate()] || '';
+                    }
+                    function isTermPast(termName) {
+                        var yd = solarTermsData[new Date().getFullYear()] || {};
+                        var now = new Date(); var today = new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+                        for (var k in yd) { if (yd[k]===termName) { var p=k.split('-'); if (new Date(now.getFullYear(),p[0]-1,p[1]).getTime()<today) return true; } }
+                        return false;
+                    }
+                    function buildTermsHTML() {
+                        var cur = getCurTerm(); var h = '';
+                        termsGroups.forEach(function(g) {
+                            h += '<div class="solar-terms-season"><div class="solar-terms-season-title">'+g.s+'</div><div class="solar-terms-grid">';
+                            g.t.forEach(function(name) {
+                                var d = findTermDate(name); var isCur = name===cur; var past = isTermPast(name);
+                                var cls = isCur?'current':(past?'past':'');
+                                h += '<div class="solar-term-item '+cls+'"><div class="st-name">'+name+'</div><div class="st-date">'+d+'</div></div>';
+                            });
+                            h += '</div></div>';
+                        });
+                        return h;
+                    }
+                    function openST() { stBody.innerHTML = buildTermsHTML(); stOverlay.classList.add('show'); stPanel.classList.add('show'); }
+                    function closeST() { stOverlay.classList.remove('show'); stPanel.classList.remove('show'); }
+
+                    stCard.style.cursor = 'pointer';
+                    stCard.onclick = function(e) { e.stopPropagation(); openST(); };
+                    stClose.onclick = function(e) { e.stopPropagation(); closeST(); };
+                    stOverlay.onclick = function(e) { e.stopPropagation(); closeST(); };
+                    stPanel.onclick = function(e) { e.stopPropagation(); };
+                    console.log('🌿 节气弹窗已绑定');
+                })();
+
+                /* ===== 节假日弹窗绑定 ===== */
+                (function() {
+                    var hlOverlay = document.getElementById('holidayListOverlay');
+                    var hlPanel = document.getElementById('holidayListPanel');
+                    var hlBody = document.getElementById('holidayListBody');
+                    var hlClose = document.getElementById('holidayListClose');
+                    var hlBar = document.getElementById('countdownBar');
+                    if (!hlOverlay || !hlPanel || !hlBody || !hlClose || !hlBar) { console.warn('节假日弹窗元素缺失'); return; }
+
+                    var hlEmojis = { '元旦':'🎊','春节':'🧧','清明':'🌿','劳动节':'💪','端午':'🐲','中秋':'🌕','国庆':'🇨🇳','建党节':'🔴','建军节':'🎖️','国际和平日':'🕊️','人权日':'✊','联合国日':'🌐' };
+
+                    function getHolidays() {
+                        var yd = allYearHolidays[new Date().getFullYear()] || {};
+                        var map = {};
+                        for (var k in yd) {
+                            var name = yd[k]; if (map[name]) { var p=k.split('-'); var dd=parseInt(p[1]); if(dd>map[name].e) map[name].e=dd; }
+                            else { var p=k.split('-'); map[name]={m:parseInt(p[0]),s:parseInt(p[1]),e:parseInt(p[1])}; }
+                        }
+                        var arr=[]; for (var n in map) arr.push({name:n,m:map[n].m,s:map[n].s,e:map[n].e});
+                        arr.sort(function(a,b){return a.m!==b.m?a.m-b.m:a.s-b.s;}); return arr;
+                    }
+                    function buildHLHTML() {
+                        var now=new Date(); var yr=now.getFullYear(); var today=new Date(yr,now.getMonth(),now.getDate()).getTime();
+                        var arr=getHolidays(); var months=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+                        var h=''; var cm=0;
+                        arr.forEach(function(item) {
+                            if(item.m!==cm){if(cm>0) h+='</div>'; cm=item.m; h+='<div class="holiday-month-group"><div class="holiday-month-title">'+months[item.m-1]+'</div>';}
+                            var emoji=hlEmojis[item.name]||'🎉';
+                            var endTs=new Date(yr,item.m-1,item.e).getTime();
+                            var startTs=new Date(yr,item.m-1,item.s).getTime();
+                            var isCur=(today>=startTs&&today<=endTs);
+                            var past=endTs<today;
+                            var days=Math.ceil((startTs-today)/86400000);
+                            var cls=isCur?'current':(past?'past':(days<=7?'upcoming':''));
+                            var ds=item.s===item.e?(item.m+'月'+item.s+'日'):(item.m+'月'+item.s+'-'+item.e+'日');
+                            var dt=isCur?'🎉 今天':(past?'已过':(days===1?'明天':days+'天后'));
+                            h+='<div class="holiday-item '+cls+'"><div class="hl-emoji">'+emoji+'</div><div class="hl-info"><div class="hl-name">'+item.name+'</div><div class="hl-date">'+ds+'</div></div><div class="hl-days">'+dt+'</div></div>';
+                        });
+                        if(cm>0) h+='</div>'; return h;
+                    }
+                    function openHL() { hlBody.innerHTML=buildHLHTML(); hlOverlay.classList.add('show'); hlPanel.classList.add('show'); }
+                    function closeHL() { hlOverlay.classList.remove('show'); hlPanel.classList.remove('show'); }
+
+                    hlBar.style.cursor='pointer';
+                    hlBar.onclick=function(e){e.stopPropagation();openHL();};
+                    hlClose.onclick=function(e){e.stopPropagation();closeHL();};
+                    hlOverlay.onclick=function(e){e.stopPropagation();closeHL();};
+                    hlPanel.onclick=function(e){e.stopPropagation();};
+                    console.log('📅 节假日弹窗已绑定');
+                })();
+
+                /* 其他仪表盘卡片粒子效果 */
+                var otherDashCards = document.querySelectorAll('.dashboard-card:not(#dashSolarTermCard)');
+                for (var di = 0; di < otherDashCards.length; di++) {
+                    (function(dc) {
+                        dc.style.cursor = 'pointer';
+                        dc.onclick = function() {
+                            try {
+                                var r = dc.getBoundingClientRect();
+                                spawnParticles(r.left + r.width / 2, r.top + r.height / 2, 14, ['🎉', '🎊', '✨', '⭐', '💫']);
+                            } catch(e) {}
+                        };
+                    })(otherDashCards[di]);
+                }
+
                 console.log('🕊 世界和平！日历 v2.0+ 已就绪 | Ctrl+D 收藏~');
                 console.log('💡 快捷键: ←→切换月份 | T回到今天 | ESC关闭弹窗 | 月份年份点击可跳转 | 长按天气按钮搜索城市');
                 console.log('🐰 彩蛋: 三连击标题 / Konami Code (↑↑↓↓←→←→BA) / 点击飞鸽 / 9月21日');
