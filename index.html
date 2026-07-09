@@ -2291,6 +2291,20 @@
             background: #fff0f0;
             color: #c0392b;
         }
+        .btn-remind-note {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: #999;
+            transition: all 0.2s;
+        }
+        .btn-remind-note:hover {
+            background: rgba(36, 120, 224, 0.1);
+            color: var(--primary);
+        }
         .btn-edit-note {
             background: none;
             border: none;
@@ -2868,6 +2882,116 @@
         @media (max-width: 400px) {
             .holiday-list-panel { width: 96vw; }
         }
+        /* ===== 统计面板 ===== */
+        .stats-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9000; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .stats-overlay.show { opacity: 1; visibility: visible; }
+        .stats-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.95); background: var(--card-bg); border-radius: 18px; padding: 28px; max-width: min(90vw, 520px); width: 90%; max-height: 80vh; overflow-y: auto; z-index: 9001; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); }
+        .stats-overlay.show .stats-panel { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        .stats-panel h3 { margin: 0 0 16px; font-size: 18px; }
+        .stats-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+        .stats-card { background: var(--workday-bg); border-radius: 12px; padding: 14px; text-align: center; }
+        .stats-card .num { font-size: 28px; font-weight: 800; color: var(--primary); }
+        .stats-card .label { font-size: 12px; color: #888; margin-top: 4px; }
+        .stats-chart-wrap { background: var(--workday-bg); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+        .stats-chart-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+        .stats-chart { width: 100%; height: 160px; }
+        body.dark-mode .stats-panel { background: #1e2438; }
+        body.dark-mode .stats-card { background: #252838; }
+        body.dark-mode .stats-chart-wrap { background: #252838; }
+        /* ===== 设置面板 ===== */
+        .settings-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9000; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .settings-overlay.show { opacity: 1; visibility: visible; }
+        .settings-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.95); background: var(--card-bg); border-radius: 18px; padding: 28px; max-width: min(90vw, 420px); width: 90%; z-index: 9001; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); }
+        .settings-overlay.show .settings-panel { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        .settings-panel h3 { margin: 0 0 16px; font-size: 18px; }
+        .settings-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
+        .setting-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(128,128,128,0.15); }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-label { font-size: 14px; }
+        .setting-control { display: flex; align-items: center; gap: 8px; }
+        .setting-control input[type=range] { width: 100px; accent-color: var(--primary); }
+        .setting-control select { padding: 4px 8px; border-radius: 8px; border: 1px solid #ccc; background: var(--card-bg); color: var(--text-color); }
+        body.dark-mode .settings-panel { background: #1e2438; }
+        body.dark-mode .setting-control select { border-color: #3a4060; background: #252838; }
+        /* ===== 提醒设置 ===== */
+        .reminder-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; padding: 8px; background: var(--workday-bg); border-radius: 8px; }
+        .reminder-row input[type=datetime-local] { padding: 4px 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 13px; background: var(--card-bg); color: var(--text-color); }
+        .reminder-row .btn-set-reminder { padding: 4px 12px; border-radius: 6px; border: none; background: var(--primary); color: #fff; font-size: 13px; cursor: pointer; }
+        body.dark-mode .reminder-row { background: #252838; }
+        body.dark-mode .reminder-row input { border-color: #3a4060; background: #1e2438; }
+        /* ===== 音乐按钮 ===== */
+        .music-btn { position: relative; }
+        .music-btn.playing::after { content: '♪'; position: absolute; top: -4px; right: -4px; font-size: 10px; animation: musicPulse 1s ease infinite; }
+        @keyframes musicPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+        /* ===== 音乐面板 ===== */
+        .music-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9500; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .music-overlay.show { opacity: 1; visibility: visible; }
+        .music-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.95); background: var(--card-bg); border-radius: 18px; padding: 24px; max-width: min(90vw, 400px); width: 85%; z-index: 9501; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); }
+        .music-overlay.show .music-panel { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        .music-panel h3 { margin: 0 0 16px; font-size: 17px; text-align: center; }
+        .music-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
+        .music-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        .music-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: var(--workday-bg); cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+        .music-item:hover { background: rgba(36,120,224,0.08); }
+        .music-item.active { border-color: var(--primary); background: rgba(36,120,224,0.1); }
+        .music-item .icon { font-size: 20px; }
+        .music-item .info { flex: 1; }
+        .music-item .name { font-size: 14px; font-weight: 600; }
+        .music-item .desc { font-size: 11px; color: #888; margin-top: 2px; }
+        .music-item .playing-indicator { font-size: 12px; color: var(--primary); display: none; }
+        .music-item.active .playing-indicator { display: inline; animation: musicPulse 1s ease infinite; }
+        .music-upload-row { display: flex; gap: 8px; align-items: center; padding: 10px; border-radius: 10px; border: 1.5px dashed #ccc; text-align: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .music-upload-row:hover { border-color: var(--primary); background: rgba(36,120,224,0.05); }
+        .music-upload-row input { display: none; }
+        .music-upload-row .upload-label { font-size: 13px; color: #666; }
+        .music-custom-list { margin-top: 10px; }
+        .music-custom-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; background: var(--workday-bg); margin-bottom: 6px; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+        .music-custom-item:hover { background: rgba(36,120,224,0.08); }
+        .music-custom-item.active { border-color: var(--primary); }
+        .music-custom-item .del-btn { margin-left: auto; background: none; border: none; color: #c0392b; cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 4px; }
+        .music-custom-item .del-btn:hover { background: rgba(200,50,50,0.1); }
+        .music-volume-row { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(128,128,128,0.15); }
+        .music-volume-row label { font-size: 13px; color: #666; }
+        .music-volume-row input[type=range] { flex: 1; accent-color: var(--primary); }
+        body.dark-mode .music-panel { background: #1e2438; }
+        body.dark-mode .music-item { background: #252838; }
+        body.dark-mode .music-custom-item { background: #252838; }
+        body.dark-mode .music-upload-row { border-color: #3a4060; }
+        /* ===== 分享预览 ===== */
+        .share-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .share-overlay.show { opacity: 1; visibility: visible; }
+        .share-card { background: var(--card-bg); border-radius: 18px; padding: 20px; max-width: min(90vw, 480px); text-align: center; }
+        .share-card img { max-width: 100%; border-radius: 12px; margin: 12px 0; }
+        .share-actions { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
+        .share-actions button { padding: 8px 20px; border-radius: 10px; border: none; cursor: pointer; font-size: 14px; }
+        .share-download { background: var(--primary); color: #fff; }
+        .share-close-btn { background: var(--workday-bg); color: var(--text-color); }
+        body.dark-mode .share-card { background: #1e2438; }
+        /* ===== 国际节日徽章 ===== */
+        .intl-badge { display: inline-block; font-size: 9px; padding: 1px 4px; border-radius: 4px; background: rgba(36,120,224,0.12); color: var(--primary); margin-left: 2px; vertical-align: middle; }
+        /* ===== 页面加载阶梯动画 ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .title-wrap { animation: fadeInUp 0.6s ease both; }
+        .title-wrap:nth-child(2) { animation-delay: 0.15s; }
+        .greeting-sub { animation: fadeInUp 0.6s ease 0.3s both; }
+        .dashboard-row { animation: fadeInUp 0.6s ease 0.45s both; }
+        .year-progress-wrap { animation: fadeInUp 0.6s ease 0.55s both; }
+        .countdown-bar { animation: fadeInUp 0.6s ease 0.65s both; }
+        .calendar-box { animation: fadeInUp 0.6s ease 0.75s both; }
+        /* ===== 按钮点击弹跳 ===== */
+        @keyframes btnBounce {
+            0% { transform: scale(1); }
+            40% { transform: scale(0.92); }
+            80% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+        .btn-bounce { animation: btnBounce 0.3s ease; }
+        /* ===== 日历网格过渡 ===== */
+        .day-grid { transition: transform 0.15s ease, opacity 0.15s ease; }
     </style>
 </head>
 <body>
@@ -2880,6 +3004,12 @@
         <div class="toolbar-row">
             <button class="toolbar-btn theme-toggle-btn" id="themeToggleBtn" title="切换主题" aria-label="切换深色/浅色模式">🌙 深色</button>
             <button class="toolbar-btn lang-toggle-btn active" id="langToggleBtn" title="切换语言">🌐 中文</button>
+        </div>
+        <div class="toolbar-row">
+            <button class="toolbar-btn" id="statsBtn" title="统计" aria-label="数据统计">📊</button>
+            <button class="toolbar-btn" id="shareBtn" title="分享" aria-label="分享截图">📸</button>
+            <button class="toolbar-btn music-btn" id="musicBtn" title="音乐" aria-label="背景音乐">🎵</button>
+            <button class="toolbar-btn" id="settingsBtn" title="设置" aria-label="设置">⚙️</button>
         </div>
         <div class="toolbar-row">
             <button class="toolbar-btn view-toggle-btn active" id="viewMonthBtn" title="月视图" aria-label="月视图">📅 月</button>
@@ -3131,6 +3261,122 @@
             <span class="wc-time" id="wcSydney">--:--</span>
         </div>
     </div>
+
+    <div class="stats-overlay" id="statsOverlay">
+        <div class="stats-panel" id="statsPanel">
+            <button class="stats-close" id="statsClose">✕</button>
+            <h3 id="statsTitle">📊 数据统计</h3>
+            <div class="stats-grid">
+                <div class="stats-card"><div class="num" id="statsTotalNotes">0</div><div class="label" id="statsTotalLabel">总记事</div></div>
+                <div class="stats-card"><div class="num" id="statsMonthNotes">0</div><div class="label" id="statsMonthLabel">本月</div></div>
+                <div class="stats-card"><div class="num" id="statsStreak">0</div><div class="label" id="statsStreakLabel">连续天数</div></div>
+            </div>
+            <div class="stats-chart-wrap">
+                <div class="stats-chart-title" id="statsChartTitle">每月记事数量</div>
+                <canvas class="stats-chart" id="statsChart"></canvas>
+            </div>
+            <div class="stats-chart-wrap">
+                <div class="stats-chart-title" id="statsTopDay">最活跃日期</div>
+                <div id="statsTopDayContent" style="font-size:14px;padding:8px;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- ===== 设置面板 ===== -->
+    <div class="settings-overlay" id="settingsOverlay">
+        <div class="settings-panel" id="settingsPanel">
+            <button class="settings-close" id="settingsClose">✕</button>
+            <h3 id="settingsTitle">⚙️ 设置</h3>
+            <div class="setting-row">
+                <span class="setting-label" id="settingFontSizeLabel">字体大小</span>
+                <div class="setting-control"><input type="range" id="fontSizeSlider" min="12" max="20" value="14"><span id="fontSizeValue">14px</span></div>
+            </div>
+            <div class="setting-row">
+                <span class="setting-label" id="settingBgLabel">背景图片</span>
+                <div class="setting-control"><input type="file" id="bgImageInput" accept="image/*" style="display:none;"><button id="bgImageBtn" style="padding:4px 12px;border-radius:8px;border:1px solid #ccc;background:var(--card-bg);cursor:pointer;font-size:13px;">选择图片</button><button id="bgImageClear" style="padding:4px 8px;border-radius:8px;border:1px solid #ccc;background:var(--card-bg);cursor:pointer;font-size:13px;">清除</button></div>
+            </div>
+            <div class="setting-row">
+                <span class="setting-label" id="settingSoundLabel">提示音效</span>
+                <div class="setting-control"><select id="soundSelect"><option value="on">开启</option><option value="off">关闭</option></select></div>
+            </div>
+            <div class="setting-row">
+                <span class="setting-label" id="settingQuoteSpeedLabel">语录轮播速度</span>
+                <div class="setting-control"><select id="quoteSpeedSelect"><option value="4000">4秒</option><option value="6000" selected>6秒</option><option value="10000">10秒</option><option value="0">关闭</option></select></div>
+            </div>
+        </div>
+    </div>
+    <!-- ===== 音乐面板 ===== -->
+    <div class="music-overlay" id="musicOverlay">
+        <div class="music-panel" id="musicPanel">
+            <button class="music-close" id="musicClose">✕</button>
+            <h3>🎵 背景音乐</h3>
+            <div class="music-list" id="musicList">
+                <div class="music-item" data-id="melody">
+                    <span class="icon">🎹</span>
+                    <div class="info"><div class="name">轻柔旋律</div><div class="desc">简单温暖的钢琴音</div></div>
+                    <span class="playing-indicator">♪ 播放中</span>
+                </div>
+                <div class="music-item" data-id="musicbox">
+                    <span class="icon">🔔</span>
+                    <div class="info"><div class="name">八音盒</div><div class="desc">清脆悦耳的八音盒</div></div>
+                    <span class="playing-indicator">♪ 播放中</span>
+                </div>
+                <div class="music-item" data-id="chimes">
+                    <span class="icon">🎐</span>
+                    <div class="info"><div class="name">风铃</div><div class="desc">空灵的风铃声</div></div>
+                    <span class="playing-indicator">♪ 播放中</span>
+                </div>
+                <div class="music-item" data-id="nature">
+                    <span class="icon">🌿</span>
+                    <div class="info"><div class="name">自然白噪音</div><div class="desc">鸟鸣+流水+微风</div></div>
+                    <span class="playing-indicator">♪ 播放中</span>
+                </div>
+                <div class="music-item" data-id="rain">
+                    <span class="icon">🌧️</span>
+                    <div class="info"><div class="name">雨声</div><div class="desc">轻柔的雨滴声</div></div>
+                    <span class="playing-indicator">♪ 播放中</span>
+                </div>
+                <div class="music-item" data-id="peace">
+                    <span class="icon">🕊️</span>
+                    <div class="info"><div class="name">和平之音</div><div class="desc">温暖治愈的和弦</div></div>
+                    <span class="playing-indicator">♪ 播放中</span>
+                </div>
+            </div>
+            <div class="music-upload-row" id="musicUploadRow">
+                <input type="file" id="musicFileInput" accept="audio/*">
+                <span class="upload-label">📁 上传自己的音乐文件 (mp3/wav/ogg)</span>
+            </div>
+            <div class="music-custom-list" id="musicCustomList"></div>
+            <div class="music-volume-row">
+                <label>🔊 音量</label>
+                <input type="range" id="musicVolumeSlider" min="0" max="100" value="50">
+            </div>
+            <div class="music-volume-row">
+                <label>⏱️ 自动淡出</label>
+                <select id="musicFadeSelect" style="padding:3px 8px;border-radius:6px;border:1px solid #ccc;background:var(--card-bg);color:var(--text-color);font-size:13px;">
+                    <option value="0">关闭</option>
+                    <option value="15">15秒</option>
+                    <option value="30" selected>30秒</option>
+                    <option value="60">1分钟</option>
+                    <option value="120">2分钟</option>
+                    <option value="300">5分钟</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- ===== 分享预览 ===== -->
+    <div class="share-overlay" id="shareOverlay">
+        <div class="share-card">
+            <h3 id="shareTitle">📸 分享截图</h3>
+            <div id="sharePreview"></div>
+            <div class="share-actions">
+                <button class="share-download" id="shareDownload">💾 下载图片</button>
+                <button class="share-close-btn" id="shareCloseBtn">关闭</button>
+            </div>
+        </div>
+    </div>
+    <!-- ===== 隐藏音频 ===== -->
+    <audio id="bgMusic" loop preload="none"><source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
+    <audio id="notifSound" preload="none"><source src="data:audio/wav;base64,UklGRl9vT19teleYXJGb25hdGUyLjAK" type="audio/wav"></audio>
 
     <script>
         // ================================================================
@@ -3436,9 +3682,103 @@
                     wishCloseLabel: 'Close',
                     wishInputLabel: 'Enter your wish',
                     wishFabTitle: 'Make a wish~'
+                },
+                ja: {
+                    pageTitle: '世界平和！', titleLine1: '私たちの願いは〜', titleLine2: '世界平和！',
+                    viewMonth: '月', viewWeek: '週', themeColorBtn: 'テーマカラー', themeColorBlue: '青', themeColorPurple: '紫', themeColorRose: 'バラ', themeColorTeal: 'ティール', themeColorGradient: 'グラデーション',
+                    weatherTitle: '天気を見る', weatherRefresh: '天気を更新', dashSolarTermTitle: '現在の節気', dashNewYearTitle: '元旦まで', dashNotesTitle: '今月のメモ', prevMonthTitle: '前月 (←)', nextMonthTitle: '翌月 (→)', selectYearLabel: '年を選択', selectMonthLabel: '月を選択', calendarGridLabel: 'カレンダーグリッド',
+                    forecastDays: ['日','月','火','水','木','金','土'], forecastFallback: function(d) { return new Date(d+'T12:00:00').toLocaleDateString('ja-JP',{weekday:'short'}); },
+                    easterHint: '🕊 イースターエッグ<br>「平和」を3回クリック<br>または Konami Code', easterTitle: '世界平和', easterMsg: '言語、肌の色、信仰に関係なく<br>遠近、貧富、友敵に関係なく<br>この地上を歩くすべての命は、優しく扱われる価値がある。<br>この星空の下で、戦火が永遠に消えますように<br>すべての子供が平和の中で育ちますように<br>世界がすべての鼓動の中で光に向かって進みますように。', easterCloseHint: 'クリックするか ESC を押して閉じる',
+                    wishModalTitle: '⭐ 願い星', wishCloseLabel: '閉じる', wishInputLabel: '願いを入力', wishFabTitle: '願いをかけよう〜', wishSubtitle: '星空に願いをかけて、世界平和を', wishPlaceholder: '願いを書いて...', wishBtn: '願い ✨', wishEmpty: 'まだ願いがないよ、最初の願いをかけてみよう〜', wishStarTitle: '⭐ 願い星',
+                    langSwitchTo: '中国語に切り替え', langLabel: '🌐 日本語', locale: 'ja-JP',
+                    themeLightText: '☀️ ライト', themeDarkText: '🌙 ダーク', themeLightLabel: 'ライトモードに切り替え', themeDarkLabel: 'ダークモードに切り替え',
+                    weekDays: ['月','火','水','木','金','土','日'], weekDaysFull: ['月曜日','火曜日','水曜日','木曜日','金曜日','土曜日','日曜日'], monthNames: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+                    greeting: { morning: 'おはよう ☀️ 新しい一日が始まる〜', afternoon: 'こんにちは 🌤️ 笑顔を忘れずに〜', evening: 'こんばんは 🌙 同じ星空の下、世界平和〜', night: '夜更け 🌌 平和な夢を見てね〜' },
+                    weekDaysArr: ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'], today: '今日',
+                    noteTitle: '📝 メモ', noteAdd: '追加', noteSave: '保存', notePlaceholder: 'メモを入力...', noteSearchPlaceholder: 'メモを検索...', noteExport: '📤 エクスポート', noteImport: '📥 インポート', noteSearch: '🔍 検索', noteClose: '閉じる', noteEmpty: 'メモがありません。追加してね〜', noteSearchEmpty: '一致するメモが見つかりません', noteTotal: function(n) { return '...全 ' + n + ' 件'; }, noteImportOk: '✅ インポート成功！', noteImportFail: '⚠️ インポート失敗、ファイル形式が正しくありません', noteEdit: '編集', noteDel: '削除', workdayTag: '振替',
+                    yearPanelLabel: function(y) { return '現在の年 ' + y + '、クリックして選択'; }, monthPanelLabel: function(m) { return '現在の月 ' + m + '、クリックして選択'; },
+                    weatherFeels: '体感', weatherLoading: '天気を取得中...', weatherLoadingShort: '読み込み中', weatherError: 'エラー', weatherRetry: '取得失敗、タップして再試行', weatherCurrentLoc: '現在地', citySearchPlaceholder: '都市を検索（例：東京）', weatherGo: '検索', weatherCancel: 'キャンセル',
+                    solarTermsTitle: '🌿 二十四節気', solarTermsGroups: [{s:'🌸 春',t:['立春','雨水','啓蟄','春分','清明','穀雨']},{s:'☀️ 夏',t:['立夏','小満','芒種','夏至','小暑','大暑']},{s:'🍂 秋',t:['立秋','処暑','白露','秋分','寒露','霜降']},{s:'❄️ 冬',t:['立冬','小雪','大雪','冬至','小寒','大寒']}], solarTermsDateFmt: function(m,d) { return m+'/'+d; },
+                    holidayListTitle: '📅 年間祝日', holidayNames: {'元旦':'元日','春节':'旧正月','清明':'清明節','劳动節':'メーデー','端午':'端午の節句','中秋':'中秋節','国庆':'国慶節','建党节':'記念日','建军節':'記念日','国际和平日':'世界平和記念日','人权日':'人権の日','联合国日':'国連デー'},
+                    hlToday: '🎉 今日', hlPast: '過去', hlTomorrow: '明日', hlDaysLater: '日後', cdAllPassed: '🌟 全ての祝日が過ぎました。新年を楽しみに〜', cdTodayIs: '今日は', cdHappy: 'おめでとう！', cdUntil: 'まで', cdIn: 'あと', cdDays: '日',
+                    dashSolarTerm: '節気', dashNewYear: '元旦まで', dashNotes: 'メモ/月', dashSolarTermNone: 'なし', dashYearPassed: function(p) { return '今年 ' + p + '% 経過'; },
+                    noResults: '一致するメモがありません', loading: '天気を取得中...',
+                    worldClockCities: { 'Beijing': '北京', 'Tokyo': '東京', 'NewYork': 'ニューヨーク', 'London': 'ロンドン', 'Paris': 'パリ', 'Sydney': 'シドニー' },
+                    festivalTips: { '春节':'🎊 お節料理、お年玉、家族団欒！','元宵节':'🏮 提灯、団子、謎解き！','清明':'🌿 墓参りとお出かけ、自然に触れる〜','端午':'🐲 競漕、ちまき、邪気払い！','中秋':'🌕 月見、団子、家族の時間〜','国庆':'🇨🇳 国慶節！10月1日は建国記念日〜','元旦':'🎊 謹賀新年！新年の願いを込めよう〜','劳动节':'💪 労働者に敬意！','七夕':'💕 七夕、織姫と彦星の日〜','重阳':'🍂 登高、敬老の日〜','小寒':'❄️ 寒さ本番、暖かくしてね〜','大寒':'🥶 一年で最も寒い日〜','立春':'🌱 春が来た！万物の始まり〜','春分':'🌸 昼夜等分、春の折り返し〜','谷雨':'🌧️ 雨が穀物を育てる〜','立夏':'☀️ 夏の始まり、暑さ対策を〜','小满':'🌾 穀物が実り始める〜','芒种':'🌾 収穫と種まきの季節〜','夏至':'☀️ 一年で最も昼が長い日〜','小暑':'🔥 暑さが増してくる〜','大暑':'🥵 一年で最も暑い日〜','立秋':'🍂 秋の始まり、収穫の季節〜','处暑':'🍃 暑さが和らぐ〜','白露':'💧 露が白く輝く、肌寒くなる〜','秋分':'🍁 昼夜等分、秋の折り返し〜','寒露':'🍂 露が冷たくなる〜','霜降':'❄️ 霜が降りる、冬将近〜','立冬':'🧥 冬の始まり〜','小雪':'❄️ 初雪が降る季節〜','大雪':'❄️ 雪が増え、防寒を〜','冬至':'🥟 一年で最も夜が長い日、団子を食べよう！' }
+                },
+                ko: {
+                    pageTitle: '세계 평화!', titleLine1: '우리의 소원은~', titleLine2: '세계 평화!',
+                    viewMonth: '월', viewWeek: '주', themeColorBtn: '테마 색상', themeColorBlue: '파랑', themeColorPurple: '보라', themeColorRose: '장미', themeColorTeal: '청록', themeColorGradient: '그라데이션',
+                    weatherTitle: '날씨 보기', weatherRefresh: '날씨 새로고침', dashSolarTermTitle: '현재 절기', dashNewYearTitle: '신정까지', dashNotesTitle: '이달의 메모', prevMonthTitle: '이전 달 (←)', nextMonthTitle: '다음 달 (→)', selectYearLabel: '연도 선택', selectMonthLabel: '월 선택', calendarGridLabel: '달력 그리드',
+                    forecastDays: ['일','월','화','수','목','금','토'], forecastFallback: function(d) { return new Date(d+'T12:00:00').toLocaleDateString('ko-KR',{weekday:'short'}); },
+                    easterHint: '🕊 이스터에그<br>"평화"를 3번 클릭<br>또는 Konami Code', easterTitle: '세계 평화', easterMsg: '언어, 피부색, 신앙에 관계없이<br>원근, 빈부에 관계없이<br>이 지구 위를 걷는 모든 생명은 소중히 여겨질 가치가 있다.<br>이 별빛 아래 전쟁의 불꽃이 영원히 꺼지기를<br>모든 아이가 평화 속에서 자라기를<br>세계가 모든 심장 박동 속에서 빛을 향해 나아가기를.', easterCloseHint: '아무 곳이나 클릭하거나 ESC를 눌러 닫기',
+                    wishModalTitle: '⭐ 소원 별', wishCloseLabel: '닫기', wishInputLabel: '소원 입력', wishFabTitle: '소원을 빌어보세요~', wishSubtitle: '별에게 소원을 빌며, 세계 평화를', wishPlaceholder: '소원을 적어보세요...', wishBtn: '소원 ✨', wishEmpty: '아직 소원이 없어요, 첫 번째 소원을 빌어보세요~', wishStarTitle: '⭐ 소원 별',
+                    langSwitchTo: '중국어로 전환', langLabel: '🌐 한국어', locale: 'ko-KR',
+                    themeLightText: '☀️ 라이트', themeDarkText: '🌙 다크', themeLightLabel: '라이트 모드로 전환', themeDarkLabel: '다크 모드로 전환',
+                    weekDays: ['월','화','수','목','금','토','일'], weekDaysFull: ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'], monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                    greeting: { morning: '좋은 아침 ☀️ 새로운 하루, 세계 평화와 함께~', afternoon: '좋은 오후 🌤️ 미소를 잊지 마세요~', evening: '좋은 저녁 🌙 같은 별빛 아래, 세계 평화~', night: '깊은 밤 🌌 평화로운 꿈 꾸세요~' },
+                    weekDaysArr: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'], today: '오늘',
+                    noteTitle: '📝 메모', noteAdd: '추가', noteSave: '저장', notePlaceholder: '메모를 입력하세요...', noteSearchPlaceholder: '메모 검색...', noteExport: '📤 내보내기', noteImport: '📥 가져오기', noteSearch: '🔍 검색', noteClose: '닫기', noteEmpty: '메모가 없습니다. 추가해 보세요~', noteSearchEmpty: '일치하는 메모가 없습니다', noteTotal: function(n) { return '...총 ' + n + '개'; }, noteImportOk: '✅ 가져오기 성공!', noteImportFail: '⚠️ 가져오기 실패, 파일 형식이 잘못되었습니다', noteEdit: '수정', noteDel: '삭제', workdayTag: '근무',
+                    yearPanelLabel: function(y) { return '현재 연도 ' + y + ', 클릭하여 선택'; }, monthPanelLabel: function(m) { return '현재 월 ' + m + ', 클릭하여 선택'; },
+                    weatherFeels: '체감', weatherLoading: '날씨를 가져오는 중...', weatherLoadingShort: '로딩 중', weatherError: '오류', weatherRetry: '가져오기 실패, 탭하여 재시도', weatherCurrentLoc: '현재 위치', citySearchPlaceholder: '도시 검색 (예: 서울)', weatherGo: '검색', weatherCancel: '취소',
+                    solarTermsTitle: '🌿 이십사절기', solarTermsGroups: [{s:'🌸 봄',t:['입춘','우수','경칩','춘분','청명','곡우']},{s:'☀️ 여름',t:['하지','소만','망종','하지','소서','대서']},{s:'🍂 가을',t:['입추','처서','백로','추분','한로','상강']},{s:'❄️ 겨울',t:['입동','소설','대설','동지','소한','대한']}], solarTermsDateFmt: function(m,d) { return m+'월 '+d+'일'; },
+                    holidayListTitle: '📅 연간 공휴일', holidayNames: {'元旦':'신정','春节':'구정','清明':'청명절','劳动节':'노동절','端午':'단오','中秋':'추석','国庆':'국경절','建党节':'기념일','建军节':'기념일','国际和平日':'세계 평화의 날','人权日':'인권의 날','联合国日':'유엔의 날'},
+                    hlToday: '🎉 오늘', hlPast: '지남', hlTomorrow: '내일', hlDaysLater: '일 후', cdAllPassed: '🌟 모든 공휴일이 지났습니다. 새해를 기대하세요~', cdTodayIs: '오늘은', cdHappy: '축하합니다!', cdUntil: '까지', cdIn: '', cdDays: '일',
+                    dashSolarTerm: '절기', dashNewYear: '신정까지', dashNotes: '메모/월', dashSolarTermNone: '없음', dashYearPassed: function(p) { return '올해 ' + p + '% 경과'; },
+                    noResults: '일치하는 메모가 없습니다', loading: '날씨를 가져오는 중...',
+                    worldClockCities: { 'Beijing': '베이징', 'Tokyo': '도쿄', 'NewYork': '뉴욕', 'London': '런던', 'Paris': '파리', 'Sydney': '시드니' },
+                    festivalTips: { '春节':'🎊 세뱃돈, 가족 모임, 새해 인사!','元宵节':'🏮 등불, 원소절, 수수께끼!','清明':'🌿 성묘와 나들이, 자연을 만끽~','端午':'🐲 용선 경주, 쑥, 부적!','中秋':'🌕 보름달, 송편, 가족团圆~','国庆':'🇨🇳 국경절! 10월 1일 건국 기념일~','元旦':'🎊 새해 복 많이 받으세요!','劳动节':'💪 노동자에게 경의를!','七夕':'💕 칠석, 견우와 직녀의 만남~','重阳':'🍂 등산, 경로의 날~','小寒':'❄️ 추위 시작, 따뜻하게~','大寒':'🥶 한 해中最寒~','立春':'🌱 봄이 왔다!','春分':'🌸 昼夜等分~','谷雨':'🌧️ 비가 곡식을 키운다~','立夏':'☀️ 여름 시작~','小满':'🌾 곡식이 영글기 시작~','芒种':'🌾 수확과 파종의 계절~','夏至':'☀️ 낮이 가장 긴 날~','小暑':'🔥 더위가 시작~','大暑':'🥵 한 해中最暑~','立秋':'🍂 가을 시작~','处暑':'🍃 더위가 가신다~','白露':'💧 이슬이 맺힌다~','秋分':'🍁 昼夜等分~','寒露':'🍂 찬이슬~','霜降':'❄️ 서리가 내린다~','立冬':'🧥 겨울 시작~','小雪':'❄️ 첫눈~','大雪':'❄️ 눈이 많아진다~','冬至':'🥟 밤이 가장 긴 날, 만두를 먹자!' }
+                },
+                fr: {
+                    pageTitle: 'Paix Mondiale !', titleLine1: 'Notre vœu est~', titleLine2: 'Paix Mondiale !',
+                    viewMonth: 'Mois', viewWeek: 'Sem.', themeColorBtn: 'Couleur du thème', themeColorBlue: 'Bleu', themeColorPurple: 'Violet', themeColorRose: 'Rose', themeColorTeal: 'Sarcelle', themeColorGradient: 'Dégradé',
+                    weatherTitle: 'Voir la météo', weatherRefresh: 'Actualiser la météo', dashSolarTermTitle: 'Saison actuelle', dashNewYearTitle: 'Jours jusqu\'à NY', dashNotesTitle: 'Notes du mois', prevMonthTitle: 'Mois précédent (←)', nextMonthTitle: 'Mois suivant (→)', selectYearLabel: 'Sélectionner l\'année', selectMonthLabel: 'Sélectionner le mois', calendarGridLabel: 'Grille du calendrier',
+                    forecastDays: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'], forecastFallback: function(d) { return new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short'}); },
+                    easterHint: '🕊 Indice de l\'œuf de Pâques<br>Cliquez 3 fois sur "Paix"<br>ou Konami Code', easterTitle: 'Paix Mondiale', easterMsg: 'Peu importe la langue, la couleur de peau ou la croyance,<br>peu importe la distance, la richesse ou l\'amitié,<br>chaque vie qui marche sur cette terre mérite d\'être traitée avec tendresse.<br>Que les flammes de la guerre s\'éteignent à jamais sous ces étoiles,<br>que chaque enfant grandisse dans la paix,<br>que le monde avance vers la lumière à chaque battement de cœur.', easterCloseHint: 'Cliquez n\'importe où ou appuyez sur Échap pour fermer',
+                    wishModalTitle: '⭐ Étoile à vœux', wishCloseLabel: 'Fermer', wishInputLabel: 'Entrez votre vœu', wishFabTitle: 'Faites un vœu~', wishSubtitle: 'Faites un vœu aux étoiles pour la paix mondiale', wishPlaceholder: 'Écrivez votre vœu...', wishBtn: 'Vœu ✨', wishEmpty: 'Pas encore de vœux, faites le premier~', wishStarTitle: '⭐ Étoile à vœux',
+                    langSwitchTo: 'Passer au chinois', langLabel: '🌐 FR', locale: 'fr-FR',
+                    themeLightText: '☀️ Clair', themeDarkText: '🌙 Sombre', themeLightLabel: 'Passer en mode clair', themeDarkLabel: 'Passer en mode sombre',
+                    weekDays: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'], weekDaysFull: ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], monthNames: ['Janv','Févr','Mars','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc'],
+                    greeting: { morning: 'Bonjour ☀️ Une nouvelle journée commence avec la paix~', afternoon: 'Bon après-midi 🌤️ Gardez le sourire~', evening: 'Bonsoir 🌙 Sous le même ciel, paix mondiale~', night: 'Bonne nuit 🌌 Paix dans vos rêves~' },
+                    weekDaysArr: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'], today: 'Aujourd\'hui',
+                    noteTitle: '📝 Notes', noteAdd: 'Ajouter', noteSave: 'Sauver', notePlaceholder: 'Entrez une note...', noteSearchPlaceholder: 'Rechercher des notes...', noteExport: '📤 Exporter', noteImport: '📥 Importer', noteSearch: '🔍 Rechercher', noteClose: 'Fermer', noteEmpty: 'Pas encore de notes, ajoutez-en~', noteSearchEmpty: 'Aucune note correspondante', noteTotal: function(n) { return '...Total ' + n + ' notes'; }, noteImportOk: '✅ Importé avec succès !', noteImportFail: '⚠️ Échec de l\'import, format invalide', noteEdit: 'Modifier', noteDel: 'Supprimer', workdayTag: 'Travail',
+                    yearPanelLabel: function(y) { return 'Année ' + y + ', cliquer pour sélectionner'; }, monthPanelLabel: function(m) { return 'Mois ' + m + ', cliquer pour sélectionner'; },
+                    weatherFeels: 'Ressenti', weatherLoading: 'Chargement de la météo...', weatherLoadingShort: 'Chargement', weatherError: 'Erreur', weatherRetry: 'Échec, appuyez pour réessayer', weatherCurrentLoc: 'Position actuelle', citySearchPlaceholder: 'Rechercher une ville, ex: Paris', weatherGo: 'Aller', weatherCancel: 'Annuler',
+                    solarTermsTitle: '🌿 24 Saisons', solarTermsGroups: [{s:'🌸 Printemps',t:['Début du print.','Eau de pluie','Éveil des insectes','Éq. de printemps','Clair et lumineux','Pluie de graines']},{s:'☀️ Été',t:['Début de l\'été','Épis mûrs','Grain en épi','Solstice d\'été','Petite chaleur','Grande chaleur']},{s:'🍂 Automne',t:['Début de l\'automne','Fin de chaleur','Rosée blanche','Éq. d\'automne','Rosée froide','Descente du givre']},{s:'❄️ Hiver',t:['Début de l\'hiver','Petite neige','Grande neige','Solstice d\'hiver','Petit froid','Grand froid']}], solarTermsDateFmt: function(m,d) { return d+'/'+m; },
+                    holidayListTitle: '📅 Jours fériés', holidayNames: {'元旦':'Jour de l\'An','春节':'Nouvel An ch.','清明':'Qingming','劳动节':'Fête du Trav.','端午':'Fête des Drag.','中秋':'Fête de la Lune','国庆':'Fête nationale','建党节':'Fond. du Parti','建军节':'Fête de l\'Armée','国际和平日':'Jour de la Paix','人权日':'Jour des Droits','联合国日':'Jour de l\'ONU'},
+                    hlToday: '🎉 Aujourd\'hui', hlPast: 'Passé', hlTomorrow: 'Demain', hlDaysLater: 'jours', cdAllPassed: '🌟 Tous les jours fériés sont passés~', cdTodayIs: 'Aujourd\'hui c\'est', cdHappy: 'Bonne fête !', cdUntil: 'Jusqu\'au', cdIn: 'dans', cdDays: 'jours',
+                    dashSolarTerm: 'Saison', dashNewYear: 'Jours jusqu\'à NY', dashNotes: 'Notes/mois', dashSolarTermNone: 'Aucun', dashYearPassed: function(p) { return 'Année écoulée ' + p + '%'; },
+                    noResults: 'Aucune note correspondante', loading: 'Chargement...',
+                    worldClockCities: { 'Beijing': 'Pékin', 'Tokyo': 'Tokyo', 'NewYork': 'New York', 'London': 'Londres', 'Paris': 'Paris', 'Sydney': 'Sydney' },
+                    festivalTips: { '春节':'🎊 Couplets, pétards, dîner de réunion !','元宵节':'🏮 Lanternes, tangyuan, devinettes !','清明':'🌿 Sortie et balayage des tombes~','端午':'🐲 Courses de bateaux-dragons, zongzi !','中秋':'🌕 Lune, gâteaux de lune, réunion~','国庆':'🇨🇳 Fête nationale ! 1er octobre~','元旦':'🎊 Bonne année ! Vœux de paix~','劳动节':'💪 Salut à chaque travailleur !','七夕':'💕 Fête des amoureux~','重阳':'🍂 Randonnée, respect des aînés~','小寒':'❄️ Froid intense, couvrez-vous~','大寒':'🥶 Le plus froid de l\'année~','立春':'🌱 Le printemps arrive !','春分':'🌸 Jour et nuit égaux~','谷雨':'🌧️ Pluie qui nourrit les grains~','立夏':'☀️ L\'été commence~','小满':'🌾 Épis qui mûrissent~','芒种':'🌾 Récolte et semis~','夏至':'☀️ Plus long jour~','小暑':'🔥 Chaleur montante~','大暑':'🥵 Les jours les plus chauds~','立秋':'🍂 L\'automne arrive~','处暑':'🍃 Chaleur qui diminue~','白露':'💧 Rosée blanche, ajoutez des couches~','秋分':'🍁 Jour et nuit égaux~','寒露':'🥶 Rosée froide~','霜降':'❄️ Givre sur la terre~','立冬':'🧥 L\'hiver arrive~','小雪':'❄️ Première neige~','大雪':'❄️ Neige abondante~','冬至':'🥟 Plus court jour, mangez des dumplings !' }
+                },
+                de: {
+                    pageTitle: 'Weltfrieden!', titleLine1: 'Unser Wunsch ist~', titleLine2: 'Weltfrieden!',
+                    viewMonth: 'Monat', viewWeek: 'Woche', themeColorBtn: 'Themenfarbe', themeColorBlue: 'Blau', themeColorPurple: 'Lila', themeColorRose: 'Rose', themeColorTeal: 'Blaugrün', themeColorGradient: 'Verlauf',
+                    weatherTitle: 'Wetter anzeigen', weatherRefresh: 'Wetter aktualisieren', dashSolarTermTitle: 'Aktuelle Jahreszeit', dashNewYearTitle: 'Tage bis Neujahr', dashNotesTitle: 'Notizen/Monat', prevMonthTitle: 'Vorheriger Monat (←)', nextMonthTitle: 'Nächster Monat (→)', selectYearLabel: 'Jahr auswählen', selectMonthLabel: 'Monat auswählen', calendarGridLabel: 'Kalenderraster',
+                    forecastDays: ['So','Mo','Di','Mi','Do','Fr','Sa'], forecastFallback: function(d) { return new Date(d+'T12:00:00').toLocaleDateString('de-DE',{weekday:'short'}); },
+                    easterHint: '🕊 Osterei-Hinweis<br>Klicke 3x auf "Frieden"<br>oder Konami Code', easterTitle: 'Weltfrieden', easterMsg: 'Egal welche Sprache, Hautfarbe oder Religion,<br>egal ob nah oder fern, arm oder reich,<br>jedes Leben auf dieser Erde verdient es, mit Wärme behandelt zu werden.<br>Mögen die Flammen des Krieges unter diesen Sternen für immer erlöschen,<br>möge jedes Kind in Frieden aufwachsen,<br>möge die Welt bei jedem Herzschlag dem Licht entgegengehen.', easterCloseHint: 'Klicken Sie irgendwo oder drücken Sie ESC zum Schließen',
+                    wishModalTitle: '⭐ Wunschstern', wishCloseLabel: 'Schließen', wishInputLabel: 'Wunsch eingeben', wishFabTitle: 'Einen Wunsch äußern~', wishSubtitle: 'Wünsche dir etwas bei den Sternen für Weltfrieden', wishPlaceholder: 'Schreibe deinen Wunsch...', wishBtn: 'Wunsch ✨', wishEmpty: 'Noch keine Wünsche, äußere den ersten~', wishStarTitle: '⭐ Wunschstern',
+                    langSwitchTo: 'Zu Chinesisch wechseln', langLabel: '🌐 DE', locale: 'de-DE',
+                    themeLightText: '☀️ Hell', themeDarkText: '🌙 Dunkel', themeLightLabel: 'Zum hellen Modus wechseln', themeDarkLabel: 'Zum dunklen Modus wechseln',
+                    weekDays: ['Mo','Di','Mi','Do','Fr','Sa','So'], weekDaysFull: ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'], monthNames: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+                    greeting: { morning: 'Guten Morgen ☀️ Ein neuer Tag beginnt mit Frieden~', afternoon: 'Guten Tag 🌤️ Lächeln nicht vergessen~', evening: 'Guten Abend 🌙 Unter demselben Himmel, Weltfrieden~', night: 'Gute Nacht 🌌 Friedliche Träume~' },
+                    weekDaysArr: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'], today: 'Heute',
+                    noteTitle: '📝 Notizen', noteAdd: 'Hinzufügen', noteSave: 'Speichern', notePlaceholder: 'Notiz eingeben...', noteSearchPlaceholder: 'Notizen durchsuchen...', noteExport: '📤 Exportieren', noteImport: '📥 Importieren', noteSearch: '🔍 Suchen', noteClose: 'Schließen', noteEmpty: 'Noch keine Notizen, füge eine hinzu~', noteSearchEmpty: 'Keine passenden Notizen', noteTotal: function(n) { return '...Gesamt ' + n; }, noteImportOk: '✅ Erfolgreich importiert!', noteImportFail: '⚠️ Import fehlgeschlagen', noteEdit: 'Bearbeiten', noteDel: 'Löschen', workdayTag: 'Arbeit',
+                    yearPanelLabel: function(y) { return 'Jahr ' + y + ', klicken zum Auswählen'; }, monthPanelLabel: function(m) { return 'Monat ' + m + ', klicken zum Auswählen'; },
+                    weatherFeels: 'Gefühlt', weatherLoading: 'Wetter wird geladen...', weatherLoadingShort: 'Laden', weatherError: 'Fehler', weatherRetry: 'Fehlgeschlagen, antippen zum Wiederholen', weatherCurrentLoc: 'Aktueller Standort', citySearchPlaceholder: 'Stadt suchen, z.B. Berlin', weatherGo: 'Los', weatherCancel: 'Abbrechen',
+                    solarTermsTitle: '🌿 24 Jahreszeiten', solarTermsGroups: [{s:'🌸 Frühling',t:['Frühlingsanf.','Regenwasser','Erw. d. Insekten','Frühlings-Tagundnachtgleiche','Klar und hell','Kornregen']},{s:'☀️ Sommer',t:['Sommeranfang','Körner voll','Ährenreife','Sommersonnenwende','Kleine Hitze','Große Hitze']},{s:'🍂 Herbst',t:['Herbstanfang','Ende d. Hitze','Weißer Tau','Herbst-Tagundnachtgleiche','Kalter Tau','Fallender Reif']},{s:'❄️ Winter',t:['Winteranfang','Kleiner Schnee','Großer Schnee','Wintersonnenwende','Kleine Kälte','Große Kälte']}], solarTermsDateFmt: function(m,d) { return d+'.'+m+'.'; },
+                    holidayListTitle: '📅 Feiertage', holidayNames: {'元旦':'Neujahr','春节':'Chines. Neujahr','清明':'Qingming','劳动节':'Tag der Arbeit','端午':'Drachenbootfest','中秋':'Mondfest','国庆':'Nationalfeiertag','建党节':'Parteigründung','建军节':'Armee-Tag','国际和平日':'Weltfriedenstag','人权日':'Menschrechtstag','联合国日':'UN-Tag'},
+                    hlToday: '🎉 Heute', hlPast: 'Vorbei', hlTomorrow: 'Morgen', hlDaysLater: 'Tage', cdAllPassed: '🌟 Alle Feiertage vorbei~', cdTodayIs: 'Heute ist', cdHappy: 'Frohe Feiertage!', cdUntil: 'Bis', cdIn: 'in', cdDays: 'Tagen',
+                    dashSolarTerm: 'Jahreszeit', dashNewYear: 'Tage bis Neujahr', dashNotes: 'Notizen/Monat', dashSolarTermNone: 'Keine', dashYearPassed: function(p) { return 'Jahr vergangen ' + p + '%'; },
+                    noResults: 'Keine passenden Notizen', loading: 'Wird geladen...',
+                    worldClockCities: { 'Beijing': 'Peking', 'Tokyo': 'Tokio', 'NewYork': 'New York', 'London': 'London', 'Paris': 'Paris', 'Sydney': 'Sydney' },
+                    festivalTips: { '春节':'🎊 Neujahrsessen, Familientreffen!','元宵节':'🏮 Laternen, Tangyuan, Rätsel!','清明':'🌿 Ausflug und Grabbesuch~','端午':'🐲 Drachenbootrennen, Zongzi!','中秋':'🌕 Mondkuchen, Familienzusammenkunft~','国庆':'🇨🇳 Nationalfeiertag! 1. Oktober~','元旦':'🎊 Frohes neues Jahr!','劳动节':'💪 Respekt an alle Arbeiter!','七夕':'💕 Qixi, Tag der Liebenden~','重阳':'🍂 Wandern, Respekt vor Älteren~','小寒':'❄️ Kalt, warm anziehen~','大寒':'🥶 Kälteste Tage des Jahres~','立春':'🌱 Der Frühling kommt!','春分':'🌸 Tag und Nacht gleich~','谷雨':'🌧️ Regen nährt das Korn~','立夏':'☀️ Sommer beginnt~','小满':'🌾 Körner werden voll~','芒种':'🌾 Ernte und Aussaat~','夏至':'☀️ Längster Tag~','小暑':'🔥 Hitze steigt~','大暑':'🥵 Heißeste Tage~','立秋':'🍂 Herbst beginnt~','处暑':'🍃 Hitze lässt nach~','白露':'💧 Weißer Tau, mehr Kleidung~','秋分':'🍁 Tag und Nacht gleich~','寒露':'🥶 Kalter Tau~','霜降':'❄️ Frost bedeckt das Land~','立冬':'🧥 Winter beginnt~','小雪':'❄️ Erster Schnee~','大雪':'❄️ Mehr Schnee~','冬至':'🥟 Kürzester Tag, Knödel essen!' }
                 }
             };
 
+            const LANG_ORDER = ['zh', 'en', 'ja', 'ko', 'fr', 'de'];
+            function nextLang(cur) { var idx = LANG_ORDER.indexOf(cur); return LANG_ORDER[(idx + 1) % LANG_ORDER.length]; }
             let currentLang = localStorage.getItem('cal_lang') || 'zh';
 
             function t(key) {
@@ -4146,6 +4486,7 @@
                     `<span class="solar-term-name">${solarTermName}</span>`;
                 if (isHoliday && holidayName && !isOtherMonth) inner +=
                 `<span class="holiday-name">${holidayName}</span>`;
+                if (!isOtherMonth && dateKey) { var parts = dateKey.split('-'); var intl = getIntlHoliday(parseInt(parts[1]), parseInt(parts[2])); if (intl) inner += '<span class="intl-badge">' + intl + '</span>'; }
                 if (isWorkday && !isOtherMonth && !isHoliday) inner +=
                     `<span class="workday-tag">${t('workdayTag')}</span>`;
                 if (displayLunar) inner += `<span class="lunar">${displayLunar}</span>`;
@@ -4365,6 +4706,7 @@
                 <span class="note-time">${timeStr}</span>
                 <button class="btn-edit-note" data-id="${n.id}" title="${t('noteEdit')}" aria-label="${t('noteEdit')}">✎</button>
                 <button class="btn-del-note" data-id="${n.id}" title="${t('noteDel')}" aria-label="${t('noteDel')}">✕</button>
+                <button class="btn-remind-note" data-id="${n.id}" title="设置提醒" aria-label="设置提醒">🔔</button>
               `;
                     div.querySelector('.btn-del-note').addEventListener('click', e => {
                         deleteNoteFromDate(currentModalDateKey, n.id);
@@ -4377,6 +4719,13 @@
                         modalNoteInput.value = n.text;
                         modalNoteInput.focus();
                         btnAddNote.textContent = t('noteSave');
+                    });
+                    div.querySelector('.btn-remind-note').addEventListener('click', e => {
+                        var dt = prompt('设置提醒时间 (格式: YYYY-MM-DD HH:MM)\n例如: ' + currentShowYear + '-' + String(currentShowMonth).padStart(2,'0') + '-' + String(todayDay).padStart(2,'0') + ' 09:00');
+                        if (dt && dt.trim()) {
+                            setReminder(currentModalDateKey, n.id, dt.trim());
+                            alert('✅ 提醒已设置: ' + dt.trim());
+                        }
                     });
                     modalNotesList.appendChild(div);
                 });
@@ -4402,6 +4751,7 @@
 
             function escapeHtml(str) { const d = document.createElement('div');
                 d.textContent = str; return d.innerHTML; }
+            function bounceElement(el) { el.classList.remove('btn-bounce'); void el.offsetWidth; el.classList.add('btn-bounce'); setTimeout(function(){ el.classList.remove('btn-bounce'); }, 300); }
 
             let isSearchMode = false;
 
@@ -4848,7 +5198,7 @@
                 if (ys) ys.textContent = currentLang === 'zh' ? '年' : '';
                 if (ms) ms.textContent = currentLang === 'zh' ? '月' : '';
             }
-            $('langToggleBtn').addEventListener('click', () => { applyLang(currentLang === 'zh' ? 'en' : 'zh'); });
+            $('langToggleBtn').addEventListener('click', () => { applyLang(nextLang(currentLang)); bounceElement($('langToggleBtn')); });
             $('viewMonthBtn').addEventListener('click', () => {
                 $('viewMonthBtn').classList.add('active');
                 $('viewWeekBtn').classList.remove('active');
@@ -4895,7 +5245,7 @@
                         1;
                     currentShowYear++; } switchMonth(currentShowYear, currentShowMonth, 'left'); });
             btnToday.addEventListener('click', e => {
-                e.stopPropagation();
+                e.stopPropagation(); bounceElement(btnToday);
                 if (currentShowYear === todayYear && currentShowMonth === todayMonth) { renderCalendar();
                     updateCountdown();
                     updateDashboard(); return; }
@@ -4921,9 +5271,21 @@
                     currentShowMonth--; if (currentShowMonth < 1) { currentShowMonth = 12;
                         currentShowYear--; } switchMonth(currentShowYear, currentShowMonth, 'right'); }
             }, { passive: false });
-            let touchStartX = 0;
-            calendarBox.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+            let touchStartX = 0, touchStartY = 0, isSwiping = false;
+            calendarBox.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; isSwiping = false; }, { passive: true });
+            calendarBox.addEventListener('touchmove', e => {
+                const dx = e.touches[0].clientX - touchStartX;
+                const dy = e.touches[0].clientY - touchStartY;
+                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 20) {
+                    isSwiping = true;
+                    dayGrid.style.transform = 'translateX(' + (dx * 0.3) + 'px)';
+                    dayGrid.style.opacity = 1 - Math.abs(dx) / 800;
+                }
+            }, { passive: true });
             calendarBox.addEventListener('touchend', e => {
+                dayGrid.style.transform = '';
+                dayGrid.style.opacity = '';
+                if (!isSwiping) return;
                 const dx = e.changedTouches[0].clientX - touchStartX;
                 if (Math.abs(dx) > 60) {
                     if (dx < 0) { currentShowMonth++; if (currentShowMonth > 12) { currentShowMonth = 1;
@@ -5484,7 +5846,7 @@
 
             // ===== 新增:许愿星事件绑定 =====
             $('wishStarFab').addEventListener('click', e => {
-                e.stopPropagation();
+                e.stopPropagation(); bounceElement($('wishStarFab'));
                 openWishModal();
             });
             $('wishModalOverlay').addEventListener('click', e => {
@@ -5501,6 +5863,610 @@
             });
 
             // ===== 初始化 =====
+            // ===== 1. 数据统计 =====
+            function openStats() {
+                var overlay = document.getElementById('statsOverlay');
+                overlay.classList.add('show');
+                var all = loadAllNotes();
+                var total = 0, monthCount = 0;
+                var monthPrefix = currentShowYear + '-' + currentShowMonth;
+                var monthlyData = {};
+                var dayCount = {};
+                for (var k in all) {
+                    var count = all[k].length;
+                    total += count;
+                    if (k.startsWith(monthPrefix)) monthCount += count;
+                    var ym = k.substring(0, k.lastIndexOf('-'));
+                    monthlyData[ym] = (monthlyData[ym] || 0) + count;
+                    dayCount[k] = count;
+                }
+                document.getElementById('statsTotalNotes').textContent = total;
+                document.getElementById('statsMonthNotes').textContent = monthCount;
+                // Calculate streak
+                var streak = 0;
+                var d = new Date();
+                for (var i = 0; i < 365; i++) {
+                    var key = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+                    if (all[key] && all[key].length > 0) { streak++; } else if (i > 0) break;
+                    d.setDate(d.getDate() - 1);
+                }
+                document.getElementById('statsStreak').textContent = streak;
+                // Top day
+                var topDay = '', topCount = 0;
+                for (var dk in dayCount) { if (dayCount[dk] > topCount) { topCount = dayCount[dk]; topDay = dk; } }
+                document.getElementById('statsTopDayContent').textContent = topDay ? (topDay + ' (' + topCount + '条)') : '暂无数据';
+                // Draw chart
+                var canvas = document.getElementById('statsChart');
+                var ctx = canvas.getContext('2d');
+                var rect = canvas.parentElement.getBoundingClientRect();
+                canvas.width = rect.width - 32;
+                canvas.height = 160;
+                var months = [];
+                for (var mi = 1; mi <= 12; mi++) months.push(currentShowYear + '-' + mi);
+                var maxVal = Math.max(1, Math.max.apply(null, months.map(function(m) { return monthlyData[m] || 0; })));
+                var barW = (canvas.width - 40) / 12;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                var isDark = document.body.classList.contains('dark-mode');
+                for (var bi = 0; bi < 12; bi++) {
+                    var val = monthlyData[months[bi]] || 0;
+                    var barH = (val / maxVal) * 120;
+                    var x = 20 + bi * barW;
+                    var gradient = ctx.createLinearGradient(x, 160 - barH, x, 160);
+                    gradient.addColorStop(0, isDark ? '#5a9fff' : '#2478e0');
+                    gradient.addColorStop(1, isDark ? '#74b3ff' : '#74b3ff');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(x + 2, 160 - barH, barW - 4, barH);
+                    if (val > 0) {
+                        ctx.fillStyle = isDark ? '#c8cce0' : '#333';
+                        ctx.font = '10px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(val, x + barW/2, 155 - barH);
+                    }
+                    ctx.fillStyle = isDark ? '#8a8eb0' : '#888';
+                    ctx.font = '10px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText((bi+1) + '月', x + barW/2, 155);
+                }
+            }
+            document.getElementById('statsClose').onclick = function() { document.getElementById('statsOverlay').classList.remove('show'); };
+            document.getElementById('statsOverlay').onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
+            // ===== 2. 提醒功能 =====
+            var REMINDERS_KEY = 'cal_reminders';
+            function loadReminders() { try { return JSON.parse(localStorage.getItem(REMINDERS_KEY)) || {}; } catch(e) { return {}; } }
+            function saveReminders(r) { try { localStorage.setItem(REMINDERS_KEY, JSON.stringify(r)); } catch(e) {} }
+            function setReminder(dateKey, noteId, datetime) {
+                var reminders = loadReminders();
+                reminders[dateKey + '_' + noteId] = datetime;
+                saveReminders(reminders);
+                scheduleReminder(dateKey, noteId, datetime);
+            }
+            function scheduleReminder(dateKey, noteId, datetime) {
+                var target = new Date(datetime).getTime();
+                var now = Date.now();
+                if (target <= now) return;
+                setTimeout(function() {
+                    var notes = getNotesForDate(dateKey);
+                    var note = notes.find(function(n) { return n.id === noteId; });
+                    if (!note) return;
+                    var msg = '📝 提醒: ' + note.text + '\n(' + dateKey + ')';
+                    if ('Notification' in window && Notification.permission === 'granted') {
+                        new Notification('🕊 世界和平日历', { body: note.text, icon: '🕊' });
+                    } else {
+                        alert(msg);
+                    }
+                    if (document.getElementById('soundSelect').value === 'on') {
+                        try { document.getElementById('notifSound').play(); } catch(e) {}
+                    }
+                }, target - now);
+            }
+            function initReminders() {
+                var reminders = loadReminders();
+                for (var key in reminders) {
+                    var parts = key.split('_');
+                    var dateKey = parts[0];
+                    var noteId = parseInt(parts[1]);
+                    scheduleReminder(dateKey, noteId, reminders[key]);
+                }
+                if ('Notification' in window && Notification.permission === 'default') {
+                    Notification.requestPermission();
+                }
+            }
+            // ===== 3. 分享截图 (简易 dom-to-image) =====
+            function captureCalendar() {
+                var calBox = document.getElementById('calendarBox');
+                var canvas = document.createElement('canvas');
+                var scale = 2;
+                var w = calBox.offsetWidth;
+                var h = calBox.offsetHeight;
+                canvas.width = w * scale;
+                canvas.height = h * scale;
+                var ctx = canvas.getContext('2d');
+                ctx.scale(scale, scale);
+                // Draw background
+                var isDark = document.body.classList.contains('dark-mode');
+                ctx.fillStyle = isDark ? '#1a1e2e' : '#f0f4f8';
+                ctx.fillRect(0, 0, w, h);
+                // Draw title
+                ctx.fillStyle = isDark ? '#d8dce8' : '#1a1a1a';
+                ctx.font = 'bold 20px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(t('titleLine2'), w/2, 30);
+                // Draw calendar grid as table
+                ctx.font = '13px sans-serif';
+                var cells = calBox.querySelectorAll('.day-cell');
+                var cols = 7;
+                var cellW = w / cols;
+                var startY = 50;
+                var cellH = 28;
+                // Week headers
+                var weekDays = I18N[currentLang].weekDays;
+                ctx.fillStyle = isDark ? '#a0a8c8' : '#666';
+                ctx.font = 'bold 12px sans-serif';
+                for (var wi = 0; wi < 7; wi++) {
+                    ctx.fillText(weekDays[wi], wi * cellW + cellW/2, startY);
+                }
+                startY += 10;
+                ctx.font = '12px sans-serif';
+                cells.forEach(function(cell, idx) {
+                    var col = idx % cols;
+                    var row = Math.floor(idx / cols);
+                    var x = col * cellW + cellW/2;
+                    var y = startY + row * cellH + 16;
+                    var numEl = cell.querySelector('.num');
+                    var lunarEl = cell.querySelector('.lunar');
+                    if (cell.classList.contains('other-month')) {
+                        ctx.fillStyle = isDark ? '#4a4f6a' : '#ccc';
+                    } else if (cell.classList.contains('today')) {
+                        ctx.fillStyle = isDark ? '#5a9fff' : '#2478e0';
+                    } else if (cell.classList.contains('holiday')) {
+                        ctx.fillStyle = '#d82020';
+                    } else {
+                        ctx.fillStyle = isDark ? '#c8cce0' : '#333';
+                    }
+                    ctx.textAlign = 'center';
+                    if (numEl) ctx.fillText(numEl.textContent, x, y);
+                    if (lunarEl && lunarEl.textContent && lunarEl.style.visibility !== 'hidden') {
+                        ctx.fillStyle = isDark ? '#8a8eb0' : '#999';
+                        ctx.font = '9px sans-serif';
+                        ctx.fillText(lunarEl.textContent, x, y + 11);
+                        ctx.font = '12px sans-serif';
+                    }
+                });
+                // Watermark
+                ctx.fillStyle = 'rgba(128,128,128,0.3)';
+                ctx.font = '10px sans-serif';
+                ctx.fillText('🕊 World Peace Calendar', w/2, h - 8);
+                return canvas;
+            }
+            function openShare() {
+                var canvas = captureCalendar();
+                var preview = document.getElementById('sharePreview');
+                preview.innerHTML = '';
+                var img = document.createElement('img');
+                img.src = canvas.toDataURL('image/png');
+                img.style.maxWidth = '100%';
+                img.style.borderRadius = '12px';
+                preview.appendChild(img);
+                document.getElementById('shareOverlay').classList.add('show');
+                // Store for download
+                window._shareCanvas = canvas;
+            }
+            document.getElementById('shareDownload').onclick = function() {
+                if (!window._shareCanvas) return;
+                var a = document.createElement('a');
+                a.href = window._shareCanvas.toDataURL('image/png');
+                a.download = 'peace-calendar-' + currentShowYear + '-' + currentShowMonth + '.png';
+                a.click();
+            };
+            document.getElementById('shareCloseBtn').onclick = function() { document.getElementById('shareOverlay').classList.remove('show'); };
+            document.getElementById('shareOverlay').onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
+            // ===== 4. 背景音乐系统 =====
+            var musicPlaying = false;
+            var musicAudioCtx = null;
+            var musicGainNode = null;
+            var musicCurrentId = 'melody';
+            var musicVolume = 0.5;
+            var musicScheduler = null;
+            var musicFadeTimer = null;
+            var musicFadeDuration = 30; // 秒后开始淡出
+            var musicFadeLength = 5;   // 淡出持续秒数
+            var customMusicFiles = {}; // id -> objectURL
+            var customMusicCounter = 0;
+
+            // Built-in melodies
+            var BUILTIN_MUSIC = {
+                melody: {
+                    name: '轻柔旋律', icon: '🎹',
+                    play: function(ctx, dest, vol) {
+                        var notes = [261.6,293.7,329.6,349.2,392.0,440.0,493.9,523.3];
+                        var seq = [0,2,4,5,4,2,0,2,4,7,5,4,2,0,2,4,5,4,2,0];
+                        var len = 0.4;
+                        var t = ctx.currentTime;
+                        seq.forEach(function(n,i) {
+                            var o = ctx.createOscillator();
+                            var g = ctx.createGain();
+                            o.type = 'sine';
+                            o.frequency.value = notes[n];
+                            g.gain.setValueAtTime(0, t+i*len);
+                            g.gain.linearRampToValueAtTime(vol*0.15, t+i*len+0.05);
+                            g.gain.linearRampToValueAtTime(0, t+i*len+len*0.9);
+                            o.connect(g); g.connect(dest);
+                            o.start(t+i*len); o.stop(t+i*len+len);
+                        });
+                        return seq.length * len;
+                    }
+                },
+                musicbox: {
+                    name: '八音盒', icon: '🔔',
+                    play: function(ctx, dest, vol) {
+                        var notes = [523.3,587.3,659.3,698.5,784.0,880.0,987.8,1047];
+                        var seq = [0,2,4,7,4,2,0,4,7,4,2,0,7,4,2,0];
+                        var len = 0.25;
+                        var t = ctx.currentTime;
+                        seq.forEach(function(n,i) {
+                            var o = ctx.createOscillator();
+                            var g = ctx.createGain();
+                            o.type = 'triangle';
+                            o.frequency.value = notes[n];
+                            g.gain.setValueAtTime(0, t+i*len);
+                            g.gain.linearRampToValueAtTime(vol*0.12, t+i*len+0.02);
+                            g.gain.exponentialRampToValueAtTime(0.001, t+i*len+len*0.95);
+                            o.connect(g); g.connect(dest);
+                            o.start(t+i*len); o.stop(t+i*len+len);
+                        });
+                        return seq.length * len;
+                    }
+                },
+                chimes: {
+                    name: '风铃', icon: '🎐',
+                    play: function(ctx, dest, vol) {
+                        var freqs = [1200,1500,1800,2100,2400];
+                        var t = ctx.currentTime;
+                        for (var i = 0; i < 6; i++) {
+                            var f = freqs[Math.floor(Math.random()*freqs.length)];
+                            var o = ctx.createOscillator();
+                            var g = ctx.createGain();
+                            o.type = 'sine';
+                            o.frequency.value = f;
+                            g.gain.setValueAtTime(0, t+i*0.6);
+                            g.gain.linearRampToValueAtTime(vol*0.06, t+i*0.6+0.01);
+                            g.gain.exponentialRampToValueAtTime(0.001, t+i*0.6+1.5);
+                            o.connect(g); g.connect(dest);
+                            o.start(t+i*0.6); o.stop(t+i*0.6+1.5);
+                        }
+                        return 4;
+                    }
+                },
+                nature: {
+                    name: '自然白噪音', icon: '🌿',
+                    play: function(ctx, dest, vol) {
+                        var dur = 4;
+                        var bufSize = ctx.sampleRate * dur;
+                        var buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+                        var data = buf.getChannelData(0);
+                        for (var i = 0; i < bufSize; i++) {
+                            data[i] = (Math.random()*2-1) * 0.3;
+                            if (i > 0) data[i] = data[i]*0.3 + data[i-1]*0.7; // smooth
+                        }
+                        var src = ctx.createBufferSource();
+                        src.buffer = buf; src.loop = true;
+                        var filt = ctx.createBiquadFilter();
+                        filt.type = 'lowpass'; filt.frequency.value = 800;
+                        var g = ctx.createGain();
+                        g.gain.value = vol * 0.15;
+                        src.connect(filt); filt.connect(g); g.connect(dest);
+                        src.start(); src.stop(ctx.currentTime + dur);
+                        return dur;
+                    }
+                },
+                rain: {
+                    name: '雨声', icon: '🌧️',
+                    play: function(ctx, dest, vol) {
+                        var dur = 4;
+                        var bufSize = ctx.sampleRate * dur;
+                        var buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+                        var data = buf.getChannelData(0);
+                        for (var i = 0; i < bufSize; i++) {
+                            data[i] = (Math.random()*2-1);
+                            if (i > 0) data[i] = data[i]*0.15 + data[i-1]*0.85;
+                        }
+                        var src = ctx.createBufferSource();
+                        src.buffer = buf; src.loop = true;
+                        var filt = ctx.createBiquadFilter();
+                        filt.type = 'bandpass'; filt.frequency.value = 2000; filt.Q.value = 0.5;
+                        var g = ctx.createGain();
+                        g.gain.value = vol * 0.1;
+                        src.connect(filt); filt.connect(g); g.connect(dest);
+                        src.start(); src.stop(ctx.currentTime + dur);
+                        return dur;
+                    }
+                },
+                peace: {
+                    name: '和平之音', icon: '🕊️',
+                    play: function(ctx, dest, vol) {
+                        var chords = [[261.6,329.6,392.0],[293.7,349.2,440.0],[329.6,392.0,493.9],[261.6,329.6,392.0]];
+                        var len = 1.2;
+                        var t = ctx.currentTime;
+                        chords.forEach(function(chord,ci) {
+                            chord.forEach(function(f) {
+                                var o = ctx.createOscillator();
+                                var g = ctx.createGain();
+                                o.type = 'sine'; o.frequency.value = f;
+                                g.gain.setValueAtTime(0, t+ci*len);
+                                g.gain.linearRampToValueAtTime(vol*0.05, t+ci*len+0.15);
+                                g.gain.linearRampToValueAtTime(0, t+ci*len+len*0.95);
+                                o.connect(g); g.connect(dest);
+                                o.start(t+ci*len); o.stop(t+ci*len+len);
+                            });
+                        });
+                        return chords.length * len;
+                    }
+                }
+            };
+
+            function stopMusic() {
+                musicPlaying = false;
+                if (musicScheduler) { clearTimeout(musicScheduler); musicScheduler = null; }
+                if (musicFadeTimer) { clearTimeout(musicFadeTimer); musicFadeTimer = null; }
+                if (musicAudioCtx) { try { musicAudioCtx.close(); } catch(e){} musicAudioCtx = null; }
+                var bgAudio = document.getElementById('bgMusic');
+                if (bgAudio && !bgAudio.paused) { bgAudio.pause(); bgAudio.currentTime = 0; }
+                document.getElementById('musicBtn').classList.remove('playing');
+                updateMusicListUI();
+            }
+
+            function playMusicById(id) {
+                stopMusic();
+                musicPlaying = true;
+                musicCurrentId = id;
+                document.getElementById('musicBtn').classList.add('playing');
+                try { localStorage.setItem('cal_music_id', id); } catch(e){}
+
+                // Custom file
+                if (customMusicFiles[id]) {
+                    var bgAudio = document.getElementById('bgMusic');
+                    bgAudio.src = customMusicFiles[id];
+                    bgAudio.volume = musicVolume;
+                    bgAudio.loop = true;
+                    bgAudio.play().catch(function(){});
+                    scheduleFadeOut(bgAudio);
+                    updateMusicListUI();
+                    return;
+                }
+
+                // Built-in
+                var builtin = BUILTIN_MUSIC[id];
+                if (!builtin) { stopMusic(); return; }
+                musicAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                musicGainNode = musicAudioCtx.createGain();
+                musicGainNode.gain.value = musicVolume;
+                musicGainNode.connect(musicAudioCtx.destination);
+                scheduleBuiltinLoop(id, builtin);
+                scheduleFadeOut(null);
+                updateMusicListUI();
+            }
+
+            function scheduleFadeOut(bgAudio) {
+                if (musicFadeTimer) clearTimeout(musicFadeTimer);
+                musicFadeTimer = setTimeout(function() {
+                    if (!musicPlaying) return;
+                    var steps = 20;
+                    var stepTime = (musicFadeLength * 1000) / steps;
+                    var volStep = musicVolume / steps;
+                    var currentStep = 0;
+                    var fadeInterval = setInterval(function() {
+                        currentStep++;
+                        var newVol = Math.max(0, musicVolume * (1 - currentStep / steps));
+                        if (bgAudio) {
+                            bgAudio.volume = newVol;
+                        } else if (musicGainNode) {
+                            try { musicGainNode.gain.linearRampToValueAtTime(newVol, musicAudioCtx.currentTime + stepTime/1000); } catch(e){}
+                        }
+                        if (currentStep >= steps) {
+                            clearInterval(fadeInterval);
+                            stopMusic();
+                        }
+                    }, stepTime);
+                }, musicFadeDuration * 1000);
+            }
+
+            function scheduleBuiltinLoop(id, builtin) {
+                if (!musicPlaying || musicCurrentId !== id) return;
+                var dur = builtin.play(musicAudioCtx, musicGainNode, musicVolume);
+                musicScheduler = setTimeout(function() { scheduleBuiltinLoop(id, builtin); }, (dur - 0.3) * 1000);
+            }
+
+            function toggleMusic() {
+                if (musicPlaying) { stopMusic(); } else { playMusicById(musicCurrentId); }
+            }
+
+            function updateMusicListUI() {
+                document.querySelectorAll('.music-item').forEach(function(el) {
+                    el.classList.toggle('active', el.getAttribute('data-id') === musicCurrentId && musicPlaying);
+                });
+                document.querySelectorAll('.music-custom-item').forEach(function(el) {
+                    el.classList.toggle('active', el.getAttribute('data-id') === musicCurrentId && musicPlaying);
+                });
+            }
+
+            function renderCustomMusicList() {
+                var list = document.getElementById('musicCustomList');
+                list.innerHTML = '';
+                for (var id in customMusicFiles) {
+                    var div = document.createElement('div');
+                    div.className = 'music-custom-item' + (musicCurrentId === id && musicPlaying ? ' active' : '');
+                    div.setAttribute('data-id', id);
+                    div.innerHTML = '<span>🎵</span><span style="flex:1;font-size:13px;">' + escapeHtml(id.replace('custom_','')) + '</span><span class="playing-indicator" style="font-size:11px;color:var(--primary);' + (musicCurrentId===id&&musicPlaying?'':'display:none') + '">♪</span><button class="del-btn" data-id="' + id + '">✕</button>';
+                    (function(cid) {
+                        div.addEventListener('click', function(e) {
+                            if (e.target.classList.contains('del-btn')) return;
+                            playMusicById(cid);
+                        });
+                        div.querySelector('.del-btn').addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            delete customMusicFiles[cid];
+                            try { localStorage.removeItem('cal_custom_' + cid); } catch(ex){}
+                            if (musicCurrentId === cid) stopMusic();
+                            renderCustomMusicList();
+                        });
+                    })(id);
+                    list.appendChild(div);
+                }
+            }
+
+            // Music panel events
+            document.querySelectorAll('.music-item').forEach(function(el) {
+                el.addEventListener('click', function() { playMusicById(el.getAttribute('data-id')); });
+            });
+
+            document.getElementById('musicUploadRow').addEventListener('click', function() {
+                document.getElementById('musicFileInput').click();
+            });
+            document.getElementById('musicFileInput').addEventListener('change', function(e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                customMusicCounter++;
+                var id = 'custom_' + file.name.replace(/[^a-zA-Z0-9]/g,'_') + '_' + customMusicCounter;
+                var url = URL.createObjectURL(file);
+                customMusicFiles[id] = url;
+                renderCustomMusicList();
+                playMusicById(id);
+                e.target.value = '';
+            });
+
+            document.getElementById('musicVolumeSlider').addEventListener('input', function() {
+                musicVolume = this.value / 100;
+                try { localStorage.setItem('cal_music_vol', musicVolume); } catch(e){}
+                if (musicGainNode) musicGainNode.gain.value = musicVolume;
+                var bgAudio = document.getElementById('bgMusic');
+                if (bgAudio) bgAudio.volume = musicVolume;
+            });
+            document.getElementById('musicFadeSelect').addEventListener('change', function() {
+                var val = parseInt(this.value);
+                if (val === 0) {
+                    musicFadeDuration = 999999; // effectively never
+                } else {
+                    musicFadeDuration = val;
+                }
+                try { localStorage.setItem('cal_music_fade', val); } catch(e){}
+                // Restart fade timer if playing
+                if (musicPlaying) {
+                    var bgAudio = customMusicFiles[musicCurrentId] ? document.getElementById('bgMusic') : null;
+                    scheduleFadeOut(bgAudio);
+                }
+            });
+
+            document.getElementById('musicClose').addEventListener('click', function() {
+                document.getElementById('musicOverlay').classList.remove('show');
+            });
+            document.getElementById('musicOverlay').addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('show');
+            });
+
+            function loadMusicSettings() {
+                try {
+                    var savedVol = localStorage.getItem('cal_music_vol');
+                    if (savedVol !== null) { musicVolume = parseFloat(savedVol); document.getElementById('musicVolumeSlider').value = musicVolume * 100; }
+                    var savedId = localStorage.getItem('cal_music_id');
+                    if (savedId) musicCurrentId = savedId;
+                    var savedFade = localStorage.getItem('cal_music_fade');
+                    if (savedFade !== null) {
+                        var fv = parseInt(savedFade);
+                        musicFadeDuration = fv === 0 ? 999999 : fv;
+                        document.getElementById('musicFadeSelect').value = fv;
+                    }
+                } catch(e){}
+            }
+            loadMusicSettings();
+            renderCustomMusicList();
+            updateMusicListUI();
+
+            // ===== 5. 国际节日数据 =====
+            // ===== 5. 国际节日数据 =====
+            var intlHolidays = {
+                '1-1': [{name:'New Year\'s Day',lang:'🇬🇧'},{name:'元日',lang:'🇯🇵'},{name:'신정',lang:'🇰🇷'},{name:'Jour de l\'An',lang:'🇫🇷'},{name:'Neujahr',lang:'🇩🇪'}],
+                '2-14': [{name:'Valentine\'s Day',lang:'🇬🇧'},{name:'バレンタインデー',lang:'🇯🇵'},{name:'발렌타인데이',lang:'🇰🇷'},{name:'Saint-Valentin',lang:'🇫🇷'},{name:'Valentinstag',lang:'🇩🇪'}],
+                '3-8': [{name:'Int\'l Women\'s Day',lang:'🇬🇧'},{name:'国際婦人デー',lang:'🇯🇵'},{name:'세계 여성의 날',lang:'🇰🇷'},{name:'Journée de la femme',lang:'🇫🇷'},{name:'Frauentag',lang:'🇩🇪'}],
+                '4-22': [{name:'Earth Day',lang:'🇬🇧'},{name:'アースデー',lang:'🇯🇵'},{name:'지구의 날',lang:'🇰🇷'},{name:'Jour de la Terre',lang:'🇫🇷'},{name:'Tag der Erde',lang:'🇩🇪'}],
+                '5-1': [{name:'Labor Day',lang:'🇬🇧'},{name:'メーデー',lang:'🇯🇵'},{name:'노동절',lang:'🇰🇷'},{name:'Fête du Travail',lang:'🇫🇷'},{name:'Tag der Arbeit',lang:'🇩🇪'}],
+                '6-1': [{name:'Children\'s Day',lang:'🇬🇧'},{name:'こどもの日',lang:'🇯🇵'},{name:'어린이날',lang:'🇰🇷'},{name:'Fête des enfants',lang:'🇫🇷'},{name:'Kindertag',lang:'🇩🇪'}],
+                '9-21': [{name:'Int\'l Peace Day',lang:'🇬🇧'},{name:'国際平和デー',lang:'🇯🇵'},{name:'세계 평화의 날',lang:'🇰🇷'},{name:'Journée de la paix',lang:'🇫🇷'},{name:'Weltfriedenstag',lang:'🇩🇪'}],
+                '10-24': [{name:'UN Day',lang:'🇬🇧'},{name:'国連デー',lang:'🇯🇵'},{name:'유엔의 날',lang:'🇰🇷'},{name:'Journée de l\'ONU',lang:'🇫🇷'},{name:'UN-Tag',lang:'🇩🇪'}],
+                '10-31': [{name:'Halloween',lang:'🇬🇧'},{name:'ハロウィン',lang:'🇯🇵'},{name:'할로윈',lang:'🇰🇷'},{name:'Halloween',lang:'🇫🇷'},{name:'Halloween',lang:'🇩🇪'}],
+                '12-25': [{name:'Christmas',lang:'🇬🇧'},{name:'クリスマス',lang:'🇯🇵'},{name:'크리스마스',lang:'🇰🇷'},{name:'Noël',lang:'🇫🇷'},{name:'Weihnachten',lang:'🇩🇪'}]
+            };
+            function getIntlHoliday(m, d) {
+                var key = m + '-' + d;
+                var holidays = intlHolidays[key];
+                if (!holidays) return '';
+                if (currentLang === 'zh') return '';
+                var found = holidays.find(function(h) {
+                    return (currentLang === 'en' && h.lang === '🇬🇧') ||
+                           (currentLang === 'ja' && h.lang === '🇯🇵') ||
+                           (currentLang === 'ko' && h.lang === '🇰🇷') ||
+                           (currentLang === 'fr' && h.lang === '🇫🇷') ||
+                           (currentLang === 'de' && h.lang === '🇩🇪');
+                });
+                return found ? found.name : '';
+            }
+            // ===== 6. 设置功能 =====
+            function applyFontSize(size) {
+                document.documentElement.style.fontSize = size + 'px';
+                try { localStorage.setItem('cal_font_size', size); } catch(e) {}
+            }
+            function applyBgImage(dataUrl) {
+                if (dataUrl) {
+                    document.body.style.backgroundImage = 'url(' + dataUrl + ')';
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundAttachment = 'fixed';
+                    try { localStorage.setItem('cal_bg_image', dataUrl); } catch(e) {}
+                } else {
+                    document.body.style.backgroundImage = '';
+                    try { localStorage.removeItem('cal_bg_image'); } catch(e) {}
+                }
+            }
+            function loadSettings() {
+                try {
+                    var fontSize = localStorage.getItem('cal_font_size');
+                    if (fontSize) { applyFontSize(parseInt(fontSize)); document.getElementById('fontSizeSlider').value = fontSize; document.getElementById('fontSizeValue').textContent = fontSize + 'px'; }
+                    var bgImage = localStorage.getItem('cal_bg_image');
+                    if (bgImage) applyBgImage(bgImage);
+                    var sound = localStorage.getItem('cal_sound');
+                    if (sound) document.getElementById('soundSelect').value = sound;
+                    var quoteSpeed = localStorage.getItem('cal_quote_speed');
+                    if (quoteSpeed) document.getElementById('quoteSpeedSelect').value = quoteSpeed;
+                } catch(e) {}
+            }
+            document.getElementById('fontSizeSlider').oninput = function() {
+                var v = this.value;
+                document.getElementById('fontSizeValue').textContent = v + 'px';
+                applyFontSize(v);
+            };
+            document.getElementById('bgImageBtn').onclick = function() { document.getElementById('bgImageInput').click(); };
+            document.getElementById('bgImageInput').onchange = function(e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                var reader = new FileReader();
+                reader.onload = function(ev) { applyBgImage(ev.target.result); };
+                reader.readAsDataURL(file);
+            };
+            document.getElementById('bgImageClear').onclick = function() { applyBgImage(null); };
+            document.getElementById('soundSelect').onchange = function() { try { localStorage.setItem('cal_sound', this.value); } catch(e) {} };
+            document.getElementById('quoteSpeedSelect').onchange = function() {
+                try { localStorage.setItem('cal_quote_speed', this.value); } catch(e) {}
+                if (quoteTimer) clearInterval(quoteTimer);
+                var speed = parseInt(this.value);
+                if (speed > 0) quoteTimer = setInterval(rotateQuote, speed);
+            };
+            document.getElementById('settingsClose').onclick = function() { document.getElementById('settingsOverlay').classList.remove('show'); };
+            document.getElementById('settingsOverlay').onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
+
+            // ===== 绑定新按钮 =====
+            document.getElementById('statsBtn').onclick = function() { bounceElement(this); openStats(); };
+            document.getElementById('shareBtn').onclick = function() { bounceElement(this); openShare(); };
+            document.getElementById('musicBtn').onclick = function() { bounceElement(this); document.getElementById('musicOverlay').classList.add('show'); updateMusicListUI(); };
+            document.getElementById('settingsBtn').onclick = function() { bounceElement(this); document.getElementById('settingsOverlay').classList.add('show'); };
+
             function init() {
                 try {
                     const savedTheme = localStorage.getItem('cal_theme');
@@ -5529,6 +6495,8 @@
                 checkPeaceDay();
                 checkPeaceDayEnhanced();
                 showEasterHint();
+                initReminders();
+                loadSettings();
 
                 /* ===== 节气弹窗绑定 ===== */
                 (function() {
@@ -5590,7 +6558,6 @@
                     stClose.onclick = function(e) { e.stopPropagation(); closeST(); };
                     stOverlay.onclick = function(e) { e.stopPropagation(); closeST(); };
                     stPanel.onclick = function(e) { e.stopPropagation(); };
-                    console.log('🌿 节气弹窗已绑定');
                 })();
 
                 /* ===== 节假日弹窗绑定 ===== */
@@ -5654,7 +6621,6 @@
                     hlClose.onclick=function(e){e.stopPropagation();closeHL();};
                     hlOverlay.onclick=function(e){e.stopPropagation();closeHL();};
                     hlPanel.onclick=function(e){e.stopPropagation();};
-                    console.log('📅 节假日弹窗已绑定');
                 })();
 
                 /* 其他仪表盘卡片粒子效果 */
@@ -5671,13 +6637,10 @@
                     })(otherDashCards[di]);
                 }
 
-                console.log('🕊 世界和平!日历 v2.0+ 已就绪 | Ctrl+D 收藏~');
-                console.log('💡 快捷键: ←→切换月份 | T回到今天 | ESC关闭弹窗 | 月份年份点击可跳转 | 长按天气按钮搜索城市');
-                console.log('🐰 彩蛋: 三连击标题 / Konami Code (↑↑↓↓←→←→BA) / 点击飞鸽 / 9月21日');
-                console.log('⭐ 新彩蛋: 许愿星(右下角) / 和平语录轮播 / 世界时钟 / 和平日金色粒子雨');
             }
             init();
         })();
     </script>
+    <!-- ===== 数据统计面板 ===== -->
 </body>
 </html>
