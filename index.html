@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>世界和平！</title>
+    <title>世界和平!</title>
     <link rel="shortcut icon" href="favicon.ico">
     <style>
         /* ===== CSS 变量系统 ===== */
@@ -412,7 +412,7 @@
         body.dark-mode .weather-loading span {
             color: #5a6a8a;
         }
-        /* ===== 新增：暗色模式适配 ===== */
+        /* ===== 新增:暗色模式适配 ===== */
         body.dark-mode .peace-quote-carousel {
             color: #b0b8d0;
             background: rgba(28, 33, 52, 0.7);
@@ -916,7 +916,7 @@
             }
         }
 
-        /* ===== 新增：和平语录轮播 ===== */
+        /* ===== 新增:和平语录轮播 ===== */
         .peace-quote-carousel {
             max-width: min(88vw, 500px);
             width: 100%;
@@ -965,7 +965,7 @@
             }
         }
 
-        /* ===== 新增：世界时钟行 - 已移至左下角固定 ===== */
+        /* ===== 新增:世界时钟行 - 已移至左下角固定 ===== */
         .world-clocks-row {
             position: fixed;
             bottom: 20px;
@@ -1014,7 +1014,7 @@
             white-space: nowrap;
         }
 
-        /* ===== 新增：许愿星浮动按钮 ===== */
+        /* ===== 新增:许愿星浮动按钮 ===== */
         .wish-star-fab {
             position: fixed;
             bottom: 24px;
@@ -1077,7 +1077,7 @@
             }
         }
 
-        /* ===== 新增：许愿弹窗 ===== */
+        /* ===== 新增:许愿弹窗 ===== */
         .wish-modal-overlay {
             position: fixed;
             inset: 0;
@@ -1215,7 +1215,7 @@
             padding: 8px 0;
         }
 
-        /* ===== 新增：许愿星星升空粒子 ===== */
+        /* ===== 新增:许愿星星升空粒子 ===== */
         .wish-star-particle {
             position: fixed;
             pointer-events: none;
@@ -1238,7 +1238,7 @@
             }
         }
 
-        /* ===== 新增：和平日金色粒子 ===== */
+        /* ===== 新增:和平日金色粒子 ===== */
         .peace-day-particle {
             position: fixed;
             pointer-events: none;
@@ -1261,7 +1261,7 @@
             }
         }
 
-        /* ===== 彩蛋：全屏和平祝福弹窗 ===== */
+        /* ===== 彩蛋:全屏和平祝福弹窗 ===== */
         .peace-easter-overlay {
             position: fixed;
             inset: 0;
@@ -2904,7 +2904,7 @@
                 <button class="weather-refresh-btn" id="weatherRefreshBtn" title="刷新天气" aria-label="刷新天气">⟳</button>
             </div>
             <div class="weather-search-bar" id="weatherSearchBar">
-                <input type="text" id="weatherCityInput" placeholder="搜索城市，如：北京" maxlength="30" aria-label="输入城市名">
+                <input type="text" id="weatherCityInput" placeholder="搜索城市,如:北京" maxlength="30" aria-label="输入城市名">
                 <button class="btn-go" id="btnWeatherGo">查看</button>
                 <button class="btn-cancel-search" id="btnWeatherCancel">取消</button>
             </div>
@@ -2913,13 +2913,13 @@
 
     <!-- 标题 -->
     <div class="title-wrap"><p class="title-text">我们的愿望是~</p></div>
-    <div class="title-wrap"><p class="title-text peace-text">世界和平！</p></div>
+    <div class="title-wrap"><p class="title-text peace-text">世界和平!</p></div>
     <p class="greeting-sub" id="greetingSub"></p>
 
     <!-- ===== 和平语录轮播 ===== -->
     <div class="peace-quote-carousel" id="peaceQuoteCarousel">
         <span class="quote-icon">🕊</span>
-        <span class="quote-text" id="quoteText">愿世界和平，万物共生。</span>
+        <span class="quote-text" id="quoteText">愿世界和平,万物共生。</span>
     </div>
 
     <!-- 24节气弹窗 -->
@@ -2936,15 +2936,15 @@
     <div class="dashboard-row" id="dashboardRow">
         <div class="dashboard-card" title="当前节气" id="dashSolarTermCard">
             <div class="dash-icon">🌿</div>
-            <div class="dash-value" id="dashSolarTerm">—</div>
+            <div class="dash-value" id="dashSolarTerm">-</div>
             <div class="dash-label" id="dashSolarTermLabel">节气</div>
         </div>
-        <div class="dashboard-card" title="今日距元旦">
+        <div class="dashboard-card" title="今日距元旦" id="dashNewYearCard">
             <div class="dash-icon">🎊</div>
-            <div class="dash-value" id="dashNewYear">—</div>
+            <div class="dash-value" id="dashNewYear">-</div>
             <div class="dash-label" id="dashNewYearLabel">距元旦</div>
         </div>
-        <div class="dashboard-card" title="本月记事">
+        <div class="dashboard-card" title="本月记事" id="dashNotesCard">
             <div class="dash-icon">📝</div>
             <div class="dash-value" id="dashNotes">0</div>
             <div class="dash-label" id="dashNotesLabel">本月记事</div>
@@ -2983,8 +2983,8 @@
             <button class="btn-today" id="btnToday" title="回到今天 (T)">🕊 今天</button>
             <button id="prevMonth" title="上个月 (←)" aria-label="上个月">◀</button>
             <div class="ym-text" id="ymTitle">
-                <span class="year-click" id="yearText" role="button" tabindex="0" aria-label="选择年份">2026</span>年
-                <span class="month-click" id="monthText" role="button" tabindex="0" aria-label="选择月份">7</span>月
+                <span class="year-click" id="yearText" role="button" tabindex="0" aria-label="选择年份">2026</span><span id="yearSuffix">年</span>
+                <span class="month-click" id="monthText" role="button" tabindex="0" aria-label="选择月份">7</span><span id="monthSuffix">月</span>
                 <div class="select-panel year-panel" id="yearPanel" role="listbox" aria-label="选择年份"></div>
                 <div class="select-panel month-panel" id="monthPanel" role="listbox" aria-label="选择月份"></div>
             </div>
@@ -3008,7 +3008,7 @@
             </div>
             <div class="note-search-results" id="noteSearchResults" style="display:none;"></div>
             <div class="modal-notes-list" id="modalNotesList">
-                <div class="modal-empty">暂无记事，快来添加吧~</div>
+                <div class="modal-empty">暂无记事,快来添加吧~</div>
             </div>
             <div class="modal-input-row">
                 <input type="text" id="modalNoteInput" placeholder="输入记事内容..." maxlength="200" aria-label="记事内容">
@@ -3031,7 +3031,7 @@
         <div class="tip-body" id="festivalTipBody"></div>
     </div>
 
-    <!-- ===== 🐰 彩蛋：全屏和平祝福 ===== -->
+    <!-- ===== 🐰 彩蛋:全屏和平祝福 ===== -->
     <div class="peace-easter-overlay" id="peaceEasterOverlay" role="dialog" aria-modal="true" aria-label="世界和平">
         <div class="peace-easter-stars"></div>
         <div class="peace-easter-hearts" id="peaceEasterHearts"></div>
@@ -3040,10 +3040,10 @@
             <h1 class="peace-easter-title">世界和平</h1>
             <p class="peace-easter-subtitle">WORLD PEACE · 2026</p>
             <div class="peace-easter-languages">
-                <span>中文：世界和平</span>
+                <span>中文:世界和平</span>
                 <span>English: World Peace</span>
-                <span>日本語：世界平和</span>
-                <span>한국어：세계 평화</span>
+                <span>日本語:世界平和</span>
+                <span>한국어:세계 평화</span>
                 <span>Español: Paz mundial</span>
                 <span>Français: Paix mondiale</span>
                 <span>Deutsch: Weltfrieden</span>
@@ -3065,10 +3065,10 @@
             <p class="peace-easter-msg">
                 不论语言、肤色、信仰<br>
                 不论远近、贫富、眀友<br>
-                每一个在绌上走过的生命，都值得被温柔以待。<br>
-                愿这片星空之下，战火永远熄灭，<br>
-                愿每一个孩子都能在和平中长大，<br>
-                愿世界在每一个心跳里，邧向光明。
+                每一个在绌上走过的生命,都值得被温柔以待。<br>
+                愿这片星空之下,战火永远熄灭,<br>
+                愿每一个孩子都能在和平中长大,<br>
+                愿世界在每一个心跳里,邧向光明。
             </p>
             <pre class="peace-easter-ascii">  ✦  ·   ˖  ✦    ·   ˖  ✦    ·   ˖
      "No more war, only peace."
@@ -3077,28 +3077,28 @@
         <p class="peace-easter-hint">点击任意处 或按 ESC 关闭</p>
     </div>
 
-    <!-- ===== 新增：许愿星浮动按钮 ===== -->
+    <!-- ===== 新增:许愿星浮动按钮 ===== -->
     <div class="wish-star-fab" id="wishStarFab" title="许个愿吧~" aria-label="许愿星">
         <span class="fab-emoji">⭐</span>
     </div>
 
-    <!-- ===== 新增：许愿弹窗 ===== -->
+    <!-- ===== 新增:许愿弹窗 ===== -->
     <div class="wish-modal-overlay" id="wishModalOverlay" role="dialog" aria-modal="true" aria-label="许愿星">
         <div class="wish-modal-card" id="wishModalCard">
             <button class="wish-close-btn" id="wishCloseBtn" aria-label="关闭">✕</button>
             <h3>⭐ 许愿星</h3>
-            <p style="text-align:center;font-size:12px;color:#999;" id="wishSubtitle">向星空许下心愿，愿世界和平</p>
+            <p style="text-align:center;font-size:12px;color:#999;" id="wishSubtitle">向星空许下心愿,愿世界和平</p>
             <div class="wish-input-row">
                 <input type="text" id="wishInput" placeholder="写下你的愿望..." maxlength="100" aria-label="愿望输入">
                 <button class="btn-wish-submit" id="btnWishSubmit">许愿 ✨</button>
             </div>
             <div class="wish-history" id="wishHistory">
-                <div class="wish-empty" id="wishEmpty">还没有愿望，快来许下第一个吧~</div>
+                <div class="wish-empty" id="wishEmpty">还没有愿望,快来许下第一个吧~</div>
             </div>
         </div>
     </div>
 
-    <!-- ===== 世界时钟行（已移至左下角固定显示） ===== -->
+    <!-- ===== 世界时钟行(已移至左下角固定显示) ===== -->
     <div class="world-clocks-row" id="worldClocksRow">
         <div class="world-clock-card" data-tz="Asia/Shanghai">
             <span class="wc-emoji">🇨🇳</span>
@@ -3134,7 +3134,7 @@
 
     <script>
         // ================================================================
-        // 世界和平日历 — 完整版 v2.0 + 四大新彩蛋 + 扩展语录
+        // 世界和平日历 - 完整版 v2.0 + 四大新彩蛋 + 扩展语录
         // ================================================================
         (function() {
             'use strict';
@@ -3146,57 +3146,148 @@
                     weekDaysFull: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
                     monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                     greeting: {
-                        morning: '早安 ☀️ 新的一天，从世界和平开始~',
-                        afternoon: '下午好 🌤️ 记得微笑，世界需要你~',
-                        evening: '晚上好 🌙 仰望同一片星空，世界和平~',
+                        morning: '早安 ☀️ 新的一天,从世界和平开始~',
+                        afternoon: '下午好 🌤️ 记得微笑,世界需要你~',
+                        evening: '晚上好 🌙 仰望同一片星空,世界和平~',
                         night: '夜深了 🌌 愿梦里有和平~'
                     },
                     festivalTips: {
-                        '春节': '🎊 贴春联、放鞭炮、吃年夜饭、拜年！正月里要说吉利话哦~',
-                        '元宵节': '🏮 赏花灯、吃元宵、猜灯谜，团团圆圆过佳节！',
-                        '清明': '🌿 踏青扫墓，追思先人，宜亲近自然~',
-                        '端午': '🐲 赛龙舟、吃粽子、挂艾草，驱邪祈福！',
-                        '中秋': '🌕 赏月、吃月饼、团圆饭，天涯共此时~',
-                        '国庆': '🇨🇳 普天同庆！10月1日是新中国成立纪念日~',
-                        '元旦': '🎊 新年快乐！许下新年愿望，为世界和平祈福~',
-                        '劳动节': '💪 致敬每一位劳动者！劳动最光荣~',
-                        '七夕': '💕 牛郎织女相会日，有情人的节日哦~',
-                        '重阳': '🍂 登高望远，敬老爱老，秋日宜登高~',
-                        '小寒': '❄️ 天寒地冻，注意保暖！喝热汤、添衣物~',
-                        '大寒': '🥶 一年中最冷的时候，防寒保暖是关键~',
-                        '立春': '🌱 春天来了！万物复苏，宜立志~',
-                        '春分': '🌸 昼夜平分，春天过半，宜踏青~',
-                        '谷雨': '🌧️ 雨生百谷，播种好时节~',
-                        '立夏': '☀️ 夏天开始，养心防暑~',
-                        '小满': '🌾 小麦籽粒渐满，夏收在望~',
-                        '芒种': '🌾 忙于收割，也忙于播种~',
-                        '夏至': '☀️ 白天最长，记得防暑~',
-                        '小暑': '🔥 暑气渐盛，宜静心~',
-                        '大暑': '🥵 一年最热，注意防暑降温~',
-                        '立秋': '🍂 秋天来了，收货的季节~',
-                        '处暑': '🍃 暑气消退，早晚渐凉~',
-                        '白露': '💧 露凝而白，记得添衣~',
-                        '秋分': '🍁 昼夜平分，秋天过半~',
-                        '寒露': '🍂 露气寒冷，预防秋燥~',
-                        '霜降': '❄️ 霜降大地，冬天将近~',
-                        '立冬': '🧥 冬天来了，收藏的季节~',
-                        '小雪': '❄️ 初雪降临，浪漫的时节~',
-                        '大雪': '❄️ 雪量增大，注意保暖~',
-                        '冬至': '🥟 白天最短，吃饺子/汤圆进补！'
+                        '春节': '🎊 贴春联、放鞭炮、吃年夜饭、拜年!正月里要说吉利话哦~',
+                        '元宵节': '🏮 赏花灯、吃元宵、猜灯谜,团团圆圆过佳节!',
+                        '清明': '🌿 踏青扫墓,追思先人,宜亲近自然~',
+                        '端午': '🐲 赛龙舟、吃粽子、挂艾草,驱邪祈福!',
+                        '中秋': '🌕 赏月、吃月饼、团圆饭,天涯共此时~',
+                        '国庆': '🇨🇳 普天同庆!10月1日是新中国成立纪念日~',
+                        '元旦': '🎊 新年快乐!许下新年愿望,为世界和平祈福~',
+                        '劳动节': '💪 致敬每一位劳动者!劳动最光荣~',
+                        '七夕': '💕 牛郎织女相会日,有情人的节日哦~',
+                        '重阳': '🍂 登高望远,敬老爱老,秋日宜登高~',
+                        '小寒': '❄️ 天寒地冻,注意保暖!喝热汤、添衣物~',
+                        '大寒': '🥶 一年中最冷的时候,防寒保暖是关键~',
+                        '立春': '🌱 春天来了!万物复苏,宜立志~',
+                        '春分': '🌸 昼夜平分,春天过半,宜踏青~',
+                        '谷雨': '🌧️ 雨生百谷,播种好时节~',
+                        '立夏': '☀️ 夏天开始,养心防暑~',
+                        '小满': '🌾 小麦籽粒渐满,夏收在望~',
+                        '芒种': '🌾 忙于收割,也忙于播种~',
+                        '夏至': '☀️ 白天最长,记得防暑~',
+                        '小暑': '🔥 暑气渐盛,宜静心~',
+                        '大暑': '🥵 一年最热,注意防暑降温~',
+                        '立秋': '🍂 秋天来了,收货的季节~',
+                        '处暑': '🍃 暑气消退,早晚渐凉~',
+                        '白露': '💧 露凝而白,记得添衣~',
+                        '秋分': '🍁 昼夜平分,秋天过半~',
+                        '寒露': '🍂 露气寒冷,预防秋燥~',
+                        '霜降': '❄️ 霜降大地,冬天将近~',
+                        '立冬': '🧥 冬天来了,收藏的季节~',
+                        '小雪': '❄️ 初雪降临,浪漫的时节~',
+                        '大雪': '❄️ 雪量增大,注意保暖~',
+                        '冬至': '🥟 白天最短,吃饺子/汤圆进补!'
                     },
                     dashSolarTerm: '节气',
                     dashNewYear: '距元旦',
                     dashNotes: '本月记事',
                     noResults: '没有找到匹配的记事',
                     loading: '正在获取天气...',
-                    weatherError: '获取失败，点击重试',
+                    weatherError: '获取失败,点击重试',
                     wishTitle: '⭐ 许愿星',
-                    wishSubtitle: '向星空许下心愿，愿世界和平',
+                    worldClockCities: { 'Beijing': '北京', 'Tokyo': '东京', 'NewYork': '纽约', 'London': '伦敦',
+                        'Paris': '巴黎', 'Sydney': '悉尼' },
+                    solarTermsTitle: '🌿 二十四节气',
+                    solarTermsGroups: [
+                        { s: '🌸 春', t: ['立春','雨水','惊蛰','春分','清明','谷雨'] },
+                        { s: '☀️ 夏', t: ['立夏','小满','芒种','夏至','小暑','大暑'] },
+                        { s: '🍂 秋', t: ['立秋','处暑','白露','秋分','寒露','霜降'] },
+                        { s: '❄️ 冬', t: ['立冬','小雪','大雪','冬至','小寒','大寒'] }
+                    ],
+                    solarTermsDateFmt: function(m, d) { return m + '月' + d + '日'; },
+                    holidayListTitle: '📅 全年节假日',
+                    holidayNames: { '元旦':'元旦', '春节':'春节', '清明':'清明', '劳动节':'劳动节', '端午':'端午', '中秋':'中秋', '国庆':'国庆', '建党节':'建党节', '建军节':'建军节', '国际和平日':'国际和平日', '人权日':'人权日', '联合国日':'联合国日' },
+                    hlToday: '🎉 今天',
+                    hlPast: '已过',
+                    hlTomorrow: '明天',
+                    hlDaysLater: '天后',
+                    cdAllPassed: '🌟 所有节日已过,期待新的一年~',
+                    cdTodayIs: '今天是',
+                    cdHappy: '节日快乐!',
+                    cdUntil: '距离',
+                    cdIn: '还有',
+                    cdDays: '天',
+                    dashSolarTermNone: '无',
+                    dashYearPassed: function(pct) { return '今年已过 ' + pct + '%'; },
+                    weekDaysArr: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+                    noteTitle: '📝 记事本',
+                    noteAdd: '添加',
+                    noteSave: '保存',
+                    notePlaceholder: '输入记事内容...',
+                    noteSearchPlaceholder: '搜索所有记事...',
+                    noteExport: '📤 导出',
+                    noteImport: '📥 导入',
+                    noteSearch: '🔍 搜索',
+                    noteClose: '关闭',
+                    noteEmpty: '暂无记事,快来添加吧~',
+                    noteSearchEmpty: '没有找到匹配的记事',
+                    noteTotal: function(n) { return '...共 ' + n + ' 条'; },
+                    noteImportOk: '✅ 导入成功!',
+                    noteImportFail: '⚠️ 导入失败,文件格式错误',
+                    noteEdit: '修改',
+                    noteDel: '删除',
+                    workdayTag: '补班',
+                    yearPanelLabel: function(y) { return '当前年份 ' + y + ',点击选择'; },
+                    monthPanelLabel: function(m) { return '当前月份 ' + m + ',点击选择'; },
+                    wishSubtitle: '向星空许下心愿,愿世界和平',
                     wishPlaceholder: '写下你的愿望...',
                     wishBtn: '许愿 ✨',
-                    wishEmpty: '还没有愿望，快来许下第一个吧~',
-                    worldClockCities: { 'Beijing': '北京', 'Tokyo': '东京', 'NewYork': '纽约', 'London': '伦敦',
-                        'Paris': '巴黎', 'Sydney': '悉尼' }
+                    wishEmpty: '还没有愿望,快来许下第一个吧~',
+                    themeLightLabel: '切换到浅色模式',
+                    themeDarkLabel: '切换到深色模式',
+                    weatherFeels: '体感',
+                    weatherLoading: '正在获取天气...',
+                    weatherLoadingShort: '加载中',
+                    weatherError: '获取失败',
+                    weatherRetry: '获取失败,点击重试',
+                    weatherCurrentLoc: '当前位置',
+                    citySearchPlaceholder: '搜索城市,如:北京',
+                    weatherGo: '查看',
+                    weatherCancel: '取消',
+                    today: '今天',
+                    locale: 'zh-CN',
+                    themeLightText: '☀️ 浅色',
+                    themeDarkText: '🌙 深色',
+                    pageTitle: '世界和平!',
+                    titleLine1: '我们的愿望是~',
+                    titleLine2: '世界和平!',
+                    viewMonth: '月',
+                    viewWeek: '周',
+                    themeColorBtn: '主题色',
+                    themeColorBlue: '蓝色',
+                    themeColorPurple: '紫色',
+                    themeColorRose: '玫红',
+                    themeColorTeal: '青绿',
+                    themeColorGradient: '渐变',
+                    weatherTitle: '查看天气',
+                    weatherRefresh: '刷新天气',
+                    dashSolarTermTitle: '当前节气',
+                    dashNewYearTitle: '今日距元旦',
+                    dashNotesTitle: '本月记事',
+                    prevMonthTitle: '上个月 (←)',
+                    nextMonthTitle: '下个月 (→)',
+                    selectYearLabel: '选择年份',
+                    selectMonthLabel: '选择月份',
+                    calendarGridLabel: '日历网格',
+                    forecastDays: ['周日','周一','周二','周三','周四','周五','周六'],
+                    forecastFallback: null,
+                    easterHint: '\u{1F54A} 彩蛋提示<br>三连击“和平”<br>或 Konami Code',
+                    wishStarTitle: '许愿星',
+                    langSwitchTo: 'Switch to English',
+                    langLabel: '🌐 中文',
+                    easterTitle: '世界和平',
+                    easterMsg: '不论语言、肤色、信仰<br>不论远近、贫富、眀友<br>每一个在绌上走过的生命,都值得被温柔以待。<br>愿这片星空之下,战火永远熄灭,<br>愿每一个孩子都能在和平中长大,<br>愿世界在每一个心跳里,邧向光明。',
+                    easterCloseHint: '点击任意处 或按 ESC 关闭',
+                    wishModalTitle: '⭐ 许愿星',
+                    wishCloseLabel: '关闭',
+                    wishInputLabel: '愿望输入',
+                    wishFabTitle: '许个愿吧~'
                 },
                 en: {
                     weekDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -3208,6 +3299,76 @@
                         evening: 'Good Evening 🌙 Under the same sky, world peace~',
                         night: 'Good Night 🌌 May your dreams be filled with peace~'
                     },
+                    dashSolarTerm: 'Solar Term',
+                    dashNewYear: 'Days to NY',
+                    dashNotes: 'Notes/Mo',
+                    noResults: 'No matching notes',
+                    loading: 'Loading weather...',
+                    weatherError: 'Failed, tap to retry',
+                    wishTitle: '⭐ Wish Star',
+                    worldClockCities: { 'Beijing': 'Beijing', 'Tokyo': 'Tokyo', 'NewYork': 'New York', 'London': 'London',
+                        'Paris': 'Paris', 'Sydney': 'Sydney' },
+                    solarTermsTitle: '🌿 Twenty-Four Solar Terms',
+                    solarTermsGroups: [
+                        { s: '🌸 Spring', t: ['Start of Spring', 'Rain Water', 'Awakening of Insects', 'Spring Equinox', 'Clear and Bright', 'Grain Rain'] },
+                        { s: '☀️ Summer', t: ['Start of Summer', 'Grain Buds', 'Grain in Ear', 'Summer Solstice', 'Minor Heat', 'Major Heat'] },
+                        { s: '🍂 Autumn', t: ['Start of Autumn', 'End of Heat', 'White Dew', 'Autumn Equinox', 'Cold Dew', "Frost's Descent"] },
+                        { s: '❄️ Winter', t: ['Start of Winter', 'Minor Snow', 'Major Snow', 'Winter Solstice', 'Minor Cold', 'Major Cold'] }
+                    ],
+                    solarTermsDateFmt: function(m, d) { return m + '/' + d; },
+                    holidayListTitle: '📅 Annual Holidays',
+                    holidayNames: { '元旦':'New Year', '春节':'Spring Festival', '清明':'Qingming', '劳动节':'Labor Day', '端午':'Dragon Boat', '中秋':'Mid-Autumn', '国庆':'National Day', '建党节':'CPC Founding', '建军节':'Army Day', '国际和平日':'Peace Day', '人权日':'Human Rights', '联合国日':'UN Day' },
+                    hlToday: '🎉 Today',
+                    hlPast: 'Passed',
+                    hlTomorrow: 'Tomorrow',
+                    hlDaysLater: 'days',
+                    cdAllPassed: '🌟 All holidays passed, look forward to the new year~',
+                    cdTodayIs: 'Today is',
+                    cdHappy: 'Happy holiday!',
+                    cdUntil: 'Until',
+                    cdIn: 'in',
+                    cdDays: 'days',
+                    dashSolarTermNone: 'None',
+                    dashYearPassed: function(pct) { return 'Year passed ' + pct + '%'; },
+                    weekDaysArr: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                    noteTitle: '📝 Notes',
+                    noteAdd: 'Add',
+                    noteSave: 'Save',
+                    notePlaceholder: 'Enter note...',
+                    noteSearchPlaceholder: 'Search all notes...',
+                    noteExport: '📤 Export',
+                    noteImport: '📥 Import',
+                    noteSearch: '🔍 Search',
+                    noteClose: 'Close',
+                    noteEmpty: 'No notes yet, add one~',
+                    noteSearchEmpty: 'No matching notes found',
+                    noteTotal: function(n) { return '...Total ' + n + ' items'; },
+                    noteImportOk: '✅ Imported successfully!',
+                    noteImportFail: '⚠️ Import failed, invalid file format',
+                    noteEdit: 'Edit',
+                    noteDel: 'Delete',
+                    workdayTag: 'Work',
+                    yearPanelLabel: function(y) { return 'Current year ' + y + ', click to select'; },
+                    monthPanelLabel: function(m) { return 'Current month ' + m + ', click to select'; },
+                    wishSubtitle: 'Make a wish upon the stars for world peace',
+                    wishPlaceholder: 'Write your wish...',
+                    wishBtn: 'Wish ✨',
+                    wishEmpty: 'No wishes yet, make your first one~',
+                    themeLightLabel: 'Switch to light mode',
+                    themeDarkLabel: 'Switch to dark mode',
+                    weatherFeels: 'Feels',
+                    weatherLoading: 'Loading weather...',
+                    weatherLoadingShort: 'Loading',
+                    weatherError: 'Error',
+                    weatherRetry: 'Failed, tap to retry',
+                    weatherCurrentLoc: 'Current location',
+                    citySearchPlaceholder: 'Search city, e.g. Beijing',
+                    weatherGo: 'Go',
+                    weatherCancel: 'Cancel',
+                    today: 'Today',
+                    locale: 'en-US',
+                    themeLightText: '☀️ Light',
+                    themeDarkText: '🌙 Dark',
                     festivalTips: {
                         'Spring Festival': '🎊 Spring couplets, firecrackers, reunion dinner, and greetings!',
                         'Lantern Festival': '🏮 Enjoy lanterns, eat tangyuan, solve riddles!',
@@ -3218,20 +3379,63 @@
                         "New Year's Day": '🎊 Happy New Year! Make a wish for world peace~',
                         'Labor Day': '💪 Salute to every worker!',
                         'Laba': '🍚 Laba porridge tradition, warm and nourishing~',
+                        'Start of Spring': '🌱 Spring is here! All things revive, a time for new resolutions~',
+                        'Rain Water': '🌧️ Rain nourishes all things, spring is in the air~',
+                        'Awakening of Insects': '⛈️ Thunder awakens hibernating creatures, spring deepens~',
+                        'Spring Equinox': '🌸 Day and night are equal, spring is halfway~',
+                        'Clear and Bright': '🌿 Outing and tomb sweeping, connect with nature~',
+                        'Grain Rain': '🌧️ Rain nourishes grains, perfect time for sowing~',
+                        'Start of Summer': '☀️ Summer begins, nourish the heart and prevent heatstroke~',
+                        'Grain Buds': '🌾 Wheat grains filling, summer harvest ahead~',
+                        'Grain in Ear': '🌾 Busy harvesting and sowing~',
+                        'Summer Solstice': '☀️ Longest day, stay cool~',
+                        'Minor Heat': '🔥 Heat rising, stay calm~',
+                        'Major Heat': '🥵 Hottest days of the year, stay hydrated~',
+                        'Start of Autumn': '🍂 Autumn arrives, season of harvest~',
+                        'End of Heat': '🍃 Heat fading, cooler mornings and evenings~',
+                        'White Dew': '💧 Dew forms, add layers~',
+                        'Autumn Equinox': '🍁 Day and night equal, autumn is halfway~',
+                        'Cold Dew': '🍂 Dew turns cold, watch for dryness~',
+                        'Frost\'s Descent': '❄️ Frost covers the land, winter approaches~',
+                        'Start of Winter': '🧥 Winter is here, time to store and conserve~',
+                        'Minor Snow': '❄️ First snow falls, a romantic season~',
+                        'Major Snow': '❄️ Heavier snow, bundle up~',
+                        'Winter Solstice': '🥟 Shortest day, eat dumplings or tangyuan!'
                     },
-                    dashSolarTerm: 'Solar Term',
-                    dashNewYear: 'Days to NY',
-                    dashNotes: 'Notes/Mo',
-                    noResults: 'No matching notes',
-                    loading: 'Loading weather...',
-                    weatherError: 'Failed, tap to retry',
-                    wishTitle: '⭐ Wish Star',
-                    wishSubtitle: 'Make a wish upon the stars for world peace',
-                    wishPlaceholder: 'Write your wish...',
-                    wishBtn: 'Wish ✨',
-                    wishEmpty: 'No wishes yet, make your first one~',
-                    worldClockCities: { 'Beijing': 'Beijing', 'Tokyo': 'Tokyo', 'NewYork': 'New York', 'London': 'London',
-                        'Paris': 'Paris', 'Sydney': 'Sydney' }
+                    pageTitle: 'World Peace!',
+                    titleLine1: 'Our wish is~',
+                    titleLine2: 'World Peace!',
+                    viewMonth: 'Month',
+                    viewWeek: 'Week',
+                    themeColorBtn: 'Theme Color',
+                    themeColorBlue: 'Blue',
+                    themeColorPurple: 'Purple',
+                    themeColorRose: 'Rose',
+                    themeColorTeal: 'Teal',
+                    themeColorGradient: 'Gradient',
+                    weatherTitle: 'View Weather',
+                    weatherRefresh: 'Refresh Weather',
+                    dashSolarTermTitle: 'Current Solar Term',
+                    dashNewYearTitle: 'Days to New Year',
+                    dashNotesTitle: 'Notes This Month',
+                    prevMonthTitle: 'Previous Month (←)',
+                    nextMonthTitle: 'Next Month (→)',
+                    selectYearLabel: 'Select Year',
+                    selectMonthLabel: 'Select Month',
+                    calendarGridLabel: 'Calendar Grid',
+                    forecastDays: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+                    forecastFallback: function(dateStr) { return new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', {weekday:'short'}); },
+                    easterHint: '\u{1F54A} Easter Egg Hint<br>Triple-click "Peace"<br>or Konami Code',
+                    wishStarTitle: '⭐ Wish Star',
+                    langSwitchTo: '切换到中文',
+                    langLabel: '🌐 EN',
+                    easterTitle: 'World Peace',
+                    easterMsg: 'Regardless of language, skin color, or belief,<br>regardless of distance, wealth, or friend,<br>every life that walks this earth deserves to be treated with tenderness.<br>May the flames of war be forever extinguished beneath these stars,<br>may every child grow up in peace,<br>may the world stride toward the light with every heartbeat.',
+                    easterCloseHint: 'Click anywhere or press ESC to close',
+                    wishModalTitle: '⭐ Wish Star',
+                    wishCloseLabel: 'Close',
+                    wishInputLabel: 'Enter your wish',
+                    wishFabTitle: 'Make a wish~'
                 }
             };
 
@@ -3239,6 +3443,9 @@
 
             function t(key) {
                 return I18N[currentLang][key] || key;
+            }
+            function fmtDate(y, m, d) {
+                return currentLang === 'zh' ? y+'年'+m+'月'+d+'日' : y+'/'+m+'/'+d;
             }
 
             function tGreeting() {
@@ -3281,7 +3488,7 @@
             let currentModalDateKey = null;
             let lastMinute = -1;
 
-            // ===== 农历数据 2026-2027 =====
+            // ===== 农历数据 2026-2030 =====
             const lunarData = {
                 2026: {
                     1: { 1: '元旦', 2: '十四', 3: '十五', 4: '十六', 5: '十七', 6: '十八', 7: '十九', 8: '二十', 9: '廿一',
@@ -3383,6 +3590,28 @@
                         19: '十四', 20: '十五', 21: '十六', 22: '十七', 23: '十八', 24: '十九', 25: '二十', 26: '廿一', 27: '廿二',
                         28: '廿三', 29: '廿四', 30: '廿五', 31: '廿六' }
                 }
+            };
+
+            const lunarEN = {
+                '元旦': "New Year's Day", '春节': 'Spring Festival', '国庆节': 'National Day',
+                '建党节': 'CPC Founding', '建军节': 'Army Day',
+                '初一': '1st', '初二': '2nd', '初三': '3rd', '初四': '4th', '初五': '5th',
+                '初六': '6th', '初七': '7th', '初八': '8th', '初九': '9th', '初十': '10th',
+                '十一': '11th', '十二': '12th', '十三': '13th', '十四': '14th', '十五': '15th',
+                '十六': '16th', '十七': '17th', '十八': '18th', '十九': '19th', '二十': '20th',
+                '廿一': '21st', '廿二': '22nd', '廿三': '23rd', '廿四': '24th', '廿五': '25th',
+                '廿六': '26th', '廿七': '27th', '廿八': '28th', '廿九': '29th', '三十': '30th',
+                '正月': 'Jan(L)', '二月': 'Feb(L)', '三月': 'Mar(L)', '四月': 'Apr(L)',
+                '五月': 'May(L)', '六月': 'Jun(L)', '七月': 'Jul(L)', '八月': 'Aug(L)',
+                '九月': 'Sep(L)', '十月': 'Oct(L)', '冬月': 'Nov(L)', '腊月': 'Dec(L)',
+                '小寒': 'Minor Cold', '大寒': 'Major Cold', '立春': 'Start of Spring',
+                '雨水': 'Rain Water', '惊蛰': 'Awakening', '春分': 'Spring Eq.', '清明': 'Qingming',
+                '谷雨': 'Grain Rain', '立夏': 'Start of Summer', '小满': 'Grain Buds',
+                '芒种': 'Grain in Ear', '夏至': 'Summer Sol.', '小暑': 'Minor Heat',
+                '大暑': 'Major Heat', '立秋': 'Start of Autumn', '处暑': 'End of Heat',
+                '白露': 'White Dew', '秋分': 'Autumn Eq.', '寒露': 'Cold Dew', '霜降': "Frost's Descent",
+                '立冬': 'Start of Winter', '小雪': 'Minor Snow', '大雪': 'Major Snow',
+                '冬至': 'Winter Sol.', '初伏': 'Fu-1', '中伏': 'Fu-2', '末伏': 'Fu-3'
             };
 
             // ===== 节假日数据 =====
@@ -3489,124 +3718,124 @@
                 };
             })();
 
-            /* 获取某年节气数据（硬编码优先，否则自动计算） */
+            /* 获取某年节气数据(硬编码优先,否则自动计算) */
             function getSolarTerms(year) {
                 return solarTermsData[year] || window.calcSolarTerms(year);
             }
             const festivalMap = { "7-1": "建党节", "8-1": "建军节", "9-21": "国际和平日", "10-24": "联合国日", "12-10": "人权日" };
             const peaceDays = ["9-21"];
 
-            // ===== 新增：和平语录数据（已扩充） =====
+            // ===== 新增:和平语录数据(已扩充) =====
             const peaceQuotes = {
                 zh: [
-                    '愿世界和平，万物共生。—— 佚名',
-                    '和平不是没有冲突，而是以公正化解冲突。—— J.F.肯尼迪',
-                    '每一个微笑都是和平的种子。—— 佚名',
-                    '战火熄灭之处，鲜花终将盛开。—— 佚名',
-                    '和平，是给未来最好的礼物。—— 佚名',
-                    '同一片星空下，我们都是一家人。—— 佚名',
-                    '让爱代替仇恨，让理解代替偏见。—— 曼德拉',
-                    '和平从心开始，从每一个善意的举动开始。—— 佚名',
-                    '孩子们的笑声，是和平最美的旋律。—— 佚名',
-                    '世界很大，但和平可以把我们连在一起。—— 佚名',
-                    '放下武器，拥抱彼此。—— 佚名',
-                    '愿每一个角落都有阳光照进。—— 佚名',
-                    '和平不是梦想，是我们共同的选择。—— 科菲·安南',
-                    '跨越国界，我们都是地球的守护者。—— 佚名',
-                    '温柔的力量，可以改变世界。—— 甘地',
-                    '和平不是没有冲突，而是用对话代替暴力。—— 科菲·安南',
-                    '世界和平始于每个人的内心。—— 佚名',
-                    '如果你想要和平，不要去和你的敌人说，去和你的朋友说。—— 帕特里斯·卢蒙巴',
-                    '和平不是遥不可及的梦想，而是我们每天的选择。—— 佚名',
-                    '在和平中生活是最大的幸福。—— 亚里士多德',
-                    '和平是世界上最美丽的词汇。—— 马丁·路德·金',
-                    '真正的和平不是战争的缺席，而是正义的在场。—— J.F.肯尼迪',
-                    '和平的代价是永恒的警惕，和平的回报是永恒的幸福。—— J.F.肯尼迪',
-                    '让和平像阳光一样普照大地。—— 佚名',
-                    '和平不是一个目标，而是一条道路。—— 马丁·路德·金',
-                    '世界上最强大的力量是和平的力量。—— 曼德拉',
-                    '爱与和平是宇宙的终极答案。—— 佚名',
-                    '和平从我们每个人开始，从今天开始。—— 科菲·安南',
-                    '愿这世界充满理解与宽容。—— 佚名',
-                    '没有比和平更崇高的追求，没有比战争更愚昧的行为。—— 佚名',
-                    '和平是人类最伟大的理想。—— 甘地',
-                    '以眼还眼，世界只会更盲目。—— 甘地',
-                    '非暴力是最大的力量。—— 甘地',
-                    '战争不决定谁对了，只决定谁留下了。—— 伯特兰·罗素',
-                    '和平不能靠武力维持，只有靠理解才能实现。—— 爱因斯坦',
-                    '世界和平的敌人是无知和偏见。—— 罗曼·罗兰',
-                    '真正的和平来自内心的安宁。—— 达赖喇嘛',
-                    '没有什么比和平更珍贵。—— 西塞罗',
-                    '我们无法在仇恨中建立和平，只有爱才能做到。—— 马丁·路德·金',
-                    '和平不是一瞬间的事，而是每天的努力。—— 科菲·安南',
-                    '如果我们要教导真正的和平，我们要教导同情。—— 达赖喇嘛',
-                    '和平是最美丽的花朵。—— 梵高',
-                    '宁可在和平中吃粗茶淡饭，也不要在战争中享山珍海味。—— 佚名',
-                    '永远不要低估一颗和平的心。—— 曼德拉',
-                    '人类的最终目标是和平共处。—— 联合国宪章',
-                    '每个人心中都有一盏和平的灯。—— 泰戈尔',
-                    '世界上没有通向和平的道路，和平本身就是道路。—— 甘地',
-                    '愿和平之光照耀每一个人。—— 佚名',
-                    '我们必须学会像兄弟一样共存，否则就会像愚人一样灭亡。—— 马丁·路德·金',
-                    '和平是最高的正义。—— 维吉尔',
-                    '人类的悲剧在于，我们总是准备战争，却从未准备好和平。—— 佚名',
-                    '真正的勇士追求和平。—— 孔子',
-                    '和而不同，美美与共。—— 费孝通'
+                    '愿世界和平,万物共生。-- 佚名',
+                    '和平不是没有冲突,而是以公正化解冲突。-- J.F.肯尼迪',
+                    '每一个微笑都是和平的种子。-- 佚名',
+                    '战火熄灭之处,鲜花终将盛开。-- 佚名',
+                    '和平,是给未来最好的礼物。-- 佚名',
+                    '同一片星空下,我们都是一家人。-- 佚名',
+                    '让爱代替仇恨,让理解代替偏见。-- 曼德拉',
+                    '和平从心开始,从每一个善意的举动开始。-- 佚名',
+                    '孩子们的笑声,是和平最美的旋律。-- 佚名',
+                    '世界很大,但和平可以把我们连在一起。-- 佚名',
+                    '放下武器,拥抱彼此。-- 佚名',
+                    '愿每一个角落都有阳光照进。-- 佚名',
+                    '和平不是梦想,是我们共同的选择。-- 科菲·安南',
+                    '跨越国界,我们都是地球的守护者。-- 佚名',
+                    '温柔的力量,可以改变世界。-- 甘地',
+                    '和平不是没有冲突,而是用对话代替暴力。-- 科菲·安南',
+                    '世界和平始于每个人的内心。-- 佚名',
+                    '如果你想要和平,不要去和你的敌人说,去和你的朋友说。-- 帕特里斯·卢蒙巴',
+                    '和平不是遥不可及的梦想,而是我们每天的选择。-- 佚名',
+                    '在和平中生活是最大的幸福。-- 亚里士多德',
+                    '和平是世界上最美丽的词汇。-- 马丁·路德·金',
+                    '真正的和平不是战争的缺席,而是正义的在场。-- J.F.肯尼迪',
+                    '和平的代价是永恒的警惕,和平的回报是永恒的幸福。-- J.F.肯尼迪',
+                    '让和平像阳光一样普照大地。-- 佚名',
+                    '和平不是一个目标,而是一条道路。-- 马丁·路德·金',
+                    '世界上最强大的力量是和平的力量。-- 曼德拉',
+                    '爱与和平是宇宙的终极答案。-- 佚名',
+                    '和平从我们每个人开始,从今天开始。-- 科菲·安南',
+                    '愿这世界充满理解与宽容。-- 佚名',
+                    '没有比和平更崇高的追求,没有比战争更愚昧的行为。-- 佚名',
+                    '和平是人类最伟大的理想。-- 甘地',
+                    '以眼还眼,世界只会更盲目。-- 甘地',
+                    '非暴力是最大的力量。-- 甘地',
+                    '战争不决定谁对了,只决定谁留下了。-- 伯特兰·罗素',
+                    '和平不能靠武力维持,只有靠理解才能实现。-- 爱因斯坦',
+                    '世界和平的敌人是无知和偏见。-- 罗曼·罗兰',
+                    '真正的和平来自内心的安宁。-- 达赖喇嘛',
+                    '没有什么比和平更珍贵。-- 西塞罗',
+                    '我们无法在仇恨中建立和平,只有爱才能做到。-- 马丁·路德·金',
+                    '和平不是一瞬间的事,而是每天的努力。-- 科菲·安南',
+                    '如果我们要教导真正的和平,我们要教导同情。-- 达赖喇嘛',
+                    '和平是最美丽的花朵。-- 梵高',
+                    '宁可在和平中吃粗茶淡饭,也不要在战争中享山珍海味。-- 佚名',
+                    '永远不要低估一颗和平的心。-- 曼德拉',
+                    '人类的最终目标是和平共处。-- 联合国宪章',
+                    '每个人心中都有一盏和平的灯。-- 泰戈尔',
+                    '世界上没有通向和平的道路,和平本身就是道路。-- 甘地',
+                    '愿和平之光照耀每一个人。-- 佚名',
+                    '我们必须学会像兄弟一样共存,否则就会像愚人一样灭亡。-- 马丁·路德·金',
+                    '和平是最高的正义。-- 维吉尔',
+                    '人类的悲剧在于,我们总是准备战争,却从未准备好和平。-- 佚名',
+                    '真正的勇士追求和平。-- 孔子',
+                    '和而不同,美美与共。-- 费孝通'
                 ],
                 en: [
-                    'May peace prevail on Earth. — Unknown',
-                    'Peace is not the absence of conflict, but the presence of justice. — J.F. Kennedy',
-                    'Every smile plants a seed of peace. — Unknown',
-                    'Where war ends, flowers begin to bloom. — Unknown',
-                    'Peace is the greatest gift we can give to the future. — Unknown',
-                    'Under the same sky, we are all one family. — Unknown',
-                    'Let love replace hatred, understanding replace prejudice. — Nelson Mandela',
-                    'Peace begins with a single kind act. — Unknown',
-                    "Children's laughter is the sweetest melody of peace. — Unknown",
-                    'The world is vast, but peace connects us all. — Unknown',
-                    'Lay down arms, embrace one another. — Unknown',
-                    'May sunlight reach every corner of the world. — Unknown',
-                    'Peace is not a dream, it is our shared choice. — Kofi Annan',
-                    'Across borders, we are all guardians of Earth. — Unknown',
-                    'Gentle strength can change the world. — Mahatma Gandhi',
-                    'Peace is not absence of conflict, it is dialogue instead of violence. — Kofi Annan',
-                    'World peace begins in the heart of each individual. — Unknown',
-                    'If you want peace, talk to your friends, not your enemies. — Patrice Lumumba',
-                    'Peace is not a distant dream, but a daily choice. — Unknown',
-                    'To live in peace is the greatest happiness. — Aristotle',
-                    'Peace is the most beautiful word in any language. — Martin Luther King Jr.',
-                    'True peace is not the absence of war, but the presence of justice. — J.F. Kennedy',
-                    'The price of peace is eternal vigilance, the reward is eternal happiness. — J.F. Kennedy',
-                    'Let peace shine upon the Earth like the sun. — Unknown',
-                    'Peace is not a destination, it is a path. — Martin Luther King Jr.',
-                    'The most powerful force in the world is the force of peace. — Nelson Mandela',
-                    'Love and peace are the ultimate answers of the universe. — Unknown',
-                    'Peace starts with each of us, starting today. — Kofi Annan',
-                    'May this world be filled with understanding and tolerance. — Unknown',
-                    'There is no pursuit more noble than peace, no act more foolish than war. — Unknown',
-                    'Peace is the greatest ideal of humanity. — Mahatma Gandhi',
-                    'An eye for an eye makes the whole world blind. — Mahatma Gandhi',
-                    'Non-violence is the greatest force. — Mahatma Gandhi',
-                    'War does not determine who is right — only who is left. — Bertrand Russell',
-                    'Peace cannot be kept by force; it can only be achieved by understanding. — Albert Einstein',
-                    'The enemies of world peace are ignorance and prejudice. — Romain Rolland',
-                    'True peace comes from inner peace. — Dalai Lama',
-                    'Nothing is more precious than peace. — Cicero',
-                    'We cannot build peace with hatred; only love can do that. — Martin Luther King Jr.',
-                    'Peace is not a moment, it is a daily effort. — Kofi Annan',
-                    'If we are to teach real peace, we must teach compassion. — Dalai Lama',
-                    'Peace is the most beautiful flower. — Vincent van Gogh',
-                    'Better to eat bread in peace than feast in war. — Unknown',
-                    'Never underestimate a heart at peace. — Nelson Mandela',
-                    'The ultimate goal of humanity is peaceful coexistence. — United Nations Charter',
-                    'Everyone carries a lamp of peace within. — Rabindranath Tagore',
-                    'There is no way to peace; peace is the way. — Mahatma Gandhi',
-                    'May the light of peace shine upon everyone. — Unknown',
-                    'We must learn to live together as brothers, or perish together as fools. — Martin Luther King Jr.',
-                    'Peace is the highest justice. — Virgil',
-                    'The tragedy of humanity is that we are always prepared for war, never for peace. — Unknown',
-                    'The true warrior seeks peace. — Confucius',
-                    'Harmony in diversity, beauty shared by all. — Fei Xiaotong'
+                    'May peace prevail on Earth. - Unknown',
+                    'Peace is not the absence of conflict, but the presence of justice. - J.F. Kennedy',
+                    'Every smile plants a seed of peace. - Unknown',
+                    'Where war ends, flowers begin to bloom. - Unknown',
+                    'Peace is the greatest gift we can give to the future. - Unknown',
+                    'Under the same sky, we are all one family. - Unknown',
+                    'Let love replace hatred, understanding replace prejudice. - Nelson Mandela',
+                    'Peace begins with a single kind act. - Unknown',
+                    "Children's laughter is the sweetest melody of peace. - Unknown",
+                    'The world is vast, but peace connects us all. - Unknown',
+                    'Lay down arms, embrace one another. - Unknown',
+                    'May sunlight reach every corner of the world. - Unknown',
+                    'Peace is not a dream, it is our shared choice. - Kofi Annan',
+                    'Across borders, we are all guardians of Earth. - Unknown',
+                    'Gentle strength can change the world. - Mahatma Gandhi',
+                    'Peace is not absence of conflict, it is dialogue instead of violence. - Kofi Annan',
+                    'World peace begins in the heart of each individual. - Unknown',
+                    'If you want peace, talk to your friends, not your enemies. - Patrice Lumumba',
+                    'Peace is not a distant dream, but a daily choice. - Unknown',
+                    'To live in peace is the greatest happiness. - Aristotle',
+                    'Peace is the most beautiful word in any language. - Martin Luther King Jr.',
+                    'True peace is not the absence of war, but the presence of justice. - J.F. Kennedy',
+                    'The price of peace is eternal vigilance, the reward is eternal happiness. - J.F. Kennedy',
+                    'Let peace shine upon the Earth like the sun. - Unknown',
+                    'Peace is not a destination, it is a path. - Martin Luther King Jr.',
+                    'The most powerful force in the world is the force of peace. - Nelson Mandela',
+                    'Love and peace are the ultimate answers of the universe. - Unknown',
+                    'Peace starts with each of us, starting today. - Kofi Annan',
+                    'May this world be filled with understanding and tolerance. - Unknown',
+                    'There is no pursuit more noble than peace, no act more foolish than war. - Unknown',
+                    'Peace is the greatest ideal of humanity. - Mahatma Gandhi',
+                    'An eye for an eye makes the whole world blind. - Mahatma Gandhi',
+                    'Non-violence is the greatest force. - Mahatma Gandhi',
+                    'War does not determine who is right - only who is left. - Bertrand Russell',
+                    'Peace cannot be kept by force; it can only be achieved by understanding. - Albert Einstein',
+                    'The enemies of world peace are ignorance and prejudice. - Romain Rolland',
+                    'True peace comes from inner peace. - Dalai Lama',
+                    'Nothing is more precious than peace. - Cicero',
+                    'We cannot build peace with hatred; only love can do that. - Martin Luther King Jr.',
+                    'Peace is not a moment, it is a daily effort. - Kofi Annan',
+                    'If we are to teach real peace, we must teach compassion. - Dalai Lama',
+                    'Peace is the most beautiful flower. - Vincent van Gogh',
+                    'Better to eat bread in peace than feast in war. - Unknown',
+                    'Never underestimate a heart at peace. - Nelson Mandela',
+                    'The ultimate goal of humanity is peaceful coexistence. - United Nations Charter',
+                    'Everyone carries a lamp of peace within. - Rabindranath Tagore',
+                    'There is no way to peace; peace is the way. - Mahatma Gandhi',
+                    'May the light of peace shine upon everyone. - Unknown',
+                    'We must learn to live together as brothers, or perish together as fools. - Martin Luther King Jr.',
+                    'Peace is the highest justice. - Virgil',
+                    'The tragedy of humanity is that we are always prepared for war, never for peace. - Unknown',
+                    'The true warrior seeks peace. - Confucius',
+                    'Harmony in diversity, beauty shared by all. - Fei Xiaotong'
                 ]
             };
             let quoteIndex = 0;
@@ -3637,7 +3866,7 @@
                 quoteTimer = setInterval(rotateQuote, 6000);
             }
 
-            // ===== 新增：世界时钟更新 =====
+            // ===== 新增:世界时钟更新 =====
             const worldClockTzMap = {
                 'wcBeijing': 'Asia/Shanghai',
                 'wcTokyo': 'Asia/Tokyo',
@@ -3653,7 +3882,7 @@
                     const el = $(elId);
                     if (!el) continue;
                     try {
-                        const timeStr = now.toLocaleTimeString(currentLang === 'zh' ? 'zh-CN' : 'en-US', {
+                        const timeStr = now.toLocaleTimeString(I18N[currentLang].locale, {
                             timeZone: tz,
                             hour: '2-digit',
                             minute: '2-digit',
@@ -3682,7 +3911,7 @@
                 });
             }
 
-            // ===== 新增：许愿星系统 =====
+            // ===== 新增:许愿星系统 =====
             const WISH_KEY = 'peace_wish_star_wishes';
 
             function loadWishes() {
@@ -3746,13 +3975,11 @@
             function openWishModal() {
                 $('wishModalOverlay').classList.add('show');
                 $('wishInput').value = '';
-                $('wishSubtitle').textContent = currentLang === 'zh' ? '向星空许下心愿，愿世界和平' :
-                    'Make a wish upon the stars for world peace';
-                $('wishInput').placeholder = currentLang === 'zh' ? '写下你的愿望...' : 'Write your wish...';
-                $('btnWishSubmit').textContent = currentLang === 'zh' ? '许愿 ✨' : 'Wish ✨';
+                $('wishSubtitle').textContent = t('wishSubtitle');
+                $('wishInput').placeholder = t('wishPlaceholder');
+                $('btnWishSubmit').textContent = t('wishBtn');
                 const emptyEl = $('wishEmpty');
-                if (emptyEl) emptyEl.textContent = currentLang === 'zh' ? '还没有愿望，快来许下第一个吧~' :
-                    'No wishes yet, make your first one~';
+                if (emptyEl) emptyEl.textContent = t('wishEmpty');
                 renderWishHistory();
                 setTimeout(() => $('wishInput').focus(), 200);
             }
@@ -3776,7 +4003,7 @@
                 input.focus();
             }
 
-            // ===== 新增：和平日金色粒子雨 =====
+            // ===== 新增:和平日金色粒子雨 =====
             function spawnPeaceDayParticles() {
                 const emojis = ['🕊', '☮️', '💛', '🌟', '✨', '🕊️', '🌍', '💫', '⭐', '🎗️', '🏳️', '💖'];
                 const count = 50;
@@ -3860,8 +4087,11 @@
             function hasNotesForDate(dateKey) { return getNotesForDate(dateKey).length > 0; }
 
             function getSimpleLunar(y, m, d) {
-                if (lunarData[y] && lunarData[y][m] && lunarData[y][m][d]) return lunarData[y][m][d];
-                return '';
+                let txt = '';
+                if (lunarData[y] && lunarData[y][m] && lunarData[y][m][d]) txt = lunarData[y][m][d];
+                if (!txt) return '';
+                if (currentLang === 'en' && lunarEN[txt]) return lunarEN[txt];
+                return txt;
             }
 
             function isDuplicateName(lunarTxt, holidayName) {
@@ -3874,15 +4104,14 @@
             }
 
             function renderWeekRow() {
-                const days = currentLang === 'zh' ? I18N.zh.weekDays : I18N.en.weekDays;
+                const days = I18N[currentLang].weekDays;
                 weekRow.innerHTML = '';
                 days.forEach((d, i) => {
                     const div = document.createElement('div');
                     div.className = 'week-item' + (i === 5 ? ' weekday-sat' : '') + (i === 6 ? ' weekday-sun' :
                         '');
                     div.setAttribute('role', 'columnheader');
-                    div.setAttribute('aria-label', (currentLang === 'zh' ? '' : I18N.en.weekDaysFull[i] + ', ') +
-                        d);
+                    div.setAttribute('aria-label', I18N[currentLang].weekDaysFull[i] + ', ' + d);
                     div.textContent = d;
                     weekRow.appendChild(div);
                 });
@@ -3918,7 +4147,7 @@
                 if (isHoliday && holidayName && !isOtherMonth) inner +=
                 `<span class="holiday-name">${holidayName}</span>`;
                 if (isWorkday && !isOtherMonth && !isHoliday) inner +=
-                    `<span class="workday-tag">${currentLang==='zh'?'补班':'Work'}</span>`;
+                    `<span class="workday-tag">${t('workdayTag')}</span>`;
                 if (displayLunar) inner += `<span class="lunar">${displayLunar}</span>`;
                 else if (!isOtherMonth && !displayLunar && !isHoliday && !isSolarTerm && !isWorkday) inner +=
                     '<span class="lunar" style="visibility:hidden;">·</span>';
@@ -3938,7 +4167,7 @@
                     item.textContent = y;
                     item.addEventListener('click', e => {
                         e.stopPropagation();
-                        switchMonth(currentShowYear, y, 'none');
+                        switchMonth(y, currentShowMonth, 'none');
                         closeAllPanel();
                     });
                     yearPanel.appendChild(item);
@@ -3998,10 +4227,8 @@
                 dayGrid.innerHTML = '';
                 yearText.textContent = currentShowYear;
                 monthText.textContent = currentShowMonth;
-                yearText.setAttribute('aria-label', currentLang === 'zh' ? `当前年份 ${currentShowYear}，点击选择` :
-                    `Year ${currentShowYear}, click to select`);
-                monthText.setAttribute('aria-label', currentLang === 'zh' ? `当前月份 ${currentShowMonth}，点击选择` :
-                    `Month ${currentShowMonth}, click to select`);
+                yearText.setAttribute('aria-label', I18N[currentLang].yearPanelLabel(currentShowYear));
+                monthText.setAttribute('aria-label', I18N[currentLang].monthPanelLabel(currentShowMonth));
                 const yearHoliday = allYearHolidays[currentShowYear] || {};
                 const yearWorkday = allYearWorkdays[currentShowYear] || {};
                 const yearSolarTerms = getSolarTerms(currentShowYear);
@@ -4072,11 +4299,11 @@
                 if (!notes.length) return;
                 const [y, m, d] = dateKey.split('-');
                 let html =
-                    `<div class="tooltip-date">📌 ${y}${currentLang==='zh'?'年':'/'}${m}${currentLang==='zh'?'月':'/'}${d}${currentLang==='zh'?'日':''}</div>`;
+                    `<div class="tooltip-date">📌 ${fmtDate(y,m,d)}</div>`;
                 notes.slice(0, 3).forEach(n => { html +=
                         `<div class="tooltip-item">${escapeHtml(n.text.length>18?n.text.slice(0,18)+'...':n.text)}</div>`; });
                 if (notes.length > 3) html +=
-                    `<div class="tooltip-item" style="color:#999;">...${currentLang==='zh'?'共':'Total'} ${notes.length} ${currentLang==='zh'?'条':'items'}</div>`;
+                    `<div class="tooltip-item" style="color:#999;">${I18N[currentLang].noteTotal(notes.length)}</div>`;
                 noteTooltip.innerHTML = html;
                 noteTooltip.classList.add('show');
                 positionTooltip(e);
@@ -4103,10 +4330,9 @@
                 currentModalDateKey = dateKey;
                 editingNoteId = null;
                 modalNoteInput.value = '';
-                btnAddNote.textContent = currentLang === 'zh' ? '添加' : 'Add';
+                btnAddNote.textContent = t('noteAdd');
                 const [y, m, d] = dateKey.split('-');
-                modalDateLabel.textContent =
-                    `${y}${currentLang==='zh'?'年':'/'}${m}${currentLang==='zh'?'月':'/'}${d}${currentLang==='zh'?'日':''}`;
+                modalDateLabel.textContent = fmtDate(y,m,d);
                 hideSearchResults();
                 $('noteSearchRow').style.display = 'none';
                 renderModalNotesList();
@@ -4126,19 +4352,19 @@
                 modalNotesList.innerHTML = '';
                 if (!notes.length) {
                     modalNotesList.innerHTML =
-                        `<div class="modal-empty">${currentLang==='zh'?'暂无记事，快来添加吧~':'No notes yet, add one~'}</div>`;
+                        `<div class="modal-empty">${t('noteEmpty')}</div>`;
                     return;
                 }
                 notes.forEach(n => {
                     const div = document.createElement('div');
                     div.className = 'modal-note-item';
-                    const timeStr = new Date(n.createdAt).toLocaleString(currentLang === 'zh' ? 'zh-CN' :
-                        'en-US', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                    const timeStr = new Date(n.createdAt).toLocaleString(I18N[currentLang].locale,
+                        { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                     div.innerHTML = `
                 <span class="note-text">${escapeHtml(n.text)}</span>
                 <span class="note-time">${timeStr}</span>
-                <button class="btn-edit-note" data-id="${n.id}" title="${currentLang==='zh'?'修改':'Edit'}" aria-label="${currentLang==='zh'?'修改记事':'Edit note'}">✎</button>
-                <button class="btn-del-note" data-id="${n.id}" title="${currentLang==='zh'?'删除':'Delete'}" aria-label="${currentLang==='zh'?'删除记事':'Delete note'}">✕</button>
+                <button class="btn-edit-note" data-id="${n.id}" title="${t('noteEdit')}" aria-label="${t('noteEdit')}">✎</button>
+                <button class="btn-del-note" data-id="${n.id}" title="${t('noteDel')}" aria-label="${t('noteDel')}">✕</button>
               `;
                     div.querySelector('.btn-del-note').addEventListener('click', e => {
                         deleteNoteFromDate(currentModalDateKey, n.id);
@@ -4150,7 +4376,7 @@
                         editingNoteId = n.id;
                         modalNoteInput.value = n.text;
                         modalNoteInput.focus();
-                        btnAddNote.textContent = currentLang === 'zh' ? '保存' : 'Save';
+                        btnAddNote.textContent = t('noteSave');
                     });
                     modalNotesList.appendChild(div);
                 });
@@ -4163,7 +4389,7 @@
                 if (editingNoteId) {
                     updateNoteInDate(currentModalDateKey, editingNoteId, text);
                     editingNoteId = null;
-                    btnAddNote.textContent = currentLang === 'zh' ? '添加' : 'Add';
+                    btnAddNote.textContent = t('noteAdd');
                 } else {
                     addNoteToDate(currentModalDateKey, text);
                 }
@@ -4200,7 +4426,7 @@
             function renderSearchResults(results) {
                 const box = $('noteSearchResults');
                 if (!results.length) { box.innerHTML =
-                        `<div class="modal-empty">${currentLang==='zh'?'没有找到匹配的记事':'No matching notes found'}</div>`;
+                        `<div class="modal-empty">${t('noteSearchEmpty')}</div>`;
                     box.style.display = ''; return; }
                 box.innerHTML = '';
                 results.forEach(r => {
@@ -4208,7 +4434,7 @@
                     const div = document.createElement('div');
                     div.className = 'note-search-item';
                     div.innerHTML =
-                        `<span class="nsi-date">${y}${currentLang==='zh'?'年':'/'}${m}${currentLang==='zh'?'月':'/'}${d}${currentLang==='zh'?'日':''}</span><span class="nsi-text">${escapeHtml(r.text)}</span>`;
+                        `<span class="nsi-date">${fmtDate(y,m,d)}</span><span class="nsi-text">${escapeHtml(r.text)}</span>`;
                     div.addEventListener('click', () => {
                         const ym = parseInt(y),
                             tm = parseInt(m);
@@ -4248,10 +4474,9 @@
                             saveAllNotes(merged);
                             renderCalendar();
                             updateDashboard();
-                            alert(currentLang === 'zh' ? '✅ 导入成功！' : '✅ Imported successfully!');
+                            alert(t('noteImportOk'));
                         } else throw new Error('Invalid format');
-                    } catch (err) { alert(currentLang === 'zh' ? '⚠️ 导入失败，文件格式错误' :
-                            '⚠️ Import failed: invalid format'); }
+                    } catch (err) { alert(t('noteImportFail')); }
                 };
                 reader.readAsText(file);
             }
@@ -4279,28 +4504,30 @@
                 }
                 allHolidayDates.sort((a, b) => a.dateObj - b.dateObj);
                 const next = allHolidayDates[0];
-                if (!next) { countdownText.innerHTML = currentLang === 'zh' ? '🌟 所有节日已过，期待新的一年~' :
-                        "🌟 All holidays passed, look forward to the new year~"; return; }
+                const i18n = I18N[currentLang];
+                const nameMap = i18n.holidayNames;
+                if (!next) { countdownText.innerHTML = i18n.cdAllPassed; return; }
                 const diffDays = Math.ceil((next.dateObj.getTime() - nowTime) / 86400000);
                 let emoji = '🎉';
                 const emap = { '春节': '🧧', '中秋': '🌕', '国庆': '🇨🇳', '端午': '🐲', '清明': '🌿', '劳动节': '💪', '元旦': '🎊',
                     '元宵节': '🏮' };
                 if (emap[next.name]) emoji = emap[next.name];
+                const displayName = (nameMap && nameMap[next.name]) ? nameMap[next.name] : next.name;
                 if (diffDays === 0) countdownText.innerHTML =
-                    `${currentLang==='zh'?'今天是':'Today is'} <strong>${next.name}</strong> ${emoji} ${currentLang==='zh'?'节日快乐！':'Happy holiday!'}`;
+                    `${i18n.cdTodayIs} <strong>${displayName}</strong> ${emoji} ${i18n.cdHappy}`;
                 else countdownText.innerHTML =
-                    `${currentLang==='zh'?'距离':'Until'} <strong>${next.year}${currentLang==='zh'?'年':'/'}${next.month}${currentLang==='zh'?'月':'/'}${next.day} ${next.name}</strong> ${currentLang==='zh'?'还有':'in'} <strong>${diffDays}</strong> ${currentLang==='zh'?'天':'days'} ${emoji}`;
+                    `${i18n.cdUntil} <strong>${fmtDate(next.year,next.month,next.day)} ${displayName}</strong> ${i18n.cdIn} <strong>${diffDays}</strong> ${i18n.cdDays} ${emoji}`;
             }
 
             function updateDashboard() {
                 const todayKey = `${todayMonth}-${todayDay}`;
                 const st = getSolarTerms(todayYear)[todayKey] || '';
-                $('dashSolarTerm').textContent = st || (currentLang === 'zh' ? '无' : 'None');
-                $('dashSolarTermLabel').textContent = currentLang === 'zh' ? '节气' : 'Solar Term';
+                $('dashSolarTerm').textContent = st || t('dashSolarTermNone');
+                $('dashSolarTermLabel').textContent = t('dashSolarTerm');
                 const ny = new Date(todayYear + 1, 0, 1).getTime();
                 const nyDays = Math.ceil((ny - new Date(todayYear, todayMonth - 1, todayDay).getTime()) / 86400000);
                 $('dashNewYear').textContent = nyDays;
-                $('dashNewYearLabel').textContent = currentLang === 'zh' ? '天到元旦' : 'Days to NY';
+                $('dashNewYearLabel').textContent = t('dashNewYear');
                 const all = loadAllNotes();
                 const monthPrefix = `${currentShowYear}-${currentShowMonth}`;
                 let count = 0;
@@ -4308,7 +4535,7 @@
                     if (k.startsWith(monthPrefix)) count += notes.length;
                 }
                 $('dashNotes').textContent = count;
-                $('dashNotesLabel').textContent = currentLang === 'zh' ? '本月记事' : 'Notes/Mo';
+                $('dashNotesLabel').textContent = t('dashNotes');
                 /* 年度进度条 */
                 updateYearProgress();
             }
@@ -4319,9 +4546,7 @@
                 const end = new Date(now.getFullYear() + 1, 0, 1).getTime();
                 const pct = Math.min(100, ((now.getTime() - start) / (end - start) * 100));
                 $('yearProgressFill').style.width = pct.toFixed(1) + '%';
-                $('yearProgressLabel').textContent = currentLang === 'zh'
-                    ? `今年已过 ${pct.toFixed(1)}%`
-                    : `Year passed ${pct.toFixed(1)}%`;
+                $('yearProgressLabel').textContent = I18N[currentLang].dashYearPassed(pct.toFixed(1));
             }
 
             /* 季节底色 */
@@ -4342,15 +4567,12 @@
                 const y = now.getFullYear(),
                     mo = now.getMonth() + 1,
                     d = now.getDate();
-                const weekArr = currentLang === 'zh' ? ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'] : [
-                    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
-                ];
+                const weekArr = I18N[currentLang].weekDaysArr;
                 const week = weekArr[now.getDay()];
                 const h = String(now.getHours()).padStart(2, '0');
                 const mi = String(now.getMinutes()).padStart(2, '0');
                 const s = String(now.getSeconds()).padStart(2, '0');
-                timeText.textContent =
-                    `${y}${currentLang==='zh'?'年':'/'}${String(mo).padStart(2,'0')}${currentLang==='zh'?'月':'/'}${String(d).padStart(2,'0')} ${week} ${h}:${mi}:${s}`;
+                timeText.textContent = fmtDate(y, String(mo).padStart(2,'0'), String(d).padStart(2,'0')) + ' ' + week + ' ' + h+':'+mi+':'+s;
                 if (now.getMinutes() !== lastMinute) {
                     lastMinute = now.getMinutes();
                     updateCountdown();
@@ -4366,9 +4588,19 @@
                 const holidayName = allYearHolidays[todayYear] && allYearHolidays[todayYear][
                     `${todayMonth}-${todayDay}`
                 ] || '';
-                const solarName = getSolarTerms(todayYear)[
+                const solarNameZh = getSolarTerms(todayYear)[
                     `${todayMonth}-${todayDay}`
                 ] || '';
+                /* Translate solar term name for display and tip lookup in English */
+                let solarName = solarNameZh;
+                if (currentLang === 'en' && solarNameZh) {
+                    const zhGroups = I18N.zh.solarTermsGroups;
+                    const enGroups = I18N.en.solarTermsGroups;
+                    for (let gi = 0; gi < zhGroups.length; gi++) {
+                        const idx = zhGroups[gi].t.indexOf(solarNameZh);
+                        if (idx !== -1) { solarName = enGroups[gi].t[idx]; break; }
+                    }
+                }
                 const name = holidayName || solarName;
                 const tip = I18N[currentLang].festivalTips[name] || I18N[currentLang].festivalTips[holidayName] || I18N[
                     currentLang].festivalTips[solarName];
@@ -4412,12 +4644,10 @@
 
             function applyTheme(dark) {
                 if (dark) { document.body.classList.add('dark-mode');
-                    $('themeToggleBtn').textContent = '☀️ 浅色';
-                    $('themeToggleBtn').setAttribute('aria-label', currentLang === 'zh' ? '切换到浅色模式' :
-                        'Switch to light mode'); } else { document.body.classList.remove('dark-mode');
-                    $('themeToggleBtn').textContent = '🌙 深色';
-                    $('themeToggleBtn').setAttribute('aria-label', currentLang === 'zh' ? '切换到深色模式' :
-                        'Switch to dark mode'); }
+                    $('themeToggleBtn').textContent = t('themeLightText');
+                    $('themeToggleBtn').setAttribute('aria-label', t('themeLightLabel')); } else { document.body.classList.remove('dark-mode');
+                    $('themeToggleBtn').textContent = t('themeDarkText');
+                    $('themeToggleBtn').setAttribute('aria-label', t('themeDarkLabel')); }
                 /* 切换明暗时重新应用当前主题色 */
                 try {
                     const curColor = localStorage.getItem('cal_theme_color') || 'blue';
@@ -4485,8 +4715,81 @@
             function applyLang(lang) {
                 currentLang = lang;
                 try { localStorage.setItem('cal_lang', lang); } catch (e) {}
-                $('langToggleBtn').textContent = lang === 'zh' ? '🌐 中文' : '🌐 EN';
-                $('langToggleBtn').setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
+                document.title = t('pageTitle');
+                // Title lines
+                var titleLine1 = document.querySelector('.title-text:not(.peace-text)');
+                if (titleLine1) titleLine1.textContent = t('titleLine1');
+                var titleLine2 = document.querySelector('.title-text.peace-text');
+                if (titleLine2) titleLine2.textContent = t('titleLine2');
+                // Lang toggle
+                $('langToggleBtn').textContent = t('langLabel');
+                $('langToggleBtn').setAttribute('aria-label', t('langSwitchTo'));
+                // View toggle
+                $('viewMonthBtn').textContent = '📅 ' + t('viewMonth');
+                $('viewMonthBtn').setAttribute('aria-label', t('viewMonth'));
+                $('viewWeekBtn').textContent = '📆 ' + t('viewWeek');
+                $('viewWeekBtn').setAttribute('aria-label', t('viewWeek'));
+                // Theme color button
+                var themeColorBtn = document.getElementById('themeColorBtn');
+                if (themeColorBtn) {
+                    themeColorBtn.textContent = '🎨 ' + t('themeColorBtn');
+                    themeColorBtn.setAttribute('aria-label', t('themeColorBtn'));
+                }
+                // Theme dot titles
+                var dotMap = { blue: 'themeColorBlue', purple: 'themeColorPurple', rose: 'themeColorRose', teal: 'themeColorTeal', gradient: 'themeColorGradient' };
+                document.querySelectorAll('.theme-dot').forEach(function(dot) {
+                    var c = dot.getAttribute('data-color');
+                    if (dotMap[c]) dot.setAttribute('title', t(dotMap[c]));
+                });
+                // Weather buttons
+                var weatherToggleBtn = document.getElementById('weatherToggleBtn');
+                if (weatherToggleBtn) {
+                    weatherToggleBtn.setAttribute('title', t('weatherTitle'));
+                    weatherToggleBtn.setAttribute('aria-label', t('weatherTitle'));
+                }
+                var weatherRefreshBtn = document.getElementById('weatherRefreshBtn');
+                if (weatherRefreshBtn) {
+                    weatherRefreshBtn.setAttribute('title', t('weatherRefresh'));
+                    weatherRefreshBtn.setAttribute('aria-label', t('weatherRefresh'));
+                }
+                // Dashboard card titles
+                var dashSolarTermCard = document.getElementById('dashSolarTermCard');
+                if (dashSolarTermCard) dashSolarTermCard.setAttribute('title', t('dashSolarTermTitle'));
+                var dashNewYearCard = document.getElementById('dashNewYearCard');
+                if (dashNewYearCard) dashNewYearCard.setAttribute('title', t('dashNewYearTitle'));
+                var dashNotesCard = document.getElementById('dashNotesCard');
+                if (dashNotesCard) dashNotesCard.setAttribute('title', t('dashNotesTitle'));
+                // Dashboard labels
+                var dashSolarTermLabel = document.getElementById('dashSolarTermLabel');
+                if (dashSolarTermLabel) dashSolarTermLabel.textContent = t('dashSolarTerm');
+                var dashNewYearLabel = document.getElementById('dashNewYearLabel');
+                if (dashNewYearLabel) dashNewYearLabel.textContent = t('dashNewYear');
+                var dashNotesLabel = document.getElementById('dashNotesLabel');
+                if (dashNotesLabel) dashNotesLabel.textContent = t('dashNotes');
+                // Nav buttons
+                var prevMonth = document.getElementById('prevMonth');
+                if (prevMonth) { prevMonth.setAttribute('title', t('prevMonthTitle')); prevMonth.setAttribute('aria-label', t('prevMonthTitle')); }
+                var nextMonth = document.getElementById('nextMonth');
+                if (nextMonth) { nextMonth.setAttribute('title', t('nextMonthTitle')); nextMonth.setAttribute('aria-label', t('nextMonthTitle')); }
+                // Year/Month text aria-label
+                var yearText = document.getElementById('yearText');
+                if (yearText) yearText.setAttribute('aria-label', t('selectYearLabel'));
+                var monthText = document.getElementById('monthText');
+                if (monthText) monthText.setAttribute('aria-label', t('selectMonthLabel'));
+                // Panels aria-label
+                var yearPanel = document.getElementById('yearPanel');
+                if (yearPanel) yearPanel.setAttribute('aria-label', t('selectYearLabel'));
+                var monthPanel = document.getElementById('monthPanel');
+                if (monthPanel) monthPanel.setAttribute('aria-label', t('selectMonthLabel'));
+                // Day grid aria-label
+                var dayGridEl = document.getElementById('dayGrid');
+                if (dayGridEl) dayGridEl.setAttribute('aria-label', t('calendarGridLabel'));
+                // Easter overlay aria-label
+                var easterOverlay = document.getElementById('peaceEasterOverlay');
+                if (easterOverlay) easterOverlay.setAttribute('aria-label', t('titleLine2'));
+                // Wish star fab
+                var wishStarFab = document.getElementById('wishStarFab');
+                if (wishStarFab) { wishStarFab.setAttribute('title', t('wishStarTitle')); wishStarFab.setAttribute('aria-label', t('wishStarTitle')); }
                 renderWeekRow();
                 renderCalendar();
                 lastCountdownMinute = -1; updateCountdown();
@@ -4494,32 +4797,56 @@
                 updateGreeting();
                 renderYearPanel();
                 renderMonthPanel();
-                $('modalTitle').textContent = currentLang === 'zh' ? '📝 记事本' : '📝 Notes';
-                btnAddNote.textContent = editingNoteId ? (currentLang === 'zh' ? '保存' : 'Save') : (currentLang === 'zh' ?
-                    '添加' : 'Add');
-                modalNoteInput.placeholder = currentLang === 'zh' ? '输入记事内容...' : 'Enter note...';
-                $('noteSearchInput').placeholder = currentLang === 'zh' ? '搜索所有记事...' : 'Search all notes...';
-                $('btnExportNotes').innerHTML = (currentLang === 'zh' ? '📤 导出' : '📤 Export');
-                $('btnImportNotes').innerHTML = (currentLang === 'zh' ? '📥 导入' : '📥 Import');
-                $('btnShowSearch').innerHTML = (currentLang === 'zh' ? '🔍 搜索' : '🔍 Search');
-                $('btnCloseModal').textContent = currentLang === 'zh' ? '关闭' : 'Close';
-                $('btnToday').textContent = currentLang === 'zh' ? '🕊 今天' : '🕊 Today';
-                $('weatherCityInput').placeholder = currentLang === 'zh' ? '搜索城市，如：北京' : 'Search city, e.g. Beijing';
-                $('btnWeatherGo').textContent = currentLang === 'zh' ? '查看' : 'Go';
-                $('btnWeatherCancel').textContent = currentLang === 'zh' ? '取消' : 'Cancel';
+                $('modalTitle').textContent = t('noteTitle');
+                btnAddNote.textContent = editingNoteId ? t('noteSave') : t('noteAdd');
+                modalNoteInput.placeholder = t('notePlaceholder');
+                $('noteSearchInput').placeholder = t('noteSearchPlaceholder');
+                $('btnExportNotes').innerHTML = t('noteExport');
+                $('btnImportNotes').innerHTML = t('noteImport');
+                $('btnShowSearch').innerHTML = t('noteSearch');
+                $('btnCloseModal').textContent = t('noteClose');
+                $('btnToday').textContent = '🕊 ' + t('today');
+                $('weatherCityInput').placeholder = t('citySearchPlaceholder');
+                $('btnWeatherGo').textContent = t('weatherGo');
+                $('btnWeatherCancel').textContent = t('weatherCancel');
                 const toggleBtn = $('weatherToggleBtn');
-                toggleBtn.innerHTML = '📍 ' + (currentLang === 'zh' ? '天气加载中' : 'Loading...');
-                $('wishSubtitle').textContent = currentLang === 'zh' ? '向星空许下心愿，愿世界和平' :
-                    'Make a wish upon the stars for world peace';
-                $('wishInput').placeholder = currentLang === 'zh' ? '写下你的愿望...' : 'Write your wish...';
-                $('btnWishSubmit').textContent = currentLang === 'zh' ? '许愿 ✨' : 'Wish ✨';
+                toggleBtn.innerHTML = '📍 ' + t('weatherLoadingShort');
+                $('wishSubtitle').textContent = t('wishSubtitle');
+                $('wishInput').placeholder = t('wishPlaceholder');
+                $('btnWishSubmit').textContent = t('wishBtn');
                 const wishEmpty = $('wishEmpty');
-                if (wishEmpty) wishEmpty.textContent = currentLang === 'zh' ? '还没有愿望，快来许下第一个吧~' :
-                    'No wishes yet, make your first one~';
+                if (wishEmpty) wishEmpty.textContent = t('wishEmpty');
+                // Easter overlay
+                var easterTitleEl = document.querySelector('.peace-easter-title');
+                if (easterTitleEl) easterTitleEl.textContent = t('easterTitle');
+                var easterMsgEl = document.querySelector('.peace-easter-msg');
+                if (easterMsgEl) easterMsgEl.innerHTML = t('easterMsg');
+                var easterHintEl = document.querySelector('.peace-easter-hint');
+                if (easterHintEl) easterHintEl.innerHTML = t('easterCloseHint') || t('easterHint') || easterHintEl.innerHTML;
+                // Wish modal
+                var wishModalH3 = document.querySelector('.wish-modal-card h3');
+                if (wishModalH3) wishModalH3.textContent = t('wishModalTitle');
+                var wishCloseBtn = document.getElementById('wishCloseBtn');
+                if (wishCloseBtn) wishCloseBtn.setAttribute('aria-label', t('wishCloseLabel'));
+                var wishInput = document.getElementById('wishInput');
+                if (wishInput) wishInput.setAttribute('aria-label', t('wishInputLabel'));
+                var wishFab = document.getElementById('wishStarFab');
+                if (wishFab) { wishFab.setAttribute('title', t('wishFabTitle')); wishFab.setAttribute('aria-label', t('wishFabTitle')); }
                 updateWorldClockCityNames();
                 updateWorldClocks();
                 initQuoteCarousel();
                 checkFestivalTip();
+                if (window._refreshSolarTermsPanel) window._refreshSolarTermsPanel();
+                if (window._refreshHolidayListPanel) window._refreshHolidayListPanel();
+                // 更新主题按钮文字
+                var isDark = document.body.classList.contains('dark-mode');
+                $('themeToggleBtn').textContent = t(isDark ? 'themeLightText' : 'themeDarkText');
+                $('themeToggleBtn').setAttribute('aria-label', t(isDark ? 'themeLightLabel' : 'themeDarkLabel'));
+                // 更新年/月后缀
+                var ys = document.getElementById('yearSuffix');
+                var ms = document.getElementById('monthSuffix');
+                if (ys) ys.textContent = currentLang === 'zh' ? '年' : '';
+                if (ms) ms.textContent = currentLang === 'zh' ? '月' : '';
             }
             $('langToggleBtn').addEventListener('click', () => { applyLang(currentLang === 'zh' ? 'en' : 'zh'); });
             $('viewMonthBtn').addEventListener('click', () => {
@@ -4705,18 +5032,16 @@
             </div>
             </div>
             <div class="weather-detail">
-            <span>${currentLang==='zh'?'体感':'Feels'} ${feelsLike}</span>
+            <span>${t('weatherFeels')} ${feelsLike}</span>
             <span>💧 ${humidity}</span>
             <span>💨 ${wind}</span>
             </div>`;
                 if (forecast && forecast.length) {
                     html += `<div class="weather-forecast">`;
                     forecast.forEach(f => {
-                        const dayName = currentLang === 'zh' ? ['', '', '', '', '', '', '六', '日', '', '一', '二',
-                            '三', '四', '五'
-                        ][new Date(f.date + 'T12:00:00').getDay()] || f.date.slice(-2) + '日' : ['', '', '',
-                            '', '', '', 'Sat', 'Sun', '', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'
-                        ][new Date(f.date + 'T12:00:00').getDay()] || f.date.slice(-2);
+                        const dow = new Date(f.date + 'T12:00:00').getDay();
+                        const fDays = I18N[currentLang].forecastDays;
+                        const dayName = (fDays && fDays[dow]) ? fDays[dow] : (I18N[currentLang].forecastFallback ? I18N[currentLang].forecastFallback(f.date) : f.date.slice(-2));
                         html +=
                             `<div class="weather-forecast-item"><span class="f-day">${dayName}</span><span class="f-emoji">${weatherEmoji(f.desc, true)}</span><span>${f.max}°</span></div>`;
                     });
@@ -4730,14 +5055,14 @@
 
             function showWeatherLoading() {
                 weatherContent.innerHTML =
-                    `<div class="weather-loading"><div class="spinner"></div><span>${currentLang==='zh'?'正在获取天气...':'Loading weather...'}</span></div>`;
-                weatherToggleBtn.innerHTML = '📍 ' + (currentLang === 'zh' ? '加载中' : 'Loading...');
+                    `<div class="weather-loading"><div class="spinner"></div><span>${t('weatherLoading')}</span></div>`;
+                weatherToggleBtn.innerHTML = '📍 ' + t('weatherLoadingShort');
             }
 
             function showWeatherError(msg) {
                 weatherContent.innerHTML =
                 `<div class="weather-error"><span>⚠️</span><span>${msg}</span></div>`;
-                weatherToggleBtn.innerHTML = '📍 ' + (currentLang === 'zh' ? '获取失败' : 'Error');
+                weatherToggleBtn.innerHTML = '📍 ' + t('weatherError');
             }
             const cityNameCN = {
                 'beijing': '北京',
@@ -4838,7 +5163,7 @@
                         const nearestArea = data.nearest_area && data.nearest_area[0];
                         const rawName = (nearestArea && nearestArea.areaName && nearestArea.areaName[0] && nearestArea
                             .areaName[0].value) || '';
-                        cityName = translateToCN(rawName) || (currentLang === 'zh' ? '当前位置' : 'Current location');
+                        cityName = translateToCN(rawName) || t('weatherCurrentLoc');
                     }
                     const forecast = [];
                     if (data.weather && data.weather.length >= 3) {
@@ -4856,7 +5181,7 @@
                     weatherCard.classList.add('show');
                 } catch (err) {
                     console.warn('Weather fetch failed:', err);
-                    showWeatherError(currentLang === 'zh' ? '获取失败，点击重试' : 'Failed, tap to retry');
+                    showWeatherError(t('weatherRetry'));
                     weatherCard.classList.add('show');
                 }
             }
@@ -5144,7 +5469,7 @@
                     const hint = document.createElement('div');
                     hint.style.cssText =
                         'position:fixed;top:30%;right:18px;z-index:100;font-size:11px;color:rgba(36,120,224,0.4);animation:hintPulse 2s ease-in-out infinite 3;pointer-events:none;letter-spacing:1px;text-align:right;line-height:1.6;';
-                    hint.innerHTML = '🕊 彩蛋提示<br>三连击"和平"<br>或 Konami Code';
+                    hint.innerHTML = t('easterHint') || '\u{1F54A} 彩蛋提示<br>三连击“和平”<br>或 Konami Code';
                     document.body.appendChild(hint);
                     setTimeout(() => hint.remove(), 8000);
                 }, 2000);
@@ -5157,7 +5482,7 @@
                 });
             }
 
-            // ===== 新增：许愿星事件绑定 =====
+            // ===== 新增:许愿星事件绑定 =====
             $('wishStarFab').addEventListener('click', e => {
                 e.stopPropagation();
                 openWishModal();
@@ -5212,18 +5537,13 @@
                     var stBody = document.getElementById('solarTermsBody');
                     var stClose = document.getElementById('solarTermsClose');
                     var stCard = document.getElementById('dashSolarTermCard');
+                    var stHeader = stPanel ? stPanel.querySelector('.solar-terms-header h3') : null;
                     if (!stOverlay || !stPanel || !stBody || !stClose || !stCard) { console.warn('节气弹窗元素缺失'); return; }
-
-                    var termsGroups = [
-                        { s: '🌸 春', t: ['立春','雨水','惊蛰','春分','清明','谷雨'] },
-                        { s: '☀️ 夏', t: ['立夏','小满','芒种','夏至','小暑','大暑'] },
-                        { s: '🍂 秋', t: ['立秋','处暑','白露','秋分','寒露','霜降'] },
-                        { s: '❄️ 冬', t: ['立冬','小雪','大雪','冬至','小寒','大寒'] }
-                    ];
 
                     function findTermDate(termName) {
                         var yd = getSolarTerms(new Date().getFullYear());
-                        for (var k in yd) { if (yd[k] === termName) { var p = k.split('-'); return p[0]+'月'+p[1]+'日'; } }
+                        var fmt = I18N[currentLang].solarTermsDateFmt;
+                        for (var k in yd) { if (yd[k] === termName) { var p = k.split('-'); return fmt(parseInt(p[0]), parseInt(p[1])); } }
                         return '';
                     }
                     function getCurTerm() {
@@ -5236,20 +5556,34 @@
                         return false;
                     }
                     function buildTermsHTML() {
-                        var cur = getCurTerm(); var h = '';
-                        termsGroups.forEach(function(g) {
+                        var cur = getCurTerm();
+                        var zhGroups = I18N.zh.solarTermsGroups;
+                        var displayGroups = I18N[currentLang].solarTermsGroups;
+                        var h = '';
+                        for (var gi = 0; gi < displayGroups.length; gi++) {
+                            var g = displayGroups[gi];
+                            var zhG = zhGroups[gi];
                             h += '<div class="solar-terms-season"><div class="solar-terms-season-title">'+g.s+'</div><div class="solar-terms-grid">';
-                            g.t.forEach(function(name) {
-                                var d = findTermDate(name); var isCur = name===cur; var past = isTermPast(name);
+                            for (var ti = 0; ti < g.t.length; ti++) {
+                                var name = g.t[ti];
+                                var zhName = zhG.t[ti];
+                                var d = findTermDate(zhName); var isCur = zhName===cur; var past = isTermPast(zhName);
                                 var cls = isCur?'current':(past?'past':'');
                                 h += '<div class="solar-term-item '+cls+'"><div class="st-name">'+name+'</div><div class="st-date">'+d+'</div></div>';
-                            });
+                            }
                             h += '</div></div>';
-                        });
+                        }
                         return h;
                     }
-                    function openST() { stBody.innerHTML = buildTermsHTML(); stOverlay.classList.add('show'); stPanel.classList.add('show'); }
+                    function refreshSTHeader() {
+                        if (stHeader) stHeader.textContent = I18N[currentLang].solarTermsTitle;
+                    }
+                    function openST() { refreshSTHeader(); stBody.innerHTML = buildTermsHTML(); stOverlay.classList.add('show'); stPanel.classList.add('show'); }
                     function closeST() { stOverlay.classList.remove('show'); stPanel.classList.remove('show'); }
+                    window._refreshSolarTermsPanel = function() {
+                        refreshSTHeader();
+                        if (stPanel.classList.contains('show')) { stBody.innerHTML = buildTermsHTML(); }
+                    };
 
                     stCard.style.cursor = 'pointer';
                     stCard.onclick = function(e) { e.stopPropagation(); openST(); };
@@ -5266,6 +5600,7 @@
                     var hlBody = document.getElementById('holidayListBody');
                     var hlClose = document.getElementById('holidayListClose');
                     var hlBar = document.getElementById('countdownBar');
+                    var hlHeader = hlPanel ? hlPanel.querySelector('.holiday-list-header h3') : null;
                     if (!hlOverlay || !hlPanel || !hlBody || !hlClose || !hlBar) { console.warn('节假日弹窗元素缺失'); return; }
 
                     var hlEmojis = { '元旦':'🎊','春节':'🧧','清明':'🌿','劳动节':'💪','端午':'🐲','中秋':'🌕','国庆':'🇨🇳','建党节':'🔴','建军节':'🎖️','国际和平日':'🕊️','人权日':'✊','联合国日':'🌐' };
@@ -5282,25 +5617,37 @@
                     }
                     function buildHLHTML() {
                         var now=new Date(); var yr=now.getFullYear(); var today=new Date(yr,now.getMonth(),now.getDate()).getTime();
-                        var arr=getHolidays(); var months=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+                        var arr=getHolidays();
+                        var i18n = I18N[currentLang];
+                        var months = i18n.monthNames;
+                        var nameMap = i18n.holidayNames;
+                        var dateFmt = i18n.solarTermsDateFmt;
                         var h=''; var cm=0;
                         arr.forEach(function(item) {
-                            if(item.m!==cm){if(cm>0) h+='</div>'; cm=item.m; h+='<div class="holiday-month-group"><div class="holiday-month-title">'+months[item.m-1]+'</div>';}
+                            if(item.m!==cm){if(cm>0) h+='</div>'; cm=item.m; h+='<div class="holiday-month-group"><div class="holiday-month-title">'+(currentLang==='zh'?(item.m+'月'):months[item.m-1])+'</div>';}
                             var emoji=hlEmojis[item.name]||'🎉';
+                            var displayName=(nameMap&&nameMap[item.name])?nameMap[item.name]:item.name;
                             var endTs=new Date(yr,item.m-1,item.e).getTime();
                             var startTs=new Date(yr,item.m-1,item.s).getTime();
                             var isCur=(today>=startTs&&today<=endTs);
                             var past=endTs<today;
                             var days=Math.ceil((startTs-today)/86400000);
                             var cls=isCur?'current':(past?'past':(days<=7?'upcoming':''));
-                            var ds=item.s===item.e?(item.m+'月'+item.s+'日'):(item.m+'月'+item.s+'-'+item.e+'日');
-                            var dt=isCur?'🎉 今天':(past?'已过':(days===1?'明天':days+'天后'));
-                            h+='<div class="holiday-item '+cls+'"><div class="hl-emoji">'+emoji+'</div><div class="hl-info"><div class="hl-name">'+item.name+'</div><div class="hl-date">'+ds+'</div></div><div class="hl-days">'+dt+'</div></div>';
+                            var ds=item.s===item.e?dateFmt(item.m,item.s):(dateFmt(item.m,item.s)+'-'+item.e);
+                            var dt=isCur?i18n.hlToday:(past?i18n.hlPast:(days===1?i18n.hlTomorrow:days+i18n.hlDaysLater));
+                            h+='<div class="holiday-item '+cls+'"><div class="hl-emoji">'+emoji+'</div><div class="hl-info"><div class="hl-name">'+displayName+'</div><div class="hl-date">'+ds+'</div></div><div class="hl-days">'+dt+'</div></div>';
                         });
                         if(cm>0) h+='</div>'; return h;
                     }
-                    function openHL() { hlBody.innerHTML=buildHLHTML(); hlOverlay.classList.add('show'); hlPanel.classList.add('show'); }
+                    function refreshHLHeader() {
+                        if (hlHeader) hlHeader.textContent = I18N[currentLang].holidayListTitle;
+                    }
+                    function openHL() { refreshHLHeader(); hlBody.innerHTML=buildHLHTML(); hlOverlay.classList.add('show'); hlPanel.classList.add('show'); }
                     function closeHL() { hlOverlay.classList.remove('show'); hlPanel.classList.remove('show'); }
+                    window._refreshHolidayListPanel = function() {
+                        refreshHLHeader();
+                        if (hlPanel.classList.contains('show')) { hlBody.innerHTML=buildHLHTML(); }
+                    };
 
                     hlBar.style.cursor='pointer';
                     hlBar.onclick=function(e){e.stopPropagation();openHL();};
@@ -5324,7 +5671,7 @@
                     })(otherDashCards[di]);
                 }
 
-                console.log('🕊 世界和平！日历 v2.0+ 已就绪 | Ctrl+D 收藏~');
+                console.log('🕊 世界和平!日历 v2.0+ 已就绪 | Ctrl+D 收藏~');
                 console.log('💡 快捷键: ←→切换月份 | T回到今天 | ESC关闭弹窗 | 月份年份点击可跳转 | 长按天气按钮搜索城市');
                 console.log('🐰 彩蛋: 三连击标题 / Konami Code (↑↑↓↓←→←→BA) / 点击飞鸽 / 9月21日');
                 console.log('⭐ 新彩蛋: 许愿星(右下角) / 和平语录轮播 / 世界时钟 / 和平日金色粒子雨');
