@@ -2970,6 +2970,108 @@
         body.dark-mode .share-card { background: #1e2438; }
         /* ===== 国际节日徽章 ===== */
         .intl-badge { display: inline-block; font-size: 9px; padding: 1px 4px; border-radius: 4px; background: rgba(36,120,224,0.12); color: var(--primary); margin-left: 2px; vertical-align: middle; }
+        /* ===== 倒数日/纪念日 ===== */
+        .countdown-fab { position: fixed; bottom: 80px; right: 18px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #e11d48, #f97316); color: #fff; border: none; font-size: 20px; cursor: pointer; box-shadow: 0 4px 14px rgba(229,29,72,0.3); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .countdown-fab:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(229,29,72,0.4); }
+        .countdown-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9600; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .countdown-modal-overlay.show { opacity: 1; visibility: visible; }
+        .countdown-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.95); background: var(--card-bg); border-radius: 18px; padding: 24px; max-width: min(90vw, 460px); width: 85%; max-height: 70vh; overflow-y: auto; z-index: 9601; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); }
+        .countdown-modal-overlay.show .countdown-modal { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        .countdown-modal h3 { margin: 0 0 14px; font-size: 17px; }
+        .countdown-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
+        .countdown-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: var(--workday-bg); margin-bottom: 8px; }
+        .countdown-item .cd-icon { font-size: 24px; }
+        .countdown-item .cd-info { flex: 1; }
+        .countdown-item .cd-name { font-size: 14px; font-weight: 600; }
+        .countdown-item .cd-date { font-size: 11px; color: #888; }
+        .countdown-item .cd-days { font-size: 20px; font-weight: 800; color: var(--primary); }
+        .countdown-item .cd-del { background: none; border: none; color: #c0392b; cursor: pointer; font-size: 14px; padding: 4px 8px; border-radius: 6px; }
+        .countdown-item .cd-del:hover { background: rgba(200,50,50,0.1); }
+        .countdown-add-row { display: flex; gap: 8px; margin-top: 12px; }
+        .countdown-add-row input { flex: 1; padding: 8px 12px; border-radius: 10px; border: 1px solid #ccc; background: var(--card-bg); color: var(--text-color); font-size: 13px; }
+        .countdown-add-row select { padding: 8px; border-radius: 10px; border: 1px solid #ccc; background: var(--card-bg); color: var(--text-color); font-size: 13px; }
+        .countdown-add-row button { padding: 8px 16px; border-radius: 10px; border: none; background: var(--primary); color: #fff; cursor: pointer; font-size: 13px; }
+        body.dark-mode .countdown-modal { background: #1e2438; }
+        body.dark-mode .countdown-item { background: #252838; }
+        /* ===== 待办清单 ===== */
+        .todo-fab { position: fixed; bottom: 140px; right: 18px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #0d9488, #10b981); color: #fff; border: none; font-size: 20px; cursor: pointer; box-shadow: 0 4px 14px rgba(16,185,129,0.3); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .todo-fab:hover { transform: scale(1.1); }
+        .todo-panel-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9600; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .todo-panel-overlay.show { opacity: 1; visibility: visible; }
+        .todo-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.95); background: var(--card-bg); border-radius: 18px; padding: 24px; max-width: min(90vw, 420px); width: 85%; max-height: 70vh; overflow-y: auto; z-index: 9601; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); }
+        .todo-panel-overlay.show .todo-panel { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        .todo-panel h3 { margin: 0 0 14px; font-size: 17px; }
+        .todo-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
+        .todo-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: var(--workday-bg); margin-bottom: 6px; transition: all 0.2s; }
+        .todo-item.done { opacity: 0.5; }
+        .todo-item.done .todo-text { text-decoration: line-through; }
+        .todo-item input[type=checkbox] { accent-color: var(--primary); width: 18px; height: 18px; cursor: pointer; }
+        .todo-item .todo-text { flex: 1; font-size: 14px; }
+        .todo-item .todo-del { background: none; border: none; color: #c0392b; cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 4px; }
+        .todo-add-row { display: flex; gap: 8px; margin-top: 12px; }
+        .todo-add-row input { flex: 1; padding: 8px 12px; border-radius: 10px; border: 1px solid #ccc; background: var(--card-bg); color: var(--text-color); font-size: 13px; }
+        .todo-add-row button { padding: 8px 16px; border-radius: 10px; border: none; background: var(--primary); color: #fff; cursor: pointer; }
+        body.dark-mode .todo-panel { background: #1e2438; }
+        body.dark-mode .todo-item { background: #252838; }
+        /* ===== 浮动便签 ===== */
+        .sticky-note { position: fixed; z-index: 8000; width: 180px; min-height: 80px; background: #fffde7; border-radius: 4px; box-shadow: 2px 2px 10px rgba(0,0,0,0.15); padding: 12px; font-size: 13px; cursor: move; user-select: none; }
+        .sticky-note textarea { width: 100%; min-height: 50px; border: none; background: transparent; resize: vertical; font-size: 13px; font-family: inherit; outline: none; }
+        .sticky-note .sticky-close { position: absolute; top: 4px; right: 6px; background: none; border: none; font-size: 14px; cursor: pointer; color: #999; }
+        .sticky-note .sticky-color { position: absolute; top: 4px; left: 6px; display: flex; gap: 3px; }
+        .sticky-note .sticky-color span { width: 10px; height: 10px; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0,0,0,0.1); }
+        .sticky-fab { position: fixed; bottom: 200px; right: 18px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #eab308); color: #fff; border: none; font-size: 20px; cursor: pointer; box-shadow: 0 4px 14px rgba(245,158,11,0.3); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .sticky-fab:hover { transform: scale(1.1); }
+        /* ===== 成就系统 ===== */
+        .achievement-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.8); z-index: 99999; background: linear-gradient(135deg, #1a1e2e, #2a2e40); border: 2px solid #f5c842; border-radius: 18px; padding: 28px; text-align: center; color: #fff; opacity: 0; transition: all 0.5s; pointer-events: none; }
+        .achievement-popup.show { opacity: 1; transform: translate(-50%,-50%) scale(1); pointer-events: auto; }
+        .achievement-popup .ach-icon { font-size: 48px; margin-bottom: 10px; }
+        .achievement-popup .ach-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+        .achievement-popup .ach-desc { font-size: 13px; color: #aaa; }
+        /* ===== 动态背景 ===== */
+        body.time-dawn { background: linear-gradient(180deg, #1a1a2e 0%, #e94560 50%, #f5c842 100%) !important; }
+        body.time-day { background: linear-gradient(180deg, #74b3ff 0%, #e0ecf8 100%) !important; }
+        body.time-dusk { background: linear-gradient(180deg, #2d1b69 0%, #e94560 50%, #f5c842 100%) !important; }
+        body.time-night { background: linear-gradient(180deg, #0f0c29 0%, #1a1a2e 50%, #302b63 100%) !important; }
+        /* ===== 粒子特效 ===== */
+        @keyframes sakuraFall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+        .sakura { position: fixed; pointer-events: none; z-index: 50; font-size: 14px; animation: sakuraFall linear forwards; }
+        @keyframes snowFall { 0% { transform: translateY(-10vh) translateX(0); opacity: 1; } 100% { transform: translateY(110vh) translateX(30px); opacity: 0.3; } }
+        .snow-particle { position: fixed; pointer-events: none; z-index: 50; font-size: 12px; color: #fff; animation: snowFall linear forwards; }
+        @keyframes fireflyGlow { 0%,100% { opacity: 0.3; transform: translate(0,0); } 25% { opacity: 1; transform: translate(10px,-15px); } 50% { opacity: 0.5; transform: translate(-5px,10px); } 75% { opacity: 0.9; transform: translate(15px,5px); } }
+        .firefly { position: fixed; pointer-events: none; z-index: 50; width: 6px; height: 6px; border-radius: 50%; background: #f5d860; box-shadow: 0 0 8px #f5d860; animation: fireflyGlow 4s ease-in-out infinite; }
+        /* ===== 历史上的今天 ===== */
+        .history-today { background: var(--workday-bg); border-radius: 12px; padding: 14px; margin-top: 12px; }
+        .history-today h4 { margin: 0 0 8px; font-size: 14px; }
+        .history-today .ht-item { font-size: 12px; color: #666; padding: 4px 0; border-bottom: 1px solid rgba(128,128,128,0.1); }
+        .history-today .ht-item:last-child { border-bottom: none; }
+        body.dark-mode .history-today { background: #252838; }
+        body.dark-mode .history-today .ht-item { color: #a0a8c8; }
+        /* ===== 成就徽章 ===== */
+        .badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+        .badge-item { text-align: center; padding: 10px 4px; border-radius: 10px; background: var(--workday-bg); opacity: 0.35; transition: all 0.3s; }
+        .badge-item.unlocked { opacity: 1; background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05)); }
+        .badge-item .badge-icon { font-size: 28px; }
+        .badge-item .badge-name { font-size: 10px; margin-top: 4px; color: #888; }
+        /* ===== 快捷键面板 ===== */
+        .kbd-help { position: fixed; bottom: 10px; left: 10px; z-index: 50; font-size: 10px; color: rgba(128,128,128,0.4); cursor: pointer; }
+        .kbd-help:hover { color: var(--primary); }
+        .kbd-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .kbd-overlay.show { opacity: 1; visibility: visible; }
+        .kbd-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--card-bg); border-radius: 18px; padding: 24px; max-width: min(90vw, 380px); width: 85%; z-index: 10000; }
+        .kbd-panel h3 { margin: 0 0 12px; font-size: 16px; }
+        .kbd-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid rgba(128,128,128,0.1); }
+        .kbd-row:last-child { border-bottom: none; }
+        .kbd-key { background: var(--workday-bg); padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+        body.dark-mode .kbd-panel { background: #1e2438; }
+        body.dark-mode .kbd-key { background: #252838; }
+        /* ===== 打印模式 ===== */
+        @media print {
+            .topbar, .weather-widget, .dove-container, .wish-star-fab, .countdown-fab, .todo-fab, .sticky-fab, .kbd-help, .peace-quote-carousel, .greeting-sub, .year-progress-wrap, .festival-tip-box, .peace-easter-overlay, .wish-modal-overlay, .stats-overlay, .settings-overlay, .share-overlay, .music-overlay, .countdown-modal-overlay, .todo-panel-overlay, .kbd-overlay, .achievement-popup, body::before, canvas#starCanvas { display: none !important; }
+            body { background: #fff !important; color: #000 !important; }
+            .calendar-box { box-shadow: none; border: 1px solid #ccc; }
+            .day-cell { border: 1px solid #eee; }
+            .title-wrap, .countdown-bar, .dashboard-row { animation: none !important; }
+        }
         /* ===== 页面加载阶梯动画 ===== */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -3303,6 +3405,61 @@
                 <div class="setting-control"><select id="quoteSpeedSelect"><option value="4000">4秒</option><option value="6000" selected>6秒</option><option value="10000">10秒</option><option value="0">关闭</option></select></div>
             </div>
         </div>
+    </div>
+    <!-- ===== 倒数日按钮+面板 ===== -->
+    <button class="countdown-fab" id="countdownFab" title="倒数日" aria-label="倒数日">⏳</button>
+    <div class="countdown-modal-overlay" id="cdModalOverlay">
+        <div class="countdown-modal">
+            <button class="countdown-close" id="cdClose">✕</button>
+            <h3 id="cdTitle">⏳ 倒数日 / 纪念日</h3>
+            <div id="cdList"></div>
+            <div class="countdown-add-row">
+                <input type="text" id="cdNameInput" placeholder="名称（如：生日）" maxlength="30">
+                <input type="date" id="cdDateInput">
+                <select id="cdTypeSelect"><option value="countdown">倒数</option><option value="anniversary">纪念日</option></select>
+                <button id="cdAddBtn">添加</button>
+            </div>
+            <div class="history-today" id="historyToday" style="margin-top:16px;"><h4 id="historyTodayTitle">📜 历史上的今天</h4><div id="historyTodayContent"></div></div>
+        </div>
+    </div>
+    <!-- ===== 待办按钮+面板 ===== -->
+    <button class="todo-fab" id="todoFab" title="待办" aria-label="待办清单">✅</button>
+    <div class="todo-panel-overlay" id="todoOverlay">
+        <div class="todo-panel">
+            <button class="todo-close" id="todoClose">✕</button>
+            <h3 id="todoTitle">✅ 待办清单</h3>
+            <div id="todoList"></div>
+            <div class="todo-add-row">
+                <input type="text" id="todoInput" placeholder="添加待办事项..." maxlength="100">
+                <button id="todoAddBtn">添加</button>
+            </div>
+            <div class="badge-grid" id="badgeGrid" style="margin-top:16px;"></div>
+        </div>
+    </div>
+    <!-- ===== 浮动便签按钮 ===== -->
+    <button class="sticky-fab" id="stickyFab" title="便签" aria-label="浮动便签">📝</button>
+    <div id="stickyContainer"></div>
+    <!-- ===== 快捷键提示 ===== -->
+    <div class="kbd-help" id="kbdHelp" title="快捷键">⌨️ ?</div>
+    <div class="kbd-overlay" id="kbdOverlay">
+        <div class="kbd-panel">
+            <h3 id="kbdTitle">⌨️ 快捷键</h3>
+            <div class="kbd-row"><span>切换月份</span><span class="kbd-key">← →</span></div>
+            <div class="kbd-row"><span>回到今天</span><span class="kbd-key">T</span></div>
+            <div class="kbd-row"><span>关闭弹窗</span><span class="kbd-key">ESC</span></div>
+            <div class="kbd-row"><span>月视图</span><span class="kbd-key">M</span></div>
+            <div class="kbd-row"><span>周视图</span><span class="kbd-key">W</span></div>
+            <div class="kbd-row"><span>深色模式</span><span class="kbd-key">D</span></div>
+            <div class="kbd-row"><span>统计面板</span><span class="kbd-key">S</span></div>
+            <div class="kbd-row"><span>快捷键面板</span><span class="kbd-key">?</span></div>
+            <div class="kbd-row"><span>打印</span><span class="kbd-key">Ctrl+P</span></div>
+        </div>
+    </div>
+    <!-- ===== 成就弹窗 ===== -->
+    <div class="achievement-popup" id="achievementPopup">
+        <div class="ach-icon" id="achIcon">🏆</div>
+        <div class="ach-title" id="achTitle">成就解锁！</div>
+        <div class="ach-desc" id="achDesc"></div>
     </div>
     <!-- ===== 音乐面板 ===== -->
     <div class="music-overlay" id="musicOverlay">
@@ -5314,9 +5471,12 @@
                 if (e.key === 'ArrowRight' && !e.target.closest('input,textarea,select')) { e.preventDefault();
                     currentShowMonth++; if (currentShowMonth > 12) { currentShowMonth = 1;
                         currentShowYear++; } switchMonth(currentShowYear, currentShowMonth, 'left'); }
-                if ((e.key === 't' || e.key === 'T') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e
-                    .metaKey) { e.preventDefault();
-                    btnToday.click(); }
+                if ((e.key === 't' || e.key === 'T') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); btnToday.click(); }
+                if ((e.key === 'm' || e.key === 'M') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); document.getElementById('viewMonthBtn').click(); }
+                if ((e.key === 'w' || e.key === 'W') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); document.getElementById('viewWeekBtn').click(); }
+                if ((e.key === 'd' || e.key === 'D') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); document.getElementById('themeToggleBtn').click(); }
+                if ((e.key === 's' || e.key === 'S') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); document.getElementById('statsBtn').click(); }
+                if (e.key === '?' && !e.target.closest('input,textarea,select')) { e.preventDefault(); document.getElementById('kbdOverlay').classList.toggle('show'); }
             });
             modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeNoteModal(); });
             btnCloseModal.addEventListener('click', closeNoteModal);
@@ -5779,7 +5939,9 @@
                     konamiPos++;
                     if (konamiPos === konamiSeq.length) { konamiPos = 0;
                         showEaster();
-                        easterTriggered = true; }
+                        easterTriggered = true;
+                        try { sessionStorage.setItem('konami_triggered','1'); } catch(e){}
+                        checkAchievements(); }
                 } else { konamiPos = (e.key === konamiSeq[0]) ? 1 : 0; }
                 if (e.key === 'Escape' && easterOpen) hideEaster();
             });
@@ -6467,6 +6629,323 @@
             document.getElementById('musicBtn').onclick = function() { bounceElement(this); document.getElementById('musicOverlay').classList.add('show'); updateMusicListUI(); };
             document.getElementById('settingsBtn').onclick = function() { bounceElement(this); document.getElementById('settingsOverlay').classList.add('show'); };
 
+            // ===== 倒数日/纪念日系统 =====
+            var CD_KEY = 'cal_countdowns';
+            function loadCountdowns() { try { return JSON.parse(localStorage.getItem(CD_KEY)) || []; } catch(e) { return []; } }
+            function saveCountdowns(arr) { try { localStorage.setItem(CD_KEY, JSON.stringify(arr)); } catch(e) {} }
+            function addCountdown(name, dateStr, type) {
+                var arr = loadCountdowns();
+                arr.push({ id: Date.now(), name: name, date: dateStr, type: type });
+                saveCountdowns(arr);
+                renderCountdowns();
+            }
+            function deleteCountdown(id) {
+                var arr = loadCountdowns().filter(function(c) { return c.id !== id; });
+                saveCountdowns(arr);
+                renderCountdowns();
+            }
+            function renderCountdowns() {
+                var arr = loadCountdowns();
+                var list = document.getElementById('cdList');
+                list.innerHTML = '';
+                if (arr.length === 0) { list.innerHTML = '<div style="text-align:center;color:#888;font-size:13px;padding:16px;">还没有倒数日，快来添加吧~</div>'; return; }
+                var now = new Date();
+                var today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+                arr.sort(function(a,b) { return new Date(a.date) - new Date(b.date); });
+                arr.forEach(function(c) {
+                    var target = new Date(c.date + 'T00:00:00');
+                    var diff = Math.ceil((target.getTime() - today) / 86400000);
+                    var icon = c.type === 'anniversary' ? '🎉' : '⏳';
+                    var daysText = '';
+                    if (c.type === 'anniversary') {
+                        // Calculate years
+                        var years = now.getFullYear() - target.getFullYear();
+                        if (diff > 0) years--;
+                        daysText = years > 0 ? years + '周年' : (diff === 0 ? '今天！' : diff + '天');
+                    } else {
+                        daysText = diff === 0 ? '今天！' : (diff > 0 ? diff + '天' : '已过 ' + Math.abs(diff) + ' 天');
+                    }
+                    var div = document.createElement('div');
+                    div.className = 'countdown-item';
+                    div.innerHTML = '<span class="cd-icon">' + icon + '</span><div class="cd-info"><div class="cd-name">' + escapeHtml(c.name) + '</div><div class="cd-date">' + c.date + '</div></div><div class="cd-days">' + daysText + '</div><button class="cd-del" data-id="' + c.id + '">✕</button>';
+                    div.querySelector('.cd-del').addEventListener('click', function() { deleteCountdown(c.id); });
+                    list.appendChild(div);
+                });
+            }
+            document.getElementById('cdAddBtn').addEventListener('click', function() {
+                var name = document.getElementById('cdNameInput').value.trim();
+                var date = document.getElementById('cdDateInput').value;
+                var type = document.getElementById('cdTypeSelect').value;
+                if (!name || !date) return;
+                addCountdown(name, date, type);
+                document.getElementById('cdNameInput').value = '';
+                document.getElementById('cdDateInput').value = '';
+            });
+            document.getElementById('cdClose').addEventListener('click', function() { document.getElementById('cdModalOverlay').classList.remove('show'); });
+            document.getElementById('cdModalOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+            document.getElementById('countdownFab').addEventListener('click', function() { bounceElement(this); renderCountdowns(); loadHistoryToday(); document.getElementById('cdModalOverlay').classList.add('show'); });
+
+            // ===== 历史上的今天 =====
+            function loadHistoryToday() {
+                var content = document.getElementById('historyTodayContent');
+                var m = new Date().getMonth() + 1;
+                var d = new Date().getDate();
+                var events = getHistoryEvents(m, d);
+                content.innerHTML = events.map(function(e) { return '<div class="ht-item">' + e + '</div>'; }).join('');
+            }
+            function getHistoryEvents(m, d) {
+                var key = m + '-' + d;
+                var data = {
+                    '1-1':['1912年 中华民国成立','1942年 联合国宣言签署','1999年 欧元正式启用'],
+                    '1-2':['1920年 美国科幻作家阿西莫夫出生','1959年 苏联发射月球1号探测器'],
+                    '2-14':['1876年 贝尔申请电话专利','1946年 世界第一台电子计算机ENIAC诞生'],
+                    '3-8':['1910年 国际妇女节首次庆祝','1917年 俄国二月革命'],
+                    '4-22':['1970年 第一个地球日','1724年 康德诞生'],
+                    '5-1':['1886年 芝加哥工人大罢工','2011年 本·拉登被击毙'],
+                    '6-1':['1925年 上海发生五卅惨案','1980年 CNN开播'],
+                    '7-4':['1776年 美国独立宣言签署','1862年 卡弗出生'],
+                    '7-20':['1969年 阿波罗11号登月','1976年 维京1号登陆火星'],
+                    '9-21':['1949年 中国人民政治协商会议第一届全体会议召开','1981年 伯利兹独立','国际和平日'],
+                    '10-1':['1949年 中华人民共和国成立','1964年 日本新干线开通'],
+                    '10-24':['1945年 联合国正式成立','1964年 中国第一颗原子弹爆炸成功'],
+                    '12-10':['1901年 首届诺贝尔奖颁发','1948年 世界人权宣言通过'],
+                    '12-25':['1642年 牛顿诞生','1991年 苏联解体'],
+                    '12-31':['1999年 巴拿马运河主权回归巴拿马']
+                };
+                return data[key] || ['暂无记录~'];
+            }
+
+            // ===== 待办清单系统 =====
+            var TODO_KEY = 'cal_todos';
+            function loadTodos() { try { return JSON.parse(localStorage.getItem(TODO_KEY)) || []; } catch(e) { return []; } }
+            function saveTodos(arr) { try { localStorage.setItem(TODO_KEY, JSON.stringify(arr)); } catch(e) {} }
+            function addTodo(text) {
+                var arr = loadTodos();
+                arr.push({ id: Date.now(), text: text, done: false, createdAt: new Date().toISOString() });
+                saveTodos(arr);
+                renderTodos();
+                checkAchievements();
+            }
+            function toggleTodo(id) {
+                var arr = loadTodos();
+                var item = arr.find(function(t) { return t.id === id; });
+                if (item) item.done = !item.done;
+                saveTodos(arr);
+                renderTodos();
+                checkAchievements();
+            }
+            function deleteTodo(id) {
+                var arr = loadTodos().filter(function(t) { return t.id !== id; });
+                saveTodos(arr);
+                renderTodos();
+            }
+            function renderTodos() {
+                var arr = loadTodos();
+                var list = document.getElementById('todoList');
+                list.innerHTML = '';
+                if (arr.length === 0) { list.innerHTML = '<div style="text-align:center;color:#888;font-size:13px;padding:16px;">暂无待办~</div>'; return; }
+                arr.forEach(function(t) {
+                    var div = document.createElement('div');
+                    div.className = 'todo-item' + (t.done ? ' done' : '');
+                    div.innerHTML = '<input type="checkbox" ' + (t.done ? 'checked' : '') + '><span class="todo-text">' + escapeHtml(t.text) + '</span><button class="todo-del">✕</button>';
+                    div.querySelector('input').addEventListener('change', function() { toggleTodo(t.id); });
+                    div.querySelector('.todo-del').addEventListener('click', function() { deleteTodo(t.id); });
+                    list.appendChild(div);
+                });
+            }
+            document.getElementById('todoAddBtn').addEventListener('click', function() {
+                var input = document.getElementById('todoInput');
+                if (input.value.trim()) { addTodo(input.value.trim()); input.value = ''; }
+            });
+            document.getElementById('todoInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('todoAddBtn').click(); } });
+            document.getElementById('todoClose').addEventListener('click', function() { document.getElementById('todoOverlay').classList.remove('show'); });
+            document.getElementById('todoOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+            document.getElementById('todoFab').addEventListener('click', function() { bounceElement(this); renderTodos(); renderBadges(); document.getElementById('todoOverlay').classList.add('show'); });
+
+            // ===== 成就系统 =====
+            var ACH_KEY = 'cal_achievements';
+            function loadAchievements() { try { return JSON.parse(localStorage.getItem(ACH_KEY)) || []; } catch(e) { return []; } }
+            function saveAchievements(arr) { try { localStorage.setItem(ACH_KEY, JSON.stringify(arr)); } catch(e) {} }
+            function unlockAchievement(id) {
+                var arr = loadAchievements();
+                if (arr.includes(id)) return;
+                arr.push(id);
+                saveAchievements(arr);
+                showAchievementPopup(id);
+            }
+            var ACHIEVEMENTS = [
+                { id:'first_note', icon:'📝', name:'初试身手', desc:'创建第一条记事', check: function() { return loadAllNotes() && Object.values(loadAllNotes()).reduce(function(s,n){return s+n.length;},0) >= 1; } },
+                { id:'ten_notes', icon:'📚', name:'记录达人', desc:'累计创建10条记事', check: function() { return Object.values(loadAllNotes()).reduce(function(s,n){return s+n.length;},0) >= 10; } },
+                { id:'first_wish', icon:'⭐', name:'许愿成真', desc:'许下第一个愿望', check: function() { try { return JSON.parse(localStorage.getItem('peace_wishes') || '[]').length >= 1; } catch(e) { return false; } } },
+                { id:'first_todo', icon:'✅', name:'万事开头难', desc:'创建第一个待办', check: function() { return loadTodos().length >= 1; } },
+                { id:'ten_todos', icon:'🏆', name:'效率达人', desc:'完成10个待办', check: function() { return loadTodos().filter(function(t){return t.done;}).length >= 10; } },
+                { id:'week_user', icon:'📅', name:'忠实用户', desc:'使用超过7天', check: function() { try { var d = localStorage.getItem('cal_first_day'); return d && (Date.now() - parseInt(d)) > 7*86400000; } catch(e) { return false; } } },
+                { id:'dark_mode', icon:'🌙', name:'暗夜行者', desc:'使用过深色模式', check: function() { return document.body.classList.contains('dark-mode'); } },
+                { id:'multilang', icon:'🌐', name:'语言大师', desc:'切换过其他语言', check: function() { return localStorage.getItem('cal_lang') && localStorage.getItem('cal_lang') !== 'zh'; } },
+                { id:'music_lover', icon:'🎵', name:'音乐爱好者', desc:'播放过背景音乐', check: function() { return localStorage.getItem('cal_music_id') !== null; } },
+                { id:'custom_bg', icon:'🖼️', name:'个性达人', desc:'设置过自定义背景', check: function() { return localStorage.getItem('cal_bg_image') !== null; } },
+                { id:'peace_day', icon:'🕊️', name:'和平使者', desc:'在9月21日和平日访问', check: function() { var n = new Date(); return n.getMonth() === 8 && n.getDate() === 21; } },
+                { id:'konami', icon:'🎮', name:'隐藏玩家', desc:'触发Konami Code彩蛋', check: function() { return sessionStorage.getItem('konami_triggered') === '1'; } }
+            ];
+            function checkAchievements() {
+                try { if (!localStorage.getItem('cal_first_day')) localStorage.setItem('cal_first_day', Date.now().toString()); } catch(e){}
+                ACHIEVEMENTS.forEach(function(a) { if (a.check()) unlockAchievement(a.id); });
+            }
+            function showAchievementPopup(id) {
+                var ach = ACHIEVEMENTS.find(function(a) { return a.id === id; });
+                if (!ach) return;
+                document.getElementById('achIcon').textContent = ach.icon;
+                document.getElementById('achTitle').textContent = '🏆 ' + ach.name;
+                document.getElementById('achDesc').textContent = ach.desc;
+                var popup = document.getElementById('achievementPopup');
+                popup.classList.add('show');
+                setTimeout(function() { popup.classList.remove('show'); }, 3000);
+            }
+            function renderBadges() {
+                var unlocked = loadAchievements();
+                var grid = document.getElementById('badgeGrid');
+                grid.innerHTML = '';
+                ACHIEVEMENTS.forEach(function(a) {
+                    var div = document.createElement('div');
+                    div.className = 'badge-item' + (unlocked.includes(a.id) ? ' unlocked' : '');
+                    div.innerHTML = '<div class="badge-icon">' + a.icon + '</div><div class="badge-name">' + a.name + '</div>';
+                    div.title = a.desc;
+                    grid.appendChild(div);
+                });
+            }
+
+            // ===== 浮动便签 =====
+            var STICKY_KEY = 'cal_stickies';
+            function loadStickies() { try { return JSON.parse(localStorage.getItem(STICKY_KEY)) || []; } catch(e) { return []; } }
+            function saveStickies(arr) { try { localStorage.setItem(STICKY_KEY, JSON.stringify(arr)); } catch(e) {} }
+            var stickyColors = ['#fffde7','#fce4ec','#e8f5e9','#e3f2fd','#f3e5f5'];
+            function createSticky(data) {
+                var note = document.createElement('div');
+                note.className = 'sticky-note';
+                note.style.left = (data.x || 100 + Math.random()*200) + 'px';
+                note.style.top = (data.y || 100 + Math.random()*200) + 'px';
+                note.style.background = data.color || stickyColors[0];
+                note.innerHTML = '<div class="sticky-color">' + stickyColors.map(function(c) { return '<span data-color="' + c + '" style="background:' + c + '"></span>'; }).join('') + '</div><button class="sticky-close">✕</button><textarea placeholder="写点什么..." maxlength="200">' + escapeHtml(data.text || '') + '</textarea>';
+                // Drag
+                var isDragging = false, startX, startY, origX, origY;
+                note.addEventListener('mousedown', function(e) {
+                    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON' || e.target.tagName === 'SPAN') return;
+                    isDragging = true; startX = e.clientX; startY = e.clientY;
+                    origX = parseInt(note.style.left); origY = parseInt(note.style.top);
+                    note.style.zIndex = 8001;
+                });
+                document.addEventListener('mousemove', function(e) {
+                    if (!isDragging) return;
+                    note.style.left = (origX + e.clientX - startX) + 'px';
+                    note.style.top = (origY + e.clientY - startY) + 'px';
+                });
+                document.addEventListener('mouseup', function() { if (isDragging) { isDragging = false; note.style.zIndex = 8000; saveAllStickies(); } });
+                // Close
+                note.querySelector('.sticky-close').addEventListener('click', function() { note.remove(); saveAllStickies(); });
+                // Color
+                note.querySelectorAll('.sticky-color span').forEach(function(span) {
+                    span.addEventListener('click', function() { note.style.background = span.getAttribute('data-color'); saveAllStickies(); });
+                });
+                // Text change
+                note.querySelector('textarea').addEventListener('input', function() { saveAllStickies(); });
+                document.getElementById('stickyContainer').appendChild(note);
+            }
+            function saveAllStickies() {
+                var notes = document.querySelectorAll('.sticky-note');
+                var arr = [];
+                notes.forEach(function(n) {
+                    arr.push({ x: parseInt(n.style.left), y: parseInt(n.style.top), color: n.style.background, text: n.querySelector('textarea').value });
+                });
+                saveStickies(arr);
+            }
+            function loadAllStickies() {
+                loadStickies().forEach(function(d) { createSticky(d); });
+            }
+            document.getElementById('stickyFab').addEventListener('click', function() { bounceElement(this); createSticky({}); saveAllStickies(); });
+
+            // ===== 动态背景(时间/季节) =====
+            function applyDynamicBg() {
+                var saved = localStorage.getItem('cal_dynamic_bg');
+                if (saved !== 'on') return;
+                var h = new Date().getHours();
+                var cls = h >= 5 && h < 7 ? 'time-dawn' : h >= 7 && h < 17 ? 'time-day' : h >= 17 && h < 19 ? 'time-dusk' : 'time-night';
+                document.body.classList.remove('time-dawn','time-day','time-dusk','time-night');
+                document.body.classList.add(cls);
+            }
+
+            // ===== 季节粒子特效 =====
+            function spawnSeasonParticles() {
+                var month = new Date().getMonth();
+                if (month >= 2 && month <= 4) spawnSakura(); // Spring: cherry blossoms
+                else if (month >= 11 || month <= 1) spawnSnow(); // Winter: snow
+                else if (month >= 5 && month <= 7) spawnFireflies(); // Summer: fireflies
+            }
+            function spawnSakura() {
+                for (var i = 0; i < 15; i++) {
+                    setTimeout(function() {
+                        var el = document.createElement('div');
+                        el.className = 'sakura';
+                        el.textContent = '🌸';
+                        el.style.left = Math.random() * 100 + 'vw';
+                        el.style.fontSize = (10 + Math.random()*10) + 'px';
+                        el.style.animationDuration = (6 + Math.random()*8) + 's';
+                        el.style.animationDelay = Math.random() * 2 + 's';
+                        document.body.appendChild(el);
+                        setTimeout(function() { el.remove(); }, 15000);
+                    }, i * 500);
+                }
+            }
+            function spawnSnow() {
+                for (var i = 0; i < 20; i++) {
+                    setTimeout(function() {
+                        var el = document.createElement('div');
+                        el.className = 'snow-particle';
+                        el.textContent = '❄';
+                        el.style.left = Math.random() * 100 + 'vw';
+                        el.style.fontSize = (8 + Math.random()*10) + 'px';
+                        el.style.animationDuration = (5 + Math.random()*10) + 's';
+                        document.body.appendChild(el);
+                        setTimeout(function() { el.remove(); }, 16000);
+                    }, i * 400);
+                }
+            }
+            function spawnFireflies() {
+                for (var i = 0; i < 10; i++) {
+                    var el = document.createElement('div');
+                    el.className = 'firefly';
+                    el.style.left = Math.random() * 100 + 'vw';
+                    el.style.top = Math.random() * 100 + 'vh';
+                    el.style.animationDelay = Math.random() * 4 + 's';
+                    document.body.appendChild(el);
+                }
+            }
+
+            // ===== 快捷键增强 =====
+            document.getElementById('kbdHelp').addEventListener('click', function() { document.getElementById('kbdOverlay').classList.add('show'); });
+            document.getElementById('kbdOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+
+            // ===== 每日名言(多分类) =====
+            var DAILY_QUOTES = [
+                '世界上最强大的力量是和平的力量。—— 曼德拉',
+                '以眼还眼，世界只会更盲目。—— 甘地',
+                '和平不是一个目标，而是一条道路。—— 马丁·路德·金',
+                '生活不是等待暴风雨过去，而是学会在雨中跳舞。—— 维维安·格林',
+                '你不能改变风向，但你可以调整帆的方向。—— 吉米·迪恩',
+                '每一个圣人都有过去，每一个罪人都有未来。—— 奥斯卡·王尔德',
+                '真正的勇气不是没有恐惧，而是带着恐惧前行。—— 纳尔逊·曼德拉',
+                '星星在黑暗中最闪亮。—— 迪帕克·乔普拉'
+            ];
+            function getDailyQuote() {
+                var dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+                return DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
+            }
+
+            // ===== PWA Service Worker注册 =====
+            if ('serviceWorker' in navigator) {
+                // SW would be registered from external file
+                // navigator.serviceWorker.register('sw.js');
+            }
+
             function init() {
                 try {
                     const savedTheme = localStorage.getItem('cal_theme');
@@ -6497,6 +6976,12 @@
                 showEasterHint();
                 initReminders();
                 loadSettings();
+                renderCountdowns();
+                renderTodos();
+                loadAllStickies();
+                applyDynamicBg();
+                spawnSeasonParticles();
+                checkAchievements();
 
                 /* ===== 节气弹窗绑定 ===== */
                 (function() {
