@@ -3072,6 +3072,81 @@
             .day-cell { border: 1px solid #eee; }
             .title-wrap, .countdown-bar, .dashboard-row { animation: none !important; }
         }
+        /* ===== 番茄钟 ===== */
+        .pomo-fab { position: fixed; bottom: 260px; right: 18px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #dc2626, #f97316); color: #fff; border: none; font-size: 20px; cursor: pointer; box-shadow: 0 4px 14px rgba(220,38,38,0.3); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .pomo-fab:hover { transform: scale(1.1); }
+        .pomo-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.95); background: var(--card-bg); border-radius: 18px; padding: 28px; max-width: min(90vw, 340px); width: 85%; z-index: 9701; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); text-align: center; }
+        .pomo-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9700; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .pomo-overlay.show { opacity: 1; visibility: visible; }
+        .pomo-overlay.show .pomo-panel { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        .pomo-timer { font-size: 56px; font-weight: 800; color: var(--primary); margin: 16px 0; font-variant-numeric: tabular-nums; }
+        .pomo-label { font-size: 14px; color: #888; margin-bottom: 12px; }
+        .pomo-btns { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
+        .pomo-btns button { padding: 8px 20px; border-radius: 10px; border: none; cursor: pointer; font-size: 14px; }
+        .pomo-start { background: var(--primary); color: #fff; }
+        .pomo-reset { background: var(--workday-bg); color: var(--text-color); }
+        .pomo-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
+        .pomo-progress { width: 100%; height: 6px; background: var(--workday-bg); border-radius: 3px; margin-top: 12px; overflow: hidden; }
+        .pomo-progress-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 1s linear; }
+        body.dark-mode .pomo-panel { background: #1e2438; }
+        /* ===== 月相 ===== */
+        .moon-phase { font-size: 9px; line-height: 1; vertical-align: middle; margin-left: 1px; }
+        /* ===== 活动热力图 ===== */
+        .heatmap-wrap { background: var(--workday-bg); border-radius: 12px; padding: 14px; margin-top: 12px; overflow-x: auto; }
+        .heatmap-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+        .heatmap-grid { display: grid; grid-template-columns: repeat(53, 1fr); gap: 2px; }
+        .heatmap-cell { width: 100%; aspect-ratio: 1; border-radius: 2px; background: rgba(36,120,224,0.06); min-width: 8px; }
+        .heatmap-cell.l1 { background: rgba(36,120,224,0.2); }
+        .heatmap-cell.l2 { background: rgba(36,120,224,0.4); }
+        .heatmap-cell.l3 { background: rgba(36,120,224,0.65); }
+        .heatmap-cell.l4 { background: rgba(36,120,224,0.9); }
+        body.dark-mode .heatmap-cell { background: rgba(90,159,255,0.08); }
+        body.dark-mode .heatmap-cell.l1 { background: rgba(90,159,255,0.2); }
+        body.dark-mode .heatmap-cell.l2 { background: rgba(90,159,255,0.4); }
+        body.dark-mode .heatmap-cell.l3 { background: rgba(90,159,255,0.65); }
+        body.dark-mode .heatmap-cell.l4 { background: rgba(90,159,255,0.9); }
+        /* ===== 计算器 ===== */
+        .calc-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.95); background: var(--card-bg); border-radius: 18px; padding: 20px; max-width: min(90vw, 280px); width: 80%; z-index: 9801; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); }
+        .calc-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9800; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .calc-overlay.show { opacity: 1; visibility: visible; }
+        .calc-overlay.show .calc-panel { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        .calc-display { background: var(--workday-bg); border-radius: 10px; padding: 12px; text-align: right; font-size: 24px; font-weight: 700; margin-bottom: 12px; min-height: 40px; overflow: hidden; }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .calc-grid button { padding: 12px; border-radius: 8px; border: none; font-size: 16px; cursor: pointer; background: var(--workday-bg); color: var(--text-color); transition: all 0.1s; }
+        .calc-grid button:active { transform: scale(0.95); }
+        .calc-grid .calc-op { background: var(--primary); color: #fff; }
+        .calc-grid .calc-eq { background: #10b981; color: #fff; }
+        .calc-close { position: absolute; top: 10px; right: 14px; background: none; border: none; font-size: 18px; cursor: pointer; color: #999; }
+        body.dark-mode .calc-panel { background: #1e2438; }
+        body.dark-mode .calc-grid button { background: #252838; }
+        /* ===== 日记模式 ===== */
+        .diary-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9600; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .diary-overlay.show { opacity: 1; visibility: visible; }
+        .diary-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.95); background: var(--card-bg); border-radius: 18px; padding: 24px; max-width: min(90vw, 500px); width: 85%; max-height: 80vh; overflow-y: auto; z-index: 9601; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); }
+        .diary-overlay.show .diary-panel { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        .diary-panel h3 { margin: 0 0 12px; font-size: 17px; }
+        .diary-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
+        .diary-textarea { width: 100%; min-height: 200px; border: 1px solid #ccc; border-radius: 12px; padding: 14px; font-size: 14px; font-family: inherit; resize: vertical; background: var(--card-bg); color: var(--text-color); line-height: 1.8; }
+        .diary-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(36,120,224,0.15); }
+        .diary-toolbar { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .diary-toolbar button { padding: 6px 12px; border-radius: 8px; border: 1px solid #ccc; background: var(--workday-bg); cursor: pointer; font-size: 12px; }
+        .diary-mood { display: flex; gap: 8px; margin-top: 8px; }
+        .diary-mood span { font-size: 24px; cursor: pointer; opacity: 0.4; transition: all 0.2s; }
+        .diary-mood span.active { opacity: 1; transform: scale(1.2); }
+        body.dark-mode .diary-panel { background: #1e2438; }
+        body.dark-mode .diary-textarea { border-color: #3a4060; background: #252838; }
+        /* ===== 弹幕 ===== */
+        .danmaku { position: fixed; z-index: 50; pointer-events: none; font-size: 14px; font-weight: 600; white-space: nowrap; animation: danmakuFly linear forwards; }
+        @keyframes danmakuFly { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+        /* ===== 自定义取色 ===== */
+        .color-picker-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+        .color-picker-row input[type=color] { width: 36px; height: 36px; border: none; border-radius: 8px; cursor: pointer; background: none; }
+        .color-picker-row label { font-size: 13px; }
+        /* ===== 语音按钮 ===== */
+        .voice-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 8px; transition: all 0.2s; }
+        .voice-btn:hover { background: rgba(36,120,224,0.1); }
+        .voice-btn.recording { color: #dc2626; animation: voicePulse 1s ease infinite; }
+        @keyframes voicePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
         /* ===== 页面加载阶梯动画 ===== */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -3403,6 +3478,71 @@
             <div class="setting-row">
                 <span class="setting-label" id="settingQuoteSpeedLabel">语录轮播速度</span>
                 <div class="setting-control"><select id="quoteSpeedSelect"><option value="4000">4秒</option><option value="6000" selected>6秒</option><option value="10000">10秒</option><option value="0">关闭</option></select></div>
+            </div>
+        </div>
+    </div>
+    <!-- ===== 番茄钟 ===== -->
+    <button class="pomo-fab" id="pomoFab" title="番茄钟" aria-label="番茄钟">🍅</button>
+    <div class="pomo-overlay" id="pomoOverlay">
+        <div class="pomo-panel" style="position:relative;">
+            <button class="pomo-close" id="pomoClose">✕</button>
+            <h3>🍅 番茄钟</h3>
+            <div class="pomo-label" id="pomoLabel">专注时间</div>
+            <div class="pomo-timer" id="pomoTimer">25:00</div>
+            <div class="pomo-progress"><div class="pomo-progress-fill" id="pomoProgressFill" style="width:0%"></div></div>
+            <div class="pomo-btns">
+                <button class="pomo-start" id="pomoStart">开始</button>
+                <button class="pomo-reset" id="pomoReset">重置</button>
+            </div>
+        </div>
+    </div>
+    <!-- ===== 计算器 ===== -->
+    <div class="calc-overlay" id="calcOverlay">
+        <div class="calc-panel" style="position:relative;">
+            <button class="calc-close" id="calcClose">✕</button>
+            <div class="calc-display" id="calcDisplay">0</div>
+            <div class="calc-grid">
+                <button data-val="C" class="calc-op">C</button>
+                <button data-val="(" class="calc-op">(</button>
+                <button data-val=")" class="calc-op">)</button>
+                <button data-val="/" class="calc-op">÷</button>
+                <button data-val="7">7</button>
+                <button data-val="8">8</button>
+                <button data-val="9">9</button>
+                <button data-val="*" class="calc-op">×</button>
+                <button data-val="4">4</button>
+                <button data-val="5">5</button>
+                <button data-val="6">6</button>
+                <button data-val="-" class="calc-op">−</button>
+                <button data-val="1">1</button>
+                <button data-val="2">2</button>
+                <button data-val="3">3</button>
+                <button data-val="+" class="calc-op">+</button>
+                <button data-val="0">0</button>
+                <button data-val=".">.</button>
+                <button data-val="Backspace">⌫</button>
+                <button data-val="=" class="calc-eq">=</button>
+            </div>
+        </div>
+    </div>
+    <!-- ===== 日记面板 ===== -->
+    <div class="diary-overlay" id="diaryOverlay">
+        <div class="diary-panel" style="position:relative;">
+            <button class="diary-close" id="diaryClose">✕</button>
+            <h3 id="diaryTitle">📖 日记</h3>
+            <div class="diary-mood" id="diaryMood">
+                <span data-mood="happy">😊</span>
+                <span data-mood="good">🙂</span>
+                <span data-mood="neutral">😐</span>
+                <span data-mood="sad">😢</span>
+                <span data-mood="angry">😠</span>
+                <span data-mood="love">🥰</span>
+            </div>
+            <textarea class="diary-textarea" id="diaryTextarea" placeholder="今天发生了什么..."></textarea>
+            <div class="diary-toolbar">
+                <button id="diarySave">💾 保存</button>
+                <button id="diaryVoice">🎤 语音输入</button>
+                <button id="diaryHistory">📜 历史日记</button>
             </div>
         </div>
     </div>
@@ -6940,11 +7080,261 @@
                 return DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
             }
 
-            // ===== PWA Service Worker注册 =====
-            if ('serviceWorker' in navigator) {
-                // SW would be registered from external file
-                // navigator.serviceWorker.register('sw.js');
+            // ===== 番茄钟 =====
+            var pomoState = 'idle'; // idle, running, break
+            var pomoTime = 25 * 60;
+            var pomoTotal = 25 * 60;
+            var pomoInterval = null;
+            function updatePomoDisplay() {
+                var m = Math.floor(pomoTime / 60);
+                var s = pomoTime % 60;
+                document.getElementById('pomoTimer').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+                var pct = ((pomoTotal - pomoTime) / pomoTotal * 100);
+                document.getElementById('pomoProgressFill').style.width = pct + '%';
             }
+            function startPomo() {
+                if (pomoState === 'running') { clearInterval(pomoInterval); pomoState = 'idle'; document.getElementById('pomoStart').textContent = '继续'; return; }
+                pomoState = 'running';
+                document.getElementById('pomoStart').textContent = '暂停';
+                document.getElementById('pomoLabel').textContent = pomoTime > 60 ? '专注时间' : '休息时间';
+                pomoInterval = setInterval(function() {
+                    pomoTime--;
+                    updatePomoDisplay();
+                    if (pomoTime <= 0) {
+                        clearInterval(pomoInterval);
+                        pomoState = 'idle';
+                        if (pomoTotal === 25*60) {
+                            // Work done, start break
+                            pomoTime = 5*60; pomoTotal = 5*60;
+                            document.getElementById('pomoLabel').textContent = '☕ 休息一下';
+                            document.getElementById('pomoStart').textContent = '开始';
+                        } else {
+                            // Break done, reset
+                            pomoTime = 25*60; pomoTotal = 25*60;
+                            document.getElementById('pomoLabel').textContent = '专注时间';
+                            document.getElementById('pomoStart').textContent = '开始';
+                        }
+                        updatePomoDisplay();
+                        try {
+                            if ('Notification' in window && Notification.permission === 'granted') new Notification('🍅 番茄钟', { body: pomoTotal === 5*60 ? '休息结束！继续加油~' : '专注结束！休息一下~' });
+                            else alert(pomoTotal === 5*60 ? '🍅 休息结束！继续加油~' : '🍅 专注结束！休息一下~');
+                        } catch(e) {}
+                    }
+                }, 1000);
+            }
+            document.getElementById('pomoStart').addEventListener('click', startPomo);
+            document.getElementById('pomoReset').addEventListener('click', function() {
+                clearInterval(pomoInterval); pomoState = 'idle';
+                pomoTime = 25*60; pomoTotal = 25*60;
+                document.getElementById('pomoStart').textContent = '开始';
+                document.getElementById('pomoLabel').textContent = '专注时间';
+                updatePomoDisplay();
+            });
+            document.getElementById('pomoFab').addEventListener('click', function() { bounceElement(this); document.getElementById('pomoOverlay').classList.add('show'); });
+            document.getElementById('pomoClose').addEventListener('click', function() { document.getElementById('pomoOverlay').classList.remove('show'); });
+            document.getElementById('pomoOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+
+            // ===== 计算器 =====
+            var calcExpr = '';
+            function updateCalcDisplay() { document.getElementById('calcDisplay').textContent = calcExpr || '0'; }
+            document.querySelectorAll('.calc-grid button').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var val = btn.getAttribute('data-val');
+                    if (val === 'C') { calcExpr = ''; }
+                    else if (val === 'Backspace') { calcExpr = calcExpr.slice(0,-1); }
+                    else if (val === '=') {
+                        try { calcExpr = String(eval(calcExpr)); } catch(e) { calcExpr = 'Error'; }
+                    } else { calcExpr += val; }
+                    updateCalcDisplay();
+                });
+            });
+            document.getElementById('calcClose').addEventListener('click', function() { document.getElementById('calcOverlay').classList.remove('show'); });
+            document.getElementById('calcOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+
+            // ===== 月相计算 =====
+            function getMoonPhase(y, m, d) {
+                var c = Math.floor(365.25 * y);
+                var e = Math.floor(30.6 * m);
+                var jd = c + e + d - 694039.09;
+                jd /= 29.5305882;
+                jd = jd - Math.floor(jd);
+                var phases = ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
+                return phases[Math.floor(jd * 8) % 8];
+            }
+
+            // ===== 活动热力图 =====
+            function renderHeatmap() {
+                var container = document.getElementById('heatmapGrid');
+                if (!container) return;
+                container.innerHTML = '';
+                var all = loadAllNotes();
+                var today = new Date();
+                for (var w = 0; w < 53; w++) {
+                    for (var dd = 0; dd < 7; dd++) {
+                        var d = new Date(today);
+                        d.setDate(d.getDate() - (52-w)*7 - (6-dd));
+                        var key = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+                        var count = (all[key] || []).length;
+                        var cell = document.createElement('div');
+                        cell.className = 'heatmap-cell' + (count > 0 ? (count >= 5 ? ' l4' : count >= 3 ? ' l3' : count >= 2 ? ' l2' : ' l1') : '');
+                        cell.title = key + ': ' + count + '条';
+                        container.appendChild(cell);
+                    }
+                }
+            }
+
+            // ===== Geolocation天气 =====
+            function fetchWeatherByGeo() {
+                if (!navigator.geolocation) return;
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    var lat = pos.coords.latitude.toFixed(2);
+                    var lon = pos.coords.longitude.toFixed(2);
+                    fetchWeather(lat + ',' + lon);
+                }, function() {}, { timeout: 5000 });
+            }
+
+            // ===== 拖拽排序(待办) =====
+            var dragTodoId = null;
+            function enableTodoDrag() {
+                var list = document.getElementById('todoList');
+                if (!list) return;
+                list.addEventListener('dragstart', function(e) {
+                    if (e.target.classList.contains('todo-item')) { dragTodoId = e.target.getAttribute('data-id'); e.dataTransfer.effectAllowed = 'move'; }
+                });
+                list.addEventListener('dragover', function(e) { e.preventDefault(); });
+                list.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    var target = e.target.closest('.todo-item');
+                    if (!target || !dragTodoId) return;
+                    var targetId = target.getAttribute('data-id');
+                    if (dragTodoId === targetId) return;
+                    var arr = loadTodos();
+                    var fromIdx = arr.findIndex(function(t) { return t.id == dragTodoId; });
+                    var toIdx = arr.findIndex(function(t) { return t.id == targetId; });
+                    if (fromIdx < 0 || toIdx < 0) return;
+                    var item = arr.splice(fromIdx, 1)[0];
+                    arr.splice(toIdx, 0, item);
+                    saveTodos(arr);
+                    renderTodos();
+                });
+            }
+
+            // ===== 自定义配色 =====
+            function applyCustomColor(primary, primaryLight) {
+                document.documentElement.style.setProperty('--primary', primary);
+                document.documentElement.style.setProperty('--primary-light', primaryLight);
+                try { localStorage.setItem('cal_custom_primary', primary); localStorage.setItem('cal_custom_primary_light', primaryLight); } catch(e){}
+            }
+
+            // ===== 弹幕系统 =====
+            function spawnDanmaku(texts, duration) {
+                texts = texts || ['🕊️ 世界和平', '☮️ Peace', '🌍 和平万岁', '✨ 愿世界和平'];
+                duration = duration || 8000;
+                for (var i = 0; i < texts.length; i++) {
+                    (function(text, delay) {
+                        setTimeout(function() {
+                            var el = document.createElement('div');
+                            el.className = 'danmaku';
+                            el.textContent = text;
+                            el.style.top = (10 + Math.random() * 70) + 'vh';
+                            el.style.fontSize = (12 + Math.random() * 8) + 'px';
+                            el.style.color = 'hsl(' + Math.random()*360 + ',70%,60%)';
+                            el.style.animationDuration = (duration/1000) + 's';
+                            document.body.appendChild(el);
+                            setTimeout(function() { el.remove(); }, duration + 500);
+                        }, delay);
+                    })(texts[i], i * 600);
+                }
+            }
+
+            // ===== 日记系统 =====
+            var DIARY_KEY = '***';
+            var currentDiaryMood = 'good';
+            function loadDiary(dateKey) { try { var d = JSON.parse(localStorage.getItem(DIARY_KEY)) || {}; return d[dateKey] || { text:'', mood:'good' }; } catch(e) { return { text:'', mood:'good' }; } }
+            function saveDiary(dateKey, text, mood) { try { var d = JSON.parse(localStorage.getItem(DIARY_KEY)) || {}; d[dateKey] = { text: text, mood: mood, updatedAt: new Date().toISOString() }; localStorage.setItem(DIARY_KEY, JSON.stringify(d)); } catch(e) {} }
+            function openDiary() {
+                var dateKey = todayYear + '-' + todayMonth + '-' + todayDay;
+                var data = loadDiary(dateKey);
+                document.getElementById('diaryTextarea').value = data.text || '';
+                currentDiaryMood = data.mood || 'good';
+                document.querySelectorAll('#diaryMood span').forEach(function(s) {
+                    s.classList.toggle('active', s.getAttribute('data-mood') === currentDiaryMood);
+                });
+                document.getElementById('diaryOverlay').classList.add('show');
+            }
+            document.querySelectorAll('#diaryMood span').forEach(function(s) {
+                s.addEventListener('click', function() {
+                    currentDiaryMood = s.getAttribute('data-mood');
+                    document.querySelectorAll('#diaryMood span').forEach(function(x) { x.classList.toggle('active', x === s); });
+                });
+            });
+            document.getElementById('diarySave').addEventListener('click', function() {
+                var dateKey = todayYear + '-' + todayMonth + '-' + todayDay;
+                saveDiary(dateKey, document.getElementById('diaryTextarea').value, currentDiaryMood);
+                alert('💾 日记已保存！');
+            });
+            document.getElementById('diaryHistory').addEventListener('click', function() {
+                try {
+                    var d = JSON.parse(localStorage.getItem(DIARY_KEY)) || {};
+                    var keys = Object.keys(d).sort().reverse().slice(0, 10);
+                    if (keys.length === 0) { alert('还没有日记~'); return; }
+                    var msg = '最近的日记:\n\n';
+                    keys.forEach(function(k) {
+                        var moods = { happy:'😊', good:'🙂', neutral:'😐', sad:'😢', angry:'😠', love:'🥰' };
+                        msg += k + ' ' + (moods[d[k].mood]||'') + '\n' + (d[k].text||'(空)').substring(0,50) + '\n\n';
+                    });
+                    alert(msg);
+                } catch(e) {}
+            });
+            document.getElementById('diaryClose').addEventListener('click', function() { document.getElementById('diaryOverlay').classList.remove('show'); });
+            document.getElementById('diaryOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+
+            // ===== 语音输入 =====
+            var recognition = null;
+            function startVoice(targetInput) {
+                if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { alert('当前浏览器不支持语音输入'); return; }
+                var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SR();
+                recognition.lang = currentLang === 'zh' ? 'zh-CN' : (currentLang === 'ja' ? 'ja-JP' : currentLang === 'ko' ? 'ko-KR' : currentLang === 'fr' ? 'fr-FR' : currentLang === 'de' ? 'de-DE' : 'en-US');
+                recognition.interimResults = true;
+                recognition.onresult = function(e) {
+                    var transcript = '';
+                    for (var i = e.resultIndex; i < e.results.length; i++) transcript += e.results[i][0].transcript;
+                    targetInput.value = transcript;
+                };
+                recognition.onend = function() { document.querySelectorAll('.voice-btn').forEach(function(b) { b.classList.remove('recording'); }); };
+                recognition.onerror = function() { document.querySelectorAll('.voice-btn').forEach(function(b) { b.classList.remove('recording'); }); };
+                recognition.start();
+            }
+            // Add voice buttons to note modal and diary
+            var noteVoiceBtn = document.createElement('button');
+            noteVoiceBtn.className = 'voice-btn';
+            noteVoiceBtn.textContent = '🎤';
+            noteVoiceBtn.title = '语音输入';
+            noteVoiceBtn.addEventListener('click', function() {
+                if (recognition) { recognition.stop(); recognition = null; this.classList.remove('recording'); return; }
+                this.classList.add('recording');
+                startVoice(modalNoteInput);
+            });
+            var inputRow = document.querySelector('.modal-input-row');
+            if (inputRow) inputRow.insertBefore(noteVoiceBtn, inputRow.querySelector('button'));
+
+            document.getElementById('diaryVoice').addEventListener('click', function() {
+                if (recognition) { recognition.stop(); recognition = null; this.classList.remove('recording'); return; }
+                this.classList.add('recording');
+                startVoice(document.getElementById('diaryTextarea'));
+            });
+
+            // ===== 更新仪表盘热力图 =====
+            var origUpdateDashboard = typeof updateDashboard === 'function' ? updateDashboard : function(){};
+            // Heatmap added to stats panel
+
+            // ===== 加载自定义配色 =====
+            try {
+                var cp = localStorage.getItem('cal_custom_primary');
+                var cpl = localStorage.getItem('cal_custom_primary_light');
+                if (cp && cpl) applyCustomColor(cp, cpl);
+            } catch(e){}
 
             function init() {
                 try {
@@ -6982,6 +7372,50 @@
                 applyDynamicBg();
                 spawnSeasonParticles();
                 checkAchievements();
+                enableTodoDrag();
+                renderHeatmap();
+                // 添加日记按钮到仪表盘
+                var dashRow = document.getElementById('dashboardRow');
+                if (dashRow) {
+                    var diaryCard = document.createElement('div');
+                    diaryCard.className = 'dashboard-card';
+                    diaryCard.style.cursor = 'pointer';
+                    diaryCard.title = '日记';
+                    diaryCard.innerHTML = '<div class="dash-icon">📖</div><div class="dash-value" id="dashDiaryMood">-</div><div class="dash-label">日记</div>';
+                    diaryCard.addEventListener('click', function() { bounceElement(this); openDiary(); });
+                    dashRow.appendChild(diaryCard);
+                    // Load today's diary mood
+                    var dk = todayYear+'-'+todayMonth+'-'+todayDay;
+                    var dd = loadDiary(dk);
+                    var moods = {happy:'😊',good:'🙂',neutral:'😐',sad:'😢',angry:'😠',love:'🥰'};
+                    if (dd.text) document.getElementById('dashDiaryMood').textContent = moods[dd.mood] || '📖';
+                }
+                // 添加计算器到工具栏
+                var kbdHelp = document.getElementById('kbdHelp');
+                if (kbdHelp) {
+                    var calcBtn = document.createElement('span');
+                    calcBtn.textContent = ' | 🧮 计算器';
+                    calcBtn.style.cursor = 'pointer';
+                    calcBtn.addEventListener('click', function() { document.getElementById('calcOverlay').classList.add('show'); });
+                    kbdHelp.appendChild(calcBtn);
+                }
+                // 热力图添加到统计面板
+                var statsPanel = document.querySelector('.stats-panel .stats-grid');
+                if (statsPanel && statsPanel.parentElement) {
+                    var hmWrap = document.createElement('div');
+                    hmWrap.className = 'heatmap-wrap';
+                    hmWrap.innerHTML = '<div class="heatmap-title">📊 年度活动热力图</div><div class="heatmap-grid" id="heatmapGrid"></div>';
+                    statsPanel.parentElement.appendChild(hmWrap);
+                    renderHeatmap();
+                }
+                // 节日弹幕
+                var todayKey = todayMonth+'-'+todayDay;
+                var isHoliday = !!(allYearHolidays[todayYear] && allYearHolidays[todayYear][todayKey]);
+                if (isHoliday) setTimeout(function() { spawnDanmaku(); }, 3000);
+                // Geolocation天气(仅首次)
+                if (!localStorage.getItem('***') && navigator.geolocation) {
+                    setTimeout(fetchWeatherByGeo, 2000);
+                }
 
                 /* ===== 节气弹窗绑定 ===== */
                 (function() {
