@@ -2468,14 +2468,30 @@
         }
 
         /* ===== 响应式 ===== */
+        /* ===== 移动端性能优化 ===== */
+        .calendar-box { contain: layout style; }
+        .day-grid { will-change: transform, opacity; transform: translateZ(0); }
+        .topbar { contain: layout style paint; }
+        .dashboard-row { contain: layout style; }
+        .modal-overlay, .stats-overlay, .settings-overlay, .music-overlay, .countdown-modal-overlay, .todo-panel-overlay, .diary-overlay, .calc-overlay, .kbd-overlay, .share-overlay { will-change: opacity; }
+        .wish-star-fab, .countdown-fab, .todo-fab, .sticky-fab, .pomo-fab { will-change: transform; transform: translateZ(0); }
+        .festival-tip-box { will-change: opacity, transform; transform: translateZ(0); }
+        .peace-quote-carousel { contain: layout style; }
+        .day-cell.animate-in { transform: translateZ(0); }
+
         /* ===== 触摸优化 ===== */
         * { -webkit-tap-highlight-color: transparent; }
         button, .btn-today, .toolbar-btn, .dashboard-card, .day-cell, .panel-item, .music-item, .todo-item, .countdown-item { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         .day-grid { touch-action: pan-y; }
-        input, textarea, select { font-size: 16px !important; /* Prevent iOS zoom */ }
-        @media (max-width: 480px) { body { overflow-x: hidden; } }
+        /* iOS输入框防放大: 仅在非480+屏幕设16px */
+        @media (max-width: 480px) {
+            input, textarea, select { font-size: 16px; }
+            body { overflow-x: hidden; }
+            /* 移动端减少动画开销 */
+            *, *::before, *::after { transition-duration: 0.15s !important; animation-duration: 0.3s !important; }
+            .day-cell.animate-in { animation: none; }
+        }
         @supports (-webkit-touch-callout: none) {
-            /* iOS specific */
             .modal-overlay, .stats-overlay, .settings-overlay, .music-overlay, .countdown-modal-overlay, .todo-panel-overlay, .diary-overlay, .calc-overlay, .kbd-overlay, .share-overlay { -webkit-overflow-scrolling: touch; }
         }
 
@@ -3166,21 +3182,21 @@
         body.dark-mode .todo-panel { background: #1e2438; }
         body.dark-mode .todo-item { background: #252838; }
         /* ===== 浮动便签 ===== */
-        .sticky-note { position: fixed; z-index: 8000; width: 200px; min-height: 80px; max-height: 320px; background: #fffde7; border-radius: 6px; box-shadow: 2px 2px 10px rgba(0,0,0,0.15); padding: 12px; font-size: 13px; user-select: none; -webkit-user-select: none; display: flex; flex-direction: column; transition: transform 0.2s, opacity 0.2s; overflow: hidden; touch-action: none; }
+        .sticky-note { position: fixed; z-index: 8000; width: 200px; min-height: 80px; max-height: 320px; background: #fffde7; border-radius: 6px; box-shadow: 2px 2px 10px rgba(0,0,0,0.15); padding: 12px; font-size: 13px; user-select: none; -webkit-user-select: none; display: flex; flex-direction: column; transition: transform 0.2s, opacity 0.2s; overflow: hidden; }
         .sticky-note.swiping { transition: none; }
-        .sticky-note .sticky-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-shrink: 0; touch-action: none; }
-        .sticky-note .sticky-handle { cursor: move; display: flex; align-items: center; gap: 4px; flex: 1; padding: 2px 0; }
-        .sticky-note .sticky-handle::before { content: '⠿'; font-size: 16px; color: rgba(0,0,0,0.25); }
-        .sticky-note .sticky-close { background: none; border: none; font-size: 14px; cursor: pointer; color: #999; padding: 0 4px; touch-action: manipulation; }
+        .sticky-note .sticky-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-shrink: 0; }
+        .sticky-note .sticky-handle { cursor: move; display: flex; align-items: center; gap: 4px; flex: 1; padding: 4px 2px; touch-action: none; }
+        .sticky-note .sticky-handle::before { content: '⠿'; font-size: 18px; color: rgba(0,0,0,0.3); line-height: 1; }
+        .sticky-note .sticky-close { background: none; border: none; font-size: 16px; cursor: pointer; color: #999; padding: 4px 6px; touch-action: manipulation; z-index: 1; }
         .sticky-note .sticky-color { display: flex; gap: 3px; }
-        .sticky-note .sticky-color span { width: 10px; height: 10px; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0,0,0,0.1); touch-action: manipulation; }
-        .sticky-note textarea { width: 100%; flex: 1; min-height: 50px; max-height: 220px; border: none; background: transparent; resize: none; font-size: 13px; font-family: inherit; outline: none; overflow-y: auto; line-height: 1.6; touch-action: auto; }
+        .sticky-note .sticky-color span { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0,0,0,0.1); touch-action: manipulation; z-index: 1; }
+        .sticky-note textarea { width: 100%; flex: 1; min-height: 50px; max-height: 220px; border: none; background: transparent; resize: none; font-size: 13px; font-family: inherit; outline: none; overflow-y: auto; line-height: 1.6; touch-action: auto; position: relative; z-index: 0; }
         .sticky-note textarea::-webkit-scrollbar { width: 3px; }
         .sticky-note textarea::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
         .sticky-note .sticky-bottom { display: flex; justify-content: center; align-items: center; gap: 8px; padding-top: 6px; border-top: 1px solid rgba(0,0,0,0.06); flex-shrink: 0; margin-top: 6px; }
-        .sticky-note .sticky-del-btn { background: none; border: none; font-size: 11px; color: #e11d48; cursor: pointer; padding: 4px 12px; border-radius: 6px; transition: all 0.2s; touch-action: manipulation; }
-        .sticky-note .sticky-del-btn:hover { background: rgba(229,29,72,0.1); }
-        body.dark-mode .sticky-note .sticky-handle::before { color: rgba(255,255,255,0.25); }
+        .sticky-note .sticky-del-btn { background: none; border: none; font-size: 12px; color: #e11d48; cursor: pointer; padding: 6px 16px; border-radius: 6px; transition: all 0.2s; touch-action: manipulation; z-index: 1; }
+        .sticky-note .sticky-del-btn:active { background: rgba(229,29,72,0.15); }
+        body.dark-mode .sticky-note .sticky-handle::before { color: rgba(255,255,255,0.3); }
         body.dark-mode .sticky-note .sticky-bottom { border-top-color: rgba(255,255,255,0.08); }
         .sticky-fab { position: fixed; bottom: 200px; right: 18px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #eab308); color: #fff; border: none; font-size: 20px; cursor: pointer; box-shadow: 0 4px 14px rgba(245,158,11,0.3); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .sticky-fab:hover { transform: scale(1.1); }
@@ -5775,11 +5791,11 @@
                     currentShowMonth++; if (currentShowMonth > 12) { currentShowMonth = 1;
                         currentShowYear++; } switchMonth(currentShowYear, currentShowMonth, 'left'); }
                 if ((e.key === 't' || e.key === 'T') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); btnToday.click(); }
-                if ((e.key === 'm' || e.key === 'M') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); document.getElementById('viewMonthBtn').click(); }
-                if ((e.key === 'w' || e.key === 'W') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); document.getElementById('viewWeekBtn').click(); }
-                if ((e.key === 'd' || e.key === 'D') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); document.getElementById('themeToggleBtn').click(); }
-                if ((e.key === 's' || e.key === 'S') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); document.getElementById('statsBtn').click(); }
-                if (e.key === '?' && !e.target.closest('input,textarea,select')) { e.preventDefault(); document.getElementById('kbdOverlay').classList.toggle('show'); }
+                if ((e.key === 'm' || e.key === 'M') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); var _b = document.getElementById('viewMonthBtn'); if (_b) _b.click(); }
+                if ((e.key === 'w' || e.key === 'W') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); var _b = document.getElementById('viewWeekBtn'); if (_b) _b.click(); }
+                if ((e.key === 'd' || e.key === 'D') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); var _b = document.getElementById('themeToggleBtn'); if (_b) _b.click(); }
+                if ((e.key === 's' || e.key === 'S') && !e.target.closest('input,textarea,select') && !e.ctrlKey && !e.metaKey) { e.preventDefault(); var _b = document.getElementById('statsBtn'); if (_b) _b.click(); }
+                if (e.key === '?' && !e.target.closest('input,textarea,select')) { e.preventDefault(); var _k = document.getElementById('kbdOverlay'); if (_k) _k.classList.toggle('show'); }
             });
             modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeNoteModal(); });
             btnCloseModal.addEventListener('click', closeNoteModal);
@@ -6055,8 +6071,8 @@
             });
             let pressTimer = null;
             weatherToggleBtn.addEventListener('touchstart', () => { pressTimer = setTimeout(() => { showWeatherSearch(); },
-                    600); });
-            weatherToggleBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
+                    600); }, { passive: true });
+            weatherToggleBtn.addEventListener('touchend', () => clearTimeout(pressTimer), { passive: true });
             weatherToggleBtn.addEventListener('mousedown', () => { pressTimer = setTimeout(() => { showWeatherSearch(); },
                     600); });
             weatherToggleBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
@@ -6393,8 +6409,9 @@
                     ctx.fillText((bi+1) + '月', x + barW/2, 155);
                 }
             }
-            document.getElementById('statsClose').onclick = function() { document.getElementById('statsOverlay').classList.remove('show'); };
-            document.getElementById('statsOverlay').onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
+            var _el;
+            _el = document.getElementById('statsClose'); if (_el) _el.onclick = function() { var o = document.getElementById('statsOverlay'); if (o) o.classList.remove('show'); };
+            _el = document.getElementById('statsOverlay'); if (_el) _el.onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
             // ===== 2. 提醒功能 =====
             var REMINDERS_KEY = 'cal_reminders';
             function loadReminders() { try { return JSON.parse(localStorage.getItem(REMINDERS_KEY)) || {}; } catch(e) { return {}; } }
@@ -6516,15 +6533,15 @@
                 // Store for download
                 window._shareCanvas = canvas;
             }
-            document.getElementById('shareDownload').onclick = function() {
+            _el = document.getElementById('shareDownload'); if (_el) _el.onclick = function() {
                 if (!window._shareCanvas) return;
                 var a = document.createElement('a');
                 a.href = window._shareCanvas.toDataURL('image/png');
                 a.download = 'peace-calendar-' + currentShowYear + '-' + currentShowMonth + '.png';
                 a.click();
             };
-            document.getElementById('shareCloseBtn').onclick = function() { document.getElementById('shareOverlay').classList.remove('show'); };
-            document.getElementById('shareOverlay').onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
+            _el = document.getElementById('shareCloseBtn'); if (_el) _el.onclick = function() { var o = document.getElementById('shareOverlay'); if (o) o.classList.remove('show'); };
+            _el = document.getElementById('shareOverlay'); if (_el) _el.onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
             // ===== 4. 背景音乐系统 =====
             var musicPlaying = false;
             var musicAudioCtx = null;
@@ -6902,35 +6919,35 @@
                     if (quoteSpeed) document.getElementById('quoteSpeedSelect').value = quoteSpeed;
                 } catch(e) {}
             }
-            document.getElementById('fontSizeSlider').oninput = function() {
+            _el = document.getElementById('fontSizeSlider'); if (_el) _el.oninput = function() {
                 var v = this.value;
                 document.getElementById('fontSizeValue').textContent = v + 'px';
                 applyFontSize(v);
             };
-            document.getElementById('bgImageBtn').onclick = function() { document.getElementById('bgImageInput').click(); };
-            document.getElementById('bgImageInput').onchange = function(e) {
+            _el = document.getElementById('bgImageBtn'); if (_el) _el.onclick = function() { var inp = document.getElementById('bgImageInput'); if (inp) inp.click(); };
+            _el = document.getElementById('bgImageInput'); if (_el) _el.onchange = function(e) {
                 var file = e.target.files[0];
                 if (!file) return;
                 var reader = new FileReader();
                 reader.onload = function(ev) { applyBgImage(ev.target.result); };
                 reader.readAsDataURL(file);
             };
-            document.getElementById('bgImageClear').onclick = function() { applyBgImage(null); };
-            document.getElementById('soundSelect').onchange = function() { try { localStorage.setItem('cal_sound', this.value); } catch(e) {} };
-            document.getElementById('quoteSpeedSelect').onchange = function() {
+            _el = document.getElementById('bgImageClear'); if (_el) _el.onclick = function() { applyBgImage(null); };
+            _el = document.getElementById('soundSelect'); if (_el) _el.onchange = function() { try { localStorage.setItem('cal_sound', this.value); } catch(e) {} };
+            _el = document.getElementById('quoteSpeedSelect'); if (_el) _el.onchange = function() {
                 try { localStorage.setItem('cal_quote_speed', this.value); } catch(e) {}
                 if (quoteTimer) clearInterval(quoteTimer);
                 var speed = parseInt(this.value);
                 if (speed > 0) quoteTimer = setInterval(rotateQuote, speed);
             };
-            document.getElementById('settingsClose').onclick = function() { document.getElementById('settingsOverlay').classList.remove('show'); };
-            document.getElementById('settingsOverlay').onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
+            _el = document.getElementById('settingsClose'); if (_el) _el.onclick = function() { var o = document.getElementById('settingsOverlay'); if (o) o.classList.remove('show'); };
+            _el = document.getElementById('settingsOverlay'); if (_el) _el.onclick = function(e) { if (e.target === this) this.classList.remove('show'); };
 
             // ===== 绑定新按钮 =====
-            document.getElementById('statsBtn').onclick = function() { bounceElement(this); openStats(); };
-            document.getElementById('shareBtn').onclick = function() { bounceElement(this); openShare(); };
-            document.getElementById('musicBtn').onclick = function() { bounceElement(this); document.getElementById('musicOverlay').classList.add('show'); updateMusicListUI(); };
-            document.getElementById('settingsBtn').onclick = function() { bounceElement(this); document.getElementById('settingsOverlay').classList.add('show'); };
+            _el = document.getElementById('statsBtn'); if (_el) _el.onclick = function() { bounceElement(this); openStats(); };
+            _el = document.getElementById('shareBtn'); if (_el) _el.onclick = function() { bounceElement(this); openShare(); };
+            _el = document.getElementById('musicBtn'); if (_el) _el.onclick = function() { bounceElement(this); var o = document.getElementById('musicOverlay'); if (o) { o.classList.add('show'); updateMusicListUI(); } };
+            _el = document.getElementById('settingsBtn'); if (_el) _el.onclick = function() { bounceElement(this); var o = document.getElementById('settingsOverlay'); if (o) o.classList.add('show'); };
 
             // ===== 倒数日/纪念日系统 =====
             var CD_KEY = 'cal_countdowns';
@@ -7132,107 +7149,108 @@
                 note.innerHTML = '<div class="sticky-header"><div class="sticky-handle"></div><div class="sticky-color">' + stickyColors.map(function(c) { return '<span data-color="' + c + '" style="background:' + c + '"></span>'; }).join('') + '</div><button class="sticky-close">✕</button></div><textarea placeholder="写点什么..." maxlength="500">' + escapeHtml(data.text || '') + '</textarea><div class="sticky-bottom"><button class="sticky-del-btn">🗑 删除</button></div>';
 
                 var handle = note.querySelector('.sticky-handle');
-                var isDragging = false, startX, startY, origX, origY;
+                var isDragging = false, dragStartX, dragStartY, dragOrigX, dragOrigY;
 
-                // === Desktop drag ===
+                // === Desktop drag via handle ===
                 handle.addEventListener('mousedown', function(e) {
                     isDragging = true;
-                    startX = e.clientX; startY = e.clientY;
-                    origX = parseInt(note.style.left); origY = parseInt(note.style.top);
+                    dragStartX = e.clientX; dragStartY = e.clientY;
+                    dragOrigX = parseInt(note.style.left); dragOrigY = parseInt(note.style.top);
                     note.style.zIndex = 8001;
                     e.preventDefault();
                 });
                 document.addEventListener('mousemove', function(e) {
                     if (!isDragging) return;
-                    note.style.left = (origX + e.clientX - startX) + 'px';
-                    note.style.top = (origY + e.clientY - startY) + 'px';
+                    note.style.left = (dragOrigX + e.clientX - dragStartX) + 'px';
+                    note.style.top = (dragOrigY + e.clientY - dragStartY) + 'px';
                 });
                 document.addEventListener('mouseup', function() {
                     if (isDragging) { isDragging = false; note.style.zIndex = 8000; saveAllStickies(); }
                 });
 
-                // === Touch: drag via handle, swipe-delete via note body ===
-                var touchState = null; // 'drag' | 'swipe' | null
-                var tStartX = 0, tStartY = 0, tOrigX = 0, tOrigY = 0, tDistX = 0;
-
-                note.addEventListener('touchstart', function(e) {
-                    var target = e.target;
-                    // Don't interfere with textarea, buttons, color dots
-                    if (target.tagName === 'TEXTAREA' || target.tagName === 'BUTTON' || target.tagName === 'SPAN') return;
-                    var touch = e.touches[0];
-                    tStartX = touch.clientX; tStartY = touch.clientY;
-                    tDistX = 0;
-                    // Determine if touching handle (drag) or body (swipe)
-                    if (target.closest('.sticky-handle') || target === handle) {
-                        touchState = 'drag';
-                        tOrigX = parseInt(note.style.left); tOrigY = parseInt(note.style.top);
-                        note.style.zIndex = 8001;
-                    } else {
-                        touchState = 'swipe';
-                        note.classList.add('swiping');
-                    }
+                // === Touch: drag via handle ONLY ===
+                var touchDragging = false, tStartX, tStartY, tOrigX, tOrigY;
+                handle.addEventListener('touchstart', function(e) {
+                    touchDragging = true;
+                    tStartX = e.touches[0].clientX; tStartY = e.touches[0].clientY;
+                    tOrigX = parseInt(note.style.left); tOrigY = parseInt(note.style.top);
+                    note.style.zIndex = 8001;
                 }, { passive: true });
-
-                note.addEventListener('touchmove', function(e) {
-                    if (!touchState) return;
-                    var touch = e.touches[0];
-                    var dx = touch.clientX - tStartX;
-                    var dy = touch.clientY - tStartY;
-                    if (touchState === 'drag') {
-                        note.style.left = (tOrigX + dx) + 'px';
-                        note.style.top = (tOrigY + dy) + 'px';
-                    } else if (touchState === 'swipe') {
-                        tDistX = dx;
-                        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
-                            note.style.transform = 'translateX(' + dx + 'px)';
-                            note.style.opacity = Math.max(0.2, 1 - Math.abs(dx) / 200);
-                        }
-                    }
+                handle.addEventListener('touchmove', function(e) {
+                    if (!touchDragging) return;
+                    var dx = e.touches[0].clientX - tStartX;
+                    var dy = e.touches[0].clientY - tStartY;
+                    note.style.left = (tOrigX + dx) + 'px';
+                    note.style.top = (tOrigY + dy) + 'px';
                 }, { passive: true });
-
-                note.addEventListener('touchend', function() {
-                    if (touchState === 'drag') {
-                        note.style.zIndex = 8000;
-                        saveAllStickies();
-                    } else if (touchState === 'swipe') {
-                        note.classList.remove('swiping');
-                        if (Math.abs(tDistX) > 80) {
-                            // Swipe delete
-                            note.style.transform = 'translateX(' + (tDistX > 0 ? '400px' : '-400px') + ')';
-                            note.style.opacity = '0';
-                            setTimeout(function() { note.remove(); saveAllStickies(); }, 250);
-                        } else {
-                            note.style.transform = '';
-                            note.style.opacity = '';
-                        }
-                    }
-                    touchState = null;
+                handle.addEventListener('touchend', function() {
+                    if (touchDragging) { touchDragging = false; note.style.zIndex = 8000; saveAllStickies(); }
                 });
 
-                // === Close button (desktop & mobile) ===
-                note.querySelector('.sticky-close').addEventListener('click', function() {
+                // === Swipe delete: use swipeHint area or background area ===
+                var swipeActive = false, swipeStartX, swipeDistX;
+                // Listen on the note itself, but only activate for non-interactive areas
+                note.addEventListener('touchstart', function(e) {
+                    var tag = e.target.tagName;
+                    // Skip if touching interactive elements
+                    if (tag === 'BUTTON' || tag === 'SPAN' || tag === 'TEXTAREA' || tag === 'INPUT') return;
+                    if (e.target.closest('.sticky-handle') || e.target.closest('.sticky-close') || e.target.closest('.sticky-color') || e.target.closest('.sticky-del-btn')) return;
+                    swipeActive = true;
+                    swipeStartX = e.touches[0].clientX;
+                    swipeDistX = 0;
+                    note.classList.add('swiping');
+                }, { passive: true });
+                note.addEventListener('touchmove', function(e) {
+                    if (!swipeActive) return;
+                    swipeDistX = e.touches[0].clientX - swipeStartX;
+                    if (Math.abs(swipeDistX) > 8) {
+                        note.style.transform = 'translateX(' + swipeDistX + 'px)';
+                        note.style.opacity = Math.max(0.2, 1 - Math.abs(swipeDistX) / 200);
+                    }
+                }, { passive: true });
+                note.addEventListener('touchend', function() {
+                    if (!swipeActive) return;
+                    swipeActive = false;
+                    note.classList.remove('swiping');
+                    if (Math.abs(swipeDistX) > 80) {
+                        note.style.transform = 'translateX(' + (swipeDistX > 0 ? '400px' : '-400px') + ')';
+                        note.style.opacity = '0';
+                        setTimeout(function() { note.remove(); saveAllStickies(); }, 250);
+                    } else {
+                        note.style.transform = '';
+                        note.style.opacity = '';
+                    }
+                });
+
+                // === Close button (click works on both desktop & mobile) ===
+                var closeBtn = note.querySelector('.sticky-close');
+                closeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     note.style.transform = 'scale(0.8)';
                     note.style.opacity = '0';
                     setTimeout(function() { note.remove(); saveAllStickies(); }, 200);
                 });
 
-                // === Delete button at bottom ===
-                note.querySelector('.sticky-del-btn').addEventListener('click', function() {
+                // === Delete button ===
+                var delBtn = note.querySelector('.sticky-del-btn');
+                delBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     note.style.transform = 'translateX(400px)';
                     note.style.opacity = '0';
                     setTimeout(function() { note.remove(); saveAllStickies(); }, 250);
                 });
 
-                // === Color ===
+                // === Color dots ===
                 note.querySelectorAll('.sticky-color span').forEach(function(span) {
-                    span.addEventListener('click', function() { note.style.background = span.getAttribute('data-color'); saveAllStickies(); });
+                    span.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        note.style.background = span.getAttribute('data-color');
+                        saveAllStickies();
+                    });
                 });
 
                 // === Text change ===
                 note.querySelector('textarea').addEventListener('input', function() { saveAllStickies(); });
-
-                // === Prevent scroll through textarea ===
-                note.querySelector('textarea').addEventListener('touchmove', function(e) { e.stopPropagation(); }, { passive: true });
 
                 document.getElementById('stickyContainer').appendChild(note);
             }
@@ -7603,9 +7621,9 @@
                 initQuoteCarousel();
                 updateWorldClocks();
                 updateWorldClockCityNames();
-                setInterval(updateTime, 1000);
-                setInterval(updateCountdown, 60000);
-                setInterval(updateWorldClocks, 30000);
+                var _timeInterval = setInterval(updateTime, 1000);
+                var _countdownInterval = setInterval(updateCountdown, 60000);
+                var _clockInterval = setInterval(updateWorldClocks, 30000);
                 checkFestivalTip();
                 checkPeaceDay();
                 checkPeaceDayEnhanced();
