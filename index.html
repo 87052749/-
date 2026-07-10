@@ -3166,17 +3166,22 @@
         body.dark-mode .todo-panel { background: #1e2438; }
         body.dark-mode .todo-item { background: #252838; }
         /* ===== 浮动便签 ===== */
-        .sticky-note { position: fixed; z-index: 8000; width: 200px; min-height: 80px; max-height: 320px; background: #fffde7; border-radius: 6px; box-shadow: 2px 2px 10px rgba(0,0,0,0.15); padding: 12px; font-size: 13px; cursor: move; user-select: none; display: flex; flex-direction: column; transition: transform 0.2s, opacity 0.2s; overflow: hidden; }
+        .sticky-note { position: fixed; z-index: 8000; width: 200px; min-height: 80px; max-height: 320px; background: #fffde7; border-radius: 6px; box-shadow: 2px 2px 10px rgba(0,0,0,0.15); padding: 12px; font-size: 13px; user-select: none; -webkit-user-select: none; display: flex; flex-direction: column; transition: transform 0.2s, opacity 0.2s; overflow: hidden; touch-action: none; }
         .sticky-note.swiping { transition: none; }
-        .sticky-note .sticky-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-shrink: 0; cursor: move; }
-        .sticky-note .sticky-close { background: none; border: none; font-size: 14px; cursor: pointer; color: #999; padding: 0 2px; }
+        .sticky-note .sticky-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-shrink: 0; touch-action: none; }
+        .sticky-note .sticky-handle { cursor: move; display: flex; align-items: center; gap: 4px; flex: 1; padding: 2px 0; }
+        .sticky-note .sticky-handle::before { content: '⠿'; font-size: 16px; color: rgba(0,0,0,0.25); }
+        .sticky-note .sticky-close { background: none; border: none; font-size: 14px; cursor: pointer; color: #999; padding: 0 4px; touch-action: manipulation; }
         .sticky-note .sticky-color { display: flex; gap: 3px; }
-        .sticky-note .sticky-color span { width: 10px; height: 10px; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0,0,0,0.1); }
-        .sticky-note textarea { width: 100%; flex: 1; min-height: 50px; max-height: 220px; border: none; background: transparent; resize: none; font-size: 13px; font-family: inherit; outline: none; overflow-y: auto; line-height: 1.6; }
+        .sticky-note .sticky-color span { width: 10px; height: 10px; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0,0,0,0.1); touch-action: manipulation; }
+        .sticky-note textarea { width: 100%; flex: 1; min-height: 50px; max-height: 220px; border: none; background: transparent; resize: none; font-size: 13px; font-family: inherit; outline: none; overflow-y: auto; line-height: 1.6; touch-action: auto; }
         .sticky-note textarea::-webkit-scrollbar { width: 3px; }
         .sticky-note textarea::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
-        .sticky-note .sticky-swipe-hint { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-size: 9px; color: rgba(0,0,0,0.2); pointer-events: none; transition: opacity 0.3s; }
-        .sticky-note:hover .sticky-swipe-hint { opacity: 0; }
+        .sticky-note .sticky-bottom { display: flex; justify-content: center; align-items: center; gap: 8px; padding-top: 6px; border-top: 1px solid rgba(0,0,0,0.06); flex-shrink: 0; margin-top: 6px; }
+        .sticky-note .sticky-del-btn { background: none; border: none; font-size: 11px; color: #e11d48; cursor: pointer; padding: 4px 12px; border-radius: 6px; transition: all 0.2s; touch-action: manipulation; }
+        .sticky-note .sticky-del-btn:hover { background: rgba(229,29,72,0.1); }
+        body.dark-mode .sticky-note .sticky-handle::before { color: rgba(255,255,255,0.25); }
+        body.dark-mode .sticky-note .sticky-bottom { border-top-color: rgba(255,255,255,0.08); }
         .sticky-fab { position: fixed; bottom: 200px; right: 18px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #eab308); color: #fff; border: none; font-size: 20px; cursor: pointer; box-shadow: 0 4px 14px rgba(245,158,11,0.3); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .sticky-fab:hover { transform: scale(1.1); }
         /* ===== 成就系统 ===== */
@@ -7124,13 +7129,15 @@
                 note.style.top = (data.y || 100 + Math.random()*200) + 'px';
                 note.style.background = data.color || stickyColors[0];
                 note.setAttribute('draggable', 'false');
-                note.innerHTML = '<div class="sticky-header"><div class="sticky-color">' + stickyColors.map(function(c) { return '<span data-color="' + c + '" style="background:' + c + '"></span>'; }).join('') + '</div><button class="sticky-close">✕</button></div><textarea placeholder="写点什么..." maxlength="500">' + escapeHtml(data.text || '') + '</textarea><div class="sticky-swipe-hint">← 滑动删除 →</div>';
-                // Drag (via header only)
+                note.innerHTML = '<div class="sticky-header"><div class="sticky-handle"></div><div class="sticky-color">' + stickyColors.map(function(c) { return '<span data-color="' + c + '" style="background:' + c + '"></span>'; }).join('') + '</div><button class="sticky-close">✕</button></div><textarea placeholder="写点什么..." maxlength="500">' + escapeHtml(data.text || '') + '</textarea><div class="sticky-bottom"><button class="sticky-del-btn">🗑 删除</button></div>';
+
+                var handle = note.querySelector('.sticky-handle');
                 var isDragging = false, startX, startY, origX, origY;
-                var header = note.querySelector('.sticky-header');
-                header.addEventListener('mousedown', function(e) {
-                    if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SPAN') return;
-                    isDragging = true; startX = e.clientX; startY = e.clientY;
+
+                // === Desktop drag ===
+                handle.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    startX = e.clientX; startY = e.clientY;
                     origX = parseInt(note.style.left); origY = parseInt(note.style.top);
                     note.style.zIndex = 8001;
                     e.preventDefault();
@@ -7140,70 +7147,93 @@
                     note.style.left = (origX + e.clientX - startX) + 'px';
                     note.style.top = (origY + e.clientY - startY) + 'px';
                 });
-                document.addEventListener('mouseup', function() { if (isDragging) { isDragging = false; note.style.zIndex = 8000; saveAllStickies(); } });
-                // Touch drag (via header)
-                var touchDragging = false, tStartX, tStartY, tOrigX, tOrigY;
-                header.addEventListener('touchstart', function(e) {
-                    if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SPAN') return;
-                    touchDragging = true;
-                    tStartX = e.touches[0].clientX; tStartY = e.touches[0].clientY;
-                    tOrigX = parseInt(note.style.left); tOrigY = parseInt(note.style.top);
-                    note.style.zIndex = 8001;
-                }, { passive: true });
-                header.addEventListener('touchmove', function(e) {
-                    if (!touchDragging) return;
-                    note.style.left = (tOrigX + e.touches[0].clientX - tStartX) + 'px';
-                    note.style.top = (tOrigY + e.touches[0].clientY - tStartY) + 'px';
-                }, { passive: true });
-                header.addEventListener('touchend', function() { if (touchDragging) { touchDragging = false; note.style.zIndex = 8000; saveAllStickies(); } });
-                // Swipe to delete (on the note body)
-                var swipeStartX = 0, swipeStartY = 0, swipeDistX = 0, isSwiping = false;
-                note.addEventListener('touchstart', function(e) {
-                    if (e.target.tagName === 'TEXTAREA' || e.target.closest('.sticky-header')) return;
-                    swipeStartX = e.touches[0].clientX;
-                    swipeStartY = e.touches[0].clientY;
-                    swipeDistX = 0;
-                    isSwiping = true;
-                    note.classList.add('swiping');
-                }, { passive: true });
-                note.addEventListener('touchmove', function(e) {
-                    if (!isSwiping) return;
-                    swipeDistX = e.touches[0].clientX - swipeStartX;
-                    var dy = Math.abs(e.touches[0].clientY - swipeStartY);
-                    if (Math.abs(swipeDistX) > dy) {
-                        note.style.transform = 'translateX(' + swipeDistX + 'px)';
-                        note.style.opacity = Math.max(0.2, 1 - Math.abs(swipeDistX) / 200);
-                    }
-                }, { passive: true });
-                note.addEventListener('touchend', function() {
-                    if (!isSwiping) return;
-                    isSwiping = false;
-                    note.classList.remove('swiping');
-                    if (Math.abs(swipeDistX) > 100) {
-                        // Swipe delete
-                        note.style.transform = 'translateX(' + (swipeDistX > 0 ? '300px' : '-300px') + ')';
-                        note.style.opacity = '0';
-                        setTimeout(function() { note.remove(); saveAllStickies(); }, 250);
-                    } else {
-                        note.style.transform = '';
-                        note.style.opacity = '';
-                    }
+                document.addEventListener('mouseup', function() {
+                    if (isDragging) { isDragging = false; note.style.zIndex = 8000; saveAllStickies(); }
                 });
-                // Close button
+
+                // === Touch: drag via handle, swipe-delete via note body ===
+                var touchState = null; // 'drag' | 'swipe' | null
+                var tStartX = 0, tStartY = 0, tOrigX = 0, tOrigY = 0, tDistX = 0;
+
+                note.addEventListener('touchstart', function(e) {
+                    var target = e.target;
+                    // Don't interfere with textarea, buttons, color dots
+                    if (target.tagName === 'TEXTAREA' || target.tagName === 'BUTTON' || target.tagName === 'SPAN') return;
+                    var touch = e.touches[0];
+                    tStartX = touch.clientX; tStartY = touch.clientY;
+                    tDistX = 0;
+                    // Determine if touching handle (drag) or body (swipe)
+                    if (target.closest('.sticky-handle') || target === handle) {
+                        touchState = 'drag';
+                        tOrigX = parseInt(note.style.left); tOrigY = parseInt(note.style.top);
+                        note.style.zIndex = 8001;
+                    } else {
+                        touchState = 'swipe';
+                        note.classList.add('swiping');
+                    }
+                }, { passive: true });
+
+                note.addEventListener('touchmove', function(e) {
+                    if (!touchState) return;
+                    var touch = e.touches[0];
+                    var dx = touch.clientX - tStartX;
+                    var dy = touch.clientY - tStartY;
+                    if (touchState === 'drag') {
+                        note.style.left = (tOrigX + dx) + 'px';
+                        note.style.top = (tOrigY + dy) + 'px';
+                    } else if (touchState === 'swipe') {
+                        tDistX = dx;
+                        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+                            note.style.transform = 'translateX(' + dx + 'px)';
+                            note.style.opacity = Math.max(0.2, 1 - Math.abs(dx) / 200);
+                        }
+                    }
+                }, { passive: true });
+
+                note.addEventListener('touchend', function() {
+                    if (touchState === 'drag') {
+                        note.style.zIndex = 8000;
+                        saveAllStickies();
+                    } else if (touchState === 'swipe') {
+                        note.classList.remove('swiping');
+                        if (Math.abs(tDistX) > 80) {
+                            // Swipe delete
+                            note.style.transform = 'translateX(' + (tDistX > 0 ? '400px' : '-400px') + ')';
+                            note.style.opacity = '0';
+                            setTimeout(function() { note.remove(); saveAllStickies(); }, 250);
+                        } else {
+                            note.style.transform = '';
+                            note.style.opacity = '';
+                        }
+                    }
+                    touchState = null;
+                });
+
+                // === Close button (desktop & mobile) ===
                 note.querySelector('.sticky-close').addEventListener('click', function() {
                     note.style.transform = 'scale(0.8)';
                     note.style.opacity = '0';
                     setTimeout(function() { note.remove(); saveAllStickies(); }, 200);
                 });
-                // Color
+
+                // === Delete button at bottom ===
+                note.querySelector('.sticky-del-btn').addEventListener('click', function() {
+                    note.style.transform = 'translateX(400px)';
+                    note.style.opacity = '0';
+                    setTimeout(function() { note.remove(); saveAllStickies(); }, 250);
+                });
+
+                // === Color ===
                 note.querySelectorAll('.sticky-color span').forEach(function(span) {
                     span.addEventListener('click', function() { note.style.background = span.getAttribute('data-color'); saveAllStickies(); });
                 });
-                // Text change
+
+                // === Text change ===
                 note.querySelector('textarea').addEventListener('input', function() { saveAllStickies(); });
-                // Scrollable textarea
-                var ta = note.querySelector('textarea');
-                ta.addEventListener('wheel', function(e) { e.stopPropagation(); }, { passive: true });
+
+                // === Prevent scroll through textarea ===
+                note.querySelector('textarea').addEventListener('touchmove', function(e) { e.stopPropagation(); }, { passive: true });
+
                 document.getElementById('stickyContainer').appendChild(note);
             }
             function saveAllStickies() {
