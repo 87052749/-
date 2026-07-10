@@ -2487,9 +2487,7 @@
         @media (max-width: 480px) {
             input, textarea, select { font-size: 16px; }
             body { overflow-x: hidden; }
-            /* 移动端减少动画开销 */
-            *, *::before, *::after { transition-duration: 0.15s !important; animation-duration: 0.3s !important; }
-            .day-cell.animate-in { animation: none; }
+            /* 移动端保持原始动画速度 */
         }
         @supports (-webkit-touch-callout: none) {
             .modal-overlay, .stats-overlay, .settings-overlay, .music-overlay, .countdown-modal-overlay, .todo-panel-overlay, .diary-overlay, .calc-overlay, .kbd-overlay, .share-overlay { -webkit-overflow-scrolling: touch; }
